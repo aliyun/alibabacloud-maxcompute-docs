@@ -1,0 +1,10 @@
+{
+  "label": "连接器",
+  "position": 4,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "doc",
+    "id": "components/connectors/index"
+  }
+}

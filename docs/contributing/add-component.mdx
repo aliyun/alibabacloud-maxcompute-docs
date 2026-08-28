@@ -1,0 +1,53 @@
+---
+title: 接入组件
+description: 将新组件按注册、目录、导航、所有权和最低页面契约接入文档平台。
+component: platform
+doc_type: how-to
+status: published
+tags:
+  - contributing
+  - components
+sidebar_position: 3
+---
+
+组件接入是一个原子变更。只创建内容目录会造成首页、导航和维护责任不一致，因此注册信息、最低页面和所有权应在同一个合并请求中提交。
+
+## 准备接入信息
+
+确定稳定组件 ID、展示名称、目标读者、内容范围、权威来源、真实维护组和版本策略。组件 ID 使用英文 kebab-case，发布后保持稳定。
+
+## 创建组件目录
+
+使用生成命令一次性创建目录、注册表条目和精确 CODEOWNERS 规则：
+
+```shell
+npm run new:component -- \
+  --id <component-id> \
+  --name "<组件展示名称>" \
+  --description "<首页卡片摘要>" \
+  --category <core|development|integration|operations> \
+  --owner <@gitlab-group>
+```
+
+命令从 `templates/component/` 生成以下页面：
+
+- 概览
+- 快速开始
+- 核心概念
+- 操作指南
+- 参考
+- 故障排查
+- 版本说明
+
+## 登记和授权
+
+检查命令写入的 `config/components.json` 条目和 `.gitlab/CODEOWNERS` 精确规则。组件注册表会驱动首页卡片，校验脚本会检查目录、登记项和所有权一致。提交前确认维护组真实存在并具备项目访问权限。
+
+## 完成验证
+
+```shell
+npm run check:components
+npm run ci
+```
+
+合并请求使用“新组件”模板，并提供内容来源、生命周期和所有权信息。完整接入契约见仓库 `handbook/component-onboarding.md`。

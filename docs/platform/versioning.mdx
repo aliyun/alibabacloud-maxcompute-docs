@@ -1,0 +1,28 @@
+---
+title: 版本策略
+description: 区分站点部署、组件文档版本和平台版本的生命周期。
+component: platform
+doc_type: governance
+status: published
+tags:
+  - platform
+  - versioning
+sidebar_position: 2
+---
+
+平台分别管理站点部署、组件文档版本和平台版本。普通内容变更不创建 Docusaurus 版本快照，也不要求发布语义版本。
+
+## 初始化策略
+
+当前所有组件位于默认 docs 实例中，不启用整体版本化。这样可以避免一次命令复制全部组件内容，并减少维护旧版本的成本。
+
+## 组件版本化触发条件
+
+组件同时满足以下条件时，可以迁移为独立 docs plugin：
+
+- 需要同时维护多个公开版本
+- 发布生命周期与其他组件不同
+- 已有负责旧版本修复和归档的维护者
+- 已定义重定向、下线和支持期限
+
+迁移时保持原有 `routeBasePath`，避免公开 URL 变化。详细操作和回滚要求记录在仓库 `handbook/versioning.md`。

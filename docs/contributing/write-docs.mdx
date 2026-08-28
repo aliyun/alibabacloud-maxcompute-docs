@@ -1,0 +1,32 @@
+---
+title: 编写文档
+description: 按统一目录、front matter 和内容质量要求新增或修改页面。
+component: platform
+doc_type: how-to
+status: published
+tags:
+  - contributing
+  - authoring
+sidebar_position: 2
+---
+
+## 选择模板
+
+从仓库 `templates/docs/` 中选择与任务匹配的模板。概念、操作、故障排查和参考内容使用不同模板，避免一篇页面混合多个目标。
+
+## 放置文件
+
+组件页面放在 `docs/components/<component-id>/`。文件名使用英文 kebab-case，标题和导航名称使用面向读者的中文。图片放在对应页面或组件的 `assets/` 目录。
+
+## 补全元数据
+
+每篇页面必须填写 `title`、`description`、`component`、`doc_type`、`status` 和 `tags`。组件 ID 必须已在注册表中登记。
+
+## 验证内容
+
+```shell
+npm run ci
+npm run build
+```
+
+合并请求中说明事实来源、本地验证结果和受影响 URL。流水线通过后，仍需要组件维护者确认产品能力、命令、参数和兼容性结论。

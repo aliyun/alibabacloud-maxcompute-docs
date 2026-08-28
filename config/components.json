@@ -1,0 +1,56 @@
+{
+  "$schema": "./components.schema.json",
+  "schemaVersion": 1,
+  "components": [
+    {
+      "id": "maxcompute",
+      "name": "MaxCompute",
+      "description": "MaxCompute 核心产品文档入口。",
+      "path": "docs/components/maxcompute",
+      "href": "/docs/components/maxcompute",
+      "category": "core",
+      "status": "draft",
+      "owner": "@odps"
+    },
+    {
+      "id": "maxframe",
+      "name": "MaxFrame",
+      "description": "MaxFrame 组件文档入口。",
+      "path": "docs/components/maxframe",
+      "href": "/docs/components/maxframe",
+      "category": "development",
+      "status": "draft",
+      "owner": "@odps"
+    },
+    {
+      "id": "sdks",
+      "name": "SDK",
+      "description": "MaxCompute SDK 文档入口。",
+      "path": "docs/components/sdks",
+      "href": "/docs/components/sdks",
+      "category": "development",
+      "status": "draft",
+      "owner": "@odps"
+    },
+    {
+      "id": "connectors",
+      "name": "连接器",
+      "description": "MaxCompute 连接器文档入口。",
+      "path": "docs/components/connectors",
+      "href": "/docs/components/connectors",
+      "category": "integration",
+      "status": "draft",
+      "owner": "@odps"
+    },
+    {
+      "id": "tools",
+      "name": "开发工具",
+      "description": "MaxCompute 开发工具文档入口。",
+      "path": "docs/components/tools",
+      "href": "/docs/components/tools",
+      "category": "development",
+      "status": "draft",
+      "owner": "@odps"
+    }
+  ]
+}

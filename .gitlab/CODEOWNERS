@@ -1,0 +1,21 @@
+# 初始兜底所有者来自仓库命名空间。组件接入时应追加更具体的真实维护组。
+* @odps
+
+# 平台核心
+/docusaurus.config.ts @odps
+/sidebars.ts @odps
+/package.json @odps
+/package-lock.json @odps
+/src/ @odps
+/scripts/ @odps
+/config/ @odps
+/.gitlab-ci.yml @odps
+/.gitlab/ @odps
+
+# 组件内容。新增组件时在下方追加精确路径和维护组。
+/docs/components/ @odps
+/docs/components/maxcompute/ @odps
+/docs/components/maxframe/ @odps
+/docs/components/sdks/ @odps
+/docs/components/connectors/ @odps
+/docs/components/tools/ @odps

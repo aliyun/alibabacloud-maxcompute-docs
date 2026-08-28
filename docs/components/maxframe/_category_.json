@@ -1,0 +1,10 @@
+{
+  "label": "MaxFrame",
+  "position": 2,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "doc",
+    "id": "components/maxframe/index"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "label": "最佳实践",
+  "position": 1,
+  "collapsible": true,
+  "collapsed": false,
+  "link": {
+    "type": "doc",
+    "id": "best-practices/index"
+  }
+}

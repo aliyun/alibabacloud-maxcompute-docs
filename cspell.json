@@ -1,0 +1,36 @@
+{
+  "version": "0.2",
+  "language": "en,zh-CN",
+  "useGitignore": true,
+  "enableGlobDot": true,
+  "files": ["**/*.{md,mdx,ts,tsx,json,yml,yaml}"],
+  "ignorePaths": [
+    "build/**",
+    ".docusaurus/**",
+    "node_modules/**",
+    "package-lock.json",
+    "static/**"
+  ],
+  "words": [
+    "Alibaba",
+    "Algolia",
+    "Ajv",
+    "camelcase",
+    "CODEOWNERS",
+    "davidanson",
+    "Docusaurus",
+    "DocSearch",
+    "esbenp",
+    "frontmatter",
+    "GitLab",
+    "MaxCompute",
+    "MaxFrame",
+    "MDX",
+    "ODPS",
+    "hideable",
+    "quickstart",
+    "sidebars",
+    "sql",
+    "tsbuildinfo"
+  ]
+}

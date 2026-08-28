@@ -1,0 +1,19 @@
+---
+title: 部署状态
+description: 说明文档站点当前构建能力和接入生产托管前的配置要求。
+component: platform
+doc_type: governance
+status: draft
+tags:
+  - platform
+  - deployment
+sidebar_position: 3
+---
+
+GitLab CI 已提供生产构建和静态站点制品。生产托管地址、访问范围、发布环境和回滚机制尚未确定，因此仓库当前不执行自动发布。
+
+## 接入生产托管
+
+接入发布任务前，需要确认真实站点地址、子路径、可见性、缓存策略、安全响应头、发布凭据和回滚方案。生产构建通过受保护的 CI 变量设置 `DOCS_SITE_URL` 和 `DOCS_BASE_URL`。
+
+发布任务应与合并请求校验分离，只允许默认分支或受保护标签触发，并串行执行以避免静态资源相互覆盖。
