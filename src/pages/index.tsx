@@ -22,13 +22,13 @@ function HomepageHeader(): ReactNode {
         <div className={styles.buttons}>
           <Link
             className="button button--primary button--lg"
-            to="/docs/components"
+            to="/docs/components/"
           >
             浏览组件文档
           </Link>
           <Link
             className="button button--outline button--primary button--lg"
-            to="/docs/contributing"
+            to="/docs/contributing/"
           >
             参与贡献
           </Link>
@@ -67,7 +67,7 @@ export default function Home(): ReactNode {
                 <p className={styles.sectionLabel}>COMPONENTS</p>
                 <Heading as="h2">按组件浏览</Heading>
               </div>
-              <Link to="/docs/components">查看组件总览 →</Link>
+              <Link to="/docs/components/">查看组件总览 →</Link>
             </div>
             <ComponentGrid />
           </div>
@@ -78,17 +78,17 @@ export default function Home(): ReactNode {
             <p className={styles.sectionLabel}>QUICK PATHS</p>
             <Heading as="h2">从当前任务开始</Heading>
             <div className={styles.pathGrid}>
-              <Link className={styles.pathCard} to="/docs/intro">
+              <Link className={styles.pathCard} to="/docs/intro/">
                 <span>01</span>
                 <Heading as="h3">第一次使用</Heading>
                 <p>了解内容边界、页面状态和推荐阅读路径。</p>
               </Link>
-              <Link className={styles.pathCard} to="/docs/best-practices">
+              <Link className={styles.pathCard} to="/docs/best-practices/">
                 <span>02</span>
                 <Heading as="h3">查找跨组件方案</Heading>
                 <p>从经过验证的实践中查找场景、步骤和限制。</p>
               </Link>
-              <Link className={styles.pathCard} to="/docs/contributing">
+              <Link className={styles.pathCard} to="/docs/contributing/">
                 <span>03</span>
                 <Heading as="h3">提交文档</Heading>
                 <p>使用模板、注册表和 CI 契约完成可评审的变更。</p>
@@ -108,9 +108,9 @@ export default function Home(): ReactNode {
               </p>
             </div>
             <div className={styles.platformLinks}>
-              <Link to="/docs/platform/architecture">了解平台架构</Link>
-              <Link to="/docs/contributing/add-component">接入新组件</Link>
-              <Link to="/docs/platform/versioning">查看版本策略</Link>
+              <Link to="/docs/platform/architecture/">了解平台架构</Link>
+              <Link to="/docs/contributing/add-component/">接入新组件</Link>
+              <Link to="/docs/platform/versioning/">查看版本策略</Link>
             </div>
           </div>
         </section>

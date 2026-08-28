@@ -51,7 +51,7 @@ release-notes.mdx
 - `name`：官方展示名称
 - `description`：用于首页卡片的一句话说明
 - `path`：`docs/components/<component-id>`
-- `href`：`/docs/components/<component-id>`
+- `href`：`/docs/components/<component-id>/`
 - `category`：受控分类
 - `status`：`draft`、`published` 或 `deprecated`
 - `owner`：真实 GitLab 用户或组

@@ -56,7 +56,7 @@ const registeredDirectories = new Set();
 for (const [index, component] of (registry.components ?? []).entries()) {
   const location = `config/components.json: components[${index}]`;
   const expectedPath = `docs/components/${component.id}`;
-  const expectedHref = `/docs/components/${component.id}`;
+  const expectedHref = `/docs/components/${component.id}/`;
 
   if (!idPattern.test(component.id ?? '')) {
     errors.push(`${location}: id 必须使用英文 kebab-case。`);

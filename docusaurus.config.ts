@@ -30,7 +30,8 @@ const config: Config = {
   baseUrl: process.env.DOCS_BASE_URL ?? '/',
   organizationName: 'odps',
   projectName: 'maxcompute-docs',
-  trailingSlash: false,
+  // Aone Pages 按目录提供静态文件，使用尾斜线生成 route/index.html。
+  trailingSlash: true,
   onBrokenLinks: 'throw',
   onBrokenAnchors: 'throw',
   onDuplicateRoutes: 'throw',
@@ -133,17 +134,17 @@ const config: Config = {
         {
           title: '文档',
           items: [
-            {label: '开始使用', to: '/docs/intro'},
-            {label: '组件文档', to: '/docs/components'},
-            {label: '最佳实践', to: '/docs/best-practices'},
+            {label: '开始使用', to: '/docs/intro/'},
+            {label: '组件文档', to: '/docs/components/'},
+            {label: '最佳实践', to: '/docs/best-practices/'},
           ],
         },
         {
           title: '平台',
           items: [
-            {label: '贡献指南', to: '/docs/contributing'},
-            {label: '平台架构', to: '/docs/platform/architecture'},
-            {label: '版本策略', to: '/docs/platform/versioning'},
+            {label: '贡献指南', to: '/docs/contributing/'},
+            {label: '平台架构', to: '/docs/platform/architecture/'},
+            {label: '版本策略', to: '/docs/platform/versioning/'},
           ],
         },
         {

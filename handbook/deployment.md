@@ -17,6 +17,8 @@
 
 生产构建设置 `DOCS_SITE_URL=https://maxcompute-docs.io.alibaba-inc.com` 和 `DOCS_BASE_URL=/`。
 
+Docusaurus 使用目录式尾斜线 URL，为每条路由生成 `route/index.html`。新增硬编码站内链接时保留末尾 `/`，保证 Aone Pages 可以直接访问深层链接。
+
 ## 流水线管理
 
 流水线配置存储在 Aone CI，不在仓库中复制官方模板。修改参数或触发器前先读取流水线 `290625` 的当前配置，并同步更新本手册和 ADR 0003。不得为同一仓库重复创建 Pages 流水线。

@@ -171,7 +171,7 @@ registry.components.push({
   name: options.name,
   description: options.description,
   path: `docs/components/${options.id}`,
-  href: `/docs/components/${options.id}`,
+  href: `/docs/components/${options.id}/`,
   category: options.category,
   status: 'draft',
   owner: options.owner,

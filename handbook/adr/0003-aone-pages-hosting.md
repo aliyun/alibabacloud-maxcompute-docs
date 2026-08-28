@@ -13,6 +13,8 @@
 
 正式地址为 `https://maxcompute-docs.io.alibaba-inc.com`。生产构建使用 `DOCS_BASE_URL=/`，通过 `DOCS_SITE_URL` 写入真实站点地址。
 
+站点使用尾斜线目录路由，为每个页面生成 `route/index.html`，适配 Aone Pages 的静态文件寻址方式。
+
 ## 影响
 
 - Pages 流水线配置由 Aone CI 托管，仓库不复制官方模板 YAML。
