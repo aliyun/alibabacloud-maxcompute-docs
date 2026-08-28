@@ -1,0 +1,8 @@
+{
+  "label": "MaxCompute MCP Server",
+  "position": 2,
+  "link": {
+    "type": "doc",
+    "id": "products/mcp-server/index"
+  }
+}

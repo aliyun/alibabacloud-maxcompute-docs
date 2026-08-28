@@ -1,7 +1,7 @@
 # Dependencies
 node_modules/
 .npm/
-.component-generator.lock/
+.product-generator.lock/
 
 # Docusaurus output and caches
 build/
@@ -11,6 +11,7 @@ build/
 
 # Test and tooling output
 coverage/
+design-qa.md
 *.tsbuildinfo
 *.log
 npm-debug.log*

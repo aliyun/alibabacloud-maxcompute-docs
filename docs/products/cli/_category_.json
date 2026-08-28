@@ -1,0 +1,8 @@
+{
+  "label": "MaxCompute CLI",
+  "position": 1,
+  "link": {
+    "type": "doc",
+    "id": "products/cli/index"
+  }
+}

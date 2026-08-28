@@ -17,16 +17,17 @@ const algoliaConfig =
 const showLastUpdate = process.env.DOCS_SHOW_LAST_UPDATE === 'true';
 
 const config: Config = {
-  title: 'MaxCompute 文档中心',
-  tagline: 'MaxCompute 多组件统一文档平台',
+  title: 'MaxCompute 文档',
+  tagline: 'MaxCompute 产品使用指南与参考',
   favicon: 'img/favicon.svg',
 
   future: {
     v4: true,
   },
 
-  // 部署时通过 CI 变量覆盖，避免在仓库中写入未经确认的生产域名。
-  url: process.env.DOCS_SITE_URL ?? 'http://localhost:3000',
+  // CI 可覆盖自定义域名；默认值必须始终生成正确的 canonical 和 sitemap。
+  url:
+    process.env.DOCS_SITE_URL ?? 'https://maxcompute-docs.io.alibaba-inc.com',
   baseUrl: process.env.DOCS_BASE_URL ?? '/',
   organizationName: 'odps',
   projectName: 'maxcompute-docs',
@@ -62,8 +63,6 @@ const config: Config = {
           breadcrumbs: true,
           showLastUpdateAuthor: showLastUpdate,
           showLastUpdateTime: showLastUpdate,
-          editUrl:
-            'https://gitlab.alibaba-inc.com/odps/maxcompute-docs/-/edit/master/',
         },
         blog: false,
         sitemap: {
@@ -82,48 +81,54 @@ const config: Config = {
     metadata: [
       {
         name: 'keywords',
-        content: 'MaxCompute,文档,SDK,连接器,开发工具',
+        content: 'MaxCompute,文档,CLI,MCP Server,Desktop',
       },
     ],
     colorMode: {
       defaultMode: 'light',
-      respectPrefersColorScheme: true,
+      disableSwitch: true,
+      respectPrefersColorScheme: false,
     },
     navbar: {
-      title: 'MaxCompute 文档中心',
-      hideOnScroll: true,
+      title: 'MaxCompute 文档',
+      hideOnScroll: false,
       logo: {
-        alt: 'MaxCompute 文档中心',
+        alt: 'MaxCompute 文档',
         src: 'img/maxcompute-mark.svg',
       },
       items: [
         {
-          type: 'docSidebar',
-          sidebarId: 'overviewSidebar',
+          to: '/',
           position: 'left',
-          label: '开始使用',
+          label: '文档首页',
         },
         {
-          type: 'docSidebar',
-          sidebarId: 'componentsSidebar',
+          type: 'custom-product-menu',
           position: 'left',
-          label: '组件文档',
+          label: '产品文档',
         },
         {
-          type: 'docSidebar',
-          sidebarId: 'guidesSidebar',
+          to: '/docs/best-practices/',
           position: 'left',
-          label: '指南与参考',
+          label: '最佳实践',
         },
         {
-          type: 'docSidebar',
-          sidebarId: 'contributorSidebar',
+          to: '/docs/updates/',
           position: 'left',
-          label: '参与贡献',
+          label: '更新日志',
         },
         {
-          href: 'https://gitlab.alibaba-inc.com/odps/maxcompute-docs',
-          label: 'GitLab',
+          type: 'custom-doc-search',
+          position: 'right',
+        },
+        {
+          href: 'https://cn.aliyun.com/product/maxcompute',
+          label: '产品官网 ↗',
+          position: 'right',
+        },
+        {
+          href: 'https://maxcompute.console.aliyun.com/',
+          label: '控制台 ↗',
           position: 'right',
         },
       ],
@@ -134,29 +139,40 @@ const config: Config = {
         {
           title: '文档',
           items: [
-            {label: '开始使用', to: '/docs/intro/'},
-            {label: '组件文档', to: '/docs/components/'},
-            {label: '最佳实践', to: '/docs/best-practices/'},
-          ],
-        },
-        {
-          title: '平台',
-          items: [
-            {label: '贡献指南', to: '/docs/contributing/'},
-            {label: '平台架构', to: '/docs/platform/architecture/'},
-            {label: '版本策略', to: '/docs/platform/versioning/'},
-          ],
-        },
-        {
-          title: '仓库',
-          items: [
+            {label: '产品总览', to: '/docs/products/'},
+            {label: 'MaxCompute CLI', to: '/docs/products/cli/'},
             {
-              label: 'GitLab',
-              href: 'https://gitlab.alibaba-inc.com/odps/maxcompute-docs',
+              label: 'MaxCompute MCP Server',
+              to: '/docs/products/mcp-server/',
             },
             {
-              label: '提交问题',
-              href: 'https://gitlab.alibaba-inc.com/odps/maxcompute-docs/-/issues/new',
+              label: 'MaxCompute Desktop',
+              to: '/docs/products/desktop/',
+            },
+          ],
+        },
+        {
+          title: '资源',
+          items: [
+            {label: '最佳实践', to: '/docs/best-practices/'},
+            {label: '更新日志', to: '/docs/updates/'},
+            {label: '常见问题', to: '/docs/faq/'},
+          ],
+        },
+        {
+          title: '相关链接',
+          items: [
+            {
+              label: 'MaxCompute 产品官网',
+              href: 'https://cn.aliyun.com/product/maxcompute',
+            },
+            {
+              label: 'MaxCompute 控制台',
+              href: 'https://maxcompute.console.aliyun.com/',
+            },
+            {
+              label: 'MaxCompute 帮助中心',
+              href: 'https://help.aliyun.com/zh/maxcompute/',
             },
           ],
         },

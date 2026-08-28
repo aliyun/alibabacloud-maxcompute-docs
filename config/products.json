@@ -1,0 +1,69 @@
+{
+  "$schema": "./products.schema.json",
+  "schemaVersion": 1,
+  "products": [
+    {
+      "id": "cli",
+      "name": "MaxCompute CLI",
+      "shortName": "CLI",
+      "description": "在命令行中完成 MaxCompute 开发与管理任务。",
+      "path": "docs/products/cli",
+      "href": "/docs/products/cli/",
+      "status": "draft",
+      "owner": "@odps",
+      "icon": "terminal",
+      "accent": "orange",
+      "featured": true,
+      "navigation": [
+        {"label": "快速开始", "href": "/docs/products/cli/quickstart/"},
+        {"label": "安装与配置", "href": "/docs/products/cli/installation/"},
+        {"label": "命令参考", "href": "/docs/products/cli/command-reference/"},
+        {"label": "故障排查", "href": "/docs/products/cli/troubleshooting/"}
+      ]
+    },
+    {
+      "id": "mcp-server",
+      "name": "MaxCompute MCP Server",
+      "shortName": "MCP Server",
+      "description": "通过标准协议将 MaxCompute 能力连接到智能应用。",
+      "path": "docs/products/mcp-server",
+      "href": "/docs/products/mcp-server/",
+      "status": "draft",
+      "owner": "@odps",
+      "icon": "robot",
+      "accent": "blue",
+      "featured": true,
+      "navigation": [
+        {"label": "快速开始", "href": "/docs/products/mcp-server/quickstart/"},
+        {
+          "label": "部署与配置",
+          "href": "/docs/products/mcp-server/deployment/"
+        },
+        {
+          "label": "工具参考",
+          "href": "/docs/products/mcp-server/tools-reference/"
+        },
+        {"label": "安全与权限", "href": "/docs/products/mcp-server/security/"}
+      ]
+    },
+    {
+      "id": "desktop",
+      "name": "MaxCompute Desktop",
+      "shortName": "Desktop",
+      "description": "在桌面端探索、开发并管理 MaxCompute 工作。",
+      "path": "docs/products/desktop",
+      "href": "/docs/products/desktop/",
+      "status": "draft",
+      "owner": "@odps",
+      "icon": "desktop",
+      "accent": "violet",
+      "featured": true,
+      "navigation": [
+        {"label": "快速开始", "href": "/docs/products/desktop/quickstart/"},
+        {"label": "安装与更新", "href": "/docs/products/desktop/installation/"},
+        {"label": "使用指南", "href": "/docs/products/desktop/guides/"},
+        {"label": "故障排查", "href": "/docs/products/desktop/troubleshooting/"}
+      ]
+    }
+  ]
+}

@@ -6,11 +6,11 @@ import {load as parseYaml} from 'js-yaml';
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const docsRoot = join(root, 'docs');
 const registry = JSON.parse(
-  readFileSync(join(root, 'config/components.json'), 'utf8'),
+  readFileSync(join(root, 'config/products.json'), 'utf8'),
 );
-const componentIds = new Set([
+const productIds = new Set([
   'platform',
-  ...registry.components.map((component) => component.id),
+  ...registry.products.map((product) => product.id),
 ]);
 const docTypes = new Set([
   'overview',
@@ -48,7 +48,8 @@ function parseFrontMatter(source) {
   }
 }
 
-for (const file of collectFiles(docsRoot)) {
+const docsFiles = collectFiles(docsRoot);
+for (const file of docsFiles) {
   const displayPath = relative(root, file);
   const pathWithinDocs = relative(docsRoot, file).split(/[\\/]/);
   const source = readFileSync(file, 'utf8');
@@ -59,13 +60,7 @@ for (const file of collectFiles(docsRoot)) {
     continue;
   }
 
-  for (const key of [
-    'title',
-    'description',
-    'component',
-    'doc_type',
-    'status',
-  ]) {
+  for (const key of ['title', 'description', 'product', 'doc_type', 'status']) {
     if (
       typeof parsed.data[key] !== 'string' ||
       parsed.data[key].trim().length === 0
@@ -82,18 +77,18 @@ for (const file of collectFiles(docsRoot)) {
   ) {
     errors.push(`${displayPath}: tags 必须是包含至少一个非空字符串的列表。`);
   }
-  if (parsed.data.component && !componentIds.has(parsed.data.component)) {
+  if (parsed.data.product && !productIds.has(parsed.data.product)) {
     errors.push(
-      `${displayPath}: component ${parsed.data.component} 未登记或不是 platform。`,
+      `${displayPath}: product ${parsed.data.product} 未登记或不是 platform。`,
     );
   }
   if (
-    pathWithinDocs[0] === 'components' &&
+    pathWithinDocs[0] === 'products' &&
     pathWithinDocs.length >= 3 &&
-    parsed.data.component !== pathWithinDocs[1]
+    parsed.data.product !== pathWithinDocs[1]
   ) {
     errors.push(
-      `${displayPath}: component 必须与所在组件目录 ${pathWithinDocs[1]} 一致。`,
+      `${displayPath}: product 必须与所在产品目录 ${pathWithinDocs[1]} 一致。`,
     );
   }
   if (parsed.data.doc_type && !docTypes.has(parsed.data.doc_type)) {
@@ -118,7 +113,6 @@ for (const file of collectFiles(docsRoot)) {
       insideCodeFence = !insideCodeFence;
       continue;
     }
-
     if (insideCodeFence) continue;
 
     const heading = line.match(/^(#{1,6})\s+/);
@@ -154,4 +148,4 @@ if (errors.length > 0) {
   process.exit(1);
 }
 
-console.log(`文档契约校验通过：${collectFiles(docsRoot).length} 篇文档。`);
+console.log(`文档契约校验通过：${docsFiles.length} 篇文档。`);

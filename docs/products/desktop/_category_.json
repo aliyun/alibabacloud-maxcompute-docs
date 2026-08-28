@@ -1,0 +1,8 @@
+{
+  "label": "MaxCompute Desktop",
+  "position": 3,
+  "link": {
+    "type": "doc",
+    "id": "products/desktop/index"
+  }
+}

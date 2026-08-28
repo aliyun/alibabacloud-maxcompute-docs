@@ -1,0 +1,254 @@
+.root {
+  display: flex;
+  height: var(--ifm-navbar-height);
+  align-items: center;
+}
+
+.trigger,
+.mobileTrigger {
+  font: inherit;
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+}
+
+.trigger {
+  position: relative;
+  display: inline-flex;
+  gap: 0.28rem;
+  align-items: center;
+  color: var(--ifm-navbar-link-color);
+}
+
+.trigger:hover,
+.trigger.active {
+  color: var(--mc-ink);
+}
+
+.activeDot {
+  position: absolute;
+  top: 0.45rem;
+  right: 1.1rem;
+  width: 7px;
+  height: 7px;
+  opacity: 0;
+  background: #67c56d;
+  border-radius: 50%;
+  transition: opacity 120ms ease;
+}
+
+.active .activeDot {
+  opacity: 1;
+}
+
+.caretOpen {
+  transform: rotate(180deg);
+}
+
+.panel {
+  position: fixed;
+  z-index: calc(var(--ifm-z-index-fixed) - 1);
+  top: calc(var(--ifm-navbar-height) - 1px);
+  left: 50%;
+  width: min(1240px, calc(100vw - 48px));
+  padding-top: 12px;
+  transform: translateX(-50%);
+}
+
+.panelGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(220px, 0.72fr);
+  max-height: calc(100vh - var(--ifm-navbar-height) - 32px);
+  overflow: auto;
+  background: var(--mc-card);
+  border: 1px solid var(--mc-border);
+  border-radius: 18px;
+  box-shadow: 0 24px 70px rgba(29, 39, 62, 0.16);
+}
+
+.productsGrid {
+  display: grid;
+  min-width: 0;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.productColumn,
+.expansionColumn {
+  min-height: 338px;
+  padding: 1.5rem 1.6rem;
+}
+
+.productColumn:not(:nth-child(3n + 1)),
+.expansionColumn {
+  border-left: 1px solid var(--mc-border);
+}
+
+.productColumn:nth-child(n + 4) {
+  border-top: 1px solid var(--mc-border);
+}
+
+.productHeading {
+  display: flex;
+  gap: 0.85rem;
+  align-items: center;
+}
+
+.productHeading > div {
+  display: grid;
+  gap: 0.18rem;
+}
+
+.productIcon,
+.expansionIcon {
+  display: inline-flex;
+  width: 46px;
+  height: 46px;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  color: var(--product-accent);
+  background: var(--product-accent-soft);
+  border-radius: 12px;
+}
+
+.orange {
+  --product-accent: #e85d04;
+  --product-accent-soft: #fff1e7;
+}
+
+.blue {
+  --product-accent: #2772d4;
+  --product-accent-soft: #eaf3ff;
+}
+
+.violet {
+  --product-accent: #7057d9;
+  --product-accent-soft: #f0edff;
+}
+
+.green {
+  --product-accent: #238a68;
+  --product-accent-soft: #e8f7f1;
+}
+
+.groupLabel {
+  color: var(--mc-muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.productHeading a {
+  color: var(--mc-ink);
+  font-size: 1rem;
+  font-weight: 720;
+}
+
+.productHeading a:hover {
+  color: var(--product-accent);
+  text-decoration: none;
+}
+
+.productColumn > p,
+.expansionColumn p {
+  margin: 1rem 0 1.1rem;
+  color: var(--mc-muted);
+  font-size: 0.82rem;
+  line-height: 1.62;
+}
+
+.productLinks {
+  display: grid;
+}
+
+.productLinks a {
+  padding: 0.48rem 0;
+  color: var(--mc-ink);
+  font-size: 0.88rem;
+}
+
+.productLinks a:hover {
+  color: var(--product-accent);
+  text-decoration: none;
+}
+
+.expansionColumn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: var(--mc-surface);
+}
+
+.expansionIcon {
+  --product-accent: #6a7588;
+  --product-accent-soft: var(--mc-card);
+  margin-bottom: 1.1rem;
+}
+
+.expansionColumn strong {
+  margin-top: 0.22rem;
+  color: var(--mc-ink);
+  font-size: 1rem;
+}
+
+.expansionColumn a {
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.mobileRoot {
+  border-bottom: 1px solid var(--mc-border);
+}
+
+.mobileListItem {
+  list-style: none;
+}
+
+.mobileTrigger {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.85rem 0;
+  color: var(--mc-ink);
+  font-weight: 700;
+  text-align: left;
+}
+
+.mobilePanel {
+  padding: 0 0 0.8rem 0.6rem;
+}
+
+.mobileProduct {
+  display: grid;
+  gap: 0.4rem;
+  padding: 0.7rem 0;
+}
+
+.mobileProduct > a:first-child {
+  color: var(--mc-ink);
+  font-weight: 700;
+}
+
+.mobileProduct > a:not(:first-child) {
+  color: var(--mc-muted);
+  font-size: 0.9rem;
+}
+
+.mobileAllProducts {
+  display: inline-block;
+  margin-top: 0.4rem;
+  font-weight: 700;
+}
+
+@media screen and (max-width: 1160px) {
+  .panelGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .expansionColumn {
+    min-height: auto;
+    border-top: 1px solid var(--mc-border);
+    border-left: 0;
+  }
+}

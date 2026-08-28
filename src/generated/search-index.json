@@ -1,0 +1,233 @@
+[
+  {
+    "title": "最佳实践",
+    "description": "汇总经过验证的 MaxCompute 跨产品方案、实施步骤、验证方法和回滚要求。",
+    "href": "/docs/best-practices/",
+    "group": "MaxCompute 文档",
+    "keywords": "best-practices maxcompute 浏览方式 最佳实践按使用场景组织，帮助你在多个产品之间选择合适的工作方式。每篇内容将提供适用场景、前提条件、操作步骤、验证方法和注意事项。 浏览方式 你可以先从产品文档选择产品，也可以使用页面顶部搜索框按任务关键词查找实践。"
+  },
+  {
+    "title": "常见问题",
+    "description": "汇总 MaxCompute 文档中心的产品选择、搜索、版本说明和故障排查问题。",
+    "href": "/docs/faq/",
+    "group": "MaxCompute 文档",
+    "keywords": "faq help 如何选择产品文档？ 如何快速查找某个主题？ 在哪里查看版本变化？ 遇到问题时从哪里开始？ 如何选择产品文档？ 从产品文档进入目标产品。每个产品页面都有自己的快速开始、指南、参考和故障排查入口。 如何快速查找某个主题？ 使用页面顶部搜索框输入产品名称、任务或错误关键词，也可以从产品侧栏按页面类型浏览。 在哪里查看版本变化？ 从更新日志进入各产品的版本说明。 遇到问题时从哪里开始？ 先打开目标产品的“故障排查”，按安装、配置、连接或执行阶段定位问题。"
+  },
+  {
+    "title": "开始使用文档中心",
+    "description": "了解 MaxCompute 文档中心的内容范围和推荐阅读路径。",
+    "href": "/docs/getting-started/",
+    "group": "MaxCompute 文档",
+    "keywords": "maxcompute getting-started 选择入口 推荐阅读顺序 文档中心按产品和使用场景组织内容。先选择产品，再根据任务进入快速开始、使用指南、参考或故障排查。 选择入口 目标 入口 -------------- --------------------------------------- 了解某个产品 产品文档 查找跨产品方案 最佳实践 了解版本变化 更新日志 查询公共术语 参考 解决常见问题 常见问题 推荐阅读顺序 1. 从产品的“快速开始”完成首次操作。 2. 在“使用指南”中按目标查找步骤。 3. 通过“参考”确认命令、参数或配置。 4. 遇到异常时进入“故障排查”。"
+  },
+  {
+    "title": "查找所需文档",
+    "description": "根据产品、任务和页面类型在 MaxCompute 文档中心定位所需内容。",
+    "href": "/docs/getting-started/find-docs/",
+    "group": "MaxCompute 文档",
+    "keywords": "navigation getting-started 按产品查找 按任务查找 按产品查找 打开产品文档，选择 MaxCompute CLI、MaxCompute MCP Server 或 MaxCompute Desktop。每个产品拥有独立导航，同时保留快速开始、使用指南、参考、故障排查和版本说明等公共页面类型。 按任务查找 - 需要首次跑通时，选择“快速开始”。 - 需要理解术语和机制时，选择“核心概念”。 - 需要完成具体操作时，选择“操作指南”。 - 需要查询参数、接口或兼容性时，选择“参考”。 - 遇到错误或异常时，选择“故障排查”。 也可以使用页面顶部的搜索框，按产品名称或任务关键词查找内容。"
+  },
+  {
+    "title": "MaxCompute 文档中心",
+    "description": "从统一入口查找 MaxCompute 产品的快速开始、使用指南、参考和故障排查文档。",
+    "href": "/docs/intro/",
+    "group": "MaxCompute 文档",
+    "keywords": "maxcompute overview 如何浏览 MaxCompute 文档中心汇集产品入门、使用指南、参考信息、故障排查和版本说明。 如何浏览 - 首次使用时，从开始使用了解文档组织方式。 - 已确定目标产品时，从产品文档进入对应目录。 - 需要跨产品方案时，查看最佳实践。 - 需要了解版本变化时，查看更新日志。 - 遇到常见问题时，查看常见问题。 - 需要术语和公共约定时，查看参考。"
+  },
+  {
+    "title": "产品文档",
+    "description": "从统一入口进入 MaxCompute CLI、MaxCompute MCP Server 和 MaxCompute Desktop 的独立文档空间。",
+    "href": "/docs/products/",
+    "group": "MaxCompute 文档",
+    "keywords": "products maxcompute 产品目录 按任务选择 从产品目录进入相应的快速开始、使用指南、参考和故障排查内容。 产品目录 - MaxCompute CLI：进入命令行产品的安装与配置、命令参考和故障排查文档。 - MaxCompute MCP Server：进入服务端产品的部署与配置、工具参考和安全权限文档。 - MaxCompute Desktop：进入桌面产品的安装更新、使用指南和故障排查文档。 按任务选择 - 偏好命令行工作流时，选择 MaxCompute CLI。 - 需要连接智能应用时，选择 MaxCompute MCP Server。 - 偏好图形化桌面体验时，选择 MaxCompute Desktop。"
+  },
+  {
+    "title": "MaxCompute CLI",
+    "description": "进入 MaxCompute CLI 的快速开始、安装与配置、命令参考、使用指南和故障排查文档。",
+    "href": "/docs/products/cli/",
+    "group": "MaxCompute CLI",
+    "keywords": "cli overview"
+  },
+  {
+    "title": "CLI 命令参考",
+    "description": "按命令分组维护 MaxCompute CLI 的语法、参数、输入、输出和兼容性信息。",
+    "href": "/docs/products/cli/command-reference/",
+    "group": "MaxCompute CLI",
+    "keywords": "cli commands reference 命令分组 命令条目结构 全局选项 本页是 MaxCompute CLI 命令与参数的参考入口，可按命令名称查找语法、参数和示例。 命令分组 命令按用户任务分组，便于从目标快速定位所需命令。 命令条目结构 每个命令条目提供以下信息： 1. 用途和适用场景。 2. 完整语法。 3. 参数表及默认值。 4. 输入、输出和退出状态。 5. 经验证的示例。 6. 版本与兼容性说明。 全局选项 全局选项会同时说明优先级、作用域和与配置文件的覆盖关系。"
+  },
+  {
+    "title": "CLI 使用指南",
+    "description": "汇总按用户目标组织的 MaxCompute CLI 操作流程、验证方法和相关参考入口。",
+    "href": "/docs/products/cli/guides/",
+    "group": "MaxCompute CLI",
+    "keywords": "cli guides 指南组织方式 指南目录 本页按用户目标汇总 MaxCompute CLI 操作指南。每篇指南聚焦一个可验证结果，并链接到对应命令参考。 指南组织方式 每篇指南包含适用版本、前提条件、操作步骤、预期结果和清理方式；存在多种方法时，会同时说明适用场景。 指南目录 暂无相关指南。你可以先查看快速开始或命令参考。"
+  },
+  {
+    "title": "CLI 安装与配置",
+    "description": "说明 MaxCompute CLI 的获取方式、受支持环境、安装验证和配置项边界。",
+    "href": "/docs/products/cli/installation/",
+    "group": "MaxCompute CLI",
+    "keywords": "cli installation configuration 选择安装方式 安装 配置 验证安装 升级与卸载 本页介绍 MaxCompute CLI 的安装与配置流程，帮助你在开始使用前确认运行环境可用。 选择安装方式 选择分发渠道时，请同时确认适用环境和版本差异。 安装 安装步骤将按操作系统或运行环境组织，并提供版本、权限要求和验证方法。 配置 配置项按名称、是否必选、默认值、作用域和示例值说明。请勿在配置或示例中使用真实凭证。 验证安装 安装完成后，请使用本节提供的验证方式确认 CLI 可以正常启动。 升级与卸载 升级或卸载前，请先确认兼容性、配置保留方式和清理范围。"
+  },
+  {
+    "title": "CLI 快速开始",
+    "description": "建立 MaxCompute CLI 从准备环境到完成首次有效操作的最小流程，并保留结果验证入口。",
+    "href": "/docs/products/cli/quickstart/",
+    "group": "MaxCompute CLI",
+    "keywords": "cli quickstart 完成目标 前提条件 操作步骤 验证结果 下一步 通过本页完成 MaxCompute CLI 的首次配置与操作。 完成目标 完成准备、配置、执行和结果检查，确认 CLI 可以正常使用。 前提条件 开始前，请确认运行环境、访问权限、网络条件和所需的 MaxCompute 资源均已准备就绪。 操作步骤 按照获取产品、完成必要配置、执行一次有效操作和查看结果的顺序开始使用。 验证结果 完成操作后，请核对输出结果，并根据需要清理临时资源。 下一步 完成最小闭环后，前往使用指南按目标继续阅读，或使用命令参考查询参数。"
+  },
+  {
+    "title": "CLI 参考",
+    "description": "查找 MaxCompute CLI 的命令、安装配置和版本信息。",
+    "href": "/docs/products/cli/reference/",
+    "group": "MaxCompute CLI",
+    "keywords": "cli reference 从以下入口查找 MaxCompute CLI 的详细信息： - 安装与配置：安装方式、运行环境和连接配置。 - 命令参考：命令语法、参数、输入和输出。 - 版本说明：版本变化、兼容性和升级信息。"
+  },
+  {
+    "title": "CLI 版本说明",
+    "description": "按时间倒序记录 MaxCompute CLI 的已确认版本变化、兼容性影响和用户操作。",
+    "href": "/docs/products/cli/release-notes/",
+    "group": "MaxCompute CLI",
+    "keywords": "cli release-notes 记录格式 本页按时间倒序记录 MaxCompute CLI 的版本变化和兼容性影响。 记录格式 每个版本按发布日期倒序记录以下内容： - 版本号和发布日期 - 新增、变更和修复内容 - 兼容性与升级影响 - 用户需要执行的操作 - 已知问题和回滚入口 暂无版本记录。"
+  },
+  {
+    "title": "CLI 故障排查",
+    "description": "按安装、配置、连接和命令执行阶段组织 MaxCompute CLI 问题诊断流程。",
+    "href": "/docs/products/cli/troubleshooting/",
+    "group": "MaxCompute CLI",
+    "keywords": "cli troubleshooting 开始前收集信息 按阶段定位 仍未解决 本页提供 MaxCompute CLI 常见问题的诊断与恢复方法。 开始前收集信息 开始排查前，请记录产品版本、操作系统、执行方式、完整错误信息和问题发生时间，并移除账号凭证或敏感数据。 按阶段定位 请先判断问题发生在安装、配置、连接、命令解析还是结果处理阶段，再进入对应条目。 仍未解决 如果问题仍未解决，请通过产品支持渠道提交版本、环境和经过脱敏的错误信息。"
+  },
+  {
+    "title": "MaxCompute Desktop",
+    "description": "进入 MaxCompute Desktop 的快速开始、安装与更新、使用指南、配置和故障排查文档。",
+    "href": "/docs/products/desktop/",
+    "group": "MaxCompute Desktop",
+    "keywords": "desktop overview"
+  },
+  {
+    "title": "Desktop 配置",
+    "description": "按作用域维护 MaxCompute Desktop 配置项、默认值、生效方式和安全边界。",
+    "href": "/docs/products/desktop/configuration/",
+    "group": "MaxCompute Desktop",
+    "keywords": "desktop configuration 配置作用域 配置入口 配置项 生效与恢复 本页介绍 MaxCompute Desktop 的配置入口和配置项。 配置作用域 不同配置作用域之间的关系按配置覆盖和同步规则说明。 配置入口 存在多个配置入口时，本节会说明每个入口的适用场景和生效范围。 配置项 配置项按名称、类型、是否必选、默认值、作用域、说明和示例值列出。请勿以明文保存认证信息。 生效与恢复 修改配置后，请确认生效时间、是否需要重启以及恢复默认值的方法。"
+  },
+  {
+    "title": "Desktop 使用指南",
+    "description": "汇总按用户目标组织的 MaxCompute Desktop 操作流程、界面路径和结果验证要求。",
+    "href": "/docs/products/desktop/guides/",
+    "group": "MaxCompute Desktop",
+    "keywords": "desktop guides 指南组织方式 指南目录 本页按用户目标汇总 MaxCompute Desktop 使用指南。每篇指南聚焦一个可验证结果，并使用当前版本中的界面名称和菜单路径。 指南组织方式 每篇指南包含适用版本、前提条件、操作步骤和预期结果，并使用与当前版本一致的界面名称。 指南目录 暂无相关指南。你可以先查看快速开始或配置。"
+  },
+  {
+    "title": "Desktop 安装与更新",
+    "description": "说明 MaxCompute Desktop 的获取渠道、支持系统、安装验证、更新和卸载要求。",
+    "href": "/docs/products/desktop/installation/",
+    "group": "MaxCompute Desktop",
+    "keywords": "desktop installation updates 获取产品 安装 更新 卸载 本页介绍 MaxCompute Desktop 的安装、更新与卸载流程。 获取产品 选择下载渠道时，请同时确认版本信息和完整性验证方式。 安装 安装步骤将按操作系统组织，并说明系统要求、权限、安装位置和验证方法。 更新 更新前，请确认兼容性、配置保留范围和数据备份要求。 卸载 卸载时请确认应用文件、用户配置、缓存和本地数据的处理范围。"
+  },
+  {
+    "title": "Desktop 快速开始",
+    "description": "建立 MaxCompute Desktop 从准备环境到完成首次有效操作的最小流程，并保留结果验证入口。",
+    "href": "/docs/products/desktop/quickstart/",
+    "group": "MaxCompute Desktop",
+    "keywords": "desktop quickstart 完成目标 前提条件 操作步骤 验证结果 下一步 通过本页完成 MaxCompute Desktop 的安装、配置与首次操作。 完成目标 完成安装、连接和一次有效操作，确认 Desktop 可以正常使用。 前提条件 开始前，请确认操作系统、访问权限、网络条件和所需的 MaxCompute 资源均已准备就绪。 操作步骤 按照获取产品、完成安装、建立必要配置、执行一次有效操作和查看结果的顺序开始使用。 验证结果 完成操作后，请核对界面结果，并根据需要清理临时资源。 下一步 完成最小闭环后，前往使用指南按目标继续阅读，或查看配置了解设置边界。"
+  },
+  {
+    "title": "Desktop 参考",
+    "description": "查找 MaxCompute Desktop 的安装、配置和版本信息。",
+    "href": "/docs/products/desktop/reference/",
+    "group": "MaxCompute Desktop",
+    "keywords": "desktop reference 从以下入口查找 MaxCompute Desktop 的详细信息： - 安装与更新：系统要求、安装方式和更新方法。 - 配置：配置入口、作用域和生效方式。 - 版本说明：版本变化、兼容性和升级信息。"
+  },
+  {
+    "title": "Desktop 版本说明",
+    "description": "按时间倒序记录 MaxCompute Desktop 的已确认版本变化、系统兼容性和用户操作。",
+    "href": "/docs/products/desktop/release-notes/",
+    "group": "MaxCompute Desktop",
+    "keywords": "desktop release-notes 记录格式 本页按时间倒序记录 MaxCompute Desktop 的版本变化和系统兼容性。 记录格式 每个版本按发布日期倒序记录以下内容： - 版本号和发布日期 - 新增、变更和修复内容 - 操作系统与配置兼容性 - 更新方式和用户操作 - 已知问题和回滚入口 暂无版本记录。"
+  },
+  {
+    "title": "Desktop 故障排查",
+    "description": "按安装、启动、配置、连接和界面操作阶段组织 MaxCompute Desktop 问题诊断流程。",
+    "href": "/docs/products/desktop/troubleshooting/",
+    "group": "MaxCompute Desktop",
+    "keywords": "desktop troubleshooting 开始前收集信息 按阶段定位 仍未解决 本页提供 MaxCompute Desktop 常见问题的诊断与恢复方法。 开始前收集信息 开始排查前，请记录产品版本、操作系统版本、安装来源、完整错误信息和问题发生时间，并移除账号凭证或敏感数据。 按阶段定位 请先判断问题发生在安装、启动、更新、配置、连接还是界面操作阶段，再进入对应条目。 仍未解决 如果问题仍未解决，请通过产品支持渠道提交版本、环境和经过脱敏的日志信息。"
+  },
+  {
+    "title": "MaxCompute MCP Server",
+    "description": "进入 MaxCompute MCP Server 的快速开始、部署与配置、工具参考、安全权限和故障排查文档。",
+    "href": "/docs/products/mcp-server/",
+    "group": "MaxCompute MCP Server",
+    "keywords": "mcp-server overview"
+  },
+  {
+    "title": "MCP Server 部署与配置",
+    "description": "说明 MaxCompute MCP Server 的受支持部署方式、运行参数、健康检查和变更验证要求。",
+    "href": "/docs/products/mcp-server/deployment/",
+    "group": "MaxCompute MCP Server",
+    "keywords": "mcp-server deployment configuration 部署前准备 选择部署方式 配置参数 验证部署 变更与回滚 本页介绍 MaxCompute MCP Server 的部署与配置流程，覆盖从准备环境到验证服务可用的完整路径。 部署前准备 开始前，请确认运行环境、网络访问、身份权限、依赖版本和配置来源。敏感值应通过安全方式提供。 选择部署方式 选择部署方式时，请同时确认适用场景、升级路径和使用限制。 配置参数 配置参数按名称、类型、是否必选、默认值和作用域说明，并标明不同配置来源之间的优先级。 验证部署 部署完成后，请依次确认服务状态、协议连接、工具发现和一次低风险调用。 变更与回滚 变更配置前，请确认生效方式、兼容性和回滚条件。"
+  },
+  {
+    "title": "MCP Server 使用指南",
+    "description": "汇总按集成和运维目标组织的 MaxCompute MCP Server 操作流程与验证要求。",
+    "href": "/docs/products/mcp-server/guides/",
+    "group": "MaxCompute MCP Server",
+    "keywords": "mcp-server guides 指南组织方式 指南目录 本页按用户目标汇总 MaxCompute MCP Server 使用指南。每篇指南聚焦一个集成或运维结果，并关联对应配置与工具契约。 指南组织方式 每篇指南包含适用版本、前提条件、操作步骤、调用验证和回滚方式；涉及写入或高权限能力时，会同时提供风险提示。 指南目录 暂无相关指南。你可以先查看快速开始或安全与权限。"
+  },
+  {
+    "title": "MCP Server 快速开始",
+    "description": "建立 MaxCompute MCP Server 从准备环境到完成首次有效调用的最小流程和验证边界。",
+    "href": "/docs/products/mcp-server/quickstart/",
+    "group": "MaxCompute MCP Server",
+    "keywords": "mcp-server quickstart 完成目标 前提条件 操作步骤 验证结果 下一步 通过本页完成 MaxCompute MCP Server 的部署、连接与首次调用。 完成目标 完成服务启动、工具发现和一次只读调用，确认服务可以正常使用。 前提条件 开始前，请确认运行环境、访问权限、网络条件和所需的 MaxCompute 资源均已准备就绪。 操作步骤 按照部署服务、配置客户端、发现工具、执行一次只读调用和核对结果的顺序开始使用。 验证结果 完成操作后，请分别确认服务状态、工具发现结果和实际调用结果。 下一步 生产环境部署前阅读安全与权限，并在工具参考确认工具契约。"
+  },
+  {
+    "title": "MCP Server 参考",
+    "description": "查找 MaxCompute MCP Server 的工具、安全和版本信息。",
+    "href": "/docs/products/mcp-server/reference/",
+    "group": "MaxCompute MCP Server",
+    "keywords": "mcp-server reference 从以下入口查找 MaxCompute MCP Server 的详细信息： - 工具参考：工具用途、输入、输出和错误语义。 - 安全与权限：身份认证、授权范围和信任边界。 - 版本说明：版本变化、兼容性和升级信息。"
+  },
+  {
+    "title": "MCP Server 版本说明",
+    "description": "按时间倒序记录 MaxCompute MCP Server 的已确认版本、工具契约和兼容性变化。",
+    "href": "/docs/products/mcp-server/release-notes/",
+    "group": "MaxCompute MCP Server",
+    "keywords": "mcp-server release-notes 记录格式 本页按时间倒序记录 MaxCompute MCP Server 的版本、工具和兼容性变化。 记录格式 每个版本按发布日期倒序记录以下内容： - 版本号和发布日期 - 工具新增、变更和下线 - 协议与客户端兼容性 - 配置、权限和部署变化 - 用户需要执行的操作 - 已知问题和回滚入口 暂无版本记录。"
+  },
+  {
+    "title": "MCP Server 安全与权限",
+    "description": "说明 MaxCompute MCP Server 的信任边界、身份凭证、最小权限和审计内容结构。",
+    "href": "/docs/products/mcp-server/security/",
+    "group": "MaxCompute MCP Server",
+    "keywords": "mcp-server security permissions 信任边界 身份与凭证 最小权限 数据与日志 上线检查 本页介绍 MaxCompute MCP Server 的安全边界和权限要求，帮助你在开放工具前完成检查。 信任边界 客户端、服务端、MaxCompute 资源和外部依赖之间的数据流向按信任边界说明，并标明各边界的身份校验方式。 身份与凭证 身份认证信息包括凭证来源、轮换要求和失效处理。示例不会显示真实凭证。 最小权限 权限按工具或任务列出，并区分读操作和写操作。 数据与日志 请求、响应、错误和审计记录中的数据均需遵循脱敏和访问控制要求。 上线检查 生产开放前，请确认身份、授权、网络边界、工具清单、日志脱敏和撤销路径。"
+  },
+  {
+    "title": "MCP Server 工具参考",
+    "description": "按工具维护 MaxCompute MCP Server 的用途、输入、输出、权限、错误和版本信息。",
+    "href": "/docs/products/mcp-server/tools-reference/",
+    "group": "MaxCompute MCP Server",
+    "keywords": "mcp-server tools reference 工具目录 工具条目结构 本页是 MaxCompute MCP Server 工具参考入口，可按工具名称查找用途、输入、输出和权限要求。 工具目录 工具按用户目标分组，便于从任务快速定位所需能力。 工具条目结构 每个工具条目提供以下信息： 1. 用途、适用场景和副作用。 2. 所需权限和信任边界。 3. 输入参数、类型和约束。 4. 返回结构和错误语义。 5. 经验证的请求与响应示例。 6. 引入版本、兼容性和变更记录。"
+  },
+  {
+    "title": "MCP Server 故障排查",
+    "description": "按启动、连接、工具发现、调用和权限阶段组织 MaxCompute MCP Server 问题诊断流程。",
+    "href": "/docs/products/mcp-server/troubleshooting/",
+    "group": "MaxCompute MCP Server",
+    "keywords": "mcp-server troubleshooting 开始前收集信息 按阶段定位 仍未解决 本页提供 MaxCompute MCP Server 常见问题的诊断与恢复方法。 开始前收集信息 开始排查前，请记录服务端版本、客户端名称与版本、部署方式、完整错误信息、请求追踪信息和问题发生时间。 按阶段定位 请先判断问题发生在进程启动、协议连接、工具发现、实际调用、权限校验还是结果处理阶段，再进入对应条目。 仍未解决 如果问题仍未解决，请通过产品支持渠道提交版本、环境和经过脱敏的日志、配置及调用样本。"
+  },
+  {
+    "title": "公共参考",
+    "description": "提供 MaxCompute 多产品共用的术语、文档约定和参考入口。",
+    "href": "/docs/reference/",
+    "group": "MaxCompute 文档",
+    "keywords": "reference maxcompute 本目录汇集多个产品共用的术语和参考信息。产品专属的命令、工具、参数、错误和兼容性信息，请在对应产品文档中查看。"
+  },
+  {
+    "title": "更新日志",
+    "description": "从统一入口查看各 MaxCompute 产品的版本说明和兼容性变化。",
+    "href": "/docs/updates/",
+    "group": "MaxCompute 文档",
+    "keywords": "updates release-notes 产品版本说明 记录要求 更新日志按产品组织，便于确认版本变化、兼容性影响和需要执行的操作。 产品版本说明 - MaxCompute CLI 版本说明 - MaxCompute MCP Server 版本说明 - MaxCompute Desktop 版本说明 记录要求 每条版本说明包含发布日期、主要变化、兼容性影响和必要操作。"
+  }
+]

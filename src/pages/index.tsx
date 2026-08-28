@@ -1,50 +1,40 @@
 import type {ReactNode} from 'react';
+import {ArrowRight} from '@phosphor-icons/react';
 import Link from '@docusaurus/Link';
+import useBaseUrl from '@docusaurus/useBaseUrl';
 import Layout from '@theme/Layout';
 import Heading from '@theme/Heading';
-import ComponentGrid from '@site/src/components/ComponentGrid';
-import registry from '@site/config/components.json';
-import packageMetadata from '@site/package.json';
+import {DocSearchTrigger} from '@site/src/components/DocSearch';
+import ProductGrid from '@site/src/components/ProductGrid';
 
 import styles from './index.module.css';
 
 function HomepageHeader(): ReactNode {
+  const heroAsset = useBaseUrl('/img/docs-products-hero.png');
+
   return (
     <header className={styles.heroBanner}>
+      <img
+        alt=""
+        aria-hidden="true"
+        className={styles.heroArtwork}
+        src={heroAsset}
+      />
       <div className={`container ${styles.heroInner}`}>
-        <p className={styles.eyebrow}>MAXCOMPUTE DOCUMENTATION</p>
-        <Heading as="h1" className={styles.heroTitle}>
-          一个入口，承载 MaxCompute 多组件文档
-        </Heading>
-        <p className={styles.heroSubtitle}>
-          统一目录、贡献契约和质量门禁，让组件团队可以独立维护内容，让读者可以按任务快速定位文档。
-        </p>
-        <div className={styles.buttons}>
-          <Link
-            className="button button--primary button--lg"
-            to="/docs/components/"
-          >
-            浏览组件文档
-          </Link>
-          <Link
-            className="button button--outline button--primary button--lg"
-            to="/docs/contributing/"
-          >
-            参与贡献
-          </Link>
-        </div>
-        <div className={styles.facts} aria-label="平台基线">
-          <div>
-            <strong>{registry.components.length}</strong>
-            <span>个组件入口</span>
-          </div>
-          <div>
-            <strong>1</strong>
-            <span>套统一贡献契约</span>
-          </div>
-          <div>
-            <strong>{packageMetadata.dependencies['@docusaurus/core']}</strong>
-            <span>Docusaurus 基线</span>
+        <div className={styles.heroCopy}>
+          <p className={styles.eyebrow}>MAXCOMPUTE DOCUMENTATION</p>
+          <Heading as="h1" className={styles.heroTitle}>
+            MaxCompute 产品文档
+          </Heading>
+          <p className={styles.heroSubtitle}>
+            CLI、MCP Server 与 Desktop
+            的安装、配置、使用与故障排查信息，都可以从这里开始查找。
+          </p>
+          <div className={styles.heroActions}>
+            <DocSearchTrigger variant="hero" />
+            <a className={styles.primaryAction} href="#products">
+              选择产品 <ArrowRight aria-hidden="true" size={18} />
+            </a>
           </div>
         </div>
       </div>
@@ -55,63 +45,44 @@ function HomepageHeader(): ReactNode {
 export default function Home(): ReactNode {
   return (
     <Layout
-      title="MaxCompute 多组件文档平台"
-      description="MaxCompute 核心产品、SDK、连接器和开发工具的统一文档入口。"
+      title="MaxCompute 产品文档"
+      description="MaxCompute CLI、MCP Server 与 Desktop 的统一产品文档入口。"
     >
       <HomepageHeader />
       <main>
-        <section className={styles.section}>
+        <section className={styles.productsSection} id="products">
           <div className="container">
             <div className={styles.sectionHeading}>
               <div>
-                <p className={styles.sectionLabel}>COMPONENTS</p>
-                <Heading as="h2">按组件浏览</Heading>
+                <p className={styles.sectionLabel}>PRODUCTS</p>
+                <Heading as="h2">选择产品</Heading>
               </div>
-              <Link to="/docs/components/">查看组件总览 →</Link>
+              <div className={styles.sectionIntro}>
+                <p>按产品进入对应的文档与参考信息。</p>
+                <Link to="/docs/products/">查看产品总览 →</Link>
+              </div>
             </div>
-            <ComponentGrid />
+            <ProductGrid />
           </div>
         </section>
 
-        <section className={styles.pathSection}>
-          <div className="container">
-            <p className={styles.sectionLabel}>QUICK PATHS</p>
-            <Heading as="h2">从当前任务开始</Heading>
-            <div className={styles.pathGrid}>
-              <Link className={styles.pathCard} to="/docs/intro/">
-                <span>01</span>
-                <Heading as="h3">第一次使用</Heading>
-                <p>了解内容边界、页面状态和推荐阅读路径。</p>
-              </Link>
-              <Link className={styles.pathCard} to="/docs/best-practices/">
-                <span>02</span>
-                <Heading as="h3">查找跨组件方案</Heading>
-                <p>从经过验证的实践中查找场景、步骤和限制。</p>
-              </Link>
-              <Link className={styles.pathCard} to="/docs/contributing/">
-                <span>03</span>
-                <Heading as="h3">提交文档</Heading>
-                <p>使用模板、注册表和 CI 契约完成可评审的变更。</p>
-              </Link>
-            </div>
-          </div>
-        </section>
-
-        <section className={styles.platformSection}>
-          <div className={`container ${styles.platformGrid}`}>
-            <div>
-              <p className={styles.sectionLabel}>PLATFORM</p>
-              <Heading as="h2">为多人协作准备的仓库基线</Heading>
-              <p>
-                组件注册表驱动首页入口，自动侧栏承载目录扩展，文档模板统一页面结构，GitLab
-                CI 在合并前检查格式、元数据、所有权契约和生产构建。
-              </p>
-            </div>
-            <div className={styles.platformLinks}>
-              <Link to="/docs/platform/architecture/">了解平台架构</Link>
-              <Link to="/docs/contributing/add-component/">接入新组件</Link>
-              <Link to="/docs/platform/versioning/">查看版本策略</Link>
-            </div>
+        <section className={styles.resourceSection}>
+          <div className={`container ${styles.resourceGrid}`}>
+            <Link to="/docs/getting-started/">
+              <span>01</span>
+              <strong>第一次使用</strong>
+              <small>了解文档边界与推荐路径</small>
+            </Link>
+            <Link to="/docs/best-practices/">
+              <span>02</span>
+              <strong>最佳实践</strong>
+              <small>按场景查找可复用方案</small>
+            </Link>
+            <Link to="/docs/faq/">
+              <span>03</span>
+              <strong>常见问题</strong>
+              <small>快速查找常见问题与说明</small>
+            </Link>
           </div>
         </section>
       </main>
