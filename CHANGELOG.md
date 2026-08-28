@@ -10,3 +10,4 @@
 - 增加贡献指南、文档模板、组件模板、AGENTS.md 和平台手册
 - 增加 GitLab CI、CODEOWNERS、Issue 模板和合并请求模板
 - 增加格式、Markdown、拼写、front matter、组件和生产构建门禁
+- 使用 Aone CI 官方模板将 `master` 分支部署到 Aone Pages

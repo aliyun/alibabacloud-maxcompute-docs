@@ -55,7 +55,7 @@ scripts/              文档与组件契约校验
 
 ## 构建与发布
 
-GitLab CI 会在合并请求和分支流水线中执行完整校验，并保存 `build/` 静态站点制品。生产托管地址和发布任务尚未启用；确定托管环境后，通过受保护的 CI 变量设置 `DOCS_SITE_URL` 和 `DOCS_BASE_URL`，再按 [handbook/deployment.md](handbook/deployment.md) 接入发布阶段。
+GitLab CI 会在合并请求和分支流水线中执行完整校验，并保存 `build/` 静态站点制品。Aone CI 流水线 `290625` 使用官方 Aone Pages 模板发布站点：`master` 分支发布到 [maxcompute-docs.io.alibaba-inc.com](https://maxcompute-docs.io.alibaba-inc.com)，其他分支和合并请求生成预览版本。配置和维护方式见 [handbook/deployment.md](handbook/deployment.md)。
 
 ## 技术基线
 
