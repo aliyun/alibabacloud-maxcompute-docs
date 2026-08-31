@@ -7,19 +7,72 @@ status: draft
 tags:
   - cli
   - release-notes
-sidebar_position: 7
+sidebar_position: 10
 ---
 
-本页按时间倒序记录 MaxCompute CLI 的版本变化和兼容性影响。
+本页按时间倒序记录 MaxCompute CLI 的版本变化。
 
-## 记录格式
+## [0.5.1] — 2026-08-31
 
-每个版本按发布日期倒序记录以下内容：
+### Fixes
 
-- 版本号和发布日期
-- 新增、变更和修复内容
-- 兼容性与升级影响
-- 用户需要执行的操作
-- 已知问题和回滚入口
+- 修复多个进程首次初始化同一状态目录时的创建竞态；并发创建不再误报 `FileExistsError`。
+- 隔离只读 SQL 门禁的 CLI 回归测试，确保 Linux、Windows 和 Python 版本矩阵得到一致结果。
 
-暂无版本记录。
+## [0.5.0] — 2026-08-31
+
+### Breaking Changes
+
+- 自动发现的工作区配置不再允许定义 `auth`；凭证必须位于用户级 `~/.maxc/config.yaml` 或显式 `--config`。
+- `data upload` 不再隐式创建缺失分区；必须显式传入 `--create-partition`。
+- 远程查询不再接受会造成重复提交歧义的自动重试参数；异步恢复统一使用 `job_id` 和 cursor。
+- `agent_hints.next_actions` 只包含无需补参、无需确认且允许 Agent 自动执行的命令。
+
+### Features
+
+- 新增由实时 parser 生成的 `agent manifest`，覆盖全部命令的参数、副作用和输出形状。
+- OAuth 登录、刷新采用可恢复的结构化 Envelope；`agent context` 保持纯本地，`agent doctor --online` 才执行在线验证。
+- Job 失败状态、等待流和结果读取统一返回可恢复的类型化错误；query/job cursor 绑定 SQL、project 和 session。
+- 查询超过同步等待预算时返回可直接执行的 `job result --max-rows ...` 动作。
+- Upload 在创建 Tunnel session 前完成整文件校验；失败区分 commit 未尝试与 commit 结果未知。
+- 本地 metadata FTS 索引可重建且可在无 FTS5 的 SQLite 上降级运行。
+
+### Security and Reliability
+
+- 配置、OAuth、Job store、cache 和 audit 使用 owner-only、原子替换及跨进程锁。
+- 外部凭据 helper 以 argv + `shell=false` 执行；审计日志递归清除凭据和 SQL 原文。
+- SQL 执行采用 SELECT-only 正向允许列表，未知操作 fail closed。
+- Markdown/brief 只把可执行、允许 Agent 且无需确认的 action 展示为下一步。
+
+## [0.4.2] — 2026-06-02
+
+- `job submit --dry-run`：预估 SQL 成本而不实际提交。
+- `data upload --dry-run`：校验表结构和 CSV 文件而不上传数据。
+
+## [0.4.1] — 2026-06-02
+
+- 统一设置 UserAgent，所有 ODPS 请求携带 `maxc-cli/{version}` 前缀。
+
+## [0.4.0] — 2026-06-01
+
+- `--help` 输出格式全面改为 aliyun CLI 风格。
+- Agent skill 安装目录统一为 `alibabacloud-maxcompute-cli`。
+- `MAXC_CLI_NAME` 环境变量控制 help/version/SKILL 模板中的程序名。
+
+## [0.3.1] — 2026-05-25
+
+- `agent skill` 六动词子命令：`install`、`update`、`uninstall`、`list`、`diff`、`path`。
+- 平台注册表支持 claude-code、cursor、windsurf、codex、qwen、qoder、qoderwork。
+- 全局 flag 位置无关；auth 自动重定向；NCS auth flow。
+
+## [0.2.4] — 2026-05-09
+
+- `data upload` / `data download`：CSV/TSV 批量导入导出（Tunnel API）。
+
+## [0.2.1] — 2026-04-22
+
+- Catalog API 集成：交互式项目选择器。
+- 外部凭证进程支持。
+- `meta semantic set/get/list-missing`：语义元数据。
+- `agent install-skill`：一键注册 SKILL 到各平台。
+- `query --wait` 替代旧 `--async/--timeout`。

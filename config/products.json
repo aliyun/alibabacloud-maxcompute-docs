@@ -15,10 +15,38 @@
       "accent": "orange",
       "featured": true,
       "navigation": [
-        {"label": "快速开始", "href": "/docs/products/cli/quickstart/"},
-        {"label": "安装与配置", "href": "/docs/products/cli/installation/"},
-        {"label": "命令参考", "href": "/docs/products/cli/command-reference/"},
-        {"label": "故障排查", "href": "/docs/products/cli/troubleshooting/"}
+        {
+          "label": "快速开始",
+          "href": "/docs/products/cli/quickstart/"
+        },
+        {
+          "label": "安装与配置",
+          "href": "/docs/products/cli/installation/"
+        },
+        {
+          "label": "Agent Skill",
+          "href": "/docs/products/cli/agent-skill/"
+        },
+        {
+          "label": "命令参考",
+          "href": "/docs/products/cli/command-reference/"
+        },
+        {
+          "label": "生态与插件",
+          "href": "/docs/products/cli/ecosystem/"
+        },
+        {
+          "label": "路线图",
+          "href": "/docs/products/cli/roadmap/"
+        },
+        {
+          "label": "版本说明",
+          "href": "/docs/products/cli/release-notes/"
+        },
+        {
+          "label": "故障排查",
+          "href": "/docs/products/cli/troubleshooting/"
+        }
       ]
     },
     {
@@ -34,7 +62,10 @@
       "accent": "blue",
       "featured": true,
       "navigation": [
-        {"label": "快速开始", "href": "/docs/products/mcp-server/quickstart/"},
+        {
+          "label": "快速开始",
+          "href": "/docs/products/mcp-server/quickstart/"
+        },
         {
           "label": "部署与配置",
           "href": "/docs/products/mcp-server/deployment/"
@@ -43,7 +74,10 @@
           "label": "工具参考",
           "href": "/docs/products/mcp-server/tools-reference/"
         },
-        {"label": "安全与权限", "href": "/docs/products/mcp-server/security/"}
+        {
+          "label": "安全与权限",
+          "href": "/docs/products/mcp-server/security/"
+        }
       ]
     },
     {
@@ -59,10 +93,22 @@
       "accent": "violet",
       "featured": true,
       "navigation": [
-        {"label": "快速开始", "href": "/docs/products/desktop/quickstart/"},
-        {"label": "安装与更新", "href": "/docs/products/desktop/installation/"},
-        {"label": "使用指南", "href": "/docs/products/desktop/guides/"},
-        {"label": "故障排查", "href": "/docs/products/desktop/troubleshooting/"}
+        {
+          "label": "快速开始",
+          "href": "/docs/products/desktop/quickstart/"
+        },
+        {
+          "label": "安装与更新",
+          "href": "/docs/products/desktop/installation/"
+        },
+        {
+          "label": "使用指南",
+          "href": "/docs/products/desktop/guides/"
+        },
+        {
+          "label": "故障排查",
+          "href": "/docs/products/desktop/troubleshooting/"
+        }
       ]
     }
   ]

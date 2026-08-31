@@ -1,6 +1,6 @@
 ---
 title: CLI 命令参考
-description: 按命令分组维护 MaxCompute CLI 的语法、参数、输入、输出和兼容性信息。
+description: 按命令家族分组列出 MaxCompute CLI 全部命令的语法、参数和典型示例。
 product: cli
 doc_type: reference
 status: draft
@@ -8,26 +8,146 @@ tags:
   - cli
   - commands
   - reference
-sidebar_position: 4
+sidebar_position: 5
 ---
 
-本页是 MaxCompute CLI 命令与参数的参考入口，可按命令名称查找语法、参数和示例。
-
-## 命令分组
-
-命令按用户任务分组，便于从目标快速定位所需命令。
-
-## 命令条目结构
-
-每个命令条目提供以下信息：
-
-1. 用途和适用场景。
-2. 完整语法。
-3. 参数表及默认值。
-4. 输入、输出和退出状态。
-5. 经验证的示例。
-6. 版本与兼容性说明。
+本页按命令家族列出 MaxCompute CLI 的全部命令。每条命令都支持 `--json` 输出结构化的 Envelope v2.0。
 
 ## 全局选项
 
-全局选项会同时说明优先级、作用域和与配置文件的覆盖关系。
+以下选项可放在命令行任意位置：
+
+| 选项 | 说明 |
+|------|------|
+| `--json` | 输出 JSON Envelope 格式；Agent 应始终使用它 |
+| `--format` | 输出格式：`table` / `markdown` / `brief` / `csv` / `ndjson` |
+| `--config` | 指定配置文件路径 |
+| `--project` | 目标 MaxCompute 项目（临时覆盖会话设置） |
+| `--schema` | 目标 Schema（临时覆盖会话设置） |
+| `--user-agent` | 自定义 User-Agent 前缀 |
+
+## query — SQL 查询
+
+默认只读模式，DDL/DML 在客户端被拦截（`--force` 可绕过）。
+
+```bash
+maxc query <sql>                       # 执行查询（默认）
+maxc query cost <sql>                  # 预估成本
+maxc query explain <sql>               # 查看执行计划
+```
+
+| 参数 | 说明 | 默认值 |
+|------|------|--------|
+| `<sql>` | SQL 文本 | — |
+| `--file` | 从文件读取 SQL | — |
+| `--stdin` | 从标准输入读取 SQL | — |
+| `--max-rows` | 最大返回行数 | 100 |
+| `--page-size` | 分页大小 | — |
+| `--cursor` | 分页游标 | — |
+| `--wait` | 同步等待秒数，超时后返回 job_id | 10 |
+| `--dry-run` | 仅显示查询计划，不执行 | — |
+| `--cost-check` | 预估成本超过阈值（CU）时中止 | — |
+| `--output` | 将结果写入文件 | — |
+| `--output-format` | 文件格式：`table` / `json` / `csv` / `ndjson` | — |
+| `--idempotency-key` | 去重键 | — |
+| `--force` | 绕过只读模式 | — |
+
+### --wait 行为
+
+- `--wait 10`（默认）：同步轮询 10 秒，完成则返回结果；超时返回 `job_id`
+- `--wait 0`：立即提交并返回 `job_id`
+- `--wait 300`：最多等待 5 分钟
+
+超时后可用 `job wait <job_id>` 继续等待。
+
+## job — 异步作业管理
+
+```bash
+maxc job submit <sql>                  # 提交 SQL 作业，返回 job_id
+maxc job status <job_id>               # 查询状态
+maxc job wait <job_id>                 # 等待完成并返回结果
+maxc job result <job_id>               # 获取已完成作业的结果
+maxc job cancel <job_id>               # 取消运行中作业
+maxc job diagnose <job_id>             # 诊断失败原因
+maxc job list                          # 列出最近作业（默认 20 条）
+```
+
+`job wait` 额外参数：`--timeout`（默认 300 秒）、`--stream`（NDJSON 进度流）。
+
+`job result` 额外参数：`--max-rows`（默认 100）、`--cursor`（分页游标）。
+
+## meta — 元数据浏览
+
+```bash
+maxc meta list-tables                  # 列出表（支持 --limit / --cursor）
+maxc meta describe <table>             # 查看表结构
+maxc meta search <keyword>             # 搜索表（支持 --limit / --cursor）
+maxc meta search-columns <keyword>     # 搜索列
+maxc meta partitions <table>           # 列出分区
+maxc meta latest-partition <table>     # 查看最新分区
+maxc meta freshness <table>            # 查看数据新鲜度
+maxc meta list-projects                # 列出可访问的项目
+maxc meta list-schemas                 # 列出项目下的 Schema
+```
+
+### 语义元数据
+
+```bash
+maxc meta semantic set <table>         # 设置语义信息
+maxc meta semantic get <table>         # 获取语义信息
+maxc meta semantic list-missing        # 列出缺少语义信息的表
+maxc meta semantic clear <table>       # 清除语义信息
+```
+
+## data — 数据操作
+
+```bash
+maxc data sample <table>               # 采样数据（默认 5 行）
+maxc data profile <table>              # 列统计画像（基于 20 行启发式）
+maxc data upload <table> --file <csv>  # CSV/TSV 上传
+maxc data download <table> --output <csv>  # 导出为 CSV/TSV
+```
+
+上传/下载额外参数：`--partition`（分区表必填）、`--overwrite`、
+`--delimiter`、`--no-header`、`--null-marker`、`--block-size`（上传）。
+
+## auth — 认证与权限
+
+```bash
+maxc auth login                        # 交互式/OAuth/AK/STS 登录
+maxc auth login-external               # 外部凭证进程
+maxc auth logout                       # 登出并清除凭证
+maxc auth whoami                       # 查看当前身份
+maxc auth can-i                        # 单表权限探测
+```
+
+## session — 会话管理
+
+```bash
+maxc session set --project <p>         # 设置默认项目
+maxc session show                      # 查看当前会话
+maxc session unset                     # 清除会话设置
+```
+
+## cache — 本地缓存
+
+```bash
+maxc cache build                       # 重建元数据缓存
+maxc cache build-status                # 查看缓存构建状态
+maxc cache status                      # 查看缓存健康度
+maxc cache clear                       # 清除缓存
+```
+
+## agent — 集成与诊断
+
+```bash
+maxc agent context                     # 本地就绪检查
+maxc agent doctor --online             # 在线就绪检查
+maxc agent manifest                    # 实时生成的命令清单
+maxc agent skill install <platform>    # 安装 Skill
+maxc agent skill update <platform>     # 更新 Skill
+maxc agent skill uninstall <platform>  # 卸载 Skill
+maxc agent skill list                  # 列出安装状态
+maxc agent skill diff <platform>       # 版本差异
+maxc agent skill path <platform>       # 查看安装路径
+```

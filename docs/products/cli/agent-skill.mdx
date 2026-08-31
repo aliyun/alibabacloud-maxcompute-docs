@@ -1,0 +1,98 @@
+---
+title: Agent Skill 安装
+description: 将 MaxCompute CLI 的 Agent Skill 一键安装到 Claude Code、Cursor、Codex 等平台，让 Agent 掌握 maxc 的正确用法。
+product: cli
+doc_type: how-to
+status: draft
+tags:
+  - cli
+  - agent
+  - skill
+sidebar_position: 4
+---
+
+MaxCompute CLI 自带名为 `alibabacloud-maxcompute-cli` 的 Agent Skill——一套安装到 Agent 平台的结构化指导文档，教会 Agent 如何使用 maxc 完成 MaxCompute 数据任务。
+
+## 两种安装方式
+
+### 方式一：公共 Skill（主路径）
+
+在 Agent 平台的 SKILL HUB 中搜索并安装公共 Skill `alibabacloud-maxcompute-cli`。Skill 会先检查 `aliyun maxc` 入口，仅在该入口不可用且用户选择独立发行版时才使用 PyPI 入口 `maxc`。
+
+### 方式二：从 CLI 注册
+
+CLI 包内含同一份 Skill 源，可直接注册到 Agent 平台的标准目录：
+
+```bash
+# 阿里云 CLI 入口：Skill 内的命令会渲染为 aliyun maxc
+aliyun maxc agent skill install codex --invocation aliyun-maxc --json
+
+# PyPI 独立入口
+maxc agent skill install codex --invocation maxc --json
+```
+
+安装目录名统一为 `alibabacloud-maxcompute-cli`。
+
+## 支持的平台
+
+| 平台 | 安装路径 |
+|------|---------|
+| `claude-code` | `~/.claude/skills/alibabacloud-maxcompute-cli/` |
+| `cursor` | `~/.cursor/skills/alibabacloud-maxcompute-cli/` |
+| `windsurf` | `~/.windsurf/skills/alibabacloud-maxcompute-cli/` |
+| `codex` | `~/.codex/skills/alibabacloud-maxcompute-cli/` |
+| `qwen` | `~/.qwen/skills/alibabacloud-maxcompute-cli/` |
+| `qoder` | `~/.qoder/skills/alibabacloud-maxcompute-cli/` |
+| `qoderwork` | `~/.qoderwork/skills/alibabacloud-maxcompute-cli/` |
+
+支持的平台以 `agent skill install --help` 的实时输出为准。
+
+## Skill 生命周期管理
+
+```bash
+# 查看所有平台的安装状态
+aliyun maxc agent skill list --json
+
+# 新版本发布后更新已安装的 Skill
+aliyun maxc agent skill update --all --json
+
+# 查看已安装版本与最新版本的差异
+aliyun maxc agent skill diff claude-code --json
+
+# 卸载
+aliyun maxc agent skill uninstall cursor --json
+```
+
+执行 `agent skill update <platform>` 或 `--all` 时，未显式传 `--invocation` 会保留每个已安装 Skill 的原入口；只有显式参数才会覆盖。
+
+## Skill 的分层设计
+
+Skill 采用分层加载，优化 LLM 上下文窗口的使用效率：
+
+| 层级 | 内容 | 加载时机 |
+|------|------|---------|
+| 主文件 SKILL.md（约 270 行） | 意图到命令映射表、核心原则、工作流、决策表 | 任务触发时自动加载 |
+| 参考文档（十余个文件） | SQL 方言指南、查询模板、分区策略、错误恢复手册等 | 按需加载 |
+
+Agent 处理简单的元数据查询时只需主文件的指导；遇到复杂 SQL 生成或错误恢复时，才按需加载对应参考文档。
+
+## Agent 启动时的 preflight 检查
+
+Agent 启动时生成一次 32 位小写十六进制 session ID，并在整个会话中复用，作为 User-Agent 追加到每条命令：
+
+```bash
+UA="AlibabaCloud-Agent-Skills/alibabacloud-maxcompute-cli/<session-id>"
+
+aliyun maxc agent context --user-agent "$UA" --json          # 本地版本、配置和能力
+aliyun maxc agent manifest --user-agent "$UA" --json         # 实时生成的命令、参数和副作用清单
+aliyun maxc agent doctor --online --user-agent "$UA" --json  # 在线验证身份与后端可达性
+aliyun maxc agent skill --user-agent "$UA" --json            # Skill 路径、名称与 min_cli_version
+```
+
+只有 `agent doctor --online` 能证明远端已就绪；不要把 `agent context` 中的 `auth_status=configured` 解读为已通过在线认证。
+
+## 下一步
+
+- 结构化输出与 agent_hints 契约：[输出协议参考](./reference.mdx)
+- Agent 工作流与命令细节：[命令参考](./command-reference.mdx)
+- 插件与集成生态：[生态与插件](./ecosystem.mdx)

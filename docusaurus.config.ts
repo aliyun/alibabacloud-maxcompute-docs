@@ -64,7 +64,13 @@ const config: Config = {
           showLastUpdateAuthor: showLastUpdate,
           showLastUpdateTime: showLastUpdate,
         },
-        blog: false,
+        blog: {
+          routeBasePath: 'blog',
+          blogTitle: '博客',
+          blogDescription: 'MaxCompute Agentic 生态的产品动态、版本发布与最佳实践。',
+          showReadingTime: true,
+          postsPerPage: 10,
+        },
         sitemap: {
           changefreq: 'weekly',
           priority: 0.5,
@@ -118,6 +124,11 @@ const config: Config = {
           label: '更新日志',
         },
         {
+          to: '/blog/',
+          position: 'left',
+          label: '博客',
+        },
+        {
           type: 'custom-doc-search',
           position: 'right',
         },
@@ -156,6 +167,7 @@ const config: Config = {
           items: [
             {label: '最佳实践', to: '/docs/best-practices/'},
             {label: '更新日志', to: '/docs/updates/'},
+            {label: '博客', to: '/blog/'},
             {label: '常见问题', to: '/docs/faq/'},
           ],
         },

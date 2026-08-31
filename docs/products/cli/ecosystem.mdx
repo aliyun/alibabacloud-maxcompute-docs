@@ -1,0 +1,53 @@
+---
+title: 生态与插件
+description: MaxCompute CLI 在 DSH、阿里云 CLI、MCP Server 和 Desktop 等场景下的集成方式。
+product: cli
+doc_type: how-to
+status: draft
+tags:
+  - cli
+  - ecosystem
+  - plugins
+sidebar_position: 8
+---
+
+MaxCompute CLI 是 Agentic 生态的数据操作层。以下是它与周边产品和 Agent 平台的集成方式。
+
+## DSH 插件（npm）
+
+[DSH (DeepSeek Harness)](https://github.com/deepseek-ai/dsh) 的用户可以通过 npm 安装 DSH 插件：
+
+```bash
+npx dsh-maxcompute setup
+```
+
+该插件会：
+
+- 自动下载 maxc 的预编译二进制（如本地无 maxc）
+- 引导交互式认证
+- 为 DSH Agent 提供 9 个 MaxCompute 工具：`mc_list_tables`、`mc_describe_table`、`mc_sample_table`、`mc_explain_sql`、`mc_run_sql`、`mc_job_status`、`mc_job_result`、`mc_job_cancel`
+
+npm 包：`dsh-maxcompute`
+
+## 阿里云 CLI（aliyun maxc）
+
+maxc 作为阿里云 CLI 的扩展分发，命令入口为 `aliyun maxc`。复用阿里云 CLI 的凭证体系和配置机制，是最推荐的安装方式。
+
+## MCP Server
+
+MaxCompute MCP Server（MCMCP）基于 Model Context Protocol（MCP）协议，将 MaxCompute 能力通过标准接口暴露给 AI Agent。CLI 与 MCP Server 共享后端能力，但 MCP Server 是远程服务，CLI 是本地工具。
+
+## MaxCompute Desktop
+
+桌面端集成 SQL IDE、Data Agent、多模态数据管理的客户端，提供可视化界面。CLI 面向脚本和 Agent，Desktop 面向人机交互。
+
+## Agent 平台集成
+
+| 平台 | 集成方式 |
+|------|---------|
+| Claude Code | `maxc agent skill install claude-code` |
+| Cursor | `maxc agent skill install cursor` |
+| Codex | `maxc agent skill install codex` |
+| Qwen Code | `maxc agent skill install qwen` |
+| QoderWork | `maxc agent skill install qoderwork` |
+| OpenClaw | Skill HUB `alibabacloud-maxcompute-cli` |

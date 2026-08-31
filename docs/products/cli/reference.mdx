@@ -1,17 +1,120 @@
 ---
-title: CLI 参考
-description: 查找 MaxCompute CLI 的命令、安装配置和版本信息。
+title: CLI 输出协议参考
+description: MaxCompute CLI 的 Envelope v2.0 协议、安全策略块和错误码参考。
 product: cli
 doc_type: reference
 status: draft
 tags:
   - cli
+  - protocol
   - reference
-sidebar_position: 5
+sidebar_position: 7
 ---
 
-从以下入口查找 MaxCompute CLI 的详细信息：
+MaxCompute CLI 的 `--json` 输出遵循统一的 Envelope v2.0 协议，便于 AI Agent 与脚本自动化解析。
 
-- [安装与配置](./installation.mdx)：安装方式、运行环境和连接配置。
-- [命令参考](./command-reference.mdx)：命令语法、参数、输入和输出。
-- [版本说明](./release-notes.mdx)：版本变化、兼容性和升级信息。
+## Envelope 结构
+
+```json
+{
+  "version": "2.0",
+  "command": "meta.describe",
+  "status": "success | pending | failure",
+  "data": { ... },
+  "metadata": { ... },
+  "error": null | { "code": "...", "message": "...", "recovery_steps": [...] },
+  "agent_hints": {
+    "actions": [
+      {
+        "id": "meta.search",
+        "title": "Search tables",
+        "command": "maxc meta search <keyword> --json",
+        "executable": false,
+        "placeholders": {"keyword": "search keyword"},
+        "args_schema": {},
+        "effect": "read",
+        "confirmation_required": false,
+        "agent_allowed": true
+      }
+    ],
+    "action_ids": ["meta.search"],
+    "next_actions": ["maxc meta search <keyword> --json"],
+    "insights": [...],
+    "warnings": [...]
+  }
+}
+```
+
+| 字段 | 说明 |
+|------|------|
+| `version` | 固定 `"2.0"` |
+| `command` | 执行的命令，如 `"meta describe"` |
+| `status` | `"success"` / `"pending"` / `"failure"` |
+| `data` | 业务数据，结构按命令类型固定 |
+| `metadata` | 执行元信息（项目名、耗时、job_id 等） |
+| `error` | 失败时的错误详情与恢复步骤 |
+| `agent_hints` | AI Agent 的下一步操作建议 |
+
+### agent_hints
+
+- `actions[]`：权威的结构化 `SuggestedAction` 对象数组
+- `action_ids`：稳定 dot-notation ID，用于程序化路由
+- `next_actions`：可直接复制执行的命令行，只包含 `executable=true`、`agent_allowed=true` 且无需确认的命令
+- `error.recovery_steps`：错误码对应的恢复步骤
+
+### safety 块
+
+`query` 和 `job` 命令的 `data` 中包含 `safety` 字段：
+
+```json
+{
+  "safety": {
+    "mode": "read_only",
+    "force": false,
+    "allowed_operations": ["SELECT"],
+    "effective_hints": {"odps.sql.read.only": "true"},
+    "policy_decision": "allowed"
+  }
+}
+```
+
+## 错误码参考
+
+| 错误码 | 说明 | 可重试 |
+|--------|------|--------|
+| `EXECUTION_FAILED` | 执行失败 | 是 |
+| `PERMISSION_DENIED` | 权限不足 | 否 |
+| `QUOTA_EXCEEDED` | 配额超限 | 是 |
+| `SQL_ERROR` | SQL 语法或执行错误 | 否 |
+| `COST_LIMIT_EXCEEDED` | 成本超过阈值 | 否 |
+| `NOT_FOUND` | 资源不存在 | 否 |
+| `TABLE_NOT_FOUND` | 表不存在 | 否 |
+| `BACKEND_CONNECTION_ERROR` | 无法连接后端 | 是 |
+| `JOB_TIMEOUT` | 作业轮询超时 | 是 |
+| `READ_ONLY_VIOLATION` | 只读模式拦截写操作 | 否 |
+| `WRITE_OPERATION_REQUIRES_FORCE` | 写操作需要 `--force` | 是 |
+| `CSV_PARSE_ERROR` | CSV 解析失败 | 否 |
+| `INTERNAL_ERROR` | 内部错误 | 否 |
+
+## 命令 data 顶层键对照
+
+| 命令 | data 顶层键 |
+|------|------------|
+| `query` / `job wait` / `job result` | `result`（含 `rows`、`schema`、`row_count`）、`pagination` |
+| `query cost` / `query explain` | `analysis` |
+| `meta list-tables` | `tables`、`pagination` |
+| `meta describe` | `table` |
+| `meta search` / `meta search-columns` | `search`（含 `matches`）、`pagination` |
+| `meta partitions` | `table`、`partitions` |
+| `data sample` | `sample` |
+| `data profile` | `profile` |
+| `job list` | `jobs`、`pagination` |
+| `job status` / `job cancel` | `job` |
+| `job diagnose` | `diagnosis` |
+| `auth whoami` | `identity` |
+| `auth login` | `identity`、`persistence` |
+| `auth can-i` | `authorization` |
+
+## 完整规范
+
+详见 CLI 仓库中的 `docs/ENVELOPE_SPEC.md` 和 `docs/ARCHITECTURE.md`。

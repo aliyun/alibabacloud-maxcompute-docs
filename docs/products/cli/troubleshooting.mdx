@@ -1,25 +1,98 @@
 ---
 title: CLI 故障排查
-description: 按安装、配置、连接和命令执行阶段组织 MaxCompute CLI 问题诊断流程。
+description: 按安装、认证、连接、查询和 Agent 集成阶段组织的 MaxCompute CLI 问题诊断流程。
 product: cli
 doc_type: troubleshooting
 status: draft
 tags:
   - cli
   - troubleshooting
-sidebar_position: 6
+sidebar_position: 11
 ---
 
 本页提供 MaxCompute CLI 常见问题的诊断与恢复方法。
 
-## 开始前收集信息
+## 安装问题
 
-开始排查前，请记录产品版本、操作系统、执行方式、完整错误信息和问题发生时间，并移除账号凭证或敏感数据。
+### `maxc` 命令未找到
 
-## 按阶段定位
+```bash
+# 检查阿里云 CLI 是否安装且 >= 3.3.3
+aliyun version
 
-请先判断问题发生在安装、配置、连接、命令解析还是结果处理阶段，再进入对应条目。
+# 检查 PyPI 独立入口
+python3 -m pip show maxc-cli
+
+# 确认 PATH 包含安装目录
+which maxc
+```
+
+### 预编译二进制无法运行
+
+- Linux：`GLIBC` 版本不兼容；使用 PyPI 入口或阿里云 CLI 入口
+- macOS：检查 Apple Silicon/Intel 架构是否匹配；Gatekeeper 可能阻止未签名二进制
+- Windows：不支持 ARM64；确保下载的是 `windows-amd64`
+
+## 认证问题
+
+### OAuth 回调超时
+
+- OAuth 回调监听 `127.0.0.1`，确认浏览器与 CLI 在同一主机
+- SSH 场景需配置端口转发，或在 CLI 同机浏览器完成授权
+- 防火墙/代理可能阻止回调端口
+
+### `auth whoami` 提示未配置
+
+- 凭证是否写入用户级 `~/.maxc/config.yaml`（文件权限 0600）
+- 是否使用了自动发现的工作区配置定义了 `auth`（已禁止）
+- 尝试 `maxc auth login --from-env` 或显式重新登录
+
+### `agent context` 显示 `auth_status=configured` 但查询失败
+
+- `agent context` 是纯本地检查，不验证凭证有效性
+- 运行 `maxc agent doctor --online --json` 进行在线验证
+- 检查 AccessKey 是否过期或权限不足
+
+## 查询问题
+
+### `READ_ONLY_VIOLATION`
+
+maxc 在客户端拦截 DDL/DML。如需执行写操作，显式传入 `--force`（Agent 不应自行添加）。
+
+### `COST_LIMIT_EXCEEDED`
+
+- 先用 `maxc query cost` 预估成本
+- 添加分区过滤减少扫描范围
+- 提高 `--cost-check` 阈值（如需）
+
+### `TABLE_NOT_FOUND`
+
+- 检查项目名和 Schema 是否正确（`--project` / `--schema`）
+- 用 `maxc meta search <keyword>` 查找相似表名
+- 确认对目标表有 SELECT 权限
+
+### 作业超时
+
+- `query --wait` 超时返回 `job_id`，用 `maxc job wait <job_id>` 继续跟踪
+- 大查询建议先 `job submit`，再用 `job wait --timeout 3600`
+
+## Agent 集成问题
+
+### Skill 安装后 Agent 不认识 maxc 命令
+
+- 确认 Skill 已正确安装到对应目录：`maxc agent skill path <platform>`
+- 检查 `agent context` 中的 `min_cli_version` 是否满足
+- 重新启动 Agent 客户端以加载新 Skill
+
+### `agent doctor --online` 失败
+
+- 检查网络连通性（能否访问阿里云 MaxCompute endpoint）
+- 确认凭证未过期：`maxc auth whoami --json`
+- 查看 `agent doctor` 返回的详细诊断信息
 
 ## 仍未解决
 
-如果问题仍未解决，请通过产品支持渠道提交版本、环境和经过脱敏的错误信息。
+通过以下渠道提交版本、环境和经过脱敏的错误信息：
+
+- CLI 仓库 Issues（GitHub）
+- MaxCompute 控制台工单

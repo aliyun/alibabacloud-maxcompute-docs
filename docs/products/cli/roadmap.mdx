@@ -1,0 +1,92 @@
+---
+title: CLI 路线图
+description: MaxCompute CLI 的功能规划：短期任务、中期计划、长期方向与不做的事情。
+product: cli
+doc_type: governance
+status: draft
+tags:
+  - cli
+  - roadmap
+sidebar_position: 9
+---
+
+> 最后更新：2026-08-31
+
+## 当前状态
+
+maxc-cli 已进入发布硬化阶段。当前重点是让 CLI 契约、文档、测试和外部 Codex skill 同步发布。
+
+## 短期任务（P0）
+
+### CLI + SKILL 联合发布硬化
+
+- [x] 将 skill source 统一为 `src/maxc_cli/skills/`
+- [x] `agent skill` 六动词命令注册到各 Agent 平台
+- [x] 对齐 README、设计文档、实现文档、测试说明
+- [ ] 固化 release smoke checks / CI，避免 CLI 与 skill 再次漂移
+
+### 真实 backend 能力补强
+
+- [ ] 接入真实血缘 API，替换 `meta lineage` 的占位结果
+- [x] 增加 Tunnel CSV/TSV 上传、下载能力
+- [ ] 扩展 `auth can-i` 到更多只读操作
+
+### 语义搜索增强
+
+- [ ] `maxc meta search` 支持 FTS5 语义搜索
+- [ ] 结合 `table_semantic` 表的语义元数据
+- [ ] 评估向量索引（sqlite-vec）用于更好的语义匹配
+
+## 中期任务（P1）
+
+### 性能与缓存优化
+
+- [ ] 元数据缓存自动更新策略
+- [ ] 查询结果缓存过期清理
+- [ ] 并发控制优化
+
+### 安全与身份增强
+
+- [ ] 敏感数据脱敏输出
+- [ ] 操作审计日志增强
+- [ ] 多凭证管理
+- [ ] 更细粒度权限预检查
+
+### 数据操作扩展
+
+- [ ] 大文件断点续传与可恢复批次
+
+## 长期任务（P2）
+
+### 认证增强
+
+- [ ] 统一凭证轮换策略
+
+### 血缘分析
+
+- [ ] `meta lineage`
+- [ ] `meta impact`
+
+### 资源管理
+
+- [ ] `resource quota`
+- [ ] `resource usage`
+
+## 不做的事情
+
+基于工具层定位，以下能力由外部 Agent 实现，maxc-cli 不做：
+
+- 自然语言转 SQL
+- 自主执行计划
+- Skill 执行引擎
+- 内置 LLM 调用
+- 交互式 REPL
+
+## 版本计划
+
+| 版本 | 目标 | 预计时间 |
+|-----|------|---------|
+| v0.2 | 联合发布 CLI + Codex skill | 已完成 |
+| v0.3 | 安全增强，性能优化 | 已完成 |
+| v0.4 | 数据导入导出、OAuth 与 Agent 契约增强 | 已发布，持续硬化 |
+| v1.0 | 稳定版，完整自动化发布 | 2026-Q4 |

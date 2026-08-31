@@ -1,21 +1,64 @@
 ---
 title: CLI 使用指南
-description: 汇总按用户目标组织的 MaxCompute CLI 操作流程、验证方法和相关参考入口。
+description: 按用户任务组织的 MaxCompute CLI 操作指南：从发现数据到执行查询，再到数据导入导出。
 product: cli
 doc_type: how-to
 status: draft
 tags:
   - cli
   - guides
-sidebar_position: 5
+sidebar_position: 6
 ---
 
-本页按用户目标汇总 MaxCompute CLI 操作指南。每篇指南聚焦一个可验证结果，并链接到对应命令参考。
+本页按用户目标组织 MaxCompute CLI 的操作指南，每篇聚焦一个可验证的结果。
 
-## 指南组织方式
+## 发现数据
 
-每篇指南包含适用版本、前提条件、操作步骤、预期结果和清理方式；存在多种方法时，会同时说明适用场景。
+```bash
+maxc meta search "销售" --json
+maxc meta describe my_table --json
+maxc meta partitions my_table --json
+maxc data sample my_table --rows 5 --json
+```
 
-## 指南目录
+## 预估并执行查询
 
-暂无相关指南。你可以先查看[快速开始](./quickstart.mdx)或[命令参考](./command-reference.mdx)。
+```bash
+# 先预估成本
+maxc query cost "SELECT * FROM large_table WHERE ds='20260601'" --json
+
+# 执行，并限制成本上限
+maxc query "SELECT * FROM large_table WHERE ds='20260601'" --cost-check 100 --json
+
+# 结果写入 CSV
+maxc query "SELECT * FROM large_table WHERE ds='20260601'" --output result.csv --output-format csv --json
+```
+
+## 异步查询
+
+```bash
+# 1. 提交并立即返回 job_id
+JOB_ID=$(maxc query "SELECT * FROM large_table" --wait 0 --json | jq -r '.metadata.job_id')
+
+# 2. 等待
+maxc job wait "$JOB_ID" --timeout 600 --json
+
+# 3. 获取结果（可分页）
+maxc job result "$JOB_ID" --max-rows 1000 --json
+```
+
+## 数据导入导出
+
+```bash
+# 上传 CSV
+maxc data upload my_table --file data.csv --partition "ds=20260601" --json
+
+# 下载 CSV（默认拒绝覆盖已有文件）
+maxc data download my_table --output data.csv --partition "ds=20260601" --json
+```
+
+## 权限检查
+
+```bash
+maxc auth can-i --table my_table --operation SELECT --json
+```

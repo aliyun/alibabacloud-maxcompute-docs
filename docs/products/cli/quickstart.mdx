@@ -1,6 +1,6 @@
 ---
 title: CLI 快速开始
-description: 建立 MaxCompute CLI 从准备环境到完成首次有效操作的最小流程，并保留结果验证入口。
+description: 五分钟完成 MaxCompute CLI 安装、认证和第一条查询，建立最小可用闭环。
 product: cli
 doc_type: quickstart
 status: draft
@@ -10,24 +10,101 @@ tags:
 sidebar_position: 2
 ---
 
-通过本页完成 MaxCompute CLI 的首次配置与操作。
+通过本页完成 MaxCompute CLI（`maxc`）的首次安装、认证和查询。
 
 ## 完成目标
 
-完成准备、配置、执行和结果检查，确认 CLI 可以正常使用。
+安装 CLI、完成认证、执行一次成本预估和一条真实查询，确认 CLI 端到端可用。
 
 ## 前提条件
 
-开始前，请确认运行环境、访问权限、网络条件和所需的 MaxCompute 资源均已准备就绪。
+- 一个可访问的 MaxCompute 项目，以及对目标表的 SELECT 权限
+- 公共云环境可访问阿里云服务；独立入口要求 Python 3.9 或更高版本
 
 ## 操作步骤
 
-按照获取产品、完成必要配置、执行一次有效操作和查看结果的顺序开始使用。
+### 1. 安装 CLI
+
+推荐使用阿里云 CLI 分发（需要 Alibaba Cloud CLI >= 3.3.3）：
+
+```bash
+# 安装或更新阿里云 CLI
+/bin/bash -c "$(curl -fsSL https://aliyuncli.alicdn.com/install.sh)"
+
+# 验证 maxc 可用
+aliyun maxc --version
+```
+
+无法使用阿里云 CLI 扩展时，使用 PyPI 独立入口：
+
+```bash
+python3 -m pip install --upgrade maxc-cli
+maxc --version
+```
+
+更多安装渠道（预编译二进制等）见[安装与配置](./installation.mdx)。
+
+### 2. 认证
+
+OAuth 是交互式登录的首选方式，不需要把长期 AK/SK 放进命令行：
+
+```bash
+aliyun maxc auth login --oauth --json
+```
+
+省略 `--project` 时会通过 Catalog API 弹出交互式项目选择器（需 TTY，仅支持中国区项目）。CI 场景使用显式参数：
+
+```bash
+aliyun maxc auth login \
+  --access-id <your-access-id> \
+  --access-key-secret <your-access-key-secret> \
+  --project my_project \
+  --endpoint http://service.cn-hangzhou.maxcompute.aliyun.com/api \
+  --no-picker --json
+```
+
+已有阿里云 CLI OAuth profile、环境变量或 STS 凭证时，先验证现有身份，不要无故覆盖：
+
+```bash
+aliyun maxc auth whoami --json
+```
+
+配置保存在 `~/.maxc/config.yaml`（文件权限 0600）。
+
+### 3. 就绪检查
+
+本地检查和在线检查是两个独立步骤：
+
+```bash
+# 仅检查本地版本、配置和能力，不访问网络
+aliyun maxc agent context --json
+
+# 在线验证身份与后端可达性
+aliyun maxc agent doctor --online --json
+```
+
+只有 `agent doctor --online` 能证明远端已就绪；`agent context` 中的 `auth_status=configured` 不代表已通过在线认证。
+
+### 4. 第一次查询
+
+```bash
+# 发现表
+aliyun maxc meta search "销售" --json
+aliyun maxc meta describe schema.table --json
+
+# 先预估成本，再执行
+aliyun maxc query cost "SELECT * FROM schema.table WHERE ds='20260415'" --json
+aliyun maxc query "SELECT * FROM schema.table WHERE ds='20260415' LIMIT 100" --json
+```
 
 ## 验证结果
 
-完成操作后，请核对输出结果，并根据需要清理临时资源。
+- `auth whoami --json` 返回 `identity` 信息
+- `agent doctor --online --json` 返回成功状态
+- `query` 返回 `data.result.rows` 中的数据行
 
 ## 下一步
 
-完成最小闭环后，前往[使用指南](./guides.mdx)按目标继续阅读，或使用[命令参考](./command-reference.mdx)查询参数。
+- 给 AI Agent 装上 Skill：[Agent Skill 安装](./agent-skill.mdx)
+- 按任务查找命令：[命令参考](./command-reference.mdx)
+- 了解结构化输出契约：[输出协议参考](./reference.mdx)
