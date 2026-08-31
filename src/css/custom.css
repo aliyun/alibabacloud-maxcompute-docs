@@ -39,7 +39,7 @@
 }
 
 .navbar {
-  padding-inline: clamp(1rem, 3vw, 3.1rem);
+  padding-inline: 1.5rem;
   background: color-mix(in srgb, var(--ifm-background-color) 96%, transparent);
   border-bottom: 1px solid var(--mc-border);
   box-shadow: none;
@@ -47,8 +47,7 @@
 }
 
 .navbar__inner {
-  max-width: 1480px;
-  margin: 0 auto;
+  max-width: none;
 }
 
 .navbar__brand {
@@ -102,5 +101,87 @@
 
   .navbar__link {
     font-size: 0.84rem;
+  }
+}
+
+/* ===== Sidebar category hierarchy enhancement ===== */
+/* Category headers */
+.theme-doc-sidebar-menu
+  .theme-doc-sidebar-item-category
+  > .menu__list-item-collapsible {
+  font-size: 0.72rem;
+  font-weight: 720;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--mc-muted);
+  background: transparent;
+}
+
+.theme-doc-sidebar-menu
+  .theme-doc-sidebar-item-category
+  > .menu__list-item-collapsible:hover {
+  background: transparent;
+}
+
+/* Category expand icon */
+.theme-doc-sidebar-menu
+  .theme-doc-sidebar-item-category
+  > .menu__list-item-collapsible
+  .menu__caret {
+  color: var(--mc-muted);
+}
+
+/* Indent leaf items under categories */
+.theme-doc-sidebar-menu
+  .theme-doc-sidebar-item-category
+  .menu__list
+  .menu__link {
+  padding-left: 1.4rem;
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: var(--mc-muted);
+  border-radius: 8px;
+}
+
+/* Active leaf item */
+.theme-doc-sidebar-menu
+  .theme-doc-sidebar-item-category
+  .menu__list
+  .menu__link--active {
+  color: var(--ifm-color-primary);
+  font-weight: 700;
+  background: #fff1e7;
+}
+
+/* Hover on leaf */
+.theme-doc-sidebar-menu
+  .theme-doc-sidebar-item-category
+  .menu__list
+  .menu__link:hover {
+  background: var(--mc-surface);
+  color: var(--mc-ink);
+}
+
+/* Collapsible category active indicator strip */
+.theme-doc-sidebar-menu .theme-doc-sidebar-item-category .menu__list {
+  padding-left: 0.3rem;
+  border-left: 2px solid var(--mc-border);
+  margin-left: 0.6rem;
+}
+
+/* Compact spacing between sidebar items */
+.theme-doc-sidebar-menu .menu__list-item {
+  margin-top: 0.12rem;
+}
+
+/* ===== Footer fix ===== */
+.footer--dark .container {
+  max-width: 100%;
+}
+
+/* ===== Responsive navbar ===== */
+@media screen and (max-width: 1280px) {
+  .navbar__inner {
+    padding-inline: 0.6rem;
   }
 }

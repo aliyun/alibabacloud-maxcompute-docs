@@ -6,7 +6,7 @@
 
 .trigger,
 .mobileTrigger {
-  font: inherit;
+  padding: 0;
   cursor: pointer;
   background: transparent;
   border: 0;
@@ -18,6 +18,8 @@
   gap: 0.28rem;
   align-items: center;
   color: var(--ifm-navbar-link-color);
+  font-size: 0.9rem;
+  font-weight: 580;
 }
 
 .trigger:hover,
@@ -250,5 +252,11 @@
     min-height: auto;
     border-top: 1px solid var(--mc-border);
     border-left: 0;
+  }
+}
+
+@media screen and (max-width: 1280px) {
+  .trigger {
+    font-size: 0.84rem;
   }
 }
