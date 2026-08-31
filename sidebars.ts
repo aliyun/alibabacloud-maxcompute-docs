@@ -47,13 +47,6 @@ const sidebars: SidebarsConfig = {
       collapsed: false,
       items: ['products/cli/ecosystem'],
     },
-    {
-      type: 'category',
-      label: 'Project',
-      collapsible: true,
-      collapsed: false,
-      items: ['products/cli/roadmap', 'products/cli/troubleshooting'],
-    },
   ],
   ...productSidebars,
   resourcesSidebar: [
