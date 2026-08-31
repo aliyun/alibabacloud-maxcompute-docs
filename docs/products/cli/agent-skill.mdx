@@ -35,15 +35,15 @@ maxc agent skill install codex --invocation maxc --json
 
 ## 支持的平台
 
-| 平台 | 安装路径 |
-|------|---------|
-| `claude-code` | `~/.claude/skills/alibabacloud-maxcompute-cli/` |
-| `cursor` | `~/.cursor/skills/alibabacloud-maxcompute-cli/` |
-| `windsurf` | `~/.windsurf/skills/alibabacloud-maxcompute-cli/` |
-| `codex` | `~/.codex/skills/alibabacloud-maxcompute-cli/` |
-| `qwen` | `~/.qwen/skills/alibabacloud-maxcompute-cli/` |
-| `qoder` | `~/.qoder/skills/alibabacloud-maxcompute-cli/` |
-| `qoderwork` | `~/.qoderwork/skills/alibabacloud-maxcompute-cli/` |
+| 平台          | 安装路径                                           |
+| ------------- | -------------------------------------------------- |
+| `claude-code` | `~/.claude/skills/alibabacloud-maxcompute-cli/`    |
+| `cursor`      | `~/.cursor/skills/alibabacloud-maxcompute-cli/`    |
+| `windsurf`    | `~/.windsurf/skills/alibabacloud-maxcompute-cli/`  |
+| `codex`       | `~/.codex/skills/alibabacloud-maxcompute-cli/`     |
+| `qwen`        | `~/.qwen/skills/alibabacloud-maxcompute-cli/`      |
+| `qoder`       | `~/.qoder/skills/alibabacloud-maxcompute-cli/`     |
+| `qoderwork`   | `~/.qoderwork/skills/alibabacloud-maxcompute-cli/` |
 
 支持的平台以 `agent skill install --help` 的实时输出为准。
 
@@ -69,10 +69,10 @@ aliyun maxc agent skill uninstall cursor --json
 
 Skill 采用分层加载，优化 LLM 上下文窗口的使用效率：
 
-| 层级 | 内容 | 加载时机 |
-|------|------|---------|
-| 主文件 SKILL.md（约 270 行） | 意图到命令映射表、核心原则、工作流、决策表 | 任务触发时自动加载 |
-| 参考文档（十余个文件） | SQL 方言指南、查询模板、分区策略、错误恢复手册等 | 按需加载 |
+| 层级                         | 内容                                             | 加载时机           |
+| ---------------------------- | ------------------------------------------------ | ------------------ |
+| 主文件 SKILL.md（约 270 行） | 意图到命令映射表、核心原则、工作流、决策表       | 任务触发时自动加载 |
+| 参考文档（十余个文件）       | SQL 方言指南、查询模板、分区策略、错误恢复手册等 | 按需加载           |
 
 Agent 处理简单的元数据查询时只需主文件的指导；遇到复杂 SQL 生成或错误恢复时，才按需加载对应参考文档。
 

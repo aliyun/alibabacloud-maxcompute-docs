@@ -17,14 +17,14 @@ sidebar_position: 5
 
 以下选项可放在命令行任意位置：
 
-| 选项 | 说明 |
-|------|------|
-| `--json` | 输出 JSON Envelope 格式；Agent 应始终使用它 |
-| `--format` | 输出格式：`table` / `markdown` / `brief` / `csv` / `ndjson` |
-| `--config` | 指定配置文件路径 |
-| `--project` | 目标 MaxCompute 项目（临时覆盖会话设置） |
-| `--schema` | 目标 Schema（临时覆盖会话设置） |
-| `--user-agent` | 自定义 User-Agent 前缀 |
+| 选项           | 说明                                                        |
+| -------------- | ----------------------------------------------------------- |
+| `--json`       | 输出 JSON Envelope 格式；Agent 应始终使用它                 |
+| `--format`     | 输出格式：`table` / `markdown` / `brief` / `csv` / `ndjson` |
+| `--config`     | 指定配置文件路径                                            |
+| `--project`    | 目标 MaxCompute 项目（临时覆盖会话设置）                    |
+| `--schema`     | 目标 Schema（临时覆盖会话设置）                             |
+| `--user-agent` | 自定义 User-Agent 前缀                                      |
 
 ## query — SQL 查询
 
@@ -36,21 +36,21 @@ maxc query cost <sql>                  # 预估成本
 maxc query explain <sql>               # 查看执行计划
 ```
 
-| 参数 | 说明 | 默认值 |
-|------|------|--------|
-| `<sql>` | SQL 文本 | — |
-| `--file` | 从文件读取 SQL | — |
-| `--stdin` | 从标准输入读取 SQL | — |
-| `--max-rows` | 最大返回行数 | 100 |
-| `--page-size` | 分页大小 | — |
-| `--cursor` | 分页游标 | — |
-| `--wait` | 同步等待秒数，超时后返回 job_id | 10 |
-| `--dry-run` | 仅显示查询计划，不执行 | — |
-| `--cost-check` | 预估成本超过阈值（CU）时中止 | — |
-| `--output` | 将结果写入文件 | — |
-| `--output-format` | 文件格式：`table` / `json` / `csv` / `ndjson` | — |
-| `--idempotency-key` | 去重键 | — |
-| `--force` | 绕过只读模式 | — |
+| 参数                | 说明                                          | 默认值 |
+| ------------------- | --------------------------------------------- | ------ |
+| `<sql>`             | SQL 文本                                      | —      |
+| `--file`            | 从文件读取 SQL                                | —      |
+| `--stdin`           | 从标准输入读取 SQL                            | —      |
+| `--max-rows`        | 最大返回行数                                  | 100    |
+| `--page-size`       | 分页大小                                      | —      |
+| `--cursor`          | 分页游标                                      | —      |
+| `--wait`            | 同步等待秒数，超时后返回 job_id               | 10     |
+| `--dry-run`         | 仅显示查询计划，不执行                        | —      |
+| `--cost-check`      | 预估成本超过阈值（CU）时中止                  | —      |
+| `--output`          | 将结果写入文件                                | —      |
+| `--output-format`   | 文件格式：`table` / `json` / `csv` / `ndjson` | —      |
+| `--idempotency-key` | 去重键                                        | —      |
+| `--force`           | 绕过只读模式                                  | —      |
 
 ### --wait 行为
 

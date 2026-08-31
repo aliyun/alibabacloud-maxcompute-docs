@@ -67,7 +67,8 @@ const config: Config = {
         blog: {
           routeBasePath: 'blog',
           blogTitle: '博客',
-          blogDescription: 'MaxCompute Agentic 生态的产品动态、版本发布与最佳实践。',
+          blogDescription:
+            'MaxCompute Agentic 生态的产品动态、版本发布与最佳实践。',
           showReadingTime: true,
           postsPerPage: 10,
         },

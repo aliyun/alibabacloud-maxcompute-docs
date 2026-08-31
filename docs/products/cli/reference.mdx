@@ -45,15 +45,15 @@ MaxCompute CLI 的 `--json` 输出遵循统一的 Envelope v2.0 协议，便于 
 }
 ```
 
-| 字段 | 说明 |
-|------|------|
-| `version` | 固定 `"2.0"` |
-| `command` | 执行的命令，如 `"meta describe"` |
-| `status` | `"success"` / `"pending"` / `"failure"` |
-| `data` | 业务数据，结构按命令类型固定 |
-| `metadata` | 执行元信息（项目名、耗时、job_id 等） |
-| `error` | 失败时的错误详情与恢复步骤 |
-| `agent_hints` | AI Agent 的下一步操作建议 |
+| 字段          | 说明                                    |
+| ------------- | --------------------------------------- |
+| `version`     | 固定 `"2.0"`                            |
+| `command`     | 执行的命令，如 `"meta describe"`        |
+| `status`      | `"success"` / `"pending"` / `"failure"` |
+| `data`        | 业务数据，结构按命令类型固定            |
+| `metadata`    | 执行元信息（项目名、耗时、job_id 等）   |
+| `error`       | 失败时的错误详情与恢复步骤              |
+| `agent_hints` | AI Agent 的下一步操作建议               |
 
 ### agent_hints
 
@@ -80,40 +80,40 @@ MaxCompute CLI 的 `--json` 输出遵循统一的 Envelope v2.0 协议，便于 
 
 ## 错误码参考
 
-| 错误码 | 说明 | 可重试 |
-|--------|------|--------|
-| `EXECUTION_FAILED` | 执行失败 | 是 |
-| `PERMISSION_DENIED` | 权限不足 | 否 |
-| `QUOTA_EXCEEDED` | 配额超限 | 是 |
-| `SQL_ERROR` | SQL 语法或执行错误 | 否 |
-| `COST_LIMIT_EXCEEDED` | 成本超过阈值 | 否 |
-| `NOT_FOUND` | 资源不存在 | 否 |
-| `TABLE_NOT_FOUND` | 表不存在 | 否 |
-| `BACKEND_CONNECTION_ERROR` | 无法连接后端 | 是 |
-| `JOB_TIMEOUT` | 作业轮询超时 | 是 |
-| `READ_ONLY_VIOLATION` | 只读模式拦截写操作 | 否 |
-| `WRITE_OPERATION_REQUIRES_FORCE` | 写操作需要 `--force` | 是 |
-| `CSV_PARSE_ERROR` | CSV 解析失败 | 否 |
-| `INTERNAL_ERROR` | 内部错误 | 否 |
+| 错误码                           | 说明                 | 可重试 |
+| -------------------------------- | -------------------- | ------ |
+| `EXECUTION_FAILED`               | 执行失败             | 是     |
+| `PERMISSION_DENIED`              | 权限不足             | 否     |
+| `QUOTA_EXCEEDED`                 | 配额超限             | 是     |
+| `SQL_ERROR`                      | SQL 语法或执行错误   | 否     |
+| `COST_LIMIT_EXCEEDED`            | 成本超过阈值         | 否     |
+| `NOT_FOUND`                      | 资源不存在           | 否     |
+| `TABLE_NOT_FOUND`                | 表不存在             | 否     |
+| `BACKEND_CONNECTION_ERROR`       | 无法连接后端         | 是     |
+| `JOB_TIMEOUT`                    | 作业轮询超时         | 是     |
+| `READ_ONLY_VIOLATION`            | 只读模式拦截写操作   | 否     |
+| `WRITE_OPERATION_REQUIRES_FORCE` | 写操作需要 `--force` | 是     |
+| `CSV_PARSE_ERROR`                | CSV 解析失败         | 否     |
+| `INTERNAL_ERROR`                 | 内部错误             | 否     |
 
 ## 命令 data 顶层键对照
 
-| 命令 | data 顶层键 |
-|------|------------|
-| `query` / `job wait` / `job result` | `result`（含 `rows`、`schema`、`row_count`）、`pagination` |
-| `query cost` / `query explain` | `analysis` |
-| `meta list-tables` | `tables`、`pagination` |
-| `meta describe` | `table` |
-| `meta search` / `meta search-columns` | `search`（含 `matches`）、`pagination` |
-| `meta partitions` | `table`、`partitions` |
-| `data sample` | `sample` |
-| `data profile` | `profile` |
-| `job list` | `jobs`、`pagination` |
-| `job status` / `job cancel` | `job` |
-| `job diagnose` | `diagnosis` |
-| `auth whoami` | `identity` |
-| `auth login` | `identity`、`persistence` |
-| `auth can-i` | `authorization` |
+| 命令                                  | data 顶层键                                                |
+| ------------------------------------- | ---------------------------------------------------------- |
+| `query` / `job wait` / `job result`   | `result`（含 `rows`、`schema`、`row_count`）、`pagination` |
+| `query cost` / `query explain`        | `analysis`                                                 |
+| `meta list-tables`                    | `tables`、`pagination`                                     |
+| `meta describe`                       | `table`                                                    |
+| `meta search` / `meta search-columns` | `search`（含 `matches`）、`pagination`                     |
+| `meta partitions`                     | `table`、`partitions`                                      |
+| `data sample`                         | `sample`                                                   |
+| `data profile`                        | `profile`                                                  |
+| `job list`                            | `jobs`、`pagination`                                       |
+| `job status` / `job cancel`           | `job`                                                      |
+| `job diagnose`                        | `diagnosis`                                                |
+| `auth whoami`                         | `identity`                                                 |
+| `auth login`                          | `identity`、`persistence`                                  |
+| `auth can-i`                          | `authorization`                                            |
 
 ## 完整规范
 

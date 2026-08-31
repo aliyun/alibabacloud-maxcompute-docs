@@ -1,12 +1,12 @@
 .grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 1rem;
+  gap: 1.2rem;
 }
 
 .card,
 .futureCard {
-  min-height: 316px;
+  min-height: 300px;
   padding: 1.5rem;
   background: var(--mc-card);
   border: 1px solid var(--mc-border);
@@ -17,15 +17,15 @@
   display: flex;
   flex-direction: column;
   transition:
-    transform 180ms ease,
-    border-color 180ms ease,
-    box-shadow 180ms ease;
+    transform 200ms ease,
+    border-color 200ms ease,
+    box-shadow 200ms ease;
 }
 
 .card:hover {
-  border-color: color-mix(in srgb, var(--card-accent) 42%, var(--mc-border));
-  box-shadow: 0 20px 45px rgba(30, 42, 68, 0.09);
-  transform: translateY(-4px);
+  border-color: color-mix(in srgb, var(--card-accent) 48%, var(--mc-border));
+  box-shadow: 0 22px 50px rgba(30, 42, 68, 0.11);
+  transform: translateY(-5px);
 }
 
 .orange {
@@ -57,19 +57,19 @@
 .icon,
 .futureIcon {
   display: inline-flex;
-  width: 52px;
-  height: 52px;
+  width: 50px;
+  height: 50px;
   align-items: center;
   justify-content: center;
   color: var(--card-accent);
   background: var(--card-accent-soft);
-  border-radius: 13px;
+  border-radius: 12px;
 }
 
 .card h3,
 .futureCard h3 {
-  margin: 1.4rem 0 0.6rem;
-  font-size: 1.18rem;
+  margin: 1.2rem 0 0.5rem;
+  font-size: 1.15rem;
   line-height: 1.35;
 }
 
@@ -86,16 +86,16 @@
 .futureCard p {
   margin: 0;
   color: var(--mc-muted);
-  font-size: 0.92rem;
-  line-height: 1.7;
+  font-size: 0.9rem;
+  line-height: 1.65;
 }
 
 .quickLinks {
   display: flex;
   flex-wrap: wrap;
   gap: 0.35rem 0.8rem;
-  margin-top: 1.15rem;
-  font-size: 0.83rem;
+  margin-top: 1.1rem;
+  font-size: 0.82rem;
 }
 
 .quickLinks a {
@@ -128,6 +128,7 @@
   justify-content: center;
   color: var(--mc-muted);
   background:
+    radial-gradient(circle at 92% 8%, var(--mc-surface) 0%, transparent 55%),
     linear-gradient(var(--mc-card), var(--mc-card)) padding-box,
     repeating-linear-gradient(
         135deg,
@@ -164,6 +165,6 @@
 
   .card,
   .futureCard {
-    min-height: 285px;
+    min-height: 280px;
   }
 }

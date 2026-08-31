@@ -15,11 +15,11 @@ sidebar_position: 3
 
 ## 选择安装方式
 
-| 渠道 | 命令入口 | 适用场景 | 环境要求 |
-|------|---------|---------|---------|
-| 阿里云 CLI 扩展（推荐） | `aliyun maxc` | 已使用或可使用阿里云 CLI | Alibaba Cloud CLI >= 3.3.3 |
-| PyPI 独立入口 | `maxc` | 无法使用阿里云 CLI 扩展，或明确需要 PyPI 版本 | Python 3.9+ |
-| 预编译二进制 | `maxc` | 无 Python 环境、Agent 沙箱、CI 镜像 | 主流 Linux / macOS / Windows |
+| 渠道                    | 命令入口      | 适用场景                                      | 环境要求                     |
+| ----------------------- | ------------- | --------------------------------------------- | ---------------------------- |
+| 阿里云 CLI 扩展（推荐） | `aliyun maxc` | 已使用或可使用阿里云 CLI                      | Alibaba Cloud CLI >= 3.3.3   |
+| PyPI 独立入口           | `maxc`        | 无法使用阿里云 CLI 扩展，或明确需要 PyPI 版本 | Python 3.9+                  |
+| 预编译二进制            | `maxc`        | 无 Python 环境、Agent 沙箱、CI 镜像           | 主流 Linux / macOS / Windows |
 
 三种渠道提供同一份命令集与 Envelope v2.0 输出契约，行为一致。
 
@@ -69,12 +69,12 @@ https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/maxc-cli/<version>/<platfor
 
 maxc 支持多种认证方式，按优先级推荐：
 
-| 方式 | 命令 | 适用场景 |
-|------|------|---------|
-| OAuth（推荐） | `maxc auth login --oauth` | 交互式登录，浏览器授权，自动刷新 |
-| 环境变量 | `maxc auth login --from-env` | 从 `ODPS_ACCESS_ID` / `ODPS_ACCESS_KEY` 读取 |
-| AK/SK | `maxc auth login --access-id <id> --access-key-secret <secret>` | 显式凭证，写入 `~/.maxc/config.yaml`（权限 0600） |
-| STS / 外部凭证进程 | `maxc auth login-external` | 由可信外部进程输出临时凭证 |
+| 方式               | 命令                                                            | 适用场景                                          |
+| ------------------ | --------------------------------------------------------------- | ------------------------------------------------- |
+| OAuth（推荐）      | `maxc auth login --oauth`                                       | 交互式登录，浏览器授权，自动刷新                  |
+| 环境变量           | `maxc auth login --from-env`                                    | 从 `ODPS_ACCESS_ID` / `ODPS_ACCESS_KEY` 读取      |
+| AK/SK              | `maxc auth login --access-id <id> --access-key-secret <secret>` | 显式凭证，写入 `~/.maxc/config.yaml`（权限 0600） |
+| STS / 外部凭证进程 | `maxc auth login-external`                                      | 由可信外部进程输出临时凭证                        |
 
 使用阿里云 CLI 入口时，`aliyun maxc` 直接复用 `aliyun configure` 配置的凭证体系。
 

@@ -9,7 +9,8 @@
     ".docusaurus/**",
     "node_modules/**",
     "package-lock.json",
-    "static/**"
+    "static/**",
+    "src/generated/**"
   ],
   "words": [
     "Alibaba",
@@ -32,6 +33,16 @@
     "quickstart",
     "sidebars",
     "sql",
-    "tsbuildinfo"
+    "tsbuildinfo",
+    "aliyun",
+    "maxc",
+    "qwen",
+    "Qoder",
+    "qoderwork",
+    "windsurf",
+    "codex",
+    "claude",
+    "alibabacloud",
+    "MCMCP"
   ]
 }
