@@ -1,9 +1,10 @@
 import type {ReactNode} from 'react';
+import {useEffect, useState} from 'react';
 import {
   ArrowRight,
   BookOpenText,
-  PuzzlePiece,
-  Robot,
+  Desktop,
+  PlugsConnected,
   Terminal,
 } from '@phosphor-icons/react';
 import Link from '@docusaurus/Link';
@@ -14,10 +15,10 @@ import ProductGrid from '@site/src/components/ProductGrid';
 
 import styles from './index.module.css';
 
-function TerminalCard(): ReactNode {
+function CliPanel(): ReactNode {
   return (
-    <div aria-hidden="true" className={styles.terminal}>
-      <div className={styles.terminalBar}>
+    <div className={`${styles.window} ${styles.windowDark}`}>
+      <div className={styles.windowBar}>
         <i />
         <i />
         <i />
@@ -65,121 +66,246 @@ function TerminalCard(): ReactNode {
   );
 }
 
+function McpPanel(): ReactNode {
+  return (
+    <div className={`${styles.window} ${styles.windowDark}`}>
+      <div className={styles.windowBar}>
+        <i />
+        <i />
+        <i />
+        <em>mcp-server · tools/call</em>
+      </div>
+      <div className={styles.terminalBody}>
+        <p className={styles.tDim}># Agent 通过 MCP 协议调用</p>
+        <p className={styles.tJson}>{'{'}</p>
+        <p className={styles.tJson}>
+          {'  '}
+          <span className={styles.tKey}>&quot;method&quot;</span>:{' '}
+          <span className={styles.tStr}>&quot;tools/call&quot;</span>,
+        </p>
+        <p className={styles.tJson}>
+          {'  '}
+          <span className={styles.tKey}>&quot;params&quot;</span>: {'{'}
+        </p>
+        <p className={styles.tJson}>
+          {'    '}
+          <span className={styles.tKey}>&quot;name&quot;</span>:{' '}
+          <span className={styles.tStr}>&quot;maxcompute_query&quot;</span>,
+        </p>
+        <p className={styles.tJson}>
+          {'    '}
+          <span className={styles.tKey}>&quot;arguments&quot;</span>: {'{'}
+          <span className={styles.tKey}>&quot;sql&quot;</span>:{' '}
+          <span className={styles.tStr}>&quot;SELECT …&quot;</span>
+          {' }'}
+        </p>
+        <p className={styles.tJson}>{'  }'}</p>
+        <p className={styles.tJson}>{'}'}</p>
+        <p className={styles.tOk}>
+          ✓ 200 OK <span className={styles.tDim}>· 结构化结果返回 Agent</span>
+        </p>
+      </div>
+    </div>
+  );
+}
+
+function DesktopPanel(): ReactNode {
+  return (
+    <div className={`${styles.window} ${styles.windowLight}`}>
+      <div className={styles.windowBar}>
+        <i />
+        <i />
+        <i />
+        <em>MaxCompute Desktop</em>
+      </div>
+      <div className={styles.desktopBody}>
+        <div className={styles.desktopSide}>
+          <span className={styles.desktopSideActive}>SQL 工作台</span>
+          <span>数据资产</span>
+          <span>作业历史</span>
+          <span>Data Agent</span>
+        </div>
+        <div className={styles.desktopMain}>
+          <div className={styles.desktopEditor}>
+            <p>
+              <span className={styles.tKw}>SELECT</span> user_id, amount
+            </p>
+            <p>
+              <span className={styles.tKw}>FROM</span> sales
+            </p>
+            <p>
+              <span className={styles.tKw}>WHERE</span> ds =
+              &apos;20260831&apos;
+            </p>
+          </div>
+          <div className={styles.desktopGrid}>
+            <div className={styles.desktopGridHead}>
+              <span>user_id</span>
+              <span>amount</span>
+            </div>
+            {['u_10021', 'u_10022', 'u_10023'].map((id, i) => (
+              <div className={styles.desktopGridRow} key={id}>
+                <span>{id}</span>
+                <span>{[326.5, 89.0, 1204.75][i]}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+const showcases = [
+  {
+    id: 'cli',
+    label: 'CLI',
+    icon: <Terminal aria-hidden="true" size={15} weight="bold" />,
+    caption: '命令行 · 结构化 JSON 输出',
+    panel: <CliPanel />,
+  },
+  {
+    id: 'mcp-server',
+    label: 'MCP Server',
+    icon: <PlugsConnected aria-hidden="true" size={15} weight="bold" />,
+    caption: '标准协议 · 远程 Agent 接入',
+    panel: <McpPanel />,
+  },
+  {
+    id: 'desktop',
+    label: 'Desktop',
+    icon: <Desktop aria-hidden="true" size={15} weight="bold" />,
+    caption: '桌面端 · 可视化数据工作台',
+    panel: <DesktopPanel />,
+  },
+];
+
+function Showcase(): ReactNode {
+  const [active, setActive] = useState(0);
+  const [paused, setPaused] = useState(false);
+
+  useEffect(() => {
+    if (paused) return undefined;
+    if (
+      typeof window !== 'undefined' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    ) {
+      return undefined;
+    }
+    const timer = window.setInterval(
+      () => setActive((value) => (value + 1) % showcases.length),
+      6000,
+    );
+    return () => window.clearInterval(timer);
+  }, [paused]);
+
+  return (
+    <div
+      className={styles.showcase}
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+    >
+      <div className={styles.showcaseTabs} role="tablist">
+        {showcases.map((item, index) => (
+          <button
+            aria-selected={active === index}
+            className={`${styles.showcaseTab} ${
+              active === index ? styles.showcaseTabActive : ''
+            }`}
+            key={item.id}
+            onClick={() => setActive(index)}
+            role="tab"
+            type="button"
+          >
+            {item.icon}
+            {item.label}
+          </button>
+        ))}
+      </div>
+      <div className={styles.showcaseStage}>
+        {showcases.map((item, index) => (
+          <div
+            aria-hidden={active !== index}
+            className={`${styles.showcasePanel} ${
+              active === index ? styles.showcasePanelActive : ''
+            }`}
+            key={item.id}
+          >
+            {item.panel}
+          </div>
+        ))}
+      </div>
+      <p className={styles.showcaseCaption}>{showcases[active].caption}</p>
+    </div>
+  );
+}
+
 function Hero(): ReactNode {
   return (
     <header className={styles.hero}>
       <div aria-hidden="true" className={styles.heroGlow} />
       <div className={`container ${styles.heroInner}`}>
         <div className={styles.heroCopy}>
-          <span className={styles.badge}>
-            <Terminal aria-hidden="true" size={14} weight="bold" />
-            MAXCOMPUTE DOCS
-          </span>
+          <span className={styles.badge}>MAXCOMPUTE DOCS</span>
           <Heading as="h1" className={styles.heroTitle}>
             给人用，也给 Agent 用的 MaxCompute 文档
           </Heading>
           <p className={styles.heroSubtitle}>
             CLI、MCP Server 与 Desktop
-            的统一文档入口。从一行命令完成安装认证，到结构化 JSON 协议驱动的
-            Agent 集成，都从这里开始。
+            的统一文档入口。命令行、协议与桌面三种形态，共享同一套 MaxCompute
+            数据底座。
           </p>
           <div className={styles.heroActions}>
-            <Link
-              className={styles.primaryAction}
-              to="/docs/products/cli/quickstart/"
-            >
-              CLI 快速开始 <ArrowRight aria-hidden="true" size={17} />
+            <Link className={styles.primaryAction} to="/docs/products/">
+              浏览全部产品 <ArrowRight aria-hidden="true" size={17} />
             </Link>
             <DocSearchTrigger variant="hero" />
           </div>
           <dl className={styles.heroStats}>
             <div>
               <dt>3</dt>
-              <dd>产品文档</dd>
+              <dd>产品形态</dd>
             </div>
             <div>
-              <dt>8</dt>
-              <dd>CLI 命令家族</dd>
+              <dt>36+</dt>
+              <dd>篇文档</dd>
             </div>
             <div>
-              <dt>v2.0</dt>
-              <dd>Envelope 协议</dd>
+              <dt>4</dt>
+              <dd>资源板块</dd>
             </div>
           </dl>
         </div>
-        <TerminalCard />
+        <Showcase />
       </div>
     </header>
   );
 }
 
-const pillars = [
-  {
-    icon: <Terminal aria-hidden="true" size={22} weight="duotone" />,
-    title: 'CLI 工具层',
-    body: 'maxc 提供元数据、查询、作业、传输等数据面操作，每条命令输出结构化 JSON Envelope。',
-    href: '/docs/products/cli/command-reference/',
-    label: '命令参考',
-  },
-  {
-    icon: <Robot aria-hidden="true" size={22} weight="duotone" />,
-    title: 'Agent Skill',
-    body: '一条命令把 MaxCompute 知识装进 Claude Code、Cursor、Codex 等平台，Agent 即刻会用 maxc。',
-    href: '/docs/products/cli/agent-skill/',
-    label: '安装 Skill',
-  },
-  {
-    icon: <PuzzlePiece aria-hidden="true" size={22} weight="duotone" />,
-    title: '生态与插件',
-    body: 'DSH 插件、MCP Server、Desktop 与 aliyun CLI 扩展共享同一套 CLI 能力，随处接入。',
-    href: '/docs/products/cli/ecosystem/',
-    label: '浏览生态',
-  },
-];
-
-function Pillars(): ReactNode {
-  return (
-    <section className={styles.pillarSection}>
-      <div className={`container ${styles.pillarGrid}`}>
-        {pillars.map((pillar) => (
-          <Link className={styles.pillar} key={pillar.title} to={pillar.href}>
-            <span className={styles.pillarIcon}>{pillar.icon}</span>
-            <strong>{pillar.title}</strong>
-            <p>{pillar.body}</p>
-            <small>
-              {pillar.label} <ArrowRight aria-hidden="true" size={13} />
-            </small>
-          </Link>
-        ))}
-      </div>
-    </section>
-  );
-}
-
 const paths = [
   {
-    step: '01',
-    title: '第一次使用',
-    body: '安装 CLI、完成 OAuth 认证、跑通第一条查询。',
+    step: 'CLI',
+    title: '命令行快速开始',
+    body: '安装 maxc、完成认证、跑通第一条查询。',
     href: '/docs/products/cli/quickstart/',
   },
   {
-    step: '02',
-    title: '接入 AI Agent',
-    body: '把 Agent Skill 注册到你使用的 Agent 平台。',
-    href: '/docs/products/cli/agent-skill/',
+    step: 'MCP',
+    title: 'MCP Server 快速开始',
+    body: '通过标准协议把 MaxCompute 能力暴露给 Agent。',
+    href: '/docs/products/mcp-server/quickstart/',
   },
   {
-    step: '03',
-    title: '查阅参考',
-    body: '命令参数、Envelope 协议与错误码。',
-    href: '/docs/products/cli/reference/',
+    step: 'Desktop',
+    title: 'Desktop 快速开始',
+    body: '桌面端 SQL 工作台与可视化管理。',
+    href: '/docs/products/desktop/quickstart/',
   },
   {
-    step: '04',
-    title: '解决问题',
-    body: '按阶段定位安装、认证与查询问题。',
-    href: '/docs/products/cli/troubleshooting/',
+    step: '实践',
+    title: '最佳实践',
+    body: '场景化的落地方法与经验总结。',
+    href: '/docs/best-practices/',
   },
 ];
 
@@ -193,7 +319,7 @@ function QuickPaths(): ReactNode {
             className={styles.pathHeadingIcon}
             size={20}
           />
-          <Heading as="h2">按任务开始</Heading>
+          <Heading as="h2">按产品开始</Heading>
         </div>
         <div className={styles.pathGrid}>
           {paths.map((path) => (
@@ -216,7 +342,6 @@ export default function Home(): ReactNode {
       description="MaxCompute CLI、MCP Server 与 Desktop 的统一产品文档入口，面向人与 AI Agent。"
     >
       <Hero />
-      <Pillars />
       <main>
         <section className={styles.productsSection} id="products">
           <div className="container">
