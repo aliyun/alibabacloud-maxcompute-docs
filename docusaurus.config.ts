@@ -25,12 +25,11 @@ const config: Config = {
     v4: true,
   },
 
-  // CI 可覆盖自定义域名；默认值必须始终生成正确的 canonical 和 sitemap。
-  url:
-    process.env.DOCS_SITE_URL ?? 'https://maxcompute-docs.io.alibaba-inc.com',
-  baseUrl: process.env.DOCS_BASE_URL ?? '/',
-  organizationName: 'odps',
-  projectName: 'maxcompute-docs',
+  // CI 可覆盖自定义域名和部署路径；默认值对应 GitHub Project Pages。
+  url: process.env.DOCS_SITE_URL ?? 'https://aliyun.github.io',
+  baseUrl: process.env.DOCS_BASE_URL ?? '/alibabacloud-maxcompute-docs/',
+  organizationName: 'aliyun',
+  projectName: 'alibabacloud-maxcompute-docs',
   // Aone Pages 按目录提供静态文件，使用尾斜线生成 route/index.html。
   trailingSlash: true,
   onBrokenLinks: 'throw',
