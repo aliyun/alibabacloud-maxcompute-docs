@@ -39,7 +39,7 @@ jobs:
 
       - name: Install dependencies
         # The lockfile is also used by internal CI; use the public registry on GitHub runners.
-        run: npm ci --registry=https://registry.npmjs.org
+        run: npm ci --registry=https://registry.npmjs.org --no-audit --no-fund
 
       - name: Validate and build website
         run: npm run ci
