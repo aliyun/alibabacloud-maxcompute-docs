@@ -16,7 +16,7 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  NODE_VERSION: 20.17.0
+  NODE_VERSION: '24.x'
   # Project Pages URL for aliyun/alibabacloud-maxcompute-docs.
   # Replace these two values if a custom domain is configured.
   DOCS_SITE_URL: https://aliyun.github.io
@@ -34,6 +34,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
+          check-latest: true
           cache: npm
 
       - name: Install dependencies
