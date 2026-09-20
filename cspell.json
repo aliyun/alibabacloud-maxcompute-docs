@@ -43,6 +43,7 @@
     "codex",
     "claude",
     "alibabacloud",
-    "MCMCP"
+    "MCMCP",
+    "certifi"
   ]
 }

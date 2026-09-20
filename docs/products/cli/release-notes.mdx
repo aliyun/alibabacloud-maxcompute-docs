@@ -12,6 +12,33 @@ sidebar_position: 10
 
 本页按时间倒序记录 MaxCompute CLI 的版本变化。
 
+## [0.7.0] — 2026-09-20
+
+### Features
+
+- 新增 `kb ask` / `kb search`：在本地知识库上做检索与问答，输出沿用统一 envelope。
+- 新增 `mcp serve`：以 MCP server 形态对外提供命令能力，便于 agent 直接接入。
+
+### Fixes
+
+- 修复企业环境下 OAuth 登录与数据面请求报
+  `SSL: CERTIFICATE_VERIFY_FAILED … unable to get local issuer certificate` 的问题。
+  CLI 现在把系统信任根（macOS 钥匙串、系统 CA 文件）与内置 certifi 合并成一份临时
+  bundle 后再发起请求，不再因为代理注入的根证书而丢掉公共根。
+  仍可通过 `SSL_CERT_FILE` / `REQUESTS_CA_BUNDLE` 显式指定信任库，用户指定的文件优先，
+  且不会被复制进合并结果。
+- 上述合并同时覆盖数据面（PyODPS 的 REST 与 Tunnel 客户端），不再只修登录一条链路。
+- TLS 校验策略未被放宽：仍为 `CERT_REQUIRED` 且保留主机名校验；只在确实缺少根证书时
+  补充信任来源。证书链仍不可信时，错误信息会给出可执行的下一步（安装代理根证书，
+  或改用 `auth login --from-env`、AK/SK、外部凭据 provider）。
+- 安装器契约与发布归档的端到端测试在受终端管控的环境下不再无限等待，改为显式跳过并
+  说明原因。
+
+### Compatibility
+
+- 无默认行为回退：仅在检测到企业 CA 时才合并信任库，普通环境结果不变。
+- 合并出的临时 bundle 权限为 `0600`，仅当前用户可读。
+
 ## [0.6.1] — 2026-09-20
 
 ### Fixes
