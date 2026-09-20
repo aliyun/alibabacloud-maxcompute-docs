@@ -12,6 +12,82 @@ sidebar_position: 10
 
 本页按时间倒序记录 MaxCompute CLI 的版本变化。
 
+## [0.6.1] — 2026-09-20
+
+### Fixes
+
+- `query` / `job result` 读取结果时，若服务端返回的文本无法被 CSV 解析器按列
+  cast（典型场景：`SHOW INDEXES` 返回含未加引号逗号的结果文本），不再报
+  `list index out of range` 并误判为连接故障。作业本身成功时降级返回原始任务
+  结果：行落在 `result` 列（附 `task_name` 列），`metadata.result_kind` 为
+  `raw_task_result`，并在 `agent_hints.warnings` 中说明未做类型转换。无原始
+  结果可降级时保持原有错误翻译不变。
+- 受影响命令示例：`aliyun maxc query "SHOW INDEXES ON <project>.<schema>.<table>"`。
+
+### Compatibility
+
+- 正常可解析结果的行为不变；实例 Tunnel 路径不经该解析器，不受影响。
+- 降级结果是字符串原文而非结构化列，消费方应按 `result_kind` 判别后再解析。
+
+## [0.6.0] — 2026-09-18
+
+### Features
+
+- 新增账号级 `semantic` 语义包远程管理命令组：版本化 JSON 导出、经审阅的
+  diff/apply（带草稿修订保护）与发布校验。
+- Catalog 请求签名保留不透明分页 token 与查询保留字符；认证失败与权限拒绝
+  区分为不同错误码。
+
+### Security and Reliability
+
+- 本地 `meta semantic` 注解与远程语义包相互独立。
+- 拒绝过期计划、不安全文件路径，以及对结果不确定写入的自动重试。
+
+## [0.5.4] — 2026-09-17
+
+### Fixes
+
+- 为代理登录增加 `--odps-endpoint` 与 `--odps-region` 别名，避免 Alibaba Cloud
+  CLI wrapper 吞掉 MaxC 路由参数。使用 `aliyun maxc` 时优先采用新别名，独立
+  入口的旧别名继续保留。
+
+## [0.5.3] — 2026-09-17
+
+### Features
+
+- 新增显式 `auth login-proxy`，用于可信凭据注入出口：只保存路由配置，忽略
+  本机凭证，发送不带冲突鉴权头的未签名 ODPS 请求。
+
+### Security and Reliability
+
+- 保留在线身份校验、原子登录替换、仅本地的 context/manifest 行为与既有签名模式。
+
+## [0.5.2] — 2026-09-01
+
+### Features
+
+- 公开 `query --force` 与 `job submit --force`：在用户明确授权且 project、schema、
+  目标与影响均已核对的前提下，允许执行一条精确的 DDL/DML。默认仍只接受可证明
+  为只读的 SQL。
+
+### Security and Reliability
+
+- `--force` 只放行一条可识别的 DDL/DML，继续拒绝多语句、过程脚本、权限与账号
+  管理、资源包管理和未知操作（含带数据面前缀的 `CHANGE OWNER` 和授权/标签子句）。
+  MaxCompute raw string 统一识别，字符串内的引号或分号不再干扰单语句判断，也不
+  能用于隐藏第二条写操作。报错、dry-run、cost、explain 或建议动作本身不构成写入
+  授权，写 SQL 的分析结果不会生成自动重放动作。
+- 支持 `CREATE OR REPLACE TABLE` 与 `LOAD INTO/OVERWRITE TABLE`；对未证实的
+  `LOAD DATA` 语法失败关闭。
+- Envelope、纯文本、流式事件与审计记录中的 LogView 统一去除签名查询参数、
+  fragment 与 URL userinfo；无法解析的 authority 失败关闭为固定脱敏占位符，
+  避免临时访问令牌进入日志或最终回答。
+- `query` / `job` 响应中的 `safety.effective_hints` 反映实际发送给 MaxCompute 的
+  执行参数；只读兼容模式下未知 hint 与已审查 key 上的异常值统一脱敏。
+- 公共 Skill 与运行时契约同步：要求 Alibaba Cloud CLI 3.3.19+，云 API 调用复用
+  session User-Agent，明确本地 context/manifest 语义、异步结果复用与原子输出
+  覆盖规则。
+
 ## [0.5.1] — 2026-08-31
 
 ### Fixes

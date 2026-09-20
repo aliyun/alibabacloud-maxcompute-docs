@@ -17,7 +17,7 @@ sidebar_position: 3
 
 | 渠道                    | 命令入口      | 适用场景                                      | 环境要求                     |
 | ----------------------- | ------------- | --------------------------------------------- | ---------------------------- |
-| 阿里云 CLI 扩展（推荐） | `aliyun maxc` | 已使用或可使用阿里云 CLI                      | Alibaba Cloud CLI >= 3.3.3   |
+| 阿里云 CLI 扩展（推荐） | `aliyun maxc` | 已使用或可使用阿里云 CLI                      | Alibaba Cloud CLI >= 3.3.19  |
 | PyPI 独立入口           | `maxc`        | 无法使用阿里云 CLI 扩展，或明确需要 PyPI 版本 | Python 3.9+                  |
 | 预编译二进制            | `maxc`        | 无 Python 环境、Agent 沙箱、CI 镜像           | 主流 Linux / macOS / Windows |
 
@@ -38,7 +38,7 @@ brew install aliyun-cli
 验证：
 
 ```bash
-aliyun version          # 确认 >= 3.3.3，否则运行 aliyun upgrade
+aliyun version          # 确认 >= 3.3.19，否则按阿里云 CLI 官方方式更新
 aliyun maxc --version
 ```
 
@@ -96,7 +96,45 @@ maxc agent doctor --online --json
 
 ## 升级与卸载
 
-- 阿里云 CLI 入口：`aliyun upgrade` 后 maxc 随之更新
+### 阿里云 CLI 入口的自动升级
+
+`aliyun maxc` 把 maxc 作为本地托管副本安装在 `~/.aliyun/maxc/`，并按以下流程
+自动保持更新：
+
+1. 每次执行 `aliyun maxc` 时，若距上次检查已满一天（时间戳记录在
+   `~/.aliyun/maxc/.version_check`），wrapper 读取版本指针
+   `.../maxc-cli/versions/latest`。
+2. 指针版本高于 `~/.aliyun/maxc/.version` 时，下载对应平台的
+   `maxc.tar.gz`、校验同名 `.sha256`，成功后原子替换安装目录并更新
+   `.version`；校验或解包失败不会破坏当前可用版本。
+3. 同一自然日内不重复检查，因此新版本最迟在次日生效。
+
+需要立即升级而不等每日检查，删除节流标记即可触发下一次调用时检查：
+
+```bash
+rm ~/.aliyun/maxc/.version_check
+aliyun maxc --version
+```
+
+相关环境变量：
+
+| 变量                                   | 作用                                             |
+| -------------------------------------- | ------------------------------------------------ |
+| `ALIBABA_CLOUD_MAXC_NO_UPDATE_CHECK`   | 设为 `1` 跳过每日版本检查，固定使用当前本地副本  |
+| `ALIBABA_CLOUD_MAXC_DOWNLOAD_BASE_URL` | 覆盖 OSS 下载地址（私有镜像或本地 mock）         |
+| `ALIBABA_CLOUD_MAXC_EXEC_PATH`         | 直接指定本机 maxc 可执行文件，跳过下载与自动升级 |
+
+注意：
+
+- 自动升级只更新 maxc 本体，不升级阿里云 CLI；后者按官方渠道更新。
+- 只有全平台制品构建成功的版本才会进入 `versions/latest`。单平台预发布版本
+  仅存在于对应版本目录，不会通过自动升级下发。
+- macOS 二进制当前未做签名与公证，全新下载首次执行可能被 Gatekeeper 拦截，
+  需在「系统设置 > 隐私与安全性」中批准或使用 PyPI 入口。
+
+### 其他入口
+
 - PyPI 入口：`python3 -m pip install --upgrade maxc-cli`
-- 预编译二进制：重新下载新版本 tarball 覆盖即可
+- 预编译二进制：重新下载新版本 tarball 覆盖即可；校验和比对见上文链接规则
 - 卸载：删除对应安装产物；本地配置和状态位于 `~/.maxc/`，按需保留或删除
+  （阿里云 CLI 入口的托管副本位于 `~/.aliyun/maxc/`）
