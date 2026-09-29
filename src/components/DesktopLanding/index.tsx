@@ -49,7 +49,7 @@ const DOC_BASE = '/docs/products/desktop';
 const ARCH_LAYERS: ArchLayer[] = [
   {
     label: '数据工作台',
-    desc: '连接数据源，取数与建模',
+    desc: '连接数据源，取数、建模与可视化',
     modules: [
       {
         title: 'MaxCompute 连接',
@@ -77,6 +77,11 @@ const ARCH_LAYERS: ArchLayer[] = [
         href: `${DOC_BASE}/sql-analysis/`,
       },
       {
+        title: '数据看板',
+        desc: 'Pin 成盘、联动与定时刷新',
+        href: `${DOC_BASE}/dashboard/`,
+      },
+      {
         title: 'MaxFrame',
         desc: 'Python 大规模数据处理',
         href: `${DOC_BASE}/maxframe-notebook/`,
@@ -95,7 +100,7 @@ const ARCH_LAYERS: ArchLayer[] = [
   },
   {
     label: 'DataAgent',
-    desc: '自然语言驱动的分析与建盘',
+    desc: '自然语言驱动的分析与归因',
     modules: [
       {
         title: 'AI Query',
@@ -106,11 +111,6 @@ const ARCH_LAYERS: ArchLayer[] = [
         title: '专家模式',
         desc: '指标归因与异常根因',
         href: `${DOC_BASE}/expert-mode/`,
-      },
-      {
-        title: '数据看板',
-        desc: 'Pin 成盘、联动与定时刷新',
-        href: `${DOC_BASE}/dashboard/`,
       },
       {
         title: '语义包',

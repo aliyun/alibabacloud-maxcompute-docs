@@ -85,6 +85,7 @@ const sidebars: SidebarsConfig = {
             },
             'products/desktop/catalog-insights',
             'products/desktop/sql-analysis',
+            'products/desktop/dashboard',
             'products/desktop/maxframe-notebook',
             'products/desktop/python-udf',
             'products/desktop/data-import',
@@ -98,7 +99,6 @@ const sidebars: SidebarsConfig = {
           items: [
             'products/desktop/ai-query',
             'products/desktop/expert-mode',
-            'products/desktop/dashboard',
             'products/desktop/semantic-pack',
           ],
         },

@@ -24,11 +24,7 @@
           "href": "/docs/products/desktop/installation/"
         },
         {
-          "label": "使用指南",
-          "href": "/docs/products/desktop/guides/"
-        },
-        {
-          "label": "AI 数据探索",
+          "label": "AI Query",
           "href": "/docs/products/desktop/ai-query/"
         },
         {
