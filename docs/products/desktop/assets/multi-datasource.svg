@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+<defs>
+  <linearGradient id="bgBase" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#F7F7FA"/><stop offset="0.25" stop-color="#FFFFFF"/>
+    <stop offset="0.75" stop-color="#FAFAF8"/><stop offset="1" stop-color="#F3F1EE"/>
+  </linearGradient>
+  <radialGradient id="haloBlue" cx="0.5" cy="0" r="0.75">
+    <stop offset="0" stop-color="#4F6EF7" stop-opacity="0.17"/>
+    <stop offset="0.4" stop-color="#7C3AED" stop-opacity="0.07"/>
+    <stop offset="0.75" stop-color="#7C3AED" stop-opacity="0"/>
+  </radialGradient>
+  <radialGradient id="haloAmber" cx="0.86" cy="0.96" r="0.5">
+    <stop offset="0" stop-color="#FF9500" stop-opacity="0.08"/>
+    <stop offset="0.6" stop-color="#FF5E3A" stop-opacity="0.025"/>
+    <stop offset="1" stop-color="#FF5E3A" stop-opacity="0"/>
+  </radialGradient>
+  <radialGradient id="haloTeal" cx="0.04" cy="0.52" r="0.45">
+    <stop offset="0" stop-color="#34C759" stop-opacity="0.055"/>
+    <stop offset="0.6" stop-color="#00C7BE" stop-opacity="0.02"/>
+    <stop offset="1" stop-color="#00C7BE" stop-opacity="0"/>
+  </radialGradient>
+  <linearGradient id="brandGrad" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#4F6EF7"/><stop offset="0.55" stop-color="#8B5CF6"/><stop offset="1" stop-color="#C084FC"/>
+  </linearGradient>
+  <linearGradient id="baseGrad" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0" stop-color="#4F6EF7" stop-opacity="0.10"/>
+    <stop offset="0.5" stop-color="#7C3AED" stop-opacity="0.08"/>
+    <stop offset="1" stop-color="#4F6EF7" stop-opacity="0.10"/>
+  </linearGradient>
+  <filter id="cardShadow" x="-6%" y="-12%" width="112%" height="130%">
+    <feDropShadow dx="0" dy="3" stdDeviation="9" flood-color="#000000" flood-opacity="0.05"/>
+  </filter>
+</defs>
+<g font-family="-apple-system, 'SF Pro Display', 'SF Pro Text', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Segoe UI', Arial, sans-serif">
+<rect width="1920" height="1080" fill="url(#bgBase)"/>
+<rect width="1920" height="1080" fill="url(#haloBlue)"/>
+<rect width="1920" height="1080" fill="url(#haloAmber)"/>
+<rect width="1920" height="1080" fill="url(#haloTeal)"/>
+<g>
+  <rect x="64" y="42" width="64" height="64" rx="17" fill="url(#brandGrad)" filter="url(#cardShadow)"/>
+  <g transform="translate(77.44, 55.44) scale(0.03625)"><path d="M575.936794 0.000213a127.985148 127.985148 0 0 1 108.040797 196.649181l181.994881 254.81843a127.985148 127.985148 0 1 1-78.113603 55.801525l-181.994881-254.81843c-2.709019 0.639926-5.439369 1.215859-8.21238 1.685137l-102.388119 470.793369a159.981435 159.981435 0 1 1-199.016906 32.806859L147.911796 510.404985a127.985148 127.985148 0 1 1 82.294451-49.380936l148.398779 247.288637a159.59748 159.59748 0 0 1 22.888011-3.754231l102.345457-470.814699A127.985148 127.985148 0 0 1 575.936794 0.000213z" fill="#FFFFFF"/></g>
+  <text x="150" y="88.4" font-size="40" font-weight="760" fill="#1D1D1F">多源数据联合分析 DataAgent</text>
+  <text x="750.4480000000002" y="88.4" font-size="18.5" font-weight="500" fill="#AEAEB2">MaxCompute · Hologres · StarRocks · AI 联合分析</text>
+</g>
+<g>
+  <rect x="1669" y="54" width="187" height="40" rx="20" fill="rgba(255,255,255,0.85)" stroke="rgba(60,60,67,0.10)" stroke-width="1" filter="url(#cardShadow)"/>
+  <circle cx="1691" cy="74" r="7" fill="url(#brandGrad)"/>
+  <text x="1707" y="79.58" font-size="15.5" font-weight="600" fill="#3C3C43">MaxQuery Studio</text>
+</g>
+<line x1="64" y1="130" x2="1856" y2="130" stroke="rgba(60,60,67,0.07)" stroke-width="1"/>
+<rect x="64" y="129" width="250" height="3" rx="1.5" fill="url(#brandGrad)"/>
+<g filter="url(#cardShadow)">
+  <rect x="64" y="195" width="1792" height="136" rx="18" fill="rgba(255,255,255,0.68)" stroke="rgba(60,60,67,0.07)" stroke-width="1"/>
+</g>
+<g>
+  <rect x="90" y="215" width="10" height="25" rx="5" fill="#34C759"/>
+  <text x="112" y="232.16" font-size="22" font-weight="700" fill="#1D1D1F">AI Query 多源数据分析</text>
+  <rect x="363.8" y="214.5" width="123" height="26" rx="13" fill="#34C759" fill-opacity="0.10"/>
+  <text x="425.3" y="232.1" font-size="13.5" font-weight="600" fill="#34C759" text-anchor="middle">auxDataSource</text>
+</g>
+<g>
+  <rect x="92.0" y="251" width="318.4" height="62" rx="14" fill="rgba(255,255,255,0.92)" stroke="#34C759" stroke-opacity="0.30" stroke-width="1.3"/>
+  <text x="251.2" y="288.12" font-size="18" font-weight="600" fill="#3C3C43" text-anchor="middle">提问点名辅助源</text>
+</g>
+<path d="M 418.4 282 L 436.4 282 M 430.9 276.5 L 436.4 282 L 430.9 287.5" stroke="#34C759" stroke-opacity="0.6" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<g>
+  <rect x="446.4" y="251" width="318.4" height="62" rx="14" fill="rgba(255,255,255,0.92)" stroke="#34C759" stroke-opacity="0.30" stroke-width="1.3"/>
+  <text x="605.6" y="288.12" font-size="18" font-weight="600" fill="#3C3C43" text-anchor="middle">list 发现连接</text>
+</g>
+<path d="M 772.8 282 L 790.8 282 M 785.3 276.5 L 790.8 282 L 785.3 287.5" stroke="#34C759" stroke-opacity="0.6" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<g>
+  <rect x="800.8" y="251" width="318.4" height="62" rx="14" fill="rgba(255,255,255,0.92)" stroke="#34C759" stroke-opacity="0.30" stroke-width="1.3"/>
+  <text x="960.0" y="288.12" font-size="18" font-weight="600" fill="#3C3C43" text-anchor="middle">query 显式寻址执行</text>
+</g>
+<path d="M 1127.2 282 L 1145.2 282 M 1139.7 276.5 L 1145.2 282 L 1139.7 287.5" stroke="#34C759" stroke-opacity="0.6" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<g>
+  <rect x="1155.2" y="251" width="318.4" height="62" rx="14" fill="rgba(255,255,255,0.92)" stroke="#34C759" stroke-opacity="0.30" stroke-width="1.3"/>
+  <text x="1314.4" y="288.12" font-size="18" font-weight="600" fill="#3C3C43" text-anchor="middle">结果表格卡渲染</text>
+</g>
+<path d="M 1481.6 282 L 1499.6 282 M 1494.1 276.5 L 1499.6 282 L 1494.1 287.5" stroke="#34C759" stroke-opacity="0.6" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<g>
+  <rect x="1509.6" y="251" width="318.4" height="62" rx="14" fill="rgba(255,255,255,0.92)" stroke="#34C759" stroke-opacity="0.30" stroke-width="1.3"/>
+  <text x="1668.8" y="288.12" font-size="18" font-weight="600" fill="#3C3C43" text-anchor="middle">Pin 到 Dashboard</text>
+</g>
+<path d="M 960 354 L 960 368 M 953 362 L 960 369 L 967 362" stroke="#4F6EF7" stroke-opacity="0.55" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<g filter="url(#cardShadow)">
+  <rect x="64" y="397" width="1792" height="250" rx="18" fill="rgba(255,255,255,0.68)" stroke="rgba(60,60,67,0.07)" stroke-width="1"/>
+</g>
+<g>
+  <rect x="90" y="417" width="10" height="25" rx="5" fill="#8B5CF6"/>
+  <text x="112" y="434.16" font-size="22" font-weight="700" fill="#1D1D1F">核心能力</text>
+  <rect x="216.0" y="416.5" width="224" height="26" rx="13" fill="#8B5CF6" fill-opacity="0.10"/>
+  <text x="328.0" y="434.1" font-size="13.5" font-weight="600" fill="#8B5CF6" text-anchor="middle">Connect · Develop · Visualize</text>
+</g>
+<g>
+  <rect x="92.0" y="453" width="420.5" height="176" rx="14" fill="rgba(255,255,255,0.92)" stroke="rgba(60,60,67,0.07)" stroke-width="1"/>
+  <rect x="92.0" y="453" width="420.5" height="176" rx="14" fill="none" stroke="#8B5CF6" stroke-opacity="0.16" stroke-width="1"/>
+  <rect x="110.0" y="469" width="9" height="22" rx="4.5" fill="#8B5CF6"/>
+  <text x="130.0" y="485.4" font-size="20" font-weight="650" fill="#1D1D1F">连接管理</text>
+  <circle cx="119.0" cy="511.72" r="3" fill="#8B5CF6" fill-opacity="0.55"/>
+  <text x="132.0" y="517" font-size="16.5" fill="#3C3C43">MaxCompute：AK / STS / AKless</text>
+  <circle cx="119.0" cy="539.72" r="3" fill="#8B5CF6" fill-opacity="0.55"/>
+  <text x="132.0" y="545" font-size="16.5" fill="#3C3C43">Hologres：AK/SK · 主机/端口/库</text>
+  <circle cx="119.0" cy="567.72" r="3" fill="#8B5CF6" fill-opacity="0.55"/>
+  <text x="132.0" y="573" font-size="16.5" fill="#3C3C43">StarRocks 用户密码 · 留空连实例</text>
+  <circle cx="119.0" cy="595.72" r="3" fill="#8B5CF6" fill-opacity="0.55"/>
+  <text x="132.0" y="601" font-size="16.5" fill="#3C3C43">测试连接 · 保存并连接 · 详情</text>
+</g>
+<g>
+  <rect x="530.5" y="453" width="420.5" height="176" rx="14" fill="rgba(255,255,255,0.92)" stroke="rgba(60,60,67,0.07)" stroke-width="1"/>
+  <rect x="530.5" y="453" width="420.5" height="176" rx="14" fill="none" stroke="#7C3AED" stroke-opacity="0.16" stroke-width="1"/>
+  <rect x="548.5" y="469" width="9" height="22" rx="4.5" fill="#7C3AED"/>
+  <text x="568.5" y="485.4" font-size="20" font-weight="650" fill="#1D1D1F">SQL 开发与执行</text>
+  <circle cx="557.5" cy="511.72" r="3" fill="#7C3AED" fill-opacity="0.55"/>
+  <text x="570.5" y="517" font-size="16.5" fill="#3C3C43">Hologres / StarRocks 专属 Tab</text>
+  <circle cx="557.5" cy="539.72" r="3" fill="#7C3AED" fill-opacity="0.55"/>
+  <text x="570.5" y="545" font-size="16.5" fill="#3C3C43">Tab 级连接绑定 · 多引擎不误路由</text>
+  <circle cx="557.5" cy="567.72" r="3" fill="#7C3AED" fill-opacity="0.55"/>
+  <text x="570.5" y="573" font-size="16.5" fill="#3C3C43">全文/选中/单句执行 · SET 合并</text>
+  <circle cx="557.5" cy="595.72" r="3" fill="#7C3AED" fill-opacity="0.55"/>
+  <text x="570.5" y="601" font-size="16.5" fill="#3C3C43">JDBC 执行示作业监控非 LogView</text>
+</g>
+<g>
+  <rect x="969.0" y="453" width="420.5" height="176" rx="14" fill="rgba(255,255,255,0.92)" stroke="rgba(60,60,67,0.07)" stroke-width="1"/>
+  <rect x="969.0" y="453" width="420.5" height="176" rx="14" fill="none" stroke="#06B6D4" stroke-opacity="0.16" stroke-width="1"/>
+  <rect x="987.0" y="469" width="9" height="22" rx="4.5" fill="#06B6D4"/>
+  <text x="1007.0" y="485.4" font-size="20" font-weight="650" fill="#1D1D1F">结果与可视化</text>
+  <circle cx="996.0" cy="511.72" r="3" fill="#06B6D4" fill-opacity="0.55"/>
+  <text x="1009.0" y="517" font-size="16.5" fill="#3C3C43">表格/可视化/透视/质量/JSON</text>
+  <circle cx="996.0" cy="539.72" r="3" fill="#06B6D4" fill-opacity="0.55"/>
+  <text x="1009.0" y="545" font-size="16.5" fill="#3C3C43">执行日志 · LogView · 作业监控</text>
+  <circle cx="996.0" cy="567.72" r="3" fill="#06B6D4" fill-opacity="0.55"/>
+  <text x="1009.0" y="573" font-size="16.5" fill="#3C3C43">智能推荐图型 · 一键换图配置</text>
+  <circle cx="996.0" cy="595.72" r="3" fill="#06B6D4" fill-opacity="0.55"/>
+  <text x="1009.0" y="601" font-size="16.5" fill="#3C3C43">复制全表 · 导出四种文件格式</text>
+</g>
+<g>
+  <rect x="1407.5" y="453" width="420.5" height="176" rx="14" fill="rgba(255,255,255,0.92)" stroke="rgba(60,60,67,0.07)" stroke-width="1"/>
+  <rect x="1407.5" y="453" width="420.5" height="176" rx="14" fill="none" stroke="#34C759" stroke-opacity="0.16" stroke-width="1"/>
+  <rect x="1425.5" y="469" width="9" height="22" rx="4.5" fill="#34C759"/>
+  <text x="1445.5" y="485.4" font-size="20" font-weight="650" fill="#1D1D1F">Dashboard 看板</text>
+  <circle cx="1434.5" cy="511.72" r="3" fill="#34C759" fill-opacity="0.55"/>
+  <text x="1447.5" y="517" font-size="16.5" fill="#3C3C43">结果一键 Pin 成磁贴</text>
+  <circle cx="1434.5" cy="539.72" r="3" fill="#34C759" fill-opacity="0.55"/>
+  <text x="1447.5" y="545" font-size="16.5" fill="#3C3C43">零配置联动 · 下钻看明细</text>
+  <circle cx="1434.5" cy="567.72" r="3" fill="#34C759" fill-opacity="0.55"/>
+  <text x="1447.5" y="573" font-size="16.5" fill="#3C3C43">TTL 缓存 · 定时刷新</text>
+  <circle cx="1434.5" cy="595.72" r="3" fill="#34C759" fill-opacity="0.55"/>
+  <text x="1447.5" y="601" font-size="16.5" fill="#3C3C43">AI 一句话建盘/加图/改盘</text>
+</g>
+<path d="M 960 670 L 960 684 M 953 678 L 960 685 L 967 678" stroke="#4F6EF7" stroke-opacity="0.55" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<g filter="url(#cardShadow)">
+  <rect x="64" y="713" width="1792" height="128" rx="18" fill="rgba(255,255,255,0.68)" stroke="rgba(60,60,67,0.07)" stroke-width="1"/>
+</g>
+<g>
+  <rect x="90" y="733" width="10" height="25" rx="5" fill="#4F6EF7"/>
+  <text x="112" y="750.16" font-size="22" font-weight="700" fill="#1D1D1F">工作台入口</text>
+  <rect x="238.0" y="732.5" width="78" height="26" rx="13" fill="#4F6EF7" fill-opacity="0.10"/>
+  <text x="277.0" y="750.1" font-size="13.5" font-weight="600" fill="#4F6EF7" text-anchor="middle">4 个入口</text>
+</g>
+<g>
+  <rect x="449.0" y="769" width="247" height="54" rx="27" fill="rgba(255,255,255,0.9)" stroke="#4F6EF7" stroke-opacity="0.28" stroke-width="1.2"/>
+  <circle cx="471.0" cy="796" r="5" fill="#4F6EF7"/>
+  <text x="486.0" y="802.12" font-size="18" font-weight="500" fill="#3C3C43">Studio / Quest 双模式</text>
+</g>
+<g>
+  <rect x="712.0" y="769" width="220" height="54" rx="27" fill="rgba(255,255,255,0.9)" stroke="#4F6EF7" stroke-opacity="0.28" stroke-width="1.2"/>
+  <circle cx="734.0" cy="796" r="5" fill="#4F6EF7"/>
+  <text x="749.0" y="802.12" font-size="18" font-weight="500" fill="#3C3C43">活动栏「连接」入口</text>
+</g>
+<g>
+  <rect x="948.0" y="769" width="220" height="54" rx="27" fill="rgba(255,255,255,0.9)" stroke="#4F6EF7" stroke-opacity="0.28" stroke-width="1.2"/>
+  <circle cx="970.0" cy="796" r="5" fill="#4F6EF7"/>
+  <text x="985.0" y="802.12" font-size="18" font-weight="500" fill="#3C3C43">标题栏数据源切换器</text>
+</g>
+<g>
+  <rect x="1184.0" y="769" width="287" height="54" rx="27" fill="rgba(255,255,255,0.9)" stroke="#4F6EF7" stroke-opacity="0.28" stroke-width="1.2"/>
+  <circle cx="1206.0" cy="796" r="5" fill="#4F6EF7"/>
+  <text x="1221.0" y="802.12" font-size="18" font-weight="500" fill="#3C3C43">AI Query / AI Coding 侧栏</text>
+</g>
+<path d="M 960 864 L 960 878 M 953 872 L 960 879 L 967 872" stroke="#4F6EF7" stroke-opacity="0.55" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<g filter="url(#cardShadow)">
+  <rect x="64" y="907" width="1792" height="96" rx="18" fill="url(#baseGrad)"/>
+  <rect x="64" y="907" width="1792" height="96" rx="18" fill="rgba(255,255,255,0.55)"/>
+  <rect x="64" y="907" width="1792" height="96" rx="18" fill="none" stroke="#4F6EF7" stroke-opacity="0.22" stroke-width="1.2"/>
+</g>
+<g><image x="532.0" y="916.0" width="36" height="36" href="data:image/svg+xml;base64,PHN2ZyB0PSIxNzA0MjUyNTQ2NzE0IiBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHAtaWQ9IjI5NzQxIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgd2lkdGg9IjIwMCIgaGVpZ2h0PSIyMDAiPjxwYXRoIGQ9Ik01NjUuMzMzMzMzIDg1LjMzMzMzM2M1OS43MzMzMzMgMCAxMDYuNjY2NjY3IDQ2LjkzMzMzMyAxMDYuNjY2NjY3IDEwNi42NjY2NjcgMCAyMS4zMzMzMzMtNi40IDQwLjUzMzMzMy0xNy4wNjY2NjcgNTcuNmwxNTEuNDY2NjY3IDIxMy4zMzMzMzNjOC41MzMzMzMtMi4xMzMzMzMgMTcuMDY2NjY3LTIuMTMzMzMzIDI1LjYtMi4xMzMzMzMgNTkuNzMzMzMzIDAgMTA2LjY2NjY2NyA0Ni45MzMzMzMgMTA2LjY2NjY2NyAxMDYuNjY2NjY3cy00Ni45MzMzMzMgMTA2LjY2NjY2Ny0xMDYuNjY2NjY3IDEwNi42NjY2NjYtMTA2LjY2NjY2Ny00Ni45MzMzMzMtMTA2LjY2NjY2Ny0xMDYuNjY2NjY2YzAtMjEuMzMzMzMzIDYuNC00MC41MzMzMzMgMTcuMDY2NjY3LTU3LjZsLTE1MS40NjY2NjctMjEzLjMzMzMzNGMtMi4xMzMzMzMgMC00LjI2NjY2NyAwLTYuNCAyLjEzMzMzNGwtODUuMzMzMzMzIDM5Mi41MzMzMzNjNDAuNTMzMzMzIDIzLjQ2NjY2NyA2OC4yNjY2NjcgNjYuMTMzMzMzIDY4LjI2NjY2NyAxMTUuMiAwIDc0LjY2NjY2Ny01OS43MzMzMzMgMTMyLjI2NjY2Ny0xMzIuMjY2NjY3IDEzMi4yNjY2NjdTMjk4LjY2NjY2NyA4NzguOTMzMzMzIDI5OC42NjY2NjcgODA2LjRjMC0zNC4xMzMzMzMgMTIuOC02NCAzNC4xMzMzMzMtODcuNDY2NjY3TDIwOS4wNjY2NjcgNTEySDE5MmMtNTkuNzMzMzMzIDAtMTA2LjY2NjY2Ny00Ni45MzMzMzMtMTA2LjY2NjY2Ny0xMDYuNjY2NjY3czQ2LjkzMzMzMy0xMDYuNjY2NjY3IDEwNi42NjY2NjctMTA2LjY2NjY2NiAxMDYuNjY2NjY3IDQ2LjkzMzMzMyAxMDYuNjY2NjY3IDEwNi42NjY2NjZjMCAyMy40NjY2NjctOC41MzMzMzMgNDYuOTMzMzMzLTIxLjMzMzMzNCA2NGwxMjMuNzMzMzM0IDIwNi45MzMzMzRjNi40LTIuMTMzMzMzIDEyLjgtMi4xMzMzMzMgMTkuMi0yLjEzMzMzNGw4NS4zMzMzMzMtMzkyLjUzMzMzM2MtMjcuNzMzMzMzLTE5LjItNDYuOTMzMzMzLTUxLjItNDYuOTMzMzMzLTg3LjQ2NjY2NyAwLTYxLjg2NjY2NyA0Ni45MzMzMzMtMTA4LjggMTA2LjY2NjY2Ni0xMDguOHoiIGZpbGw9IiNGRjZBMDAiIHAtaWQ9IjI5NzQyIj48L3BhdGg+PC9zdmc+"/><text x="580.0" y="946" font-family="PingFang SC, Microsoft YaHei, sans-serif" font-size="20" font-weight="600" fill="#3B5CE4">MaxCompute</text><image x="884.4" y="916.0" width="36" height="36" href="data:image/svg+xml;base64,PHN2ZyB0PSIxNzA0MjUyNTM2ODE5IiBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHAtaWQ9IjI5NDQzIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgd2lkdGg9IjIwMCIgaGVpZ2h0PSIyMDAiPjxwYXRoIGQ9Ik04MTIuOCA3ODIuOTMzMzMzbDEyLjggMi4xMzMzMzRjOTYgMTIuOCAxMzIuMjY2NjY3IDM0LjEzMzMzMyAxNDcuMiA0OS4wNjY2NjYgOC41MzMzMzMgOC41MzMzMzMgOC41MzMzMzMgMTQuOTMzMzMzIDguNTMzMzMzIDE5LjIgMCAyNy43MzMzMzMtMzguNCA0OS4wNjY2NjctMTEwLjkzMzMzMyA2NGgtMTAuNjY2NjY3Yy03Mi41MzMzMzMgMTIuOC0xNzkuMiAxOS4yLTMzNC45MzMzMzMgMjEuMzMzMzM0di0xNjguNTMzMzM0aDIzLjQ2NjY2N2MxMTAuOTMzMzMzIDAgMTk2LjI2NjY2NyA0LjI2NjY2NyAyNjQuNTMzMzMzIDEyLjh6IG0tNTkzLjA2NjY2NyAwdjE0Ny4yaC00LjI2NjY2NmMtNTkuNzMzMzMzLTEwLjY2NjY2Ny0xMzYuNTMzMzMzLTI5Ljg2NjY2Ny0xNjQuMjY2NjY3LTU5LjczMzMzMy02LjQtNi40LTguNTMzMzMzLTEyLjgtOC41MzMzMzMtMTcuMDY2NjY3IDAtNC4yNjY2NjcgMi4xMzMzMzMtOC41MzMzMzMgOC41MzMzMzMtMTQuOTMzMzMzbDIuMTMzMzMzLTIuMTMzMzMzYzEyLjgtMTAuNjY2NjY3IDMyLTE5LjIgNDYuOTMzMzM0LTIzLjQ2NjY2NyAyNy43MzMzMzMtMTIuOCA2OC4yNjY2NjctMjEuMzMzMzMzIDExOS40NjY2NjYtMjkuODY2NjY3ek00Mi42NjY2NjcgMzAyLjkzMzMzM2M0LjI2NjY2NyAyLjEzMzMzMyA2LjQgNC4yNjY2NjcgMTAuNjY2NjY2IDQuMjY2NjY3bDYuNCAyLjEzMzMzMyAxOS4yIDYuNGMzOC40IDEyLjggNzguOTMzMzMzIDIzLjQ2NjY2NyAxNDAuOCAzMnYzMjYuNGMtNjEuODY2NjY3IDYuNC0xMDIuNCAxNy4wNjY2NjctMTM4LjY2NjY2NiAyOS44NjY2NjctNC4yNjY2NjcgMi4xMzMzMzMtNi40IDIuMTMzMzMzLTEwLjY2NjY2NyA0LjI2NjY2Ny0yLjEzMzMzMyAyLjEzMzMzMy02LjQgMi4xMzMzMzMtOC41MzMzMzMgNC4yNjY2NjZsLTYuNCAyLjEzMzMzNC00LjI2NjY2NyAyLjEzMzMzMy00LjI2NjY2NyAyLjEzMzMzMy00LjI2NjY2NiAyLjEzMzMzNFYzMDIuOTMzMzMzeiBtOTM4LjY2NjY2NiAwdjQxNmwtNC4yNjY2NjYtMi4xMzMzMzMtNC4yNjY2NjctMi4xMzMzMzNjLTIuMTMzMzMzLTIuMTMzMzMzLTQuMjY2NjY3LTIuMTMzMzMzLTYuNC0yLjEzMzMzNGgtMi4xMzMzMzNsLTguNTMzMzM0LTQuMjY2NjY2LTQuMjY2NjY2LTIuMTMzMzM0LTYuNC0yLjEzMzMzMy02LjQtMi4xMzMzMzMtNC4yNjY2NjctMi4xMzMzMzQtNi40LTIuMTMzMzMzYy0yLjEzMzMzMyAwLTYuNC0yLjEzMzMzMy04LjUzMzMzMy0yLjEzMzMzM0g5MTcuMzMzMzMzYy00LjI2NjY2NyAwLTYuNC0yLjEzMzMzMy0xMC42NjY2NjYtMi4xMzMzMzRsLTQuMjY2NjY3LTIuMTMzMzMzLTYuNC0yLjEzMzMzMy04LjUzMzMzMy0yLjEzMzMzNC0xMC42NjY2NjctMi4xMzMzMzNoLTQuMjY2NjY3bC02LjQtMi4xMzMzMzNIODUzLjMzMzMzM2wtMTAuNjY2NjY2LTIuMTMzMzM0Yy00LjI2NjY2NyAwLTYuNCAwLTEwLjY2NjY2Ny0yLjEzMzMzM2gtNC4yNjY2NjdsLTEyLjgtMi4xMzMzMzNoLTEwLjY2NjY2NmwtOC41MzMzMzQtMi4xMzMzMzRoLTguNTMzMzMzYy00Ni45MzMzMzMtNC4yNjY2NjctMTAyLjQtOC41MzMzMzMtMTY0LjI2NjY2Ny0xMC42NjY2NjZoLTk2VjM2Mi42NjY2NjdoMjMuNDY2NjY3YzEzNC40LTIuMTMzMzMzIDIzNi44LTguNTMzMzMzIDMxMy42LTIxLjMzMzMzNGwxNy4wNjY2NjctMi4xMzMzMzNoNC4yNjY2NjZsOC41MzMzMzQtMi4xMzMzMzMgMTAuNjY2NjY2LTIuMTMzMzM0IDYuNC0yLjEzMzMzMyA4LjUzMzMzNC0yLjEzMzMzMyA4LjUzMzMzMy0yLjEzMzMzNCA4LjUzMzMzMy0yLjEzMzMzM2M0LjI2NjY2Ny0yLjEzMzMzMyAxMC42NjY2NjctNC4yNjY2NjcgMTQuOTMzMzM0LTQuMjY2NjY3IDIuMTMzMzMzIDAgNC4yNjY2NjctMi4xMzMzMzMgOC41MzMzMzMtMi4xMzMzMzNsNC4yNjY2NjctMi4xMzMzMzMgNC4yNjY2NjYtMi4xMzMzMzQgNC4yNjY2NjctMi4xMzMzMzMgNC4yNjY2NjctMi4xMzMzMzMgNC4yNjY2NjYtMi4xMzMzMzR2LTYuNHpNMzIyLjEzMzMzMyA2NjcuNzMzMzMzVjM1Ni4yNjY2NjdjMjEuMzMzMzMzIDIuMTMzMzMzIDU1LjQ2NjY2NyAyLjEzMzMzMyAxMDIuNCA0LjI2NjY2NnYzMDIuOTMzMzM0Yy0zOC40IDAtNzAuNCAyLjEzMzMzMy0xMDIuNCA0LjI2NjY2NnpNODcwLjQgMTA4LjhsMTAuNjY2NjY3IDIuMTMzMzMzQzkyOCAxMjEuNiA5ODEuMzMzMzMzIDEzOC42NjY2NjcgOTgxLjMzMzMzMyAxNzAuNjY2NjY3YzAgMjMuNDY2NjY3LTQyLjY2NjY2NyA0NC44LTExNS4yIDU5LjczMzMzM2wtNi40IDIuMTMzMzMzYy03Ni44IDE0LjkzMzMzMy0xODUuNiAyMS4zMzMzMzMtMzMwLjY2NjY2NiAyMS4zMzMzMzRWODUuMzMzMzMzaDMyYzE0MC44IDIuMTMzMzMzIDI0MS4wNjY2NjcgMTAuNjY2NjY3IDMwOS4zMzMzMzMgMjMuNDY2NjY3eiBtLTY1MC42NjY2NjctMTQuOTMzMzMzdjE0Ny4yYy01My4zMzMzMzMtNi40LTg1LjMzMzMzMy0xNC45MzMzMzMtMTE1LjItMjUuNmwtNC4yNjY2NjYtMi4xMzMzMzQtOC41MzMzMzQtMi4xMzMzMzNjLTE0LjkzMzMzMy02LjQtMzYuMjY2NjY3LTE3LjA2NjY2Ny00NC44LTI5Ljg2NjY2Ny0yLjEzMzMzMy0yLjEzMzMzMy00LjI2NjY2Ny00LjI2NjY2Ny00LjI2NjY2Ni02LjRWMTcwLjY2NjY2N2MwLTguNTMzMzMzIDEwLjY2NjY2Ny0xOS4yIDI3LjczMzMzMy0yOS44NjY2NjcgMjEuMzMzMzMzLTEyLjggNDkuMDY2NjY3LTIzLjQ2NjY2NyA4Ny40NjY2NjctMzIgMjEuMzMzMzMzLTYuNCAzOC40LTEwLjY2NjY2NyA2MS44NjY2NjYtMTQuOTMzMzMzeiIgZmlsbD0iI0ZGNkEwMCIgcC1pZD0iMjk0NDQiPjwvcGF0aD48L3N2Zz4="/><text x="932.4" y="946" font-family="PingFang SC, Microsoft YaHei, sans-serif" font-size="20" font-weight="600" fill="#3B5CE4">Hologres</text><image x="1218.2" y="916.0" width="36" height="36" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTQiIGhlaWdodD0iNjIiIHZpZXdCb3g9IjAgMCA1NCA2MiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTE2LjE3IDI3LjMzQzEyLjE3IDI0LjA2IDcuODEgMjAuNDUgNS40OCAxOC41MkwzLjg1IDE3LjE4QzIuNzIgMTYuMjUgMS44NSAxNC42IDMuNzUgMTMuNDdDNC41OCAxMyAxOC43OCA0LjgzIDI0IDEuOEMyNC45MTAxIDEuMjY3NDUgMjUuOTQ1NSAwLjk4Njc1NSAyNyAwLjk4Njc1NUMyOC4wNTQ1IDAuOTg2NzU1IDI5LjA4OTkgMS4yNjc0NSAzMCAxLjhMNDAgNy41OUM0MC4xODA4IDcuNjkzMTUgNDAuMzMxMiA3Ljg0MjMgNDAuNDM1NyA4LjAyMjMyQzQwLjU0MDMgOC4yMDIzNCA0MC41OTU0IDguNDA2ODIgNDAuNTk1NCA4LjYxNUM0MC41OTU0IDguODIzMTkgNDAuNTQwMyA5LjAyNzY3IDQwLjQzNTcgOS4yMDc2OUM0MC4zMzEyIDkuMzg3NzEgNDAuMTgwOCA5LjUzNjg2IDQwIDkuNjRMMTYuNTIgMjMuMTFDMTYuMTU4MyAyMy4zMTcgMTUuODUyNSAyMy42MDg5IDE1LjYyODcgMjMuOTYwNEMxNS40MDQ5IDI0LjMxMiAxNS4yNyAyNC43MTI3IDE1LjIzNTYgMjUuMTI4QzE1LjIwMTEgMjUuNTQzMyAxNS4yNjgyIDI1Ljk2MDcgMTUuNDMxIDI2LjM0NDNDMTUuNTkzOCAyNi43Mjc5IDE1Ljg0NzQgMjcuMDY2MiAxNi4xNyAyNy4zM1oiIGZpbGw9IiNGQUJGMDAiLz4KPHBhdGggZD0iTTIyIDM2Ljg4TDEyLjQ4IDUxLjQ1QzEyLjE0NzYgNTEuOTU2NSAxMS42MzM4IDUyLjMxNjUgMTEuMDQ0MyA1Mi40NTU5QzEwLjQ1NDcgNTIuNTk1NCA5LjgzNDEzIDUyLjUwMzggOS4zMSA1Mi4yTDMgNDguNTVDMi4wOTQ2MyA0OC4wMjczIDEuMzQxNTMgNDcuMjc3MiAwLjgxNTMyNCA0Ni4zNzM4QzAuMjg5MTE2IDQ1LjQ3MDUgMC4wMDgwNTkzMyA0NC40NDU0IDAgNDMuNEwwIDE5LjA4QzAuMDAwMzg0MjM0IDE4LjE1NTMgMC4yMTY2NDcgMTcuMjQzNSAwLjYzMTU3IDE2LjQxNzFDMS4wNDY0OSAxNS41OTA3IDEuNjQ4NjIgMTQuODcyNiAyLjM5IDE0LjMyQzAuNjkgMTUuNjMgMS4zOSAxNy4xIDIuNDkgMTguMDRMMjEuNTcgMzMuNzVDMjIuMDEyMSAzNC4xMjg4IDIyLjMgMzQuNjU2NiAyMi4zNzkzIDM1LjIzMzRDMjIuNDU4NSAzNS44MTAyIDIyLjMyMzYgMzYuMzk2IDIyIDM2Ljg4WiIgZmlsbD0iIzMzODM5MyIvPgo8cGF0aCBkPSJNMzcuODMgMzUuMTFMNDguNTIgNDMuOTJMNTAuMTUgNDUuMjZDNTEuMjggNDYuMiA1Mi4xNSA0Ny44NSA1MC4yNSA0OC45OEM0OS40MiA0OS40NyAzNS4yNSA1Ny42MiAyOS45OCA2MC42NUMyOS4wNzM5IDYxLjE2NzQgMjguMDQ4NCA2MS40Mzk1IDI3LjAwNSA2MS40Mzk1QzI1Ljk2MTYgNjEuNDM5NSAyNC45MzYyIDYxLjE2NzQgMjQuMDMgNjAuNjVMMTQgNTQuODZDMTMuODE5NCA1NC43NTU1IDEzLjY2OTQgNTQuNjA1MyAxMy41NjUxIDU0LjQyNDVDMTMuNDYwOSA1NC4yNDM3IDEzLjQwNiA1NC4wMzg3IDEzLjQwNiA1My44M0MxMy40MDYgNTMuNjIxMyAxMy40NjA5IDUzLjQxNjMgMTMuNTY1MSA1My4yMzU1QzEzLjY2OTQgNTMuMDU0NyAxMy44MTk0IDUyLjkwNDUgMTQgNTIuOEwzNy40OCAzOS4zNEMzNy44NDE3IDM5LjEzMTggMzguMTQ3NSAzOC44Mzg5IDM4LjM3MTIgMzguNDg2NUMzOC41OTQ4IDM4LjEzNDEgMzguNzI5NiAzNy43MzI3IDM4Ljc2NDEgMzcuMzE2OEMzOC43OTg1IDM2LjkwMDggMzguNzMxNSAzNi40ODI3IDM4LjU2ODggMzYuMDk4NEMzOC40MDYxIDM1LjcxNCAzOC4xNTI2IDM1LjM3NDkgMzcuODMgMzUuMTFaIiBmaWxsPSIjMzM4MzkzIi8+CjxwYXRoIGQ9Ik0zMiAyNS41N0w0MS41MiAxMUM0MS44NTI0IDEwLjQ5MzUgNDIuMzY2MiAxMC4xMzM2IDQyLjk1NTcgOS45OTQwN0M0My41NDUzIDkuODU0NTggNDQuMTY1OSA5Ljk0NjE3IDQ0LjY5IDEwLjI1TDUxIDEzLjlDNTEuOTA5NCAxNC40MTggNTIuNjY1OCAxNS4xNjcxIDUzLjE5MjcgMTYuMDcxNUM1My43MTk1IDE2Ljk3NTkgNTMuOTk4IDE4LjAwMzQgNTQgMTkuMDVWNDMuMzdDNTMuOTk5NiA0NC4yOTQ3IDUzLjc4MzMgNDUuMjA2NSA1My4zNjg0IDQ2LjAzMjlDNTIuOTUzNSA0Ni44NTkzIDUyLjM1MTQgNDcuNTc3NCA1MS42MSA0OC4xM0M1My4zMSA0Ni44MiA1Mi42MSA0NS4zNSA1MS41MSA0NC40MUwzMi40MyAyOC42OUMzMS45ODg2IDI4LjMxMjkgMzEuNzAxIDI3Ljc4NjkgMzEuNjIxOCAyNy4yMTE4QzMxLjU0MjUgMjYuNjM2NyAzMS42NzcxIDI2LjA1MjUgMzIgMjUuNTdaIiBmaWxsPSIjMzM4MzkzIi8+Cjwvc3ZnPgo="/><text x="1266.2" y="946" font-family="PingFang SC, Microsoft YaHei, sans-serif" font-size="20" font-weight="600" fill="#3B5CE4">StarRocks</text></g>
+<text x="960" y="980" font-size="15.5" fill="#6E6E73" text-anchor="middle">数据源层 · DataSourceProvider SPI 统一路由；顶栏上下文恒为 MaxCompute 主源，辅助源走 Tab 级绑定与显式寻址</text>
+</g>
+</svg>

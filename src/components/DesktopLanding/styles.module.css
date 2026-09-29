@@ -1,0 +1,285 @@
+.landing {
+  --product-accent: #7057d9;
+  --product-accent-soft: #f0edff;
+  display: grid;
+  gap: 1.35rem;
+  max-width: 980px;
+}
+
+.hero {
+  display: flex;
+  gap: 1.2rem;
+  align-items: flex-start;
+  padding: 2rem;
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--product-accent-soft) 72%, var(--mc-card)),
+    var(--mc-card) 72%
+  );
+  border: 1px solid
+    color-mix(in srgb, var(--product-accent) 24%, var(--mc-border));
+  border-radius: 18px;
+}
+
+.heroIcon {
+  display: inline-flex;
+  width: 62px;
+  height: 62px;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  color: var(--product-accent);
+  background: var(--mc-card);
+  border: 1px solid
+    color-mix(in srgb, var(--product-accent) 20%, var(--mc-border));
+  border-radius: 16px;
+}
+
+.heroCopy {
+  flex: 1;
+}
+
+.eyebrowRow {
+  color: var(--product-accent);
+  font-size: 0.68rem;
+  font-weight: 780;
+  letter-spacing: 0.1em;
+}
+
+.hero h1 {
+  margin: 0.75rem 0 0;
+  color: var(--mc-ink);
+  font-size: clamp(2rem, 4vw, 3.25rem);
+  letter-spacing: -0.04em;
+}
+
+.heroAlias {
+  margin: 0.1rem 0 0.7rem;
+  color: var(--mc-muted);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.heroIntro {
+  max-width: 650px;
+  margin: 0 0 0.55rem;
+  color: var(--mc-muted);
+  line-height: 1.75;
+}
+
+.ctaRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  margin-top: 1.1rem;
+}
+
+.ctaPrimary {
+  display: inline-flex;
+  gap: 0.45rem;
+  align-items: center;
+  padding: 0.62rem 1.05rem;
+  color: #ffffff;
+  font-weight: 680;
+  background: var(--product-accent);
+  border-radius: 10px;
+}
+
+.ctaPrimary:hover {
+  color: #ffffff;
+  text-decoration: none;
+  background: color-mix(in srgb, var(--product-accent) 86%, #000000);
+}
+
+.ctaSecondary {
+  display: inline-flex;
+  gap: 0.45rem;
+  align-items: center;
+  padding: 0.62rem 1.05rem;
+  color: var(--mc-ink);
+  font-weight: 680;
+  background: var(--mc-card);
+  border: 1px solid var(--mc-border);
+  border-radius: 10px;
+}
+
+.ctaSecondary:hover {
+  color: var(--product-accent);
+  text-decoration: none;
+  border-color: color-mix(in srgb, var(--product-accent) 38%, var(--mc-border));
+}
+
+.downloads {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.downloadCard {
+  display: flex;
+  gap: 0.8rem;
+  align-items: center;
+  padding: 1rem;
+  color: var(--mc-ink);
+  background: var(--mc-card);
+  border: 1px solid var(--mc-border);
+  border-radius: 12px;
+}
+
+.downloadCard:hover {
+  color: var(--product-accent);
+  text-decoration: none;
+  border-color: color-mix(in srgb, var(--product-accent) 38%, var(--mc-border));
+}
+
+.downloadCard > svg:last-child {
+  flex: 0 0 auto;
+  color: var(--mc-muted);
+}
+
+.downloadIcon {
+  width: 30px;
+  height: 30px;
+  flex: 0 0 auto;
+  color: var(--product-accent);
+}
+
+.downloadCopy {
+  display: grid;
+  gap: 0.15rem;
+  flex: 1;
+}
+
+.downloadCopy strong {
+  font-size: 0.98rem;
+}
+
+.downloadMeta {
+  color: var(--mc-muted);
+  font-size: 0.8rem;
+}
+
+.downloadFile {
+  color: var(--mc-muted);
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.72rem;
+}
+
+.downloadNote {
+  margin: -0.55rem 0 0;
+  color: var(--mc-muted);
+  font-size: 0.85rem;
+}
+
+.downloadNote a {
+  color: var(--product-accent);
+}
+
+.sectionTitle {
+  margin: 0.4rem 0 0.2rem;
+  font-size: 1.3rem;
+  letter-spacing: -0.02em;
+}
+
+.sectionDesc {
+  margin: 0 0 0.9rem;
+  color: var(--mc-muted);
+  font-size: 0.88rem;
+}
+
+.archLayers {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.archLayer {
+  display: grid;
+  grid-template-columns: 170px minmax(0, 1fr);
+  gap: 0.6rem;
+  align-items: stretch;
+}
+
+.archLayerLabel {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.2rem;
+  padding: 0.8rem 0.9rem;
+  background: color-mix(
+    in srgb,
+    var(--product-accent-soft) 55%,
+    var(--mc-card)
+  );
+  border: 1px solid
+    color-mix(in srgb, var(--product-accent) 18%, var(--mc-border));
+  border-radius: 12px;
+}
+
+.archLayerLabel strong {
+  color: var(--mc-ink);
+  font-size: 0.95rem;
+}
+
+.archLayerLabel span {
+  color: var(--mc-muted);
+  font-size: 0.76rem;
+}
+
+.archModules {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(178px, 1fr));
+  gap: 0.6rem;
+}
+
+.archModule {
+  display: grid;
+  gap: 0.18rem;
+  align-content: center;
+  padding: 0.72rem 0.85rem;
+  color: var(--mc-ink);
+  background: var(--mc-card);
+  border: 1px solid var(--mc-border);
+  border-radius: 10px;
+}
+
+.archModule:hover {
+  color: var(--product-accent);
+  text-decoration: none;
+  border-color: color-mix(in srgb, var(--product-accent) 42%, var(--mc-border));
+  box-shadow: 0 1px 0 color-mix(in srgb, var(--product-accent) 22%, transparent);
+}
+
+.archModule strong {
+  font-size: 0.86rem;
+}
+
+.archModule span {
+  color: var(--mc-muted);
+  font-size: 0.74rem;
+  line-height: 1.5;
+}
+
+.archFoundation {
+  padding: 0.7rem 0.9rem;
+  color: var(--mc-muted);
+  font-size: 0.8rem;
+  text-align: center;
+  background: var(--mc-card);
+  border: 1px dashed var(--mc-border);
+  border-radius: 12px;
+}
+
+@media screen and (max-width: 700px) {
+  .hero {
+    display: grid;
+    padding: 1.35rem;
+  }
+
+  .downloads {
+    grid-template-columns: 1fr;
+  }
+
+  .archLayer {
+    grid-template-columns: 1fr;
+  }
+}

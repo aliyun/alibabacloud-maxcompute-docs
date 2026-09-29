@@ -82,9 +82,9 @@
     },
     {
       "id": "desktop",
-      "name": "MaxCompute Desktop",
-      "shortName": "Desktop",
-      "description": "在桌面端探索、开发并管理 MaxCompute 工作。",
+      "name": "MaxCompute AI数据探索",
+      "shortName": "AI数据探索",
+      "description": "在桌面端完成 MaxCompute 的 SQL 开发、数据管理与可视化分析，并用 AI Agent 探索数据。",
       "path": "docs/products/desktop",
       "href": "/docs/products/desktop/",
       "status": "draft",
@@ -104,6 +104,10 @@
         {
           "label": "使用指南",
           "href": "/docs/products/desktop/guides/"
+        },
+        {
+          "label": "AI 数据探索",
+          "href": "/docs/products/desktop/ai-query/"
         },
         {
           "label": "故障排查",

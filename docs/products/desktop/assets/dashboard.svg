@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+<defs>
+  <linearGradient id="bgBase" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#F7F7FA"/><stop offset="0.25" stop-color="#FFFFFF"/>
+    <stop offset="0.75" stop-color="#FAFAF8"/><stop offset="1" stop-color="#F3F1EE"/>
+  </linearGradient>
+  <radialGradient id="haloBlue" cx="0.5" cy="0" r="0.75">
+    <stop offset="0" stop-color="#4F6EF7" stop-opacity="0.17"/>
+    <stop offset="0.4" stop-color="#7C3AED" stop-opacity="0.07"/>
+    <stop offset="0.75" stop-color="#7C3AED" stop-opacity="0"/>
+  </radialGradient>
+  <radialGradient id="haloAmber" cx="0.86" cy="0.96" r="0.5">
+    <stop offset="0" stop-color="#FF9500" stop-opacity="0.08"/>
+    <stop offset="0.6" stop-color="#FF5E3A" stop-opacity="0.025"/>
+    <stop offset="1" stop-color="#FF5E3A" stop-opacity="0"/>
+  </radialGradient>
+  <radialGradient id="haloTeal" cx="0.04" cy="0.52" r="0.45">
+    <stop offset="0" stop-color="#34C759" stop-opacity="0.055"/>
+    <stop offset="0.6" stop-color="#00C7BE" stop-opacity="0.02"/>
+    <stop offset="1" stop-color="#00C7BE" stop-opacity="0"/>
+  </radialGradient>
+  <linearGradient id="brandGrad" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#4F6EF7"/><stop offset="0.55" stop-color="#8B5CF6"/><stop offset="1" stop-color="#C084FC"/>
+  </linearGradient>
+  <linearGradient id="baseGrad" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0" stop-color="#4F6EF7" stop-opacity="0.10"/>
+    <stop offset="0.5" stop-color="#7C3AED" stop-opacity="0.08"/>
+    <stop offset="1" stop-color="#4F6EF7" stop-opacity="0.10"/>
+  </linearGradient>
+  <filter id="cardShadow" x="-6%" y="-12%" width="112%" height="130%">
+    <feDropShadow dx="0" dy="3" stdDeviation="9" flood-color="#000000" flood-opacity="0.05"/>
+  </filter>
+</defs>
+<g font-family="-apple-system, 'SF Pro Display', 'SF Pro Text', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Segoe UI', Arial, sans-serif">
+<rect width="1920" height="1080" fill="url(#bgBase)"/>
+<rect width="1920" height="1080" fill="url(#haloBlue)"/>
+<rect width="1920" height="1080" fill="url(#haloAmber)"/>
+<rect width="1920" height="1080" fill="url(#haloTeal)"/>
+<g>
+  <rect x="64" y="42" width="64" height="64" rx="17" fill="url(#brandGrad)" filter="url(#cardShadow)"/>
+  <g transform="translate(77.44, 55.44) scale(0.03625)"><path d="M575.936794 0.000213a127.985148 127.985148 0 0 1 108.040797 196.649181l181.994881 254.81843a127.985148 127.985148 0 1 1-78.113603 55.801525l-181.994881-254.81843c-2.709019 0.639926-5.439369 1.215859-8.21238 1.685137l-102.388119 470.793369a159.981435 159.981435 0 1 1-199.016906 32.806859L147.911796 510.404985a127.985148 127.985148 0 1 1 82.294451-49.380936l148.398779 247.288637a159.59748 159.59748 0 0 1 22.888011-3.754231l102.345457-470.814699A127.985148 127.985148 0 0 1 575.936794 0.000213z" fill="#FFFFFF"/></g>
+  <text x="150" y="88.4" font-size="40" font-weight="760" fill="#1D1D1F">数据看板</text>
+  <text x="344.8" y="88.4" font-size="18.5" font-weight="500" fill="#AEAEB2">磁贴画布 · 联动过滤 · 缓存刷新 · AI 成盘</text>
+</g>
+<g>
+  <rect x="1671" y="54" width="185" height="40" rx="20" fill="rgba(255,255,255,0.85)" stroke="rgba(60,60,67,0.10)" stroke-width="1" filter="url(#cardShadow)"/>
+  <circle cx="1693" cy="74" r="7" fill="url(#brandGrad)"/>
+  <text x="1709" y="79.58" font-size="15.5" font-weight="600" fill="#3C3C43">AI数据探索客户端</text>
+</g>
+<line x1="64" y1="130" x2="1856" y2="130" stroke="rgba(60,60,67,0.07)" stroke-width="1"/>
+<rect x="64" y="129" width="250" height="3" rx="1.5" fill="url(#brandGrad)"/>
+<g filter="url(#cardShadow)">
+  <rect x="64" y="158" width="1792" height="128" rx="18" fill="rgba(255,255,255,0.68)" stroke="rgba(60,60,67,0.07)" stroke-width="1"/>
+</g>
+<g>
+  <rect x="90" y="178" width="10" height="25" rx="5" fill="#4F6EF7"/>
+  <text x="112" y="195.16" font-size="22" font-weight="700" fill="#1D1D1F">成盘入口</text>
+  <rect x="216.0" y="177.5" width="78" height="26" rx="13" fill="#4F6EF7" fill-opacity="0.10"/>
+  <text x="255.0" y="195.1" font-size="13.5" font-weight="600" fill="#4F6EF7" text-anchor="middle">4 种方式</text>
+</g>
+<g>
+  <rect x="404.0" y="214" width="208" height="54" rx="27" fill="rgba(255,255,255,0.9)" stroke="#4F6EF7" stroke-opacity="0.28" stroke-width="1.2"/>
+  <circle cx="426.0" cy="241" r="5" fill="#4F6EF7"/>
+  <text x="441.0" y="247.12" font-size="18" font-weight="500" fill="#3C3C43">SQL 结果图表 Pin</text>
+</g>
+<g>
+  <rect x="628.0" y="214" width="216" height="54" rx="27" fill="rgba(255,255,255,0.9)" stroke="#4F6EF7" stroke-opacity="0.28" stroke-width="1.2"/>
+  <circle cx="650.0" cy="241" r="5" fill="#4F6EF7"/>
+  <text x="665.0" y="247.12" font-size="18" font-weight="500" fill="#3C3C43">AI Query 图表 Pin</text>
+</g>
+<g>
+  <rect x="860.0" y="214" width="367" height="54" rx="27" fill="rgba(255,255,255,0.9)" stroke="#4F6EF7" stroke-opacity="0.28" stroke-width="1.2"/>
+  <circle cx="882.0" cy="241" r="5" fill="#4F6EF7"/>
+  <text x="897.0" y="247.12" font-size="18" font-weight="500" fill="#3C3C43">AI 一句话成盘（manageDashboard）</text>
+</g>
+<g>
+  <rect x="1243.0" y="214" width="273" height="54" rx="27" fill="rgba(255,255,255,0.9)" stroke="#4F6EF7" stroke-opacity="0.28" stroke-width="1.2"/>
+  <circle cx="1265.0" cy="241" r="5" fill="#4F6EF7"/>
+  <text x="1280.0" y="247.12" font-size="18" font-weight="500" fill="#3C3C43">从零搭建 / 导入规格 JSON</text>
+</g>
+<path d="M 960 289 L 960 303 M 953 297 L 960 304 L 967 297" stroke="#4F6EF7" stroke-opacity="0.55" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<g filter="url(#cardShadow)">
+  <rect x="64" y="312" width="1792" height="222" rx="18" fill="rgba(255,255,255,0.68)" stroke="rgba(60,60,67,0.07)" stroke-width="1"/>
+</g>
+<g>
+  <rect x="90" y="332" width="10" height="25" rx="5" fill="#8B5CF6"/>
+  <text x="112" y="349.16" font-size="22" font-weight="700" fill="#1D1D1F">看板画布</text>
+  <rect x="216.0" y="331.5" width="70" height="26" rx="13" fill="#8B5CF6" fill-opacity="0.10"/>
+  <text x="251.0" y="349.1" font-size="13.5" font-weight="600" fill="#8B5CF6" text-anchor="middle">Canvas</text>
+</g>
+<g>
+  <rect x="92.0" y="368" width="859.0" height="148" rx="14" fill="rgba(255,255,255,0.92)" stroke="rgba(60,60,67,0.07)" stroke-width="1"/>
+  <rect x="92.0" y="368" width="859.0" height="148" rx="14" fill="none" stroke="#8B5CF6" stroke-opacity="0.16" stroke-width="1"/>
+  <rect x="110.0" y="384" width="9" height="22" rx="4.5" fill="#8B5CF6"/>
+  <text x="130.0" y="400.4" font-size="20" font-weight="650" fill="#1D1D1F">磁贴类型</text>
+  <circle cx="119.0" cy="426.72" r="3" fill="#8B5CF6" fill-opacity="0.55"/>
+  <text x="132.0" y="432" font-size="16.5" fill="#3C3C43">图表磁贴：20 种图表</text>
+  <circle cx="119.0" cy="454.72" r="3" fill="#8B5CF6" fill-opacity="0.55"/>
+  <text x="132.0" y="460" font-size="16.5" fill="#3C3C43">表格 · KPI 指标卡（阈值着色）· 文本</text>
+  <circle cx="119.0" cy="482.72" r="3" fill="#8B5CF6" fill-opacity="0.55"/>
+  <text x="132.0" y="488" font-size="16.5" fill="#3C3C43">磁贴配置：SQL · 连接 · TTL</text>
+</g>
+<g>
+  <rect x="969.0" y="368" width="859.0" height="148" rx="14" fill="rgba(255,255,255,0.92)" stroke="rgba(60,60,67,0.07)" stroke-width="1"/>
+  <rect x="969.0" y="368" width="859.0" height="148" rx="14" fill="none" stroke="#8B5CF6" stroke-opacity="0.16" stroke-width="1"/>
+  <rect x="987.0" y="384" width="9" height="22" rx="4.5" fill="#8B5CF6"/>
+  <text x="1007.0" y="400.4" font-size="20" font-weight="650" fill="#1D1D1F">画布编辑</text>
+  <circle cx="996.0" cy="426.72" r="3" fill="#8B5CF6" fill-opacity="0.55"/>
+  <text x="1009.0" y="432" font-size="16.5" fill="#3C3C43">12 列栅格 · 拖拽移动 · 缩放</text>
+  <circle cx="996.0" cy="454.72" r="3" fill="#8B5CF6" fill-opacity="0.55"/>
+  <text x="1009.0" y="460" font-size="16.5" fill="#3C3C43">编辑 / 预览双态 · 未保存徽标</text>
+  <circle cx="996.0" cy="482.72" r="3" fill="#8B5CF6" fill-opacity="0.55"/>
+  <text x="1009.0" y="488" font-size="16.5" fill="#3C3C43">乐观并发保存 · 冲突提示</text>
+</g>
+<path d="M 960 537 L 960 551 M 953 545 L 960 552 L 967 545" stroke="#4F6EF7" stroke-opacity="0.55" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<g filter="url(#cardShadow)">
+  <rect x="64" y="560" width="1792" height="128" rx="18" fill="rgba(255,255,255,0.68)" stroke="rgba(60,60,67,0.07)" stroke-width="1"/>
+</g>
+<g>
+  <rect x="90" y="580" width="10" height="25" rx="5" fill="#06B6D4"/>
+  <text x="112" y="597.16" font-size="22" font-weight="700" fill="#1D1D1F">交互分析</text>
+  <rect x="216.0" y="579.5" width="106" height="26" rx="13" fill="#06B6D4" fill-opacity="0.10"/>
+  <text x="269.0" y="597.1" font-size="13.5" font-weight="600" fill="#06B6D4" text-anchor="middle">Interaction</text>
+</g>
+<g>
+  <rect x="374.5" y="616" width="430" height="54" rx="27" fill="rgba(255,255,255,0.9)" stroke="#06B6D4" stroke-opacity="0.28" stroke-width="1.2"/>
+  <circle cx="396.5" cy="643" r="5" fill="#06B6D4"/>
+  <text x="411.5" y="649.12" font-size="18" font-weight="500" fill="#3C3C43">全局过滤器：时间 / 单选 / 多选 / LIKE / SQL</text>
+</g>
+<g>
+  <rect x="820.5" y="616" width="202" height="54" rx="27" fill="rgba(255,255,255,0.9)" stroke="#06B6D4" stroke-opacity="0.28" stroke-width="1.2"/>
+  <circle cx="842.5" cy="643" r="5" fill="#06B6D4"/>
+  <text x="857.5" y="649.12" font-size="18" font-weight="500" fill="#3C3C43">点击联动交叉过滤</text>
+</g>
+<g>
+  <rect x="1038.5" y="616" width="307" height="54" rx="27" fill="rgba(255,255,255,0.9)" stroke="#06B6D4" stroke-opacity="0.28" stroke-width="1.2"/>
+  <circle cx="1060.5" cy="643" r="5" fill="#06B6D4"/>
+  <text x="1075.5" y="649.12" font-size="18" font-weight="500" fill="#3C3C43">下钻明细（:value / :column）</text>
+</g>
+<g>
+  <rect x="1361.5" y="616" width="184" height="54" rx="27" fill="rgba(255,255,255,0.9)" stroke="#06B6D4" stroke-opacity="0.28" stroke-width="1.2"/>
+  <circle cx="1383.5" cy="643" r="5" fill="#06B6D4"/>
+  <text x="1398.5" y="649.12" font-size="18" font-weight="500" fill="#3C3C43">跳转另一块看板</text>
+</g>
+<path d="M 960 691 L 960 705 M 953 699 L 960 706 L 967 699" stroke="#4F6EF7" stroke-opacity="0.55" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<g filter="url(#cardShadow)">
+  <rect x="64" y="714" width="1792" height="222" rx="18" fill="rgba(255,255,255,0.68)" stroke="rgba(60,60,67,0.07)" stroke-width="1"/>
+</g>
+<g>
+  <rect x="90" y="734" width="10" height="25" rx="5" fill="#34C759"/>
+  <text x="112" y="751.16" font-size="22" font-weight="700" fill="#1D1D1F">数据链路与管理</text>
+  <rect x="282.0" y="733.5" width="90" height="26" rx="13" fill="#34C759" fill-opacity="0.10"/>
+  <text x="327.0" y="751.1" font-size="13.5" font-weight="600" fill="#34C759" text-anchor="middle">Data Link</text>
+</g>
+<g>
+  <rect x="92.0" y="770" width="859.0" height="148" rx="14" fill="rgba(255,255,255,0.92)" stroke="rgba(60,60,67,0.07)" stroke-width="1"/>
+  <rect x="92.0" y="770" width="859.0" height="148" rx="14" fill="none" stroke="#34C759" stroke-opacity="0.16" stroke-width="1"/>
+  <rect x="110.0" y="786" width="9" height="22" rx="4.5" fill="#34C759"/>
+  <text x="130.0" y="802.4" font-size="20" font-weight="650" fill="#1D1D1F">缓存与刷新</text>
+  <circle cx="119.0" cy="828.72" r="3" fill="#34C759" fill-opacity="0.55"/>
+  <text x="132.0" y="834" font-size="16.5" fill="#3C3C43">TTL 缓存（默认 1 小时）</text>
+  <circle cx="119.0" cy="856.72" r="3" fill="#34C759" fill-opacity="0.55"/>
+  <text x="132.0" y="862" font-size="16.5" fill="#3C3C43">定时刷新：小时 / 天 / 工作日 / 周</text>
+  <circle cx="119.0" cy="884.72" r="3" fill="#34C759" fill-opacity="0.55"/>
+  <text x="132.0" y="890" font-size="16.5" fill="#3C3C43">刷新通知 · 刷新全部</text>
+</g>
+<g>
+  <rect x="969.0" y="770" width="859.0" height="148" rx="14" fill="rgba(255,255,255,0.92)" stroke="rgba(60,60,67,0.07)" stroke-width="1"/>
+  <rect x="969.0" y="770" width="859.0" height="148" rx="14" fill="none" stroke="#FF9500" stroke-opacity="0.16" stroke-width="1"/>
+  <rect x="987.0" y="786" width="9" height="22" rx="4.5" fill="#FF9500"/>
+  <text x="1007.0" y="802.4" font-size="20" font-weight="650" fill="#1D1D1F">看板管理</text>
+  <circle cx="996.0" cy="828.72" r="3" fill="#FF9500" fill-opacity="0.55"/>
+  <text x="1009.0" y="834" font-size="16.5" fill="#3C3C43">重命名 · 复制 · 删除</text>
+  <circle cx="996.0" cy="856.72" r="3" fill="#FF9500" fill-opacity="0.55"/>
+  <text x="1009.0" y="862" font-size="16.5" fill="#3C3C43">软归档 → 恢复 / 彻底删除</text>
+  <circle cx="996.0" cy="884.72" r="3" fill="#FF9500" fill-opacity="0.55"/>
+  <text x="1009.0" y="890" font-size="16.5" fill="#3C3C43">导出 JSON / PNG · 导入规格</text>
+</g>
+<path d="M 960 939 L 960 953 M 953 947 L 960 954 L 967 947" stroke="#4F6EF7" stroke-opacity="0.55" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<g filter="url(#cardShadow)">
+  <rect x="64" y="962" width="1792" height="78" rx="18" fill="url(#baseGrad)"/>
+  <rect x="64" y="962" width="1792" height="78" rx="18" fill="rgba(255,255,255,0.55)"/>
+  <rect x="64" y="962" width="1792" height="78" rx="18" fill="none" stroke="#4F6EF7" stroke-opacity="0.22" stroke-width="1.2"/>
+</g>
+<text x="960" y="1007.8" font-size="20" font-weight="700" fill="#3B5CE4" text-anchor="middle">MaxCompute SQL 查询 — 磁贴数据统一来源</text>
+</g>
+</svg>

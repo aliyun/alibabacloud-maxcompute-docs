@@ -1,6 +1,6 @@
 ---
-title: Desktop 使用指南
-description: 汇总按用户目标组织的 MaxCompute Desktop 操作流程、界面路径和结果验证要求。
+title: 使用指南
+description: 按使用目标索引 MaxCompute AI数据探索的功能指南，从 SQL 分析到 AI 探索与多模态处理。
 product: desktop
 doc_type: how-to
 status: draft
@@ -10,12 +10,41 @@ tags:
 sidebar_position: 4
 ---
 
-本页按用户目标汇总 MaxCompute Desktop 使用指南。每篇指南聚焦一个可验证结果，并使用当前版本中的界面名称和菜单路径。
+本页按使用目标组织各功能指南。每篇指南说明适用场景、前提条件、操作步骤和结果验证。
 
-## 指南组织方式
+## 按目标查找指南
 
-每篇指南包含适用版本、前提条件、操作步骤和预期结果，并使用与当前版本一致的界面名称。
+| 我想……                                     | 阅读指南                                        |
+| ------------------------------------------ | ----------------------------------------------- |
+| 管理多个 MaxCompute 连接并快速切换         | [MaxCompute 连接](./connection.mdx)             |
+| 编写和执行 SQL，分析查询结果               | [SQL 分析](./sql-analysis.mdx)                  |
+| 把本地 CSV、Excel 等文件导入 MaxCompute    | [数据导入](./data-import.mdx)                   |
+| 浏览表结构，给单张表做质量体检             | [Catalog 与表洞察](./catalog-insights.mdx)      |
+| 把常用查询固化成可定时刷新的看板           | [数据看板](./dashboard.mdx)                     |
+| 用自然语言让 AI 查数、做多步分析           | [AI Query](./ai-query.mdx)                      |
+| 做指标归因、异常根因等深度分析             | [专家模式](./expert-mode.mdx)                   |
+| 让 AI 理解业务口径，提升取数准确率         | [语义包](./semantic-pack.mdx)                   |
+| 生成视频、音乐和 PPT                       | [AIGC](./aigc-studio.mdx)                       |
+| 用 Python Notebook 做大规模数据处理        | [MaxFrame](./maxframe-notebook.mdx)             |
+| 开发 Python UDF 并注册到 MaxCompute        | [UDF](./python-udf.mdx)                         |
+| 管理 MaxCompute 中的图片、视频等 Blob 数据 | [多模态管理](./multimodal-blob.mdx)             |
+| 管理和查询 OSS 上的文件                    | [OSS 文件管理](./oss-files.mdx)                 |
+| 连接 StarRocks、Hologres 等其他引擎        | [Hologres 与 StarRocks](./multi-datasource.mdx) |
+| 把分析结果同步到飞书文档                   | [办公协作](./office-collaboration.mdx)          |
+| 查看 dbt 项目的血缘与编译结果              | [dbt](./dbt-integration.mdx)                    |
+| 让外部 AI 工具调用 MaxCompute 能力         | [OpenClaw 与 MCP](./ecosystem.mdx)              |
 
-## 指南目录
+## 功能全景
 
-暂无相关指南。你可以先查看[快速开始](./quickstart.mdx)或[配置](./configuration.mdx)。
+客户端主要功能分四层：
+
+- **数据工作台**：SQL 编辑与执行、结果可视化、数据导入、Catalog 浏览。
+- **分析增强**：数据看板、表洞察、AI 数据探索、专家模式。
+- **知识与创作**：语义包、SQL 知识库、跨会话记忆、AIGC 创作工作室。
+- **扩展生态**：多数据源、OSS、dbt、办公协作、MCP、OpenClaw。
+
+## 阅读建议
+
+- 新用户从[快速开始](./quickstart.mdx)入手，完成安装和首次查询。
+- 数据工程师优先阅读[SQL 分析](./sql-analysis.mdx)和[数据导入](./data-import.mdx)。
+- 数据分析师优先阅读[AI Query](./ai-query.mdx)和[数据看板](./dashboard.mdx)。

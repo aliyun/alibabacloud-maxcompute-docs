@@ -1,0 +1,62 @@
+---
+title: OpenClaw 与 MCP
+description: 将 MaxCompute 能力通过 MCP 与 OpenClaw 暴露给外部 AI 工具，或为 Agent 接入外部工具。
+product: desktop
+doc_type: how-to
+status: draft
+tags:
+  - desktop
+  - ecosystem
+  - mcp
+sidebar_position: 21
+---
+
+客户端可以与外部 AI 工具双向集成：作为 MCP Server 对外暴露 MaxCompute 能力，作为 MCP Client 为 Agent 接入外部工具，也可以作为 OpenClaw 的 ACP Agent 承接数据分析任务。
+
+## 作为 MCP Server 对外暴露能力
+
+客户端后端内置 MCP（Model Context Protocol）服务器，把查询、表结构、Catalog 等能力以标准 MCP 工具形式对外暴露，供任意支持 MCP 的客户端调用，例如：
+
+- `executeQuery`：执行 SQL 查询。
+- `getTableSchema` / `getMultiTableSchema`：获取表结构。
+- `listTables`：列出项目中的表。
+- `generateChart` / `saveReport`：生成图表与保存报告。
+
+以 Claude Code 为例，在其 MCP 配置中加入以下内容即可接入（服务随客户端运行，监听本地端口）：
+
+```json
+{
+  "mcpServers": {
+    "maxquery": {
+      "type": "sse",
+      "url": "http://localhost:8899/mcmcp/sse"
+    }
+  }
+}
+```
+
+> **安全提示**
+> MCP 服务默认仅监听本机回环地址；MaxCompute 认证信息由客户端本地保管，调用方无需也不应持有 AccessKey。
+
+## 作为 MCP Client 接入外部工具
+
+客户端也可作为 MCP Client 连接外部 MCP 服务，扩展 Agent 可用的工具集。在设置中添加 MCP 服务端地址后，Agent 即可在分析过程中调用对应工具。
+
+## 作为 OpenClaw ACP Agent
+
+客户端可作为 OpenClaw 的标准 ACP Agent，承接 OpenClaw 下发的数据分析任务：
+
+- OpenClaw 负责发起会话；客户端保留自己的模型、Agent、工具和认证。
+- 执行过程（计划、SQL、中间结果与确认操作）在客户端界面实时显示。
+- OpenClaw 侧无需配置 AccessKey。
+
+安装步骤：
+
+1. 打开**设置 ▸ OpenClaw**，单击**注册 ACP Agent**。首次注册会自动安装可信运行时并注册 `odps` Java sidecar。
+2. 注册完成后单击**重启网关**，再执行**健康检查**。各组件状态均正常即可使用。
+
+## 相关指南
+
+- [dbt](./dbt-integration.mdx)
+- [办公协作](./office-collaboration.mdx)
+- [Hologres 与 StarRocks](./multi-datasource.mdx)

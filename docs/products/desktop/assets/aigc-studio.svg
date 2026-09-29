@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+<defs>
+  <linearGradient id="bgBase" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#F7F7FA"/><stop offset="0.25" stop-color="#FFFFFF"/>
+    <stop offset="0.75" stop-color="#FAFAF8"/><stop offset="1" stop-color="#F3F1EE"/>
+  </linearGradient>
+  <radialGradient id="haloBlue" cx="0.5" cy="0" r="0.75">
+    <stop offset="0" stop-color="#4F6EF7" stop-opacity="0.17"/>
+    <stop offset="0.4" stop-color="#7C3AED" stop-opacity="0.07"/>
+    <stop offset="0.75" stop-color="#7C3AED" stop-opacity="0"/>
+  </radialGradient>
+  <radialGradient id="haloAmber" cx="0.86" cy="0.96" r="0.5">
+    <stop offset="0" stop-color="#FF9500" stop-opacity="0.08"/>
+    <stop offset="0.6" stop-color="#FF5E3A" stop-opacity="0.025"/>
+    <stop offset="1" stop-color="#FF5E3A" stop-opacity="0"/>
+  </radialGradient>
+  <radialGradient id="haloTeal" cx="0.04" cy="0.52" r="0.45">
+    <stop offset="0" stop-color="#34C759" stop-opacity="0.055"/>
+    <stop offset="0.6" stop-color="#00C7BE" stop-opacity="0.02"/>
+    <stop offset="1" stop-color="#00C7BE" stop-opacity="0"/>
+  </radialGradient>
+  <linearGradient id="brandGrad" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#4F6EF7"/><stop offset="0.55" stop-color="#8B5CF6"/><stop offset="1" stop-color="#C084FC"/>
+  </linearGradient>
+  <linearGradient id="baseGrad" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0" stop-color="#4F6EF7" stop-opacity="0.10"/>
+    <stop offset="0.5" stop-color="#7C3AED" stop-opacity="0.08"/>
+    <stop offset="1" stop-color="#4F6EF7" stop-opacity="0.10"/>
+  </linearGradient>
+  <filter id="cardShadow" x="-6%" y="-12%" width="112%" height="130%">
+    <feDropShadow dx="0" dy="3" stdDeviation="9" flood-color="#000000" flood-opacity="0.05"/>
+  </filter>
+</defs>
+<g font-family="-apple-system, 'SF Pro Display', 'SF Pro Text', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Segoe UI', Arial, sans-serif">
+<rect width="1920" height="1080" fill="url(#bgBase)"/>
+<rect width="1920" height="1080" fill="url(#haloBlue)"/>
+<rect width="1920" height="1080" fill="url(#haloAmber)"/>
+<rect width="1920" height="1080" fill="url(#haloTeal)"/>
+<g>
+  <rect x="64" y="42" width="64" height="64" rx="17" fill="url(#brandGrad)" filter="url(#cardShadow)"/>
+  <g transform="translate(77.44, 55.44) scale(0.03625)"><path d="M575.936794 0.000213a127.985148 127.985148 0 0 1 108.040797 196.649181l181.994881 254.81843a127.985148 127.985148 0 1 1-78.113603 55.801525l-181.994881-254.81843c-2.709019 0.639926-5.439369 1.215859-8.21238 1.685137l-102.388119 470.793369a159.981435 159.981435 0 1 1-199.016906 32.806859L147.911796 510.404985a127.985148 127.985148 0 1 1 82.294451-49.380936l148.398779 247.288637a159.59748 159.59748 0 0 1 22.888011-3.754231l102.345457-470.814699A127.985148 127.985148 0 0 1 575.936794 0.000213z" fill="#FFFFFF"/></g>
+  <text x="150" y="88.4" font-size="40" font-weight="760" fill="#1D1D1F">AIGC 多模态创作</text>
+  <text x="514.576" y="88.4" font-size="18.5" font-weight="500" fill="#AEAEB2">影视工程 · 音乐工程 · PPT 演示文稿工程</text>
+</g>
+<g>
+  <rect x="1671" y="54" width="185" height="40" rx="20" fill="rgba(255,255,255,0.85)" stroke="rgba(60,60,67,0.10)" stroke-width="1" filter="url(#cardShadow)"/>
+  <circle cx="1693" cy="74" r="7" fill="url(#brandGrad)"/>
+  <text x="1709" y="79.58" font-size="15.5" font-weight="600" fill="#3C3C43">AI数据探索客户端</text>
+</g>
+<line x1="64" y1="130" x2="1856" y2="130" stroke="rgba(60,60,67,0.07)" stroke-width="1"/>
+<rect x="64" y="129" width="250" height="3" rx="1.5" fill="url(#brandGrad)"/>
+<g filter="url(#cardShadow)">
+  <rect x="64" y="199" width="1792" height="128" rx="18" fill="rgba(255,255,255,0.68)" stroke="rgba(60,60,67,0.07)" stroke-width="1"/>
+</g>
+<g>
+  <rect x="90" y="219" width="10" height="25" rx="5" fill="#4F6EF7"/>
+  <text x="112" y="236.16" font-size="22" font-weight="700" fill="#1D1D1F">创作入口</text>
+  <rect x="216.0" y="218.5" width="63" height="26" rx="13" fill="#4F6EF7" fill-opacity="0.10"/>
+  <text x="247.5" y="236.1" font-size="13.5" font-weight="600" fill="#4F6EF7" text-anchor="middle">Entry</text>
+</g>
+<g>
+  <rect x="476.0" y="255" width="327" height="54" rx="27" fill="rgba(255,255,255,0.9)" stroke="#4F6EF7" stroke-opacity="0.28" stroke-width="1.2"/>
+  <circle cx="498.0" cy="282" r="5" fill="#4F6EF7"/>
+  <text x="513.0" y="288.12" font-size="18" font-weight="500" fill="#3C3C43">AIGC 工作台（活动栏 · 多模态）</text>
+</g>
+<g>
+  <rect x="819.0" y="255" width="251" height="54" rx="27" fill="rgba(255,255,255,0.9)" stroke="#4F6EF7" stroke-opacity="0.28" stroke-width="1.2"/>
+  <circle cx="841.0" cy="282" r="5" fill="#4F6EF7"/>
+  <text x="856.0" y="288.12" font-size="18" font-weight="500" fill="#3C3C43">AI Query 自然语言创作</text>
+</g>
+<g>
+  <rect x="1086.0" y="255" width="358" height="54" rx="27" fill="rgba(255,255,255,0.9)" stroke="#4F6EF7" stroke-opacity="0.28" stroke-width="1.2"/>
+  <circle cx="1108.0" cy="282" r="5" fill="#4F6EF7"/>
+  <text x="1123.0" y="288.12" font-size="18" font-weight="500" fill="#3C3C43">设置 → AIGC：基础 / 模型 / 扩展配置</text>
+</g>
+<path d="M 960 350 L 960 364 M 953 358 L 960 365 L 967 358" stroke="#A855F7" stroke-opacity="0.55" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<g filter="url(#cardShadow)">
+  <rect x="64" y="393" width="1792" height="250" rx="18" fill="rgba(255,255,255,0.68)" stroke="rgba(60,60,67,0.07)" stroke-width="1"/>
+</g>
+<g>
+  <rect x="90" y="413" width="10" height="25" rx="5" fill="#8B5CF6"/>
+  <text x="112" y="430.16" font-size="22" font-weight="700" fill="#1D1D1F">三大工程</text>
+  <rect x="216.0" y="412.5" width="70" height="26" rx="13" fill="#8B5CF6" fill-opacity="0.10"/>
+  <text x="251.0" y="430.1" font-size="13.5" font-weight="600" fill="#8B5CF6" text-anchor="middle">Studio</text>
+</g>
+<g>
+  <rect x="92.0" y="449" width="566.7" height="176" rx="14" fill="rgba(255,255,255,0.92)" stroke="rgba(60,60,67,0.07)" stroke-width="1"/>
+  <rect x="92.0" y="449" width="566.7" height="176" rx="14" fill="none" stroke="#4F6EF7" stroke-opacity="0.16" stroke-width="1"/>
+  <rect x="110.0" y="465" width="9" height="22" rx="4.5" fill="#4F6EF7"/>
+  <text x="130.0" y="481.4" font-size="20" font-weight="650" fill="#1D1D1F">影视工程</text>
+  <rect x="593.7" y="464" width="49" height="24" rx="12" fill="#4F6EF7" fill-opacity="0.10"/>
+  <text x="618.2" y="480.42" font-size="13" font-weight="600" fill="#4F6EF7" text-anchor="middle">MP4</text>
+  <circle cx="119.0" cy="507.72" r="3" fill="#4F6EF7" fill-opacity="0.55"/>
+  <text x="132.0" y="513" font-size="16.5" fill="#3C3C43">剧本智能结构化 → 场景 / 镜头</text>
+  <circle cx="119.0" cy="535.72" r="3" fill="#4F6EF7" fill-opacity="0.55"/>
+  <text x="132.0" y="541" font-size="16.5" fill="#3C3C43">角色与场景立绘 · 关键帧</text>
+  <circle cx="119.0" cy="563.72" r="3" fill="#4F6EF7" fill-opacity="0.55"/>
+  <text x="132.0" y="569" font-size="16.5" fill="#3C3C43">三路视频：I2V / T2V / R2V</text>
+  <circle cx="119.0" cy="591.72" r="3" fill="#4F6EF7" fill-opacity="0.55"/>
+  <text x="132.0" y="597" font-size="16.5" fill="#3C3C43">镜头衔接 · 一键流水线成片</text>
+</g>
+<g>
+  <rect x="676.7" y="449" width="566.7" height="176" rx="14" fill="rgba(255,255,255,0.92)" stroke="rgba(60,60,67,0.07)" stroke-width="1"/>
+  <rect x="676.7" y="449" width="566.7" height="176" rx="14" fill="none" stroke="#34C759" stroke-opacity="0.16" stroke-width="1"/>
+  <rect x="694.7" y="465" width="9" height="22" rx="4.5" fill="#34C759"/>
+  <text x="714.7" y="481.4" font-size="20" font-weight="650" fill="#1D1D1F">音乐工程</text>
+  <rect x="1137.3" y="464" width="90" height="24" rx="12" fill="#34C759" fill-opacity="0.10"/>
+  <text x="1182.3" y="480.42" font-size="13" font-weight="600" fill="#34C759" text-anchor="middle">MP3 / WAV</text>
+  <circle cx="703.7" cy="507.72" r="3" fill="#34C759" fill-opacity="0.55"/>
+  <text x="716.7" y="513" font-size="16.5" fill="#3C3C43">歌词创作与段落结构</text>
+  <circle cx="703.7" cy="535.72" r="3" fill="#34C759" fill-opacity="0.55"/>
+  <text x="716.7" y="541" font-size="16.5" fill="#3C3C43">演唱 / 哼唱 / 纯音乐三种模式</text>
+  <circle cx="703.7" cy="563.72" r="3" fill="#34C759" fill-opacity="0.55"/>
+  <text x="716.7" y="569" font-size="16.5" fill="#3C3C43">多版本管理 · 试听对比</text>
+  <circle cx="703.7" cy="591.72" r="3" fill="#34C759" fill-opacity="0.55"/>
+  <text x="716.7" y="597" font-size="16.5" fill="#3C3C43">多段拼接导出</text>
+</g>
+<g>
+  <rect x="1261.3" y="449" width="566.7" height="176" rx="14" fill="rgba(255,255,255,0.92)" stroke="rgba(60,60,67,0.07)" stroke-width="1"/>
+  <rect x="1261.3" y="449" width="566.7" height="176" rx="14" fill="none" stroke="#FF9500" stroke-opacity="0.16" stroke-width="1"/>
+  <rect x="1279.3" y="465" width="9" height="22" rx="4.5" fill="#FF9500"/>
+  <text x="1299.3" y="481.4" font-size="20" font-weight="650" fill="#1D1D1F">PPT 演示文稿工程</text>
+  <rect x="1693.0" y="464" width="119" height="24" rx="12" fill="#FF9500" fill-opacity="0.10"/>
+  <text x="1752.5" y="480.42" font-size="13" font-weight="600" fill="#FF9500" text-anchor="middle">PPTX / Keynote</text>
+  <circle cx="1288.3" cy="507.72" r="3" fill="#FF9500" fill-opacity="0.55"/>
+  <text x="1301.3" y="513" font-size="16.5" fill="#3C3C43">四种入口：文本 / Word / PPT / 手动</text>
+  <circle cx="1288.3" cy="535.72" r="3" fill="#FF9500" fill-opacity="0.55"/>
+  <text x="1301.3" y="541" font-size="16.5" fill="#3C3C43">20 种页型智能编排</text>
+  <circle cx="1288.3" cy="563.72" r="3" fill="#FF9500" fill-opacity="0.55"/>
+  <text x="1301.3" y="569" font-size="16.5" fill="#3C3C43">配图两条路线 · 一键配图</text>
+  <circle cx="1288.3" cy="591.72" r="3" fill="#FF9500" fill-opacity="0.55"/>
+  <text x="1301.3" y="597" font-size="16.5" fill="#3C3C43">看板图表嵌入 · 旁白演播</text>
+</g>
+<path d="M 960 666 L 960 680 M 953 674 L 960 681 L 967 674" stroke="#A855F7" stroke-opacity="0.55" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<g filter="url(#cardShadow)">
+  <rect x="64" y="709" width="1792" height="128" rx="18" fill="rgba(255,255,255,0.68)" stroke="rgba(60,60,67,0.07)" stroke-width="1"/>
+</g>
+<g>
+  <rect x="90" y="729" width="10" height="25" rx="5" fill="#06B6D4"/>
+  <text x="112" y="746.16" font-size="22" font-weight="700" fill="#1D1D1F">公共能力</text>
+  <rect x="216.0" y="728.5" width="70" height="26" rx="13" fill="#06B6D4" fill-opacity="0.10"/>
+  <text x="251.0" y="746.1" font-size="13.5" font-weight="600" fill="#06B6D4" text-anchor="middle">Shared</text>
+</g>
+<g>
+  <rect x="360.0" y="765" width="361" height="54" rx="27" fill="rgba(255,255,255,0.9)" stroke="#06B6D4" stroke-opacity="0.28" stroke-width="1.2"/>
+  <circle cx="382.0" cy="792" r="5" fill="#06B6D4"/>
+  <text x="397.0" y="798.12" font-size="18" font-weight="500" fill="#3C3C43">画风预设（影视 10 种 · PPT 13 种）</text>
+</g>
+<g>
+  <rect x="737.0" y="765" width="184" height="54" rx="27" fill="rgba(255,255,255,0.9)" stroke="#06B6D4" stroke-opacity="0.28" stroke-width="1.2"/>
+  <circle cx="759.0" cy="792" r="5" fill="#06B6D4"/>
+  <text x="774.0" y="798.12" font-size="18" font-weight="500" fill="#3C3C43">氛围锚点抗漂移</text>
+</g>
+<g>
+  <rect x="937.0" y="765" width="202" height="54" rx="27" fill="rgba(255,255,255,0.9)" stroke="#06B6D4" stroke-opacity="0.28" stroke-width="1.2"/>
+  <circle cx="959.0" cy="792" r="5" fill="#06B6D4"/>
+  <text x="974.0" y="798.12" font-size="18" font-weight="500" fill="#3C3C43">内容安全自动降级</text>
+</g>
+<g>
+  <rect x="1155.0" y="765" width="241" height="54" rx="27" fill="rgba(255,255,255,0.9)" stroke="#06B6D4" stroke-opacity="0.28" stroke-width="1.2"/>
+  <circle cx="1177.0" cy="792" r="5" fill="#06B6D4"/>
+  <text x="1192.0" y="798.12" font-size="18" font-weight="500" fill="#3C3C43">全片连播 MiniPlayer</text>
+</g>
+<g>
+  <rect x="1412.0" y="765" width="148" height="54" rx="27" fill="rgba(255,255,255,0.9)" stroke="#06B6D4" stroke-opacity="0.28" stroke-width="1.2"/>
+  <circle cx="1434.0" cy="792" r="5" fill="#06B6D4"/>
+  <text x="1449.0" y="798.12" font-size="18" font-weight="500" fill="#3C3C43">撤销 / 重做</text>
+</g>
+<path d="M 960 860 L 960 874 M 953 868 L 960 875 L 967 868" stroke="#A855F7" stroke-opacity="0.55" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<g filter="url(#cardShadow)">
+  <rect x="64" y="903" width="1792" height="96" rx="18" fill="url(#baseGrad)"/>
+  <rect x="64" y="903" width="1792" height="96" rx="18" fill="rgba(255,255,255,0.55)"/>
+  <rect x="64" y="903" width="1792" height="96" rx="18" fill="none" stroke="#4F6EF7" stroke-opacity="0.22" stroke-width="1.2"/>
+</g>
+<text x="960" y="942" font-size="20" font-weight="700" fill="#3B5CE4" text-anchor="middle">DashScope 模型服务 — 文生图 · 视频生成 · 音乐生成 · TTS</text>
+<text x="960" y="976" font-size="15.5" fill="#6E6E73" text-anchor="middle">看板图表数据源：MaxCompute</text>
+</g>
+</svg>
