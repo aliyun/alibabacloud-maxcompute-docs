@@ -3,6 +3,41 @@
   "schemaVersion": 1,
   "products": [
     {
+      "id": "desktop",
+      "name": "MaxCompute AI数据探索",
+      "shortName": "AI数据探索",
+      "description": "桌面级DataAgent，一句自然语言即可驱动云端 PB 级数据分析与多模态加工。",
+      "path": "docs/products/desktop",
+      "href": "/docs/products/desktop/",
+      "status": "draft",
+      "owner": "@odps",
+      "icon": "desktop",
+      "accent": "violet",
+      "featured": true,
+      "navigation": [
+        {
+          "label": "快速开始",
+          "href": "/docs/products/desktop/quickstart/"
+        },
+        {
+          "label": "安装与更新",
+          "href": "/docs/products/desktop/installation/"
+        },
+        {
+          "label": "使用指南",
+          "href": "/docs/products/desktop/guides/"
+        },
+        {
+          "label": "AI 数据探索",
+          "href": "/docs/products/desktop/ai-query/"
+        },
+        {
+          "label": "故障排查",
+          "href": "/docs/products/desktop/troubleshooting/"
+        }
+      ]
+    },
+    {
       "id": "cli",
       "name": "MaxCompute CLI",
       "shortName": "CLI",
@@ -77,41 +112,6 @@
         {
           "label": "安全与权限",
           "href": "/docs/products/mcp-server/security/"
-        }
-      ]
-    },
-    {
-      "id": "desktop",
-      "name": "MaxCompute AI数据探索",
-      "shortName": "AI数据探索",
-      "description": "在桌面端完成 MaxCompute 的 SQL 开发、数据管理与可视化分析，并用 AI Agent 探索数据。",
-      "path": "docs/products/desktop",
-      "href": "/docs/products/desktop/",
-      "status": "draft",
-      "owner": "@odps",
-      "icon": "desktop",
-      "accent": "violet",
-      "featured": true,
-      "navigation": [
-        {
-          "label": "快速开始",
-          "href": "/docs/products/desktop/quickstart/"
-        },
-        {
-          "label": "安装与更新",
-          "href": "/docs/products/desktop/installation/"
-        },
-        {
-          "label": "使用指南",
-          "href": "/docs/products/desktop/guides/"
-        },
-        {
-          "label": "AI 数据探索",
-          "href": "/docs/products/desktop/ai-query/"
-        },
-        {
-          "label": "故障排查",
-          "href": "/docs/products/desktop/troubleshooting/"
         }
       ]
     }

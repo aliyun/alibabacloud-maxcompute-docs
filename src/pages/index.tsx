@@ -112,51 +112,23 @@ function McpPanel(): ReactNode {
 function DesktopPanel(): ReactNode {
   return (
     <div className={`${styles.window} ${styles.windowLight}`}>
-      <div className={styles.windowBar}>
-        <i />
-        <i />
-        <i />
-        <em>MaxCompute Desktop</em>
-      </div>
-      <div className={styles.desktopBody}>
-        <div className={styles.desktopSide}>
-          <span className={styles.desktopSideActive}>SQL 工作台</span>
-          <span>数据资产</span>
-          <span>作业历史</span>
-          <span>Data Agent</span>
-        </div>
-        <div className={styles.desktopMain}>
-          <div className={styles.desktopEditor}>
-            <p>
-              <span className={styles.tKw}>SELECT</span> user_id, amount
-            </p>
-            <p>
-              <span className={styles.tKw}>FROM</span> sales
-            </p>
-            <p>
-              <span className={styles.tKw}>WHERE</span> ds =
-              &apos;20260831&apos;
-            </p>
-          </div>
-          <div className={styles.desktopGrid}>
-            <div className={styles.desktopGridHead}>
-              <span>user_id</span>
-              <span>amount</span>
-            </div>
-            {['u_10021', 'u_10022', 'u_10023'].map((id, i) => (
-              <div className={styles.desktopGridRow} key={id}>
-                <span>{id}</span>
-                <span>{[326.5, 89.0, 1204.75][i]}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
+      <img
+        className={styles.desktopFrame}
+        src="img/maxquery-studio-product-frame-light-en.svg"
+        alt="MaxCompute AI数据探索客户端产品界面"
+      />
     </div>
   );
 }
 
 const showcases = [
+  {
+    id: 'desktop',
+    label: 'Desktop',
+    icon: <Desktop aria-hidden="true" size={15} weight="bold" />,
+    caption: '桌面级 DataAgent · 可视化数据工作台',
+    panel: <DesktopPanel />,
+  },
   {
     id: 'cli',
     label: 'CLI',
@@ -170,13 +142,6 @@ const showcases = [
     icon: <PlugsConnected aria-hidden="true" size={15} weight="bold" />,
     caption: '标准协议 · 远程 Agent 接入',
     panel: <McpPanel />,
-  },
-  {
-    id: 'desktop',
-    label: 'Desktop',
-    icon: <Desktop aria-hidden="true" size={15} weight="bold" />,
-    caption: '桌面端 · 可视化数据工作台',
-    panel: <DesktopPanel />,
   },
 ];
 
