@@ -1,0 +1,459 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" role="img" aria-labelledby="title desc">
+  <title id="title">MaxCompute AI Data Exploration Studio · Product Wireframe (Light · EN)</title>
+  <desc id="desc">Promotional three-pane wireframe of the MaxCompute AI Data Exploration Studio: Catalog, SQL Editor, Result Analysis, Logview DAG and Data Agent.</desc>
+  <defs>
+    <linearGradient id="pageBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FAFAFA"/>
+      <stop offset="0.55" stop-color="#F8FBFF"/>
+      <stop offset="1" stop-color="#FAFAFA"/>
+    </linearGradient>
+    <linearGradient id="windowBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#F3F7FC"/>
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#60A5FA"/>
+      <stop offset="1" stop-color="#2563EB"/>
+    </linearGradient>
+    <linearGradient id="orangeGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#D97706"/>
+      <stop offset="1" stop-color="#D97706"/>
+    </linearGradient>
+    <linearGradient id="purpleGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#8B5CF6"/>
+      <stop offset="1" stop-color="#06B6D4"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="20" stdDeviation="22" flood-color="#8597B0" flood-opacity="0.26"/>
+    </filter>
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#8597B0" flood-opacity="0.20"/>
+    </filter>
+    <filter id="glow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="20" result="b"/>
+      <feColorMatrix in="b" type="matrix" values="0 0 0 0 0.16 0 0 0 0 0.45 0 0 0 0 0.88 0 0 0 0.22 0"/>
+      <feBlend in="SourceGraphic"/>
+    </filter>
+    <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse">
+      <path d="M 48 0 L 0 0 0 48" fill="none" stroke="#3B82F6" stroke-opacity="0.06" stroke-width="1"/>
+    </pattern>
+    <style>
+      :root {
+        --text: #1E2243;
+        --muted: #5A6178;
+        --dim: #8891A5;
+        --line: rgba(92, 112, 138, 0.22);
+        --line-strong: rgba(59, 130, 246, 0.34);
+        --panel: #FFFFFF;
+        --panel-2: #FAFAFA;
+        --panel-3: #FFFFFF;
+        --chip: rgba(229, 234, 242, 0.86);
+        --accent: #3B82F6;
+        --accent-2: #16A34A;
+        --orange: #D97706;
+        --danger: #DC2626;
+        --purple: #8B5CF6;
+      }
+      text { font-family: -apple-system, BlinkMacSystemFont, "Inter", "Helvetica Neue", Arial, sans-serif; }
+      .title { fill: var(--text); font-size: 32px; font-weight: 760; letter-spacing: 0; }
+      .subtitle { fill: var(--muted); font-size: 15px; font-weight: 500; }
+      .h2 { fill: var(--text); font-size: 16px; font-weight: 680; }
+      .h3 { fill: var(--text); font-size: 13px; font-weight: 680; }
+      .body { fill: var(--muted); font-size: 13px; font-weight: 500; }
+      .small { fill: var(--dim); font-size: 11px; font-weight: 500; }
+      .tiny { fill: var(--dim); font-size: 10px; font-weight: 500; }
+      .code { font-family: "SF Mono", Menlo, Monaco, Consolas, monospace; font-size: 13px; font-weight: 520; }
+      .panel { fill: var(--panel); stroke: var(--line); stroke-width: 1; }
+      .panel2 { fill: var(--panel-2); stroke: var(--line); stroke-width: 1; }
+      .chip { fill: var(--chip); stroke: var(--line); stroke-width: 1; }
+      .line { stroke: var(--line); stroke-width: 1; fill: none; }
+    </style>
+  </defs>
+
+  <rect width="1920" height="1080" fill="url(#pageBg)"/>
+  <rect width="1920" height="1080" fill="url(#grid)" opacity="0.55"/>
+  <circle cx="138" cy="122" r="190" fill="#3B82F6" opacity="0.10" filter="url(#glow)"/>
+  <circle cx="1720" cy="170" r="240" fill="#16A34A" opacity="0.10" filter="url(#glow)"/>
+  <circle cx="1510" cy="930" r="220" fill="#8B5CF6" opacity="0.08" filter="url(#glow)"/>
+
+  <!-- Brand -->
+  <g transform="translate(86 48)">
+    <rect x="0" y="0" width="48" height="48" rx="14" fill="url(#accentGrad)" filter="url(#softShadow)"/>
+    <path d="M15 25 L25 10 L23 21 H34 L23 38 L25 27 H15 Z" fill="#ffffff" opacity="0.98"/>
+    <text x="66" y="30" class="title">MaxCompute AI Data Exploration Studio</text>
+    <text x="68" y="60" class="subtitle">Desktop Productivity · Data Agent · Multi-modal Data Management</text>
+  </g>
+
+  <!-- Capability chips -->
+  <g transform="translate(1118 56)">
+    <rect x="0" y="0" width="218" height="40" rx="20" class="chip"/>
+    <circle cx="22" cy="20" r="6" fill="url(#accentGrad)"/>
+    <text x="38" y="25" class="body">Desktop Productivity</text>
+    <rect x="234" y="0" width="232" height="40" rx="20" class="chip"/>
+    <circle cx="256" cy="20" r="6" fill="url(#orangeGrad)"/>
+    <text x="272" y="25" class="body">Multi-modal Data Mgmt</text>
+    <rect x="482" y="0" width="178" height="40" rx="20" class="chip"/>
+    <circle cx="504" cy="20" r="6" fill="url(#purpleGrad)"/>
+    <text x="520" y="25" class="body">Data Agent</text>
+  </g>
+
+  <!-- Window shell -->
+  <g filter="url(#shadow)">
+    <rect x="78" y="130" width="1764" height="880" rx="22" fill="url(#windowBg)" stroke="rgba(118,134,158,0.24)" stroke-width="1.2"/>
+    <rect x="78" y="130" width="1764" height="56" rx="22" fill="#FFFFFF" stroke="rgba(118,134,158,0.14)"/>
+    <path d="M78 158 Q78 130 106 130 H1814 Q1842 130 1842 158 V186 H78 Z" fill="#FFFFFF"/>
+  </g>
+
+  <!-- Title bar -->
+  <g>
+    <circle cx="106" cy="158" r="7" fill="#FF5F57"/>
+    <circle cx="128" cy="158" r="7" fill="#FEBC2E"/>
+    <circle cx="150" cy="158" r="7" fill="#28C840"/>
+
+    <rect x="186" y="142" width="178" height="32" rx="16" fill="rgba(59,130,246,0.08)" stroke="rgba(59,130,246,0.28)"/>
+    <circle cx="206" cy="158" r="5" fill="#16A34A"/>
+    <text x="218" y="163" class="small" fill="#2563EB">Hangzhou Project</text>
+    <rect x="374" y="142" width="178" height="32" rx="16" class="chip"/>
+    <circle cx="394" cy="158" r="5" fill="#16A34A"/>
+    <text x="406" y="163" class="small">Singapore Project</text>
+
+    <rect x="820" y="142" width="196" height="32" rx="16" fill="#FFFFFF" stroke="rgba(118,134,158,0.20)"/>
+    <text x="848" y="163" class="small">Studio</text>
+    <rect x="914" y="146" width="94" height="24" rx="12" fill="url(#accentGrad)"/>
+    <text x="940" y="163" font-size="12" font-weight="700" fill="#FFFFFF">Quest</text>
+
+    <rect x="1396" y="142" width="116" height="32" rx="8" fill="url(#accentGrad)"/>
+    <path d="M1428 152 L1428 166 L1440 159 Z" fill="#FFFFFF"/>
+    <text x="1450" y="163" font-size="13" font-weight="760" fill="#FFFFFF">Run</text>
+    <text x="1538" y="163" class="small">⌘↵</text>
+
+    <circle cx="1600" cy="158" r="14" class="chip"/>
+    <path d="M1594 158 h12 M1600 152 v12" stroke="#5A6178" stroke-width="1.4"/>
+    <circle cx="1640" cy="158" r="14" class="chip"/>
+    <path d="M1634 155 h12 v7 h-12z M1636 152 h8" stroke="#5A6178" stroke-width="1.3" fill="none"/>
+    <circle cx="1680" cy="158" r="14" fill="rgba(247,162,0,0.14)" stroke="rgba(247,162,0,0.32)"/>
+    <text x="1676" y="163" font-size="13" font-weight="760" fill="#D97706">☼</text>
+    <circle cx="1720" cy="158" r="14" fill="rgba(139,92,246,0.12)" stroke="rgba(139,92,246,0.30)"/>
+    <text x="1713" y="163" font-size="12" font-weight="760" fill="#8B5CF6">AI</text>
+    <circle cx="1764" cy="158" r="14" fill="url(#purpleGrad)"/>
+    <text x="1757" y="163" font-size="12" font-weight="700" fill="#FFFFFF">DT</text>
+  </g>
+
+  <!-- Icon rail -->
+  <g>
+    <rect x="92" y="200" width="50" height="780" rx="14" fill="#FFFFFF" stroke="rgba(118,134,158,0.18)"/>
+    <rect x="101" y="212" width="32" height="32" rx="9" fill="url(#accentGrad)"/>
+    <path d="M113 222 h8 v12 h-8z M109 226 h4 M121 226 h4 M109 232 h4 M121 232 h4" stroke="#FFFFFF" stroke-width="1.5" fill="none"/>
+    <g fill="none" stroke="#8891A5" stroke-width="1.4">
+      <rect x="108" y="266" width="20" height="20" rx="4"/>
+      <path d="M112 272 h12 M112 278 h12 M112 284 h7"/>
+      <circle cx="118" cy="316" r="10"/>
+      <path d="M111 316 h14 M118 309 v14"/>
+      <path d="M110 360 h16 M110 368 h16 M110 376 h16"/>
+      <path d="M112 410 h14 v16 h-14z M116 406 h6"/>
+      <path d="M110 466 l8 -8 8 8 M118 458 v18"/>
+      <circle cx="118" cy="520" r="10"/>
+      <path d="M118 512 v8 l6 4"/>
+      <path d="M110 570 h16 M114 564 v22 M122 564 v22"/>
+      <path d="M110 624 h16 M110 632 h16 M110 640 h10"/>
+    </g>
+    <text x="109" y="936" font-size="16" font-weight="800" fill="#3B82F6">M</text>
+  </g>
+
+  <!-- Left sidebar -->
+  <g>
+    <rect x="156" y="200" width="316" height="780" rx="14" class="panel2"/>
+    <rect x="172" y="214" width="284" height="62" rx="12" fill="rgba(22,163,74,0.08)" stroke="rgba(22,163,74,0.30)"/>
+    <text x="188" y="238" class="h2">Workspace Restored</text>
+    <text x="188" y="260" class="small">6 Tabs · 2 Connections · 1 AI Session</text>
+    <circle cx="428" cy="245" r="14" fill="rgba(22,163,74,0.14)"/>
+    <path d="M422 245 l4 4 9 -10" stroke="#16A34A" stroke-width="2" fill="none"/>
+
+    <text x="174" y="306" class="h3">Connections / Region</text>
+    <rect x="172" y="318" width="284" height="106" rx="12" fill="#FFFFFF" stroke="rgba(118,134,158,0.16)"/>
+    <circle cx="192" cy="344" r="5" fill="#16A34A"/>
+    <text x="206" y="348" class="body">Hangzhou Project</text>
+    <text x="206" y="366" class="tiny">cn-hangzhou · 18.2K tables</text>
+    <circle cx="192" cy="392" r="5" fill="#16A34A"/>
+    <text x="206" y="396" class="body">Singapore Project</text>
+    <text x="206" y="414" class="tiny">ap-southeast-1 · concurrent submit</text>
+
+    <text x="174" y="456" class="h3">Catalog · Multi-Project Tree</text>
+    <rect x="172" y="468" width="284" height="252" rx="12" fill="#FFFFFF" stroke="rgba(118,134,158,0.16)"/>
+    <g class="body">
+      <text x="188" y="494">▾ Singapore Project</text>
+      <text x="208" y="518">▾ Tables  88</text>
+      <text x="228" y="542" fill="#1E2243">▦ dwd_order_di</text>
+      <text x="248" y="564" class="small">order_id  BIGINT</text>
+      <text x="248" y="584" class="small">region    STRING</text>
+      <text x="248" y="604" class="small">amount    DOUBLE</text>
+      <text x="228" y="630">▦ ads_roi_summary</text>
+      <text x="228" y="654">▦ dim_customer</text>
+      <text x="208" y="678">▸ Views  12</text>
+    </g>
+    <rect x="180" y="690" width="268" height="22" rx="6" fill="rgba(59,130,246,0.08)" stroke="rgba(59,130,246,0.28)"/>
+    <text x="194" y="705" class="tiny" fill="#2563EB">Meta: 28.4 TB · read/write · 365 partitions</text>
+
+    <text x="174" y="752" class="h3">SQL Script Manager</text>
+    <rect x="172" y="764" width="284" height="200" rx="12" fill="#FFFFFF" stroke="rgba(118,134,158,0.16)"/>
+    <text x="188" y="790" class="body">▾ SQL</text>
+    <text x="208" y="812" class="body">▸ meta</text>
+    <text x="208" y="836" class="body">▾ analysis</text>
+    <text x="228" y="858" class="small">sales_pivot.sql</text>
+    <text x="228" y="878" class="small">quality_check.sql</text>
+    <text x="208" y="902" class="body">▾ ads</text>
+    <text x="228" y="924" class="small">roi_daily.sql</text>
+    <text x="228" y="944" class="small">storage_dashboard.sql</text>
+  </g>
+
+  <!-- Separator -->
+  <g>
+    <line x1="486" y1="208" x2="486" y2="970" stroke="rgba(118,134,158,0.22)" stroke-width="1"/>
+    <rect x="482" y="500" width="8" height="64" rx="4" fill="rgba(118,134,158,0.18)"/>
+    <circle cx="486" cy="520" r="2" fill="#5A6178"/>
+    <circle cx="486" cy="532" r="2" fill="#5A6178"/>
+    <circle cx="486" cy="544" r="2" fill="#5A6178"/>
+  </g>
+
+  <!-- SQL Editor panel -->
+  <g>
+    <rect x="498" y="200" width="876" height="346" rx="14" class="panel2"/>
+    <rect x="498" y="200" width="876" height="38" rx="14" fill="#FFFFFF"/>
+    <path d="M498 222 Q498 200 520 200 H1352 Q1374 200 1374 222 V238 H498 Z" fill="#FFFFFF"/>
+    <g>
+      <rect x="514" y="206" width="160" height="26" rx="7" fill="rgba(59,130,246,0.10)" stroke="rgba(59,130,246,0.26)"/>
+      <text x="532" y="224" class="small" fill="#2563EB">storage_usage.sql</text>
+      <circle cx="660" cy="219" r="3.5" fill="#3B82F6"/>
+      <rect x="686" y="206" width="120" height="26" rx="7" class="chip"/>
+      <text x="704" y="224" class="small">Binary Preview</text>
+      <rect x="818" y="206" width="118" height="26" rx="7" class="chip"/>
+      <text x="836" y="224" class="small">Import Tasks</text>
+      <rect x="948" y="206" width="118" height="26" rx="7" class="chip"/>
+      <text x="966" y="224" class="small">example.sql</text>
+      <text x="1080" y="224" class="small">＋</text>
+      <text x="1304" y="224" class="small" fill="#5A6178">SQL Editor</text>
+    </g>
+    <rect x="514" y="252" width="844" height="40" rx="10" fill="#FFFFFF" stroke="rgba(118,134,158,0.14)"/>
+    <rect x="526" y="259" width="100" height="26" rx="7" fill="url(#accentGrad)"/>
+    <text x="546" y="277" font-size="12" font-weight="760" fill="#FFFFFF">Run Selection</text>
+    <rect x="634" y="259" width="104" height="26" rx="7" class="chip"/>
+    <text x="650" y="277" class="small">Run Statement</text>
+    <rect x="746" y="259" width="118" height="26" rx="7" class="chip"/>
+    <text x="762" y="277" class="small">Run Full Script</text>
+    <text x="878" y="277" class="small">Autocomplete · SET FLAG hints · Format · Find &amp; Replace</text>
+    <rect x="1240" y="259" width="106" height="26" rx="7" fill="rgba(22,163,74,0.10)" stroke="rgba(22,163,74,0.30)"/>
+    <text x="1262" y="277" class="small" fill="#00754F">Shortcut ⌘↵</text>
+
+    <rect x="514" y="304" width="844" height="232" rx="12" fill="#FFFFFF" stroke="rgba(118,134,158,0.14)"/>
+    <rect x="514" y="304" width="44" height="232" rx="12" fill="#FFFFFF"/>
+    <g class="tiny" fill="#9CA3AF">
+      <text x="528" y="328">1</text>
+      <text x="528" y="352">2</text>
+      <text x="528" y="376">3</text>
+      <text x="528" y="400">4</text>
+      <text x="528" y="424">5</text>
+      <text x="528" y="448">6</text>
+      <text x="528" y="472">7</text>
+      <text x="528" y="496">8</text>
+      <text x="528" y="520">9</text>
+    </g>
+    <g class="code">
+      <text x="572" y="328" fill="#9CA3AF">-- restore workspace then continue analysis</text>
+      <text x="572" y="352" fill="#8B5CF6">set</text>
+      <text x="604" y="352" fill="#1E2243"> odps.sql.type.system.odps2=</text>
+      <text x="838" y="352" fill="#16A34A">true</text>
+      <text x="872" y="352" fill="#1E2243">;</text>
+      <text x="572" y="376" fill="#8B5CF6">with</text>
+      <text x="612" y="376" fill="#1E2243"> daily_sales </text>
+      <text x="712" y="376" fill="#8B5CF6">as</text>
+      <text x="734" y="376" fill="#1E2243"> (</text>
+      <text x="572" y="400" fill="#8B5CF6">  select</text>
+      <text x="636" y="400" fill="#1E2243"> region, category,</text>
+      <text x="572" y="424" fill="#1E2243">         sum(amount) sales,</text>
+      <text x="572" y="448" fill="#1E2243">         count(*) orders</text>
+      <text x="572" y="472" fill="#8B5CF6">  from</text>
+      <text x="622" y="472" fill="#1E2243"> dwd_order_di </text>
+      <text x="744" y="472" fill="#8B5CF6">where</text>
+      <text x="796" y="472" fill="#1E2243"> ds=</text>
+      <text x="828" y="472" fill="#16A34A">'20260521'</text>
+      <text x="572" y="496" fill="#8B5CF6">  group by</text>
+      <text x="654" y="496" fill="#1E2243"> region, category</text>
+      <text x="572" y="520" fill="#1E2243">) </text>
+      <text x="592" y="520" fill="#8B5CF6">select</text>
+      <text x="640" y="520" fill="#1E2243"> * </text>
+      <text x="666" y="520" fill="#8B5CF6">from</text>
+      <text x="704" y="520" fill="#1E2243"> daily_sales;</text>
+    </g>
+    <rect x="1196" y="324" width="148" height="200" rx="6" fill="#FFFFFF" stroke="rgba(118,134,158,0.18)"/>
+    <text x="1208" y="344" class="tiny">minimap</text>
+    <path d="M1208 506 L1218 482 L1228 490 L1240 444 L1252 466 L1266 410 L1278 452 L1290 388 L1304 472 L1318 444 L1332 498" fill="none" stroke="#3B82F6" stroke-width="1.2"/>
+    <g>
+      <rect x="690" y="404" width="220" height="118" rx="10" fill="#FFFFFF" stroke="rgba(59,130,246,0.40)" filter="url(#softShadow)"/>
+      <rect x="690" y="404" width="220" height="24" rx="10" fill="rgba(59,130,246,0.12)"/>
+      <text x="702" y="421" class="tiny" fill="#2563EB">Smart Autocomplete · metadata-aware</text>
+      <rect x="696" y="434" width="208" height="20" rx="5" fill="rgba(59,130,246,0.10)"/>
+      <text x="708" y="448" class="small" fill="#2563EB">▦ dwd_order_di</text>
+      <text x="708" y="468" class="small">▦ dwd_order_hi</text>
+      <text x="708" y="488" class="small">▦ dim_customer</text>
+      <text x="708" y="508" class="small">⚙ odps.sql.allow.fullscan</text>
+    </g>
+  </g>
+
+  <!-- Result panel -->
+  <g>
+    <rect x="498" y="564" width="876" height="406" rx="14" class="panel2"/>
+    <rect x="514" y="580" width="844" height="36" rx="10" fill="#FFFFFF" stroke="rgba(118,134,158,0.14)"/>
+    <rect x="524" y="586" width="66" height="24" rx="7" fill="rgba(59,130,246,0.10)" stroke="rgba(59,130,246,0.26)"/>
+    <text x="544" y="603" class="small" fill="#2563EB">Table</text>
+    <text x="608" y="603" class="small">Charts</text>
+    <text x="672" y="603" class="small">Pivot</text>
+    <text x="728" y="603" class="small">Quality</text>
+    <text x="790" y="603" class="small">JSON</text>
+    <rect x="838" y="586" width="78" height="24" rx="7" fill="rgba(59,130,246,0.14)" stroke="rgba(59,130,246,0.30)"/>
+    <text x="856" y="603" class="small" fill="#2563EB">Logview</text>
+    <text x="1056" y="603" class="small">200 rows · 10.3s · AI analysis</text>
+    <rect x="1264" y="586" width="78" height="24" rx="7" fill="rgba(22,163,74,0.10)" stroke="rgba(22,163,74,0.30)"/>
+    <text x="1282" y="603" class="small" fill="#00754F">Export</text>
+
+    <g>
+      <rect x="514" y="628" width="200" height="56" rx="12" fill="rgba(22,163,74,0.08)" stroke="rgba(22,163,74,0.26)"/>
+      <text x="532" y="650" class="tiny">Progress</text>
+      <text x="532" y="674" font-size="18" font-weight="760" fill="#16A34A">100%</text>
+      <rect x="724" y="628" width="200" height="56" rx="12" fill="rgba(59,130,246,0.08)" stroke="rgba(59,130,246,0.26)"/>
+      <text x="742" y="650" class="tiny">Scanned</text>
+      <text x="742" y="674" font-size="18" font-weight="760" fill="#3B82F6">2.86 MB</text>
+      <rect x="934" y="628" width="200" height="56" rx="12" fill="rgba(247,162,0,0.10)" stroke="rgba(247,162,0,0.28)"/>
+      <text x="952" y="650" class="tiny">Output</text>
+      <text x="952" y="674" font-size="18" font-weight="760" fill="#D97706">5.82 B</text>
+      <rect x="1144" y="628" width="214" height="56" rx="12" fill="rgba(139,92,246,0.08)" stroke="rgba(139,92,246,0.26)"/>
+      <text x="1162" y="650" class="tiny">Export Formats</text>
+      <text x="1162" y="674" font-size="14" font-weight="720" fill="#8B5CF6">CSV · JSON · Parquet</text>
+    </g>
+
+    <g>
+      <rect x="514" y="704" width="500" height="180" rx="12" fill="#FFFFFF" stroke="rgba(118,134,158,0.16)"/>
+      <rect x="514" y="704" width="500" height="30" rx="12" fill="#FFFFFF"/>
+      <text x="532" y="722" class="tiny" fill="#5A6178">region</text>
+      <text x="640" y="722" class="tiny" fill="#5A6178">category</text>
+      <text x="780" y="722" class="tiny" fill="#5A6178">sales</text>
+      <text x="900" y="722" class="tiny" fill="#5A6178">profit</text>
+      <line x1="514" y1="734" x2="1014" y2="734" class="line"/>
+      <g class="small">
+        <text x="532" y="758">Hangzhou</text><text x="640" y="758">Electronics</text><text x="780" y="758" fill="#3B82F6">4,050</text><text x="900" y="758" fill="#16A34A">1,030</text>
+        <text x="532" y="786">Singapore</text><text x="640" y="786">Home Goods</text><text x="780" y="786" fill="#3B82F6">2,860</text><text x="900" y="786" fill="#16A34A">520</text>
+        <text x="532" y="814">Frankfurt</text><text x="640" y="814">Outdoor</text><text x="780" y="814" fill="#3B82F6">1,730</text><text x="900" y="814" fill="#DC2626">-48</text>
+        <text x="532" y="842">Hong Kong</text><text x="640" y="842">Accessories</text><text x="780" y="842" fill="#3B82F6">1,280</text><text x="900" y="842" fill="#16A34A">301</text>
+        <text x="532" y="870" class="tiny">… 196 more rows</text>
+      </g>
+    </g>
+
+    <g>
+      <rect x="1028" y="704" width="330" height="180" rx="12" fill="#FFFFFF" stroke="rgba(118,134,158,0.16)"/>
+      <text x="1046" y="724" class="h3">Charts · Pivot · Quality</text>
+      <rect x="1252" y="710" width="94" height="20" rx="7" fill="rgba(22,163,74,0.10)" stroke="rgba(22,163,74,0.28)"/>
+      <text x="1264" y="724" class="tiny" fill="#00754F">10+ chart types</text>
+      <text x="1046" y="746" class="tiny">Auto-match columns · XYZ axes · Multi-select stacking</text>
+      <line x1="1046" y1="858" x2="1346" y2="858" stroke="rgba(118,134,158,0.22)"/>
+      <path d="M1056 850 L1108 814 L1160 832 L1212 786 L1264 804 L1316 768" fill="none" stroke="#3B82F6" stroke-width="2.4"/>
+      <path d="M1056 850 L1108 814 L1160 832 L1212 786 L1264 804 L1316 768 L1316 858 L1056 858 Z" fill="#3B82F6" opacity="0.10"/>
+      <rect x="1066" y="828" width="20" height="30" rx="4" fill="#16A34A" opacity="0.85"/>
+      <rect x="1098" y="800" width="20" height="58" rx="4" fill="#D97706" opacity="0.85"/>
+      <rect x="1132" y="838" width="20" height="20" rx="4" fill="#8B5CF6" opacity="0.85"/>
+      <text x="1046" y="876" class="tiny">Nulls 0.8% · Outliers OK · Pivot region × category</text>
+    </g>
+
+    <g>
+      <rect x="514" y="900" width="844" height="54" rx="12" fill="#FFFFFF" stroke="rgba(118,134,158,0.16)"/>
+      <text x="532" y="922" class="h3">Logview DAG Summary</text>
+      <rect x="708" y="908" width="80" height="20" rx="10" fill="rgba(59,130,246,0.14)"/>
+      <text x="724" y="922" class="tiny" fill="#2563EB">Map(M1)</text>
+      <path d="M792 918 H840" stroke="#8891A5" stroke-width="1.2"/>
+      <rect x="846" y="908" width="80" height="20" rx="10" fill="rgba(59,130,246,0.14)"/>
+      <text x="862" y="922" class="tiny" fill="#2563EB">Map(M2)</text>
+      <path d="M932 918 H980" stroke="#8891A5" stroke-width="1.2"/>
+      <rect x="986" y="908" width="86" height="20" rx="10" fill="rgba(22,163,74,0.16)"/>
+      <text x="1000" y="922" class="tiny" fill="#00754F">Reduce(R3)</text>
+      <text x="708" y="944" class="small">CPU 338 core·s · 10.3s · In 381.8K / Out 3.4K</text>
+    </g>
+  </g>
+
+  <!-- Separator -->
+  <g>
+    <line x1="1384" y1="208" x2="1384" y2="970" stroke="rgba(118,134,158,0.22)" stroke-width="1"/>
+    <rect x="1380" y="500" width="8" height="64" rx="4" fill="rgba(118,134,158,0.18)"/>
+    <circle cx="1384" cy="520" r="2" fill="#5A6178"/>
+    <circle cx="1384" cy="532" r="2" fill="#5A6178"/>
+    <circle cx="1384" cy="544" r="2" fill="#5A6178"/>
+  </g>
+
+  <!-- Right sidebar -->
+  <g>
+    <rect x="1396" y="200" width="430" height="780" rx="14" class="panel2"/>
+    <rect x="1396" y="200" width="430" height="48" rx="14" fill="#FFFFFF"/>
+    <path d="M1396 224 Q1396 200 1418 200 H1804 Q1826 200 1826 224 V248 H1396 Z" fill="#FFFFFF"/>
+    <rect x="1414" y="212" width="28" height="28" rx="9" fill="url(#purpleGrad)"/>
+    <text x="1422" y="231" font-size="13" font-weight="800" fill="#FFFFFF">M</text>
+    <text x="1452" y="231" class="h2">MaxMan AI · Data Agent</text>
+    <text x="1788" y="231" class="small">＋  ⋯</text>
+
+    <rect x="1414" y="266" width="100" height="28" rx="14" fill="url(#accentGrad)"/>
+    <text x="1444" y="285" font-size="12" font-weight="760" fill="#FFFFFF">Agent</text>
+    <rect x="1526" y="266" width="118" height="28" rx="14" class="chip"/>
+    <text x="1546" y="285" class="small">Sessions</text>
+    <rect x="1656" y="266" width="152" height="28" rx="14" class="chip"/>
+    <text x="1676" y="285" class="small">Model Settings</text>
+
+    <rect x="1414" y="312" width="394" height="120" rx="12" fill="#FFFFFF" stroke="rgba(118,134,158,0.16)"/>
+    <text x="1432" y="336" class="h3">AI Insights on Result</text>
+    <text x="1432" y="358" class="small">Trend: Electronics top sales; Outdoor profit anomaly</text>
+    <text x="1432" y="378" class="small">Suggest: Pivot region × category + WoW SQL</text>
+    <rect x="1432" y="396" width="108" height="24" rx="7" fill="rgba(22,163,74,0.10)" stroke="rgba(22,163,74,0.30)"/>
+    <text x="1450" y="412" class="tiny" fill="#00754F">Generate SQL</text>
+    <rect x="1552" y="396" width="108" height="24" rx="7" class="chip"/>
+    <text x="1570" y="412" class="tiny">WoW Analysis</text>
+
+    <rect x="1414" y="450" width="394" height="138" rx="12" fill="#FFFFFF" stroke="rgba(118,134,158,0.16)"/>
+    <text x="1432" y="474" class="h3">SQL Optimization</text>
+    <text x="1432" y="496" class="small">1. Push partition filter early: 4.5 GB → 320 MB</text>
+    <text x="1432" y="518" class="small">2. Name aggregates explicitly for charts</text>
+    <text x="1432" y="540" class="small">3. DESC / SHOW MC commands rendered inline</text>
+    <rect x="1432" y="554" width="180" height="24" rx="7" fill="rgba(59,130,246,0.10)" stroke="rgba(59,130,246,0.30)"/>
+    <text x="1450" y="570" class="tiny" fill="#2563EB">Insert into original file</text>
+
+    <rect x="1414" y="606" width="394" height="124" rx="12" fill="#FFFFFF" stroke="rgba(118,134,158,0.16)"/>
+    <text x="1432" y="630" class="h3">Local File → Table</text>
+    <rect x="1432" y="644" width="74" height="24" rx="7" class="chip"/>
+    <text x="1456" y="660" class="tiny">Excel</text>
+    <rect x="1514" y="644" width="74" height="24" rx="7" class="chip"/>
+    <text x="1538" y="660" class="tiny">CSV</text>
+    <rect x="1596" y="644" width="84" height="24" rx="7" class="chip"/>
+    <text x="1618" y="660" class="tiny">Parquet</text>
+    <rect x="1688" y="644" width="98" height="24" rx="7" fill="rgba(139,92,246,0.10)" stroke="rgba(139,92,246,0.30)"/>
+    <text x="1706" y="660" class="tiny" fill="#8B5CF6">JSON Lines</text>
+    <text x="1432" y="690" class="small">AI-inferred DDL → one-click create → track progress</text>
+    <text x="1432" y="712" class="tiny">sales_2026Q1.xlsx · 2.3 MB · 18,452 rows</text>
+
+    <rect x="1414" y="748" width="394" height="120" rx="12" fill="#FFFFFF" stroke="rgba(118,134,158,0.16)"/>
+    <text x="1432" y="772" class="h3">Hands-on with ODPS</text>
+    <text x="1432" y="794" class="small">"Find profit-anomaly regions and suggest next-step SQL"</text>
+    <g>
+      <rect x="1432" y="808" width="360" height="20" rx="10" fill="rgba(59,130,246,0.12)"/>
+      <rect x="1432" y="808" width="232" height="20" rx="10" fill="url(#accentGrad)"/>
+      <text x="1670" y="822" class="tiny">Analyzing · 64%</text>
+    </g>
+    <text x="1432" y="850" class="tiny">✓ list_tables · ✓ desc_table · ⏳ run_sql</text>
+
+    <rect x="1414" y="886" width="394" height="40" rx="12" fill="#FFFFFF" stroke="rgba(118,134,158,0.20)"/>
+    <text x="1432" y="911" class="small">Ask MaxMan AI anything...</text>
+    <rect x="1730" y="892" width="68" height="28" rx="7" fill="url(#accentGrad)"/>
+    <text x="1746" y="911" class="tiny" font-weight="760" fill="#FFFFFF">Send ▶</text>
+    <text x="1432" y="950" class="tiny" fill="#5A6178">Model: Qwen3-Max · DeepSeek · Claude · Switch ▾</text>
+  </g>
+
+  <!-- Footer -->
+  <g>
+    <rect x="86" y="1020" width="1748" height="2" fill="url(#accentGrad)" opacity="0.28"/>
+    <text x="86" y="1054" class="small">Promotional wireframe · Not a real screenshot · Based on MaxCompute AI Client layout</text>
+    <text x="1668" y="1054" class="small">Editable SVG · 4K PNG · Light EN</text>
+  </g>
+</svg>

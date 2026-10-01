@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+<defs>
+  <linearGradient id="bgBase" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#F7F7FA"/><stop offset="0.25" stop-color="#FFFFFF"/>
+    <stop offset="0.75" stop-color="#FAFAF8"/><stop offset="1" stop-color="#F3F1EE"/>
+  </linearGradient>
+  <radialGradient id="haloBlue" cx="0.5" cy="0" r="0.75">
+    <stop offset="0" stop-color="#4F6EF7" stop-opacity="0.17"/>
+    <stop offset="0.4" stop-color="#7C3AED" stop-opacity="0.07"/>
+    <stop offset="0.75" stop-color="#7C3AED" stop-opacity="0"/>
+  </radialGradient>
+  <radialGradient id="haloAmber" cx="0.86" cy="0.96" r="0.5">
+    <stop offset="0" stop-color="#FF9500" stop-opacity="0.08"/>
+    <stop offset="0.6" stop-color="#FF5E3A" stop-opacity="0.025"/>
+    <stop offset="1" stop-color="#FF5E3A" stop-opacity="0"/>
+  </radialGradient>
+  <radialGradient id="haloTeal" cx="0.04" cy="0.52" r="0.45">
+    <stop offset="0" stop-color="#34C759" stop-opacity="0.055"/>
+    <stop offset="0.6" stop-color="#00C7BE" stop-opacity="0.02"/>
+    <stop offset="1" stop-color="#00C7BE" stop-opacity="0"/>
+  </radialGradient>
+  <linearGradient id="brandGrad" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#4F6EF7"/><stop offset="0.55" stop-color="#8B5CF6"/><stop offset="1" stop-color="#C084FC"/>
+  </linearGradient>
+  <linearGradient id="baseGrad" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0" stop-color="#4F6EF7" stop-opacity="0.10"/>
+    <stop offset="0.5" stop-color="#7C3AED" stop-opacity="0.08"/>
+    <stop offset="1" stop-color="#4F6EF7" stop-opacity="0.10"/>
+  </linearGradient>
+  <filter id="cardShadow" x="-6%" y="-12%" width="112%" height="130%">
+    <feDropShadow dx="0" dy="3" stdDeviation="9" flood-color="#000000" flood-opacity="0.05"/>
+  </filter>
+</defs>
+<g font-family="-apple-system, 'SF Pro Display', 'SF Pro Text', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Segoe UI', Arial, sans-serif">
+<rect width="1920" height="1080" fill="url(#bgBase)"/>
+<rect width="1920" height="1080" fill="url(#haloBlue)"/>
+<rect width="1920" height="1080" fill="url(#haloAmber)"/>
+<rect width="1920" height="1080" fill="url(#haloTeal)"/>
+<g>
+  <rect x="64" y="42" width="64" height="64" rx="17" fill="url(#brandGrad)" filter="url(#cardShadow)"/>
+  <g transform="translate(77.44, 55.44) scale(0.03625)"><path d="M575.936794 0.000213a127.985148 127.985148 0 0 1 108.040797 196.649181l181.994881 254.81843a127.985148 127.985148 0 1 1-78.113603 55.801525l-181.994881-254.81843c-2.709019 0.639926-5.439369 1.215859-8.21238 1.685137l-102.388119 470.793369a159.981435 159.981435 0 1 1-199.016906 32.806859L147.911796 510.404985a127.985148 127.985148 0 1 1 82.294451-49.380936l148.398779 247.288637a159.59748 159.59748 0 0 1 22.888011-3.754231l102.345457-470.814699A127.985148 127.985148 0 0 1 575.936794 0.000213z" fill="#FFFFFF"/></g>
+  <text x="150" y="88.4" font-size="40" font-weight="760" fill="#1D1D1F">多模态数据集管理</text>
+  <text x="517.6" y="88.4" font-size="18.5" font-weight="500" fill="#AEAEB2">Blob 存储 · 文件浏览器 · WebDAV · 多模态预览</text>
+</g>
+<g>
+  <rect x="1671" y="54" width="185" height="40" rx="20" fill="rgba(255,255,255,0.85)" stroke="rgba(60,60,67,0.10)" stroke-width="1" filter="url(#cardShadow)"/>
+  <circle cx="1693" cy="74" r="7" fill="url(#brandGrad)"/>
+  <text x="1709" y="79.58" font-size="15.5" font-weight="600" fill="#3C3C43">AI数据探索客户端</text>
+</g>
+<line x1="64" y1="130" x2="1856" y2="130" stroke="rgba(60,60,67,0.07)" stroke-width="1"/>
+<rect x="64" y="129" width="250" height="3" rx="1.5" fill="url(#brandGrad)"/>
+<g filter="url(#cardShadow)">
+  <rect x="64" y="158" width="1792" height="128" rx="18" fill="rgba(255,255,255,0.68)" stroke="rgba(60,60,67,0.07)" stroke-width="1"/>
+</g>
+<g>
+  <rect x="90" y="178" width="10" height="25" rx="5" fill="#4F6EF7"/>
+  <text x="112" y="195.16" font-size="22" font-weight="700" fill="#1D1D1F">数据入口</text>
+  <rect x="216.0" y="177.5" width="78" height="26" rx="13" fill="#4F6EF7" fill-opacity="0.10"/>
+  <text x="255.0" y="195.1" font-size="13.5" font-weight="600" fill="#4F6EF7" text-anchor="middle">3 条路径</text>
+</g>
+<g>
+  <rect x="553.0" y="214" width="220" height="54" rx="27" fill="rgba(255,255,255,0.9)" stroke="#4F6EF7" stroke-opacity="0.28" stroke-width="1.2"/>
+  <circle cx="575.0" cy="241" r="5" fill="#4F6EF7"/>
+  <text x="590.0" y="247.12" font-size="18" font-weight="500" fill="#3C3C43">文件浏览器拖拽上传</text>
+</g>
+<g>
+  <rect x="789.0" y="214" width="339" height="54" rx="27" fill="rgba(255,255,255,0.9)" stroke="#4F6EF7" stroke-opacity="0.28" stroke-width="1.2"/>
+  <circle cx="811.0" cy="241" r="5" fill="#4F6EF7"/>
+  <text x="826.0" y="247.12" font-size="18" font-weight="500" fill="#3C3C43">通用导入：文件 / 文件夹 → Blob 表</text>
+</g>
+<g>
+  <rect x="1144.0" y="214" width="223" height="54" rx="27" fill="rgba(255,255,255,0.9)" stroke="#4F6EF7" stroke-opacity="0.28" stroke-width="1.2"/>
+  <circle cx="1166.0" cy="241" r="5" fill="#4F6EF7"/>
+  <text x="1181.0" y="247.12" font-size="18" font-weight="500" fill="#3C3C43">SQL 写入 Blob 字段</text>
+</g>
+<path d="M 960 300.75 L 960 314.75 M 953 308.75 L 960 315.75 L 967 308.75" stroke="#FF9500" stroke-opacity="0.55" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<g filter="url(#cardShadow)">
+  <rect x="64" y="335.5" width="1792" height="128" rx="18" fill="rgba(255,255,255,0.68)" stroke="rgba(60,60,67,0.07)" stroke-width="1"/>
+</g>
+<g>
+  <rect x="90" y="355.5" width="10" height="25" rx="5" fill="#8B5CF6"/>
+  <text x="112" y="372.66" font-size="22" font-weight="700" fill="#1D1D1F">存储模型</text>
+  <rect x="216.0" y="355.0" width="73" height="26" rx="13" fill="#8B5CF6" fill-opacity="0.10"/>
+  <text x="252.5" y="372.6" font-size="13.5" font-weight="600" fill="#8B5CF6" text-anchor="middle">Blob 表</text>
+</g>
+<g>
+  <rect x="374.0" y="391.5" width="251" height="54" rx="27" fill="rgba(255,255,255,0.9)" stroke="#8B5CF6" stroke-opacity="0.28" stroke-width="1.2"/>
+  <circle cx="396.0" cy="418.5" r="5" fill="#8B5CF6"/>
+  <text x="411.0" y="424.62" font-size="18" font-weight="500" fill="#3C3C43">content（BLOB 主列）</text>
+</g>
+<g>
+  <rect x="641.0" y="391.5" width="447" height="54" rx="27" fill="rgba(255,255,255,0.9)" stroke="#8B5CF6" stroke-opacity="0.28" stroke-width="1.2"/>
+  <circle cx="663.0" cy="418.5" r="5" fill="#8B5CF6"/>
+  <text x="678.0" y="424.62" font-size="18" font-weight="500" fill="#3C3C43">可选列：file_name / mime_type / file_size</text>
+</g>
+<g>
+  <rect x="1104.0" y="391.5" width="231" height="54" rx="27" fill="rgba(255,255,255,0.9)" stroke="#8B5CF6" stroke-opacity="0.28" stroke-width="1.2"/>
+  <circle cx="1126.0" cy="418.5" r="5" fill="#8B5CF6"/>
+  <text x="1141.0" y="424.62" font-size="18" font-weight="500" fill="#3C3C43">事务表 DDL 自动生成</text>
+</g>
+<g>
+  <rect x="1351.0" y="391.5" width="195" height="54" rx="27" fill="rgba(255,255,255,0.9)" stroke="#8B5CF6" stroke-opacity="0.28" stroke-width="1.2"/>
+  <circle cx="1373.0" cy="418.5" r="5" fill="#8B5CF6"/>
+  <text x="1388.0" y="424.62" font-size="18" font-weight="500" fill="#3C3C43">单文件上限 1 GB</text>
+</g>
+<path d="M 960 478.25 L 960 492.25 M 953 486.25 L 960 493.25 L 967 486.25" stroke="#FF9500" stroke-opacity="0.55" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<g filter="url(#cardShadow)">
+  <rect x="64" y="513" width="1792" height="222" rx="18" fill="rgba(255,255,255,0.68)" stroke="rgba(60,60,67,0.07)" stroke-width="1"/>
+</g>
+<g>
+  <rect x="90" y="533" width="10" height="25" rx="5" fill="#4F6EF7"/>
+  <text x="112" y="550.16" font-size="22" font-weight="700" fill="#1D1D1F">访问与消费</text>
+  <rect x="238.0" y="532.5" width="70" height="26" rx="13" fill="#4F6EF7" fill-opacity="0.10"/>
+  <text x="273.0" y="550.1" font-size="13.5" font-weight="600" fill="#4F6EF7" text-anchor="middle">Access</text>
+</g>
+<g>
+  <rect x="92.0" y="569" width="566.7" height="148" rx="14" fill="rgba(255,255,255,0.92)" stroke="rgba(60,60,67,0.07)" stroke-width="1"/>
+  <rect x="92.0" y="569" width="566.7" height="148" rx="14" fill="none" stroke="#4F6EF7" stroke-opacity="0.16" stroke-width="1"/>
+  <rect x="110.0" y="585" width="9" height="22" rx="4.5" fill="#4F6EF7"/>
+  <text x="130.0" y="601.4" font-size="20" font-weight="650" fill="#1D1D1F">文件浏览器</text>
+  <circle cx="119.0" cy="627.72" r="3" fill="#4F6EF7" fill-opacity="0.55"/>
+  <text x="132.0" y="633" font-size="16.5" fill="#3C3C43">网格 / 列表视图 · 面包屑导航</text>
+  <circle cx="119.0" cy="655.72" r="3" fill="#4F6EF7" fill-opacity="0.55"/>
+  <text x="132.0" y="661" font-size="16.5" fill="#3C3C43">文件夹管理 · 点击预览</text>
+  <circle cx="119.0" cy="683.72" r="3" fill="#4F6EF7" fill-opacity="0.55"/>
+  <text x="132.0" y="689" font-size="16.5" fill="#3C3C43">下载与批量操作</text>
+</g>
+<g>
+  <rect x="676.7" y="569" width="566.7" height="148" rx="14" fill="rgba(255,255,255,0.92)" stroke="rgba(60,60,67,0.07)" stroke-width="1"/>
+  <rect x="676.7" y="569" width="566.7" height="148" rx="14" fill="none" stroke="#06B6D4" stroke-opacity="0.16" stroke-width="1"/>
+  <rect x="694.7" y="585" width="9" height="22" rx="4.5" fill="#06B6D4"/>
+  <text x="714.7" y="601.4" font-size="20" font-weight="650" fill="#1D1D1F">WebDAV 挂载</text>
+  <circle cx="703.7" cy="627.72" r="3" fill="#06B6D4" fill-opacity="0.55"/>
+  <text x="716.7" y="633" font-size="16.5" fill="#3C3C43">挂载为本地文件夹</text>
+  <circle cx="703.7" cy="655.72" r="3" fill="#06B6D4" fill-opacity="0.55"/>
+  <text x="716.7" y="661" font-size="16.5" fill="#3C3C43">Finder ⌘K 输入地址连接</text>
+  <circle cx="703.7" cy="683.72" r="3" fill="#06B6D4" fill-opacity="0.55"/>
+  <text x="716.7" y="689" font-size="16.5" fill="#3C3C43">只读 · 仅限本机访问</text>
+</g>
+<g>
+  <rect x="1261.3" y="569" width="566.7" height="148" rx="14" fill="rgba(255,255,255,0.92)" stroke="rgba(60,60,67,0.07)" stroke-width="1"/>
+  <rect x="1261.3" y="569" width="566.7" height="148" rx="14" fill="none" stroke="#7C3AED" stroke-opacity="0.16" stroke-width="1"/>
+  <rect x="1279.3" y="585" width="9" height="22" rx="4.5" fill="#7C3AED"/>
+  <text x="1299.3" y="601.4" font-size="20" font-weight="650" fill="#1D1D1F">SQL 查询</text>
+  <circle cx="1288.3" cy="627.72" r="3" fill="#7C3AED" fill-opacity="0.55"/>
+  <text x="1301.3" y="633" font-size="16.5" fill="#3C3C43">结果表 Blob 列点击预览</text>
+  <circle cx="1288.3" cy="655.72" r="3" fill="#7C3AED" fill-opacity="0.55"/>
+  <text x="1301.3" y="661" font-size="16.5" fill="#3C3C43">BinaryPreview / BlobPreview 双链路</text>
+  <circle cx="1288.3" cy="683.72" r="3" fill="#7C3AED" fill-opacity="0.55"/>
+  <text x="1301.3" y="689" font-size="16.5" fill="#3C3C43">配合 UDF 加工处理</text>
+</g>
+<path d="M 960 749.75 L 960 763.75 M 953 757.75 L 960 764.75 L 967 757.75" stroke="#FF9500" stroke-opacity="0.55" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<g filter="url(#cardShadow)">
+  <rect x="64" y="784.5" width="1792" height="128" rx="18" fill="rgba(255,255,255,0.68)" stroke="rgba(60,60,67,0.07)" stroke-width="1"/>
+</g>
+<g>
+  <rect x="90" y="804.5" width="10" height="25" rx="5" fill="#34C759"/>
+  <text x="112" y="821.66" font-size="22" font-weight="700" fill="#1D1D1F">多模态预览</text>
+  <rect x="238.0" y="804.0" width="92" height="26" rx="13" fill="#34C759" fill-opacity="0.10"/>
+  <text x="284.0" y="821.6" font-size="13.5" font-weight="600" fill="#34C759" text-anchor="middle">按类型渲染</text>
+</g>
+<g>
+  <rect x="379.5" y="840.5" width="285" height="54" rx="27" fill="rgba(255,255,255,0.9)" stroke="#34C759" stroke-opacity="0.28" stroke-width="1.2"/>
+  <circle cx="401.5" cy="867.5" r="5" fill="#34C759"/>
+  <text x="416.5" y="873.62" font-size="18" font-weight="500" fill="#3C3C43">图片（AI 编辑 · 图生视频）</text>
+</g>
+<g>
+  <rect x="680.5" y="840.5" width="148" height="54" rx="27" fill="rgba(255,255,255,0.9)" stroke="#34C759" stroke-opacity="0.28" stroke-width="1.2"/>
+  <circle cx="702.5" cy="867.5" r="5" fill="#34C759"/>
+  <text x="717.5" y="873.62" font-size="18" font-weight="500" fill="#3C3C43">视频 / 音频</text>
+</g>
+<g>
+  <rect x="844.5" y="840.5" width="279" height="54" rx="27" fill="rgba(255,255,255,0.9)" stroke="#34C759" stroke-opacity="0.28" stroke-width="1.2"/>
+  <circle cx="866.5" cy="867.5" r="5" fill="#34C759"/>
+  <text x="881.5" y="873.62" font-size="18" font-weight="500" fill="#3C3C43">PDF / Word / Excel / PPT</text>
+</g>
+<g>
+  <rect x="1139.5" y="840.5" width="214" height="54" rx="27" fill="rgba(255,255,255,0.9)" stroke="#34C759" stroke-opacity="0.28" stroke-width="1.2"/>
+  <circle cx="1161.5" cy="867.5" r="5" fill="#34C759"/>
+  <text x="1176.5" y="873.62" font-size="18" font-weight="500" fill="#3C3C43">文本 / JSON / SQL</text>
+</g>
+<g>
+  <rect x="1369.5" y="840.5" width="171" height="54" rx="27" fill="rgba(255,255,255,0.9)" stroke="#34C759" stroke-opacity="0.28" stroke-width="1.2"/>
+  <circle cx="1391.5" cy="867.5" r="5" fill="#34C759"/>
+  <text x="1406.5" y="873.62" font-size="18" font-weight="500" fill="#3C3C43">HEX 十六进制</text>
+</g>
+<path d="M 960 927.25 L 960 941.25 M 953 935.25 L 960 942.25 L 967 935.25" stroke="#FF9500" stroke-opacity="0.55" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<g filter="url(#cardShadow)">
+  <rect x="64" y="962" width="1792" height="78" rx="18" fill="url(#baseGrad)"/>
+  <rect x="64" y="962" width="1792" height="78" rx="18" fill="rgba(255,255,255,0.55)"/>
+  <rect x="64" y="962" width="1792" height="78" rx="18" fill="none" stroke="#4F6EF7" stroke-opacity="0.22" stroke-width="1.2"/>
+</g>
+<text x="960" y="1007.8" font-size="20" font-weight="700" fill="#3B5CE4" text-anchor="middle">MaxCompute Blob 存储 — 多模态数据表格一体化管理</text>
+</g>
+</svg>

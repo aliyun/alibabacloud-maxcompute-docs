@@ -212,6 +212,12 @@
   border: 1px solid var(--mc-border);
 }
 
+.desktopFrame {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
 .windowBar {
   display: flex;
   align-items: center;
@@ -291,95 +297,6 @@
 }
 
 /* ===== Desktop panel (light GUI mockup) ===== */
-.desktopBody {
-  display: flex;
-  min-height: 262px;
-  font-size: 0.78rem;
-}
-
-.desktopSide {
-  display: flex;
-  flex-direction: column;
-  gap: 0.15rem;
-  width: 118px;
-  flex: 0 0 auto;
-  padding: 0.8rem 0.6rem;
-  color: var(--mc-muted);
-  background: var(--mc-surface);
-  border-right: 1px solid var(--mc-border);
-}
-
-.desktopSide span {
-  padding: 0.34rem 0.55rem;
-  border-radius: 7px;
-}
-
-.desktopSideActive {
-  color: var(--ifm-color-primary);
-  font-weight: 700;
-  background: #fff1e7;
-}
-
-.desktopMain {
-  flex: 1;
-  min-width: 0;
-  padding: 0.85rem 0.9rem;
-}
-
-.desktopEditor {
-  padding: 0.7rem 0.8rem;
-  margin-bottom: 0.75rem;
-  color: var(--mc-ink);
-  font-size: 0.76rem;
-  font-family: var(--ifm-font-family-monospace);
-  line-height: 1.65;
-  background: var(--mc-surface);
-  border: 1px solid var(--mc-border);
-  border-radius: 9px;
-}
-
-.desktopEditor p {
-  margin: 0;
-}
-
-.tKw {
-  color: var(--ifm-color-primary);
-  font-weight: 700;
-}
-
-.desktopGrid {
-  overflow: hidden;
-  border: 1px solid var(--mc-border);
-  border-radius: 9px;
-}
-
-.desktopGridHead,
-.desktopGridRow {
-  display: grid;
-  grid-template-columns: 1.2fr 1fr;
-}
-
-.desktopGridHead span {
-  padding: 0.4rem 0.7rem;
-  color: var(--mc-muted);
-  font-size: 0.72rem;
-  font-weight: 700;
-  background: var(--mc-surface);
-}
-
-.desktopGridRow span {
-  padding: 0.36rem 0.7rem;
-  color: var(--mc-ink);
-  font-family: var(--ifm-font-family-monospace);
-  font-size: 0.74rem;
-  border-top: 1px solid var(--mc-border);
-}
-
-/* ===== Products ===== */
-.productsSection {
-  padding: 4.2rem 0 4.6rem;
-  background: var(--ifm-background-color);
-}
 
 .sectionHeading {
   display: flex;
