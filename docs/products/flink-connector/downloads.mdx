@@ -1,6 +1,6 @@
 ---
 title: Connector JAR 下载
-description: 下载各 Flink 系列的最新 MaxCompute Connector JAR，说明 latest 入口和 1.20.0 候选版本的安装方式。
+description: 下载各 Flink 系列的最新 MaxCompute Connector JAR，覆盖 Flink 1.13、1.15、1.16–1.17 和 1.20 的下载与构建入口。
 product: flink-connector
 doc_type: reference
 status: draft
@@ -12,15 +12,18 @@ sidebar_position: 3
 
 根据部署使用的 Flink 系列选择 latest 下载入口，再按[构建与安装](./installation.mdx)部署到 SQL Client、JobManager 和 TaskManager。
 
-## 最新 JAR 下载
+## 获取 Connector JAR
 
-| Flink 系列 | 下载                                                                                                                            | 当前 Connector 版本 |
-| ---------- | ------------------------------------------------------------------------------------------------------------------------------- | ------------------- |
-| 1.13       | [下载最新 JAR](https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/latest/flink-connector-maxcompute-1.13.jar) | 1.13.19             |
-| 1.15       | [下载最新 JAR](https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/latest/flink-connector-maxcompute-1.15.jar) | 1.15.5              |
-| 1.16       | [下载最新 JAR](https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/latest/flink-connector-maxcompute-1.16.jar) | 1.16.25             |
+| Flink 系列 | 获取方式                                                                                                                        | Connector 版本与状态    |
+| ---------- | ------------------------------------------------------------------------------------------------------------------------------- | ----------------------- |
+| 1.20       | [源码构建](./installation.mdx)                                                                                                  | 1.20.0 候选，OSS 待发布 |
+| 1.16–1.17  | [下载最新 JAR](https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/latest/flink-connector-maxcompute-1.16.jar) | 1.16.25                 |
+| 1.15       | [下载最新 JAR](https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/latest/flink-connector-maxcompute-1.15.jar) | 1.15.5                  |
+| 1.13       | [下载最新 JAR](https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/latest/flink-connector-maxcompute-1.13.jar) | 1.13.19                 |
 
 当前版本核验日期为 **2026-10-13**。latest 是 OSS 符号链接，实际下载完整 JAR；链接指向的版本可以随发布更新。部署时保留本地文件的 SHA-256，便于核对 Client 与集群加载的内容。
+
+Flink **1.16 与 1.17 共用 1.16 系列的 JAR**；这一复用关系见[官方说明](https://help.aliyun.com/zh/maxcompute/use-flink-streaming-data-transmission-new-version)。
 
 ## 1.20.0 候选版本
 
@@ -28,6 +31,6 @@ sidebar_position: 3
 
 :::warning[选择匹配的版本]
 
-上表 latest 包不代表 1.20.0 候选代码，不能直接套用本空间所有新增模式。升级前核对目标 Flink 版本、字段、分区、认证以及 checkpoint／savepoint 的恢复兼容性。
+1.13、1.15、1.16–1.17 的已发布 latest 包不代表 1.20.0 候选代码，不能直接套用本空间所有新增模式。升级前核对目标 Flink 版本、字段、分区、认证以及 checkpoint／savepoint 的恢复兼容性。
 
 :::

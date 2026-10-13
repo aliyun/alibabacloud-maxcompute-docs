@@ -316,10 +316,10 @@
   },
   {
     "title": "Connector JAR 下载",
-    "description": "下载各 Flink 系列的最新 MaxCompute Connector JAR，说明 latest 入口和 1.20.0 候选版本的安装方式。",
+    "description": "下载各 Flink 系列的最新 MaxCompute Connector JAR，覆盖 Flink 1.13、1.15、1.16–1.17 和 1.20 的下载与构建入口。",
     "href": "/docs/products/flink-connector/downloads/",
     "group": "MaxCompute Flink Connector",
-    "keywords": "flink-connector download 最新 JAR 下载 1.20.0 候选版本 根据部署使用的 Flink 系列选择 latest 下载入口，再按构建与安装部署到 SQL Client、JobManager 和 TaskManager。 最新 JAR 下载 Flink 系列 下载 当前 Connector 版本 ---------- ------------------------------------------------------------------------------------------------------------------------------- ------------------- 1.13 下载最新 JAR 1.13.19 1.15 下载最新 JAR 1.15.5 1.16 下载最新 JAR 1.16.25 当前版本核验日期为 2026-10-13 。latest 是 OSS 符号链接，实际下载完整 JAR；链接指向的版本可以随发布更新。部署时保留本地文件的 SHA-256，便于核对 Client 与集群加载的内容。 1.20.0 候选版本 本空间的 SQL 配方对应 Connector 1.20.0 候选代码、Flink 1.20.4 。该候选 JAR 尚未上传 OSS，使用源码构建获得。上表已有系列包的功能与运行环境按已发布连接器文档核对。 :::warning[选择匹配的版本] 上表 latest 包不代表 1.20.0 候选代码，不能直接套用本空间所有新增模式。升级前核对目标 Flink 版本、字段、分区、认证以及 checkpoint／savepoint 的恢复兼容性。 :::"
+    "keywords": "flink-connector download 获取 Connector JAR 1.20.0 候选版本 根据部署使用的 Flink 系列选择 latest 下载入口，再按构建与安装部署到 SQL Client、JobManager 和 TaskManager。 获取 Connector JAR Flink 系列 获取方式 Connector 版本与状态 ---------- ------------------------------------------------------------------------------------------------------------------------------- ----------------------- 1.20 源码构建 1.20.0 候选，OSS 待发布 1.16–1.17 下载最新 JAR 1.16.25 1.15 下载最新 JAR 1.15.5 1.13 下载最新 JAR 1.13.19 当前版本核验日期为 2026-10-13 。latest 是 OSS 符号链接，实际下载完整 JAR；链接指向的版本可以随发布更新。部署时保留本地文件的 SHA-256，便于核对 Client 与集群加载的内容。 Flink 1.16 与 1.17 共用 1.16 系列的 JAR ；这一复用关系见官方说明。 1.20.0 候选版本 本空间的 SQL 配方对应 Connector 1.20.0 候选代码、Flink 1.20.4 。该候选 JAR 尚未上传 OSS，使用源码构建获得。上表已有系列包的功能与运行环境按已发布连接器文档核对。 :::warning[选择匹配的版本] 1.13、1.15、1.16–1.17 的已发布 latest 包不代表 1.20.0 候选代码，不能直接套用本空间所有新增模式。升级前核对目标 Flink 版本、字段、分区、认证以及 checkpoint／savepoint 的恢复兼容性。 :::"
   },
   {
     "title": "使用指南",
