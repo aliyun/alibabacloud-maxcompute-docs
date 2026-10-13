@@ -1,0 +1,72 @@
+---
+title: Sink：主键更新与删除
+description: 为主键表定义 Flink PRIMARY KEY 与 upsert Sink，处理新增、更新和删除变化行，说明部分列更新和 Storage 路径边界。
+product: flink-connector
+doc_type: how-to
+status: draft
+tags:
+  - flink-connector
+  - flink-sql
+sidebar_position: 11
+---
+
+主键 Sink 根据目标主键保存记录，接收新增、更新后值和删除。先在 MaxCompute 创建带匹配主键的目标表，再声明 Flink 主键与写入语义。
+
+## 定义主键目标
+
+假设目标 `pk_events` 的主键为 `id`，字段结构如下。替换连接占位符：
+
+```sql
+CREATE TABLE mc_pk (
+  id BIGINT NOT NULL,
+  v STRING,
+  PRIMARY KEY (id) NOT ENFORCED
+) WITH (
+  'connector' = 'maxcompute',
+  'table.name' = '<project_name>.pk_events',
+  'odps.project.name' = '<project_name>',
+  'odps.end.point' = '<endpoint>',
+  'odps.credentials.provider' = '<provider_class>',
+  'sink.operation' = 'upsert'
+);
+
+INSERT INTO mc_pk VALUES (1, 'first');
+```
+
+等待首个作业完成，再提交：
+
+```sql
+INSERT INTO mc_pk VALUES (1, 'updated');
+```
+
+使用单独的 bounded Source 或服务端查询核对：主键 1 的最终值应为 `updated`，每个主键只有当前记录。Flink 的 `NOT ENFORCED` 不负责约束上游唯一性；真正的目标主键、数据类型与分区结构必须一致。
+
+## 同步更新与删除
+
+将已注册的 CDC Source 接到目标：
+
+```sql
+INSERT INTO mc_pk SELECT id, v FROM mc_live;
+```
+
+`mc_live` 见[持续增量 Source](./source-continuous.mdx)。源表与目标表必须是两个不同的物理表，避免形成自读自写循环；修改目标 `table.name` 后再执行。
+
+SQL Sink 协商 upsert changelog：INSERT 和 UPDATE_AFTER 写入新值，DELETE 删除主键对应记录。不要把普通 `INSERT INTO ... VALUES` 当作 DELETE；删除来自上游变化行。本空间不提供直接 `DELETE FROM` 的 Connector 配方。
+
+## 选择 Storage 路径
+
+创建表时增加：
+
+```sql
+'sink.coordinator.enable' = 'false'
+```
+
+Storage 路径根据真实目标表主键决定 writer；**SQL 层仍应配置 `sink.operation=upsert` 和 Flink 主键**，否则 planner 只允许 INSERT。动态分区主键表默认按 `(partition, bucket)` 路由；生产中保持 `sink.shuffle.bucket-only.enable=false`。
+
+## 部分列更新
+
+协调式路径有 `upsert.partial-column.enable` 和 `upsert.partial-column.name` 配置。部分列更新不是完整行替换，需要匹配目标服务能力、包含主键并单独验收。Storage 路径没有实现部分列 mutation，会显式拒绝该开关。本页默认示例采用完整行写入。
+
+## 结果与恢复校验
+
+验证新增、同键更新、删除、重复回放、跨分区同键和恢复后最终值。主键可以使部分回放序列的最终状态幂等，但无法自动保证多作业之间的更新顺序或任意操作的 exactly-once。分区内键语义以真实目标表为准。

@@ -1,0 +1,72 @@
+---
+title: Source：读取有界增量
+description: 按版本或时间区间读取有限变更，区分 APPEND 与 CDC、区间边界、主键和下游兼容性，避免将变更区间误认为历史快照。
+product: flink-connector
+doc_type: how-to
+status: draft
+tags:
+  - flink-connector
+  - flink-sql
+sidebar_position: 7
+---
+
+有界增量只读取指定起点与终点间的变更，区间读完后结束。适合增量回放和分段数据校验。它需要目标表与服务端支持增量读取，不能用普通表存量测试代替验收。
+
+首次使用先完成[增量环境准备](./incremental-prerequisites.mdx)，再进入[交互操作向导](./incremental-guide.mdx)生成模板和核验结果。
+
+## 按版本读取区间
+
+在有增量能力的测试表上注册 Flink 映射。以下连接值和版本号是需要替换的模板：
+
+```sql
+SET 'execution.runtime-mode' = 'batch';
+
+CREATE TABLE mc_changes (
+  id BIGINT NOT NULL,
+  v STRING,
+  PRIMARY KEY (id) NOT ENFORCED
+) WITH (
+  'connector' = 'maxcompute',
+  'table.name' = '<project_name>.pk_events',
+  'odps.project.name' = '<project_name>',
+  'odps.end.point' = '<endpoint>',
+  'odps.credentials.provider' = '<provider_class>',
+  'scan.mode' = 'incremental',
+  'scan.incremental-between' = '5,10',
+  'scan.incremental.mode' = 'APPEND'
+);
+
+SELECT id, v FROM mc_changes;
+```
+
+`5,10` 表示 **(5, 10]**：排除起点版本，包含终点版本。这是版本区间，不是“读取版本 10 的全量快照”。用服务端真实版本替换示例数字，并确认它们仍在可读取范围。
+
+## 按时间读取区间
+
+将上述版本区间参数替换为：
+
+```sql
+'scan.incremental-between-timestamp' =
+  '2026-10-13 00:00:00.000,2026-10-13 01:00:00.000'
+```
+
+同样排除起点、包含终点。时间格式为 `yyyy-MM-dd HH:mm:ss.SSS`；时区与目标服务和部署保持一致。只选择版本或时间一种区间参数；当前同时填写时版本参数优先，不能依赖两个条件相交。
+
+## 选择变更表达
+
+| 参数值           | 目的         | 使用前检查                         |
+| ---------------- | ------------ | ---------------------------------- |
+| `APPEND`（默认） | 读取追加增量 | 不用于完整同步更新与删除           |
+| `CDC`            | 读取变更操作 | 目标服务必须支持；下游需接受变化行 |
+
+:::warning[有界 CDC 的 SQL 契约待修复]
+
+当前 batch Source 的 SQL changelog 声明为 insert-only，而底层 CDC 读取器可以发出更新／删除 RowKind。二者可能导致 planner 接受不兼容的下游，或产生错误统计。此版本先使用 APPEND 有界示例；有界 CDC 不作为可直接上线的 SQL 配方，需要修复并在真实服务校验变更类型与下游结果。
+
+:::
+
+## 验证边界
+
+在起点前、区间内、终点后分别写入能区分的测试数据。确认只输出区间内记录、作业结束，并在重放时检查结果。增量读会强制 bucket 拆分并关闭 SDK 动态负载均衡，不需要再通过 `splitstrategy` 模拟这一行为。
+
+持续追踪新的变更使用[持续增量](./source-continuous.mdx)，不能把 streaming 作业与 `scan.mode=incremental` 组合使用。

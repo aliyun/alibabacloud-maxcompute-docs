@@ -6,13 +6,14 @@
 
 本仓库是 MaxCompute 的统一文档站点。站点使用一套导航、搜索、贡献契约和质量门禁承载多个产品文档空间，让各产品团队可以独立维护内容，同时为读者提供一致体验。
 
-一期公开产品范围固定为：
+已接入公开导航的产品范围为：
 
 - `cli`：MaxCompute CLI
 - `mcp-server`：MaxCompute MCP Server
 - `desktop`：MaxCompute Desktop
+- `flink-connector`：MaxCompute Flink Connector（文档草稿）
 
-不在一期范围内的候选产品只记录在 `handbook/roadmap.md`，不得提前加入公开导航、首页入口或产品注册表。
+未获明确接入授权的候选产品只记录在 `handbook/roadmap.md`，不得提前加入公开导航、首页入口或产品注册表。
 
 ## 权威文件
 

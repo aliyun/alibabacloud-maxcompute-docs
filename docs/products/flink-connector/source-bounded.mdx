@@ -1,0 +1,79 @@
+---
+title: Source：读取存量
+description: 通过 Flink SQL 一次性读取当前表或分区，配置 bounded、分区裁剪与投影，并明确流执行模式和历史快照限制。
+product: flink-connector
+doc_type: how-to
+status: draft
+tags:
+  - flink-connector
+  - flink-sql
+sidebar_position: 6
+---
+
+存量 Source 读取一次当前快照或指定分区，数据读完后结束。适合离线加工、数据回填和有限数据校验。
+
+## 设置有界读取
+
+在[快速开始](./quickstart.mdx)的表上执行：
+
+```sql
+SET 'execution.runtime-mode' = 'batch';
+SELECT id, v FROM mc_sample;
+```
+
+表中设置 `'scan.mode' = 'bounded'`。在 `streaming` 执行模式下，`bounded` 同样强制使用有界 Source；这有助于将有限数据放入流作业，但不会持续发现后来写入的数据。
+
+## 读取指定分区
+
+假设服务端已创建 `events` 分区表，数据列为 `id BIGINT, v STRING`，分区列为 `ds STRING`，且分区 `ds=20261013` 已存在。在 Flink 注册对应映射：
+
+```sql
+CREATE TABLE mc_partitioned (
+  id BIGINT,
+  v STRING,
+  ds STRING
+) PARTITIONED BY (ds) WITH (
+  'connector' = 'maxcompute',
+  'table.name' = '<project_name>.events',
+  'odps.project.name' = '<project_name>',
+  'odps.end.point' = '<endpoint>',
+  'odps.credentials.provider' = '<provider_class>',
+  'scan.mode' = 'bounded',
+  'scan.partition' = 'ds=20261013'
+);
+
+SELECT id, v FROM mc_partitioned;
+```
+
+替换连接占位符再执行。`scan.partition` 选择一个显式分区，不存在时会报错。去掉该参数后，可以通过 `WHERE ds = '20261013'` 请求优化器裁剪分区；需要检查执行计划，watermark 等算子可能影响裁剪路径。
+
+## 投影和数据量
+
+只选择需要的列：
+
+```sql
+SELECT id FROM mc_partitioned WHERE ds = '20261013' LIMIT 100;
+```
+
+支持顶层列投影和分区裁剪，不支持嵌套列投影。`LIMIT` 可以限制查询结果，但当前 Connector 保存了 limit 后未传到读取会话，不能把 `LIMIT 100` 当作只扫描 100 行的成本保证。
+
+| 参数                      | 默认值           | 用途                       |
+| ------------------------- | ---------------- | -------------------------- |
+| `splitstrategy`           | `ROW_OFFSET`     | 拆分策略；可选 `BYTE_SIZE` |
+| `splitbytesize`           | `268435456` 字节 | 请求的字节拆分大小         |
+| `splitbatchreadsize`      | `4096`           | 每批读取行数               |
+| `dynamicloadbalancing`    | `false`          | SDK 读取动态负载均衡       |
+| `compressCodec`           | `NO_COMPRESSION` | SDK Arrow 压缩枚举         |
+| `scan.disk-spill.enabled` | `false`          | 可选磁盘缓冲路径           |
+
+磁盘缓冲需要兼容运行环境和磁盘空间；先验证实际依赖与容器目录，避免仅打开开关就认为已获得稳定磁盘缓冲能力。
+
+## 验证读取范围
+
+先构造两个分区的少量不同数据，确认指定分区只返回目标数据，再扩展到业务规模。检查行数、字段值和 Source 结束状态。
+
+:::warning[历史快照限制]
+
+当前 batch 路径没有将 `scan.snapshot-version` 或 `scan.timestamp` 接入快照会话。不要在 batch 下使用 `from-snapshot`、`from-timestamp`、`from-snapshot-full` 期望取得历史时点的数据；它们可能读取当前快照。有界变更区间使用[有界增量](./source-incremental.mdx)。
+
+:::

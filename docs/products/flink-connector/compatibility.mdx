@@ -1,0 +1,54 @@
+---
+title: 兼容性与交付语义
+description: 定义 Flink、JDK、SDK 基线，区分源码实现、本地 Emulator 验证和云端验收，解释追加重复与主键收敛边界。
+product: flink-connector
+doc_type: reference
+status: draft
+tags:
+  - flink-connector
+  - flink-sql
+sidebar_position: 16
+---
+
+本空间记录候选版本的功能和操作方式，按已验证范围使用。测试通过、源码实现与云端验收是不同状态。
+
+## 版本基线
+
+| 组件                | 基线                                   |
+| ------------------- | -------------------------------------- |
+| Connector           | `1.20.0`                               |
+| Flink               | `1.20.4`                               |
+| 构建与测试 JDK      | `17`                                   |
+| Maven               | `3.9`                                  |
+| MaxCompute Java SDK | `0.61.2-public`                        |
+| Emulator            | `1.2.0`，自动化 runner 固定镜像 digest |
+
+Java 8 字节码目标不代表 JDK 8 运行验收。其他 Flink 版本与受管发行版需单独验证。当前候选 shaded 依赖 namespace 为 `flink.connector.odps.*`，Connector API 包仍为 `org.apache.flink.odps.*`；旧 checkpoint／savepoint 的序列化兼容性不能直接假定。
+
+## 能力与证据范围
+
+| 能力                                     | 源码状态         | 验证边界                                   |
+| ---------------------------------------- | ---------------- | ------------------------------------------ |
+| 有界读取、投影、分区选择                 | 已实现           | 基线记录有本地测试                         |
+| 协调式／文件缓存／Storage 追加与主键写入 | 已实现           | 基线记录有往返、并发、故障与恢复测试       |
+| Catalog 表与分区生命周期                 | 已实现           | 基线记录有本地元数据测试                   |
+| 有界增量与持续增量                       | 有实现           | 云端 CDC、物理 bucket／多 split 待单独验收 |
+| 最新分区 CDC                             | 有实现及契约检查 | PK DLMV、服务端就绪和跨进程恢复待验收      |
+| 历史 batch 快照                          | 当前参数未接入   | 不作为可用配方                             |
+| 有界 CDC SQL changelog                   | 存在契约不一致   | 修复前不作为可上线配方                     |
+| Lookup Join                              | 未实现           | 运行时拒绝                                 |
+| SQL INSERT OVERWRITE                     | 不支持           | 不提供覆盖配方                             |
+
+本空间没有重新执行完整 Connector 云端或 Emulator 矩阵，使用的是所分析源码中的验收记录。不要将本次文档站构建通过描述为 Connector E2E 通过。
+
+## 写入恢复语义
+
+追加按至少一次恢复，成功写入后 ACK 丢失会造成重复。文件缓存依赖本地文件与恢复逻辑，不能当作共享持久存储；Storage writer 没有可恢复的 Flink committer state。
+
+主键测试以最终值和主键唯一性核对结果。主键可以让特定回放序列收敛，但不建立任意业务、跨作业顺序或所有 Source／Sink 组合的端到端 exactly-once 保证。
+
+## 真实服务验收
+
+验收应绑定目标表类型、服务版本、JAR 来源、实际 endpoint、配额与作业配置，覆盖新增、更新、删除、空分区值、checkpoint 恢复与响应丢失。存量、增量、Catalog、权限、吞吐和分布式恢复分别验证。
+
+如果生产要求严格唯一事件，使用业务主键或去重设计，再验证故障路径。不能仅凭本地模拟器事务或单次 SQL 往返推导生产保证。

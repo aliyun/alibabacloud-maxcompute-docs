@@ -1,0 +1,81 @@
+---
+title: Sink：追加写入
+description: 通过 INSERT INTO 追加数据到普通表和分区表，区别静态、动态分区，说明空值替换、完成状态与重复写入风险。
+product: flink-connector
+doc_type: how-to
+status: draft
+tags:
+  - flink-connector
+  - flink-sql
+sidebar_position: 10
+---
+
+追加 Sink 接收 INSERT 数据，将记录追加到目标表。不会根据相同字段值自动去重，也不覆盖已有表内容。
+
+## 追加到普通表
+
+在[快速开始](./quickstart.mdx)的 `mc_sample` 上执行：
+
+```sql
+INSERT INTO mc_sample VALUES (3, 'new event');
+SELECT id, v FROM mc_sample;
+```
+
+等待 INSERT 作业完成后再读取。第二次运行相同 INSERT 仍会追加；如果需要保存每个主键的最新值，使用[主键 Sink](./sink-upsert.mdx)。
+
+## 静态分区
+
+假设服务端已存在 `events(id BIGINT, v STRING)`，分区列为 `ds STRING`。注册 Flink 映射后指定分区：
+
+```sql
+CREATE TABLE mc_events (
+  id BIGINT,
+  v STRING,
+  ds STRING
+) PARTITIONED BY (ds) WITH (
+  'connector' = 'maxcompute',
+  'table.name' = '<project_name>.events',
+  'odps.project.name' = '<project_name>',
+  'odps.end.point' = '<endpoint>',
+  'odps.credentials.provider' = '<provider_class>',
+  'sink.operation' = 'insert'
+);
+
+INSERT INTO mc_events PARTITION (ds = '20261013')
+VALUES (1, 'first'), (2, 'second');
+```
+
+以上是需要替换连接值的模板。静态分区值由 `PARTITION` 子句提供，VALUES 中只包含数据列。也可以用表参数 `sink.partition=ds=20261013` 配置目标分区；入门时优先使用 SQL 静态分区子句，避免两处指定不同值。
+
+## 动态分区
+
+动态分区的值随每行数据传入：
+
+```sql
+INSERT INTO mc_events VALUES
+  (3, 'third', '20261013'),
+  (4, 'fourth', '20261014');
+```
+
+多级分区可以固定一部分列，剩余分区列由行数据提供。保持 Flink 分区声明、服务端分区列及字段顺序一致。动态 STRING 分区列的 null／空字符串映射为 `sink.partition.default-value`，默认 `__DEFAULT_PARTITION__`，需要纳入数据质量检查。
+
+## 持续追加
+
+在 streaming 作业中，将支持 INSERT 的上游接到相同目标映射：
+
+```sql
+INSERT INTO mc_events
+SELECT id, v, ds FROM events_input;
+```
+
+`events_input` 由实际上游 Connector 注册。如果查询产生更新或删除（例如持续聚合），不要直接接追加目标；改用支持变化行的主键 Sink。
+
+:::warning[恢复和重跑可能重复]
+
+追加写入按至少一次恢复设计。写入成功但响应丢失、作业重试或重跑都可能产生重复记录。业务要求唯一事件时，需要应用主键或去重策略。checkpoint 不等于端到端 exactly-once。
+
+:::
+
+## 结果验证
+
+按目标分区核对行数、字段值、空分区替换值和重复记录。测试失败恢复时使用独立临时表，不在业务表上通过重跑估算重复率。写入路径选择见[写入实现](./sink-writers.mdx)。

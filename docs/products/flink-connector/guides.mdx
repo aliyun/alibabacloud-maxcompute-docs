@@ -1,0 +1,47 @@
+---
+title: 使用指南
+description: 按从安装到读写上线的用户路径查找 Flink SQL、Source、Sink、Catalog 和 Java API 文档。
+product: flink-connector
+doc_type: how-to
+status: draft
+tags:
+  - flink-connector
+  - flink-sql
+sidebar_position: 17
+---
+
+按当前任务选择阅读路径。首次使用从快速开始验证完整往返，再替换真实服务配置。
+
+## 首次使用
+
+1. [构建与安装](./installation.mdx)：得到分发 JAR 并让 Client、集群加载同一版本。
+2. [快速开始](./quickstart.mdx)：追加两行并读取验证。
+3. [连接与认证](./connection.mdx)：部署真实服务地址和凭据提供者。
+4. [模式总览](./modes.mdx)：根据方向、表类型与有界性选择模式。
+
+## 增量读取练习
+
+[增量读取操作向导](./incremental-guide.mdx)提供场景选择、起点配置和 SQL 生成。先按[环境准备](./incremental-prerequisites.mdx)确认 Storage API、CDC 表和运行环境，再分别在 MaxCompute SQL 与 Flink SQL Client 中完成数据变化验证。
+
+## 读取数据
+
+| 任务                           | 指南                                             |
+| ------------------------------ | ------------------------------------------------ |
+| 一次性取全表或指定分区         | [存量 Source](./source-bounded.mdx)              |
+| 回放有限版本／时间区间         | [有界增量 Source](./source-incremental.mdx)      |
+| 先存量后增量或指定起点持续追踪 | [持续增量 Source](./source-continuous.mdx)       |
+| 跟随按序发布的新分区 CDC       | [最新分区 Source](./source-latest-partition.mdx) |
+
+## 写入与集成
+
+| 任务                     | 指南                                      |
+| ------------------------ | ----------------------------------------- |
+| 追加明细、静态／动态分区 | [追加 Sink](./sink-append.mdx)            |
+| 保存主键最新值、同步删除 | [主键 Sink](./sink-upsert.mdx)            |
+| 比较 writer 与调优参数   | [写入实现](./sink-writers.mdx)            |
+| 自动发现表和分区结构     | [Catalog](./catalog.mdx)                  |
+| 在 Java 作业中使用       | [Table API 与 DataStream](./java-api.mdx) |
+
+## 上线前
+
+阅读[兼容性与交付语义](./compatibility.mdx)，用[参数与类型参考](./reference.mdx)核对配置，再按[故障排查](./troubleshooting.mdx)验证已知限制。

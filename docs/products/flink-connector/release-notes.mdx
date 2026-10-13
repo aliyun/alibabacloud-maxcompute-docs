@@ -1,0 +1,38 @@
+---
+title: 版本与文档基线
+description: 记录本空间分析的 Connector 候选版本、源码分支与提交，说明尚未完成的公开发布、云端验收和兼容性状态。
+product: flink-connector
+doc_type: release-note
+status: draft
+tags:
+  - flink-connector
+  - flink-sql
+sidebar_position: 19
+---
+
+本空间按代码基线初始化，产品状态保持 draft。它不替代 Connector 的正式发行公告。
+
+## 2026-10-13 文档初始化
+
+| 项目               | 值                                                                 |
+| ------------------ | ------------------------------------------------------------------ |
+| 分析分支           | `codex/sca-emulator-tests`                                         |
+| 版本调整提交       | `d2c13a5`（仅版本号与构建名称）                                    |
+| 分析提交           | `cce1b4f90193179b83a854b60a22b824ae75565e`                         |
+| Connector 源码版本 | `1.20.0`                                                           |
+| 验证环境基线       | Flink 1.20.4、JDK 17、Maven 3.9、SDK 0.61.2-public                 |
+| 文档范围           | 安装与打包、Flink SQL、Source、Sink、Catalog、Java API、参数、排障 |
+
+分析提交原版本为 `1.16.25`；本次只将候选源码版本调整为 `1.20.0`，不把 OSS 历史 `1.16.25` 包视为该分支的分发产物。
+
+依据该提交的工厂、Source／Sink 实现、配置与测试记录整理。枚举、注释和已有 README 与实现不一致时，按实际执行路径描述限制。
+
+## 1.20.0 候选版本调整
+
+本次将候选 POM、构建产物和文档示例同步到 `1.20.0`。本地 public／release-artifacts 构建与隔离消费者验证通过；尚未将该版本上传 OSS。各系列 latest 下载入口见[JAR 下载](./downloads.mdx)。
+
+## 发行状态
+
+目前不宣称 Connector 已公开发布到 Maven Central，也不提供未经确认的公共源码仓库地址。源码基线记录仍有第三方再分发审查、发布身份与授权、真实服务验收等发行门槛。
+
+Emulator 1.2.0 是独立测试组件，已发布镜像不表示 Connector 发布门槛已经完成。后续 Connector 版本发布时，需要更新本空间的安装产物、兼容性、已知限制和相应模式示例。

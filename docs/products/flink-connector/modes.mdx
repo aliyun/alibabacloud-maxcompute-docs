@@ -1,0 +1,58 @@
+---
+title: 模式总览与选型
+description: 按数据方向、执行模式、表类型和启动位置选择 Source 或 Sink，区分存量、有界增量、持续增量与写入实现。
+product: flink-connector
+doc_type: concept
+status: draft
+tags:
+  - flink-connector
+  - flink-sql
+sidebar_position: 2
+---
+
+先确定读写方向，再选择业务语义，最后决定实现参数。Flink 的 `execution.runtime-mode` 控制作业执行模式，Connector 的 `scan.mode` 控制读取方式，两者需要一起配置。
+
+## Source：选择读取模式
+
+![存量 bounded 在快照读完后结束；incremental 只读指定区间；latest 跳过初始存量；latest-full 先读快照再持续读取变更。](/img/flink-connector/source-timeline.png)
+
+| 目标                         | Flink 执行模式 | Connector 配置                                      | 初始存量         | 是否结束      | 使用条件                                                    |
+| ---------------------------- | -------------- | --------------------------------------------------- | ---------------- | ------------- | ----------------------------------------------------------- |
+| 读取当前表或指定分区         | `batch`        | `scan.mode=bounded`                                 | 读取             | 是            | [存量 Source](./source-bounded.mdx)                         |
+| 在流作业中读取有限数据       | `streaming`    | `scan.mode=bounded`                                 | 读取             | Source 会结束 | 下游作业是否结束由拓扑决定                                  |
+| 回放两个版本或时间点间的变更 | `batch`        | `scan.mode=incremental` + 区间                      | 跳过区间前存量   | 是            | 需要服务端增量能力；见[有界增量](./source-incremental.mdx)  |
+| 只消费启动后的变更           | `streaming`    | `scan.mode=latest`                                  | 跳过             | 否            | 主键事务表                                                  |
+| 先读当前存量，再追踪变更     | `streaming`    | `scan.mode=latest-full`                             | 读取一次         | 否            | 主键事务表                                                  |
+| 从指定版本继续读取           | `streaming`    | `scan.mode=from-snapshot` + `scan.snapshot-version` | 跳过             | 否            | 主键事务表；保留范围内的版本                                |
+| 从指定时间继续读取           | `streaming`    | `scan.mode=from-timestamp` + `scan.timestamp`       | 跳过             | 否            | 主键事务表；保留范围内的时间                                |
+| 跟随最新发布分区的 CDC       | `streaming`    | `scan.partition.latest=true` + CDC                  | 不做初始全量快照 | 否            | 分区主键事务表；见[最新分区](./source-latest-partition.mdx) |
+
+持续模式详见[持续增量 Source](./source-continuous.mdx)。`scan.incremental.mode=APPEND` 与 `CDC` 决定区间的变更表达，不改变作业的有界性；不要把 APPEND 当作更新与删除的完整同步模式。
+
+:::warning[容易误选的模式]
+
+普通表、无主键事务表在 `streaming` 下会回退到有界读取，不能靠设置 `latest` 获得持续增量。`from-snapshot-full` 的流读取显式不支持。当前 batch 路径没有接入历史快照选择，不能用 `from-snapshot` 或 `from-timestamp` 做历史时点快照查询。Lookup Join 没有实现。
+
+:::
+
+## Sink：选择写入语义
+
+| 目标                 | SQL 表配置                           | MaxCompute 目标表        | 数据变化                      |
+| -------------------- | ------------------------------------ | ------------------------ | ----------------------------- |
+| 追加明细             | `sink.operation=insert`              | 普通表或经验证的追加目标 | 仅 INSERT                     |
+| 保存每个主键的最新值 | `sink.operation=upsert` + Flink 主键 | 匹配主键的目标表         | INSERT、UPDATE_AFTER、DELETE  |
+| 覆盖表或分区         | 无可用配置                           | —                        | 当前不支持 `INSERT OVERWRITE` |
+
+主键声明使用 `PRIMARY KEY (...) NOT ENFORCED`，Flink 不替你验证源数据的主键唯一性。目标表必须事先按所需表类型创建。
+
+## Sink：选择写入实现
+
+| 实现                   | 选择参数                                                        | 用途与边界                                                                    |
+| ---------------------- | --------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| 协调式记录写入（默认） | `sink.coordinator.enable=true`，`sink.file-cached.enable=false` | 追加和主键写入的起步路径                                                      |
+| 协调式文件缓存         | 上述 coordinator 为 true，`sink.file-cached.enable=true`        | 缓存、上传与恢复；需要本地磁盘                                                |
+| 独立子任务会话         | `sink.standalone.enable=true`                                   | 每个子任务独立管理会话；需验证分区与恢复组合                                  |
+| Streaming Tunnel 追加  | `insert.streaming-tunnel.enable=true`                           | 自动启用 standalone；用于追加场景                                             |
+| Storage 写入           | `sink.coordinator.enable=false`                                 | 根据真实目标表主键选择追加或 upsert；SQL 变更协商仍需 `sink.operation=upsert` |
+
+从[追加写入](./sink-append.mdx)或[主键写入](./sink-upsert.mdx)开始，再阅读[写入实现与调优](./sink-writers.mdx)。各实现的参数适用范围不同。追加恢复可能产生重复记录，不能仅凭 checkpoint 或主键声明推导端到端 exactly-once。

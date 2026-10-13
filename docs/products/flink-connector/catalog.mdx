@@ -1,0 +1,60 @@
+---
+title: 通过 Catalog 使用表
+description: 从 odps.conf 创建 MaxCompute Catalog，发现表与分区并使用 SQL，说明外部表映射与真实元数据修改的区别。
+product: flink-connector
+doc_type: how-to
+status: draft
+tags:
+  - flink-connector
+  - flink-sql
+sidebar_position: 13
+---
+
+Catalog 将 MaxCompute 项目、表和分区元数据提供给 Flink。已存在的表可以直接发现和读取，减少重复定义字段的工作。
+
+## 配置 Catalog
+
+先按照[连接与认证](./connection.mdx)部署由凭据机制生成的受保护 `odps.conf`，确认 Client 和集群使用同一配置。当前文件加载路径没有初始化凭据提供者专用字段，使用 provider 时先采用显式 SQL 表映射。然后执行需要替换路径和项目的 SQL：
+
+```sql
+CREATE CATALOG mc_catalog WITH (
+  'type' = 'maxcompute',
+  'default-database' = '<project_name>',
+  'odps-conf-dir' = '/path/to/odps-config'
+);
+
+USE CATALOG mc_catalog;
+SHOW DATABASES;
+SHOW TABLES;
+```
+
+Catalog 工厂接受 `default-database` 和 `odps-conf-dir`，连接凭据由文件加载。不要把 standalone 表的 `odps.access.id` 等参数直接复制进 `CREATE CATALOG WITH`。
+
+## 读取已存在的表
+
+在有普通表 `sample` 的默认项目下执行：
+
+```sql
+SET 'execution.runtime-mode' = 'batch';
+SELECT id, v FROM sample;
+```
+
+SQL 表临时选项可以通过 Flink 动态表提示提供，例如：
+
+```sql
+SELECT id, v FROM sample /*+ OPTIONS('scan.mode'='bounded') */;
+```
+
+使用提示前确认部署允许 Flink 动态表选项。Catalog 的元数据映射不替代 Source 模式选择，持续模式仍需满足[表类型与启动条件](./modes.mdx)。
+
+## 元数据生命周期
+
+源码包含表与分区的创建、删除、修改及缓存失效逻辑，具体组合需按目标服务验收。建议先在测试项目验证表结构读取、分区列表和 schema 命名空间，再开放 DDL 权限。
+
+:::warning[Catalog DDL 修改真实对象]
+
+通过 Catalog 执行创建、修改或删除操作可能修改真实 MaxCompute 表与分区。与 default catalog 中只注册 Connector 映射的 `CREATE TABLE ... WITH` 区分开；先确认当前 Catalog 和项目，不在业务表上试运行删除操作。
+
+:::
+
+Lookup Join 没有实现。Catalog 能发现维表不代表支持 `FOR SYSTEM_TIME AS OF` 查找关联；普通有界读取与计算关联应按实际数据规模和 Flink 查询计划另行设计。

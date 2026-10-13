@@ -260,3 +260,9 @@
     font-size: 0.84rem;
   }
 }
+
+@media screen and (max-width: 996px) {
+  .root {
+    display: none;
+  }
+}
