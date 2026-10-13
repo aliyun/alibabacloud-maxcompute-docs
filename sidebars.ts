@@ -145,7 +145,6 @@ const sidebars: SidebarsConfig = {
   'product-flink-connector': [
     'products/flink-connector/index',
     'products/flink-connector/modes',
-    'products/flink-connector/incremental-guide',
     {
       type: 'category',
       label: '入门',
@@ -163,6 +162,7 @@ const sidebars: SidebarsConfig = {
       collapsed: false,
       items: [
         'products/flink-connector/incremental-prerequisites',
+        'products/flink-connector/incremental-guide',
         'products/flink-connector/source-bounded',
         'products/flink-connector/source-incremental',
         'products/flink-connector/source-continuous',

@@ -37,21 +37,27 @@ function SqlPanel({
   title,
   note,
   sql,
+  heading = 'h3',
 }: {
   title: string;
   note: string;
   sql: string;
+  heading?: 'h3' | 'h4';
 }): ReactNode {
   return (
     <section className={styles.sqlPanel}>
-      <Heading as="h3">{title}</Heading>
+      <Heading as={heading}>{title}</Heading>
       <p>{note}</p>
       <CodeBlock language="sql">{sql}</CodeBlock>
     </section>
   );
 }
 
-export default function FlinkIncrementalGuide(): ReactNode {
+export default function FlinkIncrementalGuide({
+  embedded = false,
+}: {
+  embedded?: boolean;
+}): ReactNode {
   const [config, setConfig] = useState<GuideConfig>({...defaults});
   const [shared, setShared] = useState('');
   useEffect(() => {
@@ -103,7 +109,7 @@ export default function FlinkIncrementalGuide(): ReactNode {
     <div className={styles.guide}>
       <section className={styles.hero}>
         <span className={styles.eyebrow}>FLINK SQL · INCREMENTAL READING</span>
-        <Heading as="h1">增量读取操作向导</Heading>
+        <Heading as={embedded ? 'h2' : 'h1'}>增量读取操作向导</Heading>
         <p>
           从场景选择到结果核验，在两个 SQL 窗口完成 MaxCompute 与 Flink
           的增量读取练习。
@@ -131,7 +137,7 @@ export default function FlinkIncrementalGuide(): ReactNode {
       </nav>
 
       <section id="choose" className={styles.section}>
-        <Heading as="h2">1. 选择要完成的任务</Heading>
+        <Heading as={embedded ? 'h3' : 'h2'}>1. 选择要完成的任务</Heading>
         <div className={styles.scenarios}>
           {scenarios.map((s) => (
             <button
@@ -301,7 +307,7 @@ export default function FlinkIncrementalGuide(): ReactNode {
       </section>
 
       <section id="prepare" className={styles.section}>
-        <Heading as="h2">2. 准备环境与连接</Heading>
+        <Heading as={embedded ? 'h3' : 'h2'}>2. 准备环境与连接</Heading>
         <div className={styles.prerequisites}>
           <div>
             <CheckCircle aria-hidden="true" />
@@ -436,7 +442,7 @@ export default function FlinkIncrementalGuide(): ReactNode {
       </section>
 
       <section id="sql" className={styles.section}>
-        <Heading as="h2">3. 按顺序运行 SQL</Heading>
+        <Heading as={embedded ? 'h3' : 'h2'}>3. 按顺序运行 SQL</Heading>
         {recipe.errors.length > 0 ? (
           <div className={styles.warning} role="alert">
             <WarningCircle aria-hidden="true" size={21} />
@@ -466,11 +472,13 @@ export default function FlinkIncrementalGuide(): ReactNode {
               </div>
             )}
             <SqlPanel
+              heading={embedded ? 'h4' : 'h3'}
               title="A · MaxCompute SQL：准备独立测试表"
               note="在获准使用的测试项目中建表。表已存在时先核对结构与 CDC 配置，不在业务表上运行修改数据的练习。"
               sql={recipe.tableDDL}
             />
             <SqlPanel
+              heading={embedded ? 'h4' : 'h3'}
               title="B · MaxCompute SQL：获取版本与历史"
               note={
                 batch
@@ -481,6 +489,7 @@ export default function FlinkIncrementalGuide(): ReactNode {
             />
             {recipe.initialRowsSQL && (
               <SqlPanel
+                heading={embedded ? 'h4' : 'h3'}
                 title="B2 · MaxCompute SQL：准备初始存量"
                 note="latest-full 先读取这条存量，再启动 Flink 查询。确认主键 0 已出现后，再做后面的新增、更新和删除练习。"
                 sql={recipe.initialRowsSQL}
@@ -489,12 +498,14 @@ export default function FlinkIncrementalGuide(): ReactNode {
             {batch ? (
               <>
                 <SqlPanel
+                  heading={embedded ? 'h4' : 'h3'}
                   title="C · MaxCompute SQL：产生区间内数据"
                   note="仅新增两个不同主键，记录新的终点版本。用于 APPEND 验证，不拿它模拟删除事件。"
                   sql={recipe.mutations}
                 />
                 {recipe.flinkSQL && (
                   <SqlPanel
+                    heading={embedded ? 'h4' : 'h3'}
                     title="D · Flink SQL Client：读取指定增量区间"
                     note="先填入真实起止版本或时间，再执行。预期读取区间内的新增数据，然后结束。"
                     sql={recipe.flinkSQL}
@@ -505,12 +516,14 @@ export default function FlinkIncrementalGuide(): ReactNode {
               <>
                 {recipe.flinkSQL && (
                   <SqlPanel
+                    heading={embedded ? 'h4' : 'h3'}
                     title="C · Flink SQL Client：启动查询"
                     note="启动后保持查询运行。changelog 展示变化行；从作业日志确认首次版本发现与读取会话建立，再操作源表；仅看到作业 RUNNING 不足以证明起点已建立。"
                     sql={recipe.flinkSQL}
                   />
                 )}
                 <SqlPanel
+                  heading={embedded ? 'h4' : 'h3'}
                   title="D · MaxCompute SQL：新增、更新与删除"
                   note={
                     latestPartition
@@ -532,7 +545,7 @@ export default function FlinkIncrementalGuide(): ReactNode {
       </section>
 
       <section id="verify" className={styles.section}>
-        <Heading as="h2">4. 核验输出与完成状态</Heading>
+        <Heading as={embedded ? 'h3' : 'h2'}>4. 核验输出与完成状态</Heading>
         {latestPartition ? (
           <p>
             使用至少三个按字典序递增的分区，验证起始范围、发布时机、切换舍弃、迟到更新和

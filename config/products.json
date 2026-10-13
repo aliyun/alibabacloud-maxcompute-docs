@@ -129,10 +129,6 @@
           "href": "/docs/products/flink-connector/quickstart/"
         },
         {
-          "label": "增量读取向导",
-          "href": "/docs/products/flink-connector/incremental-guide/"
-        },
-        {
           "label": "模式总览",
           "href": "/docs/products/flink-connector/modes/"
         },
