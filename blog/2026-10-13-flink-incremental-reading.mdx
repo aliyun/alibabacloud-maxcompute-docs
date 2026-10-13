@@ -1,0 +1,61 @@
+---
+title: 用 Flink SQL 读取 MaxCompute 增量
+description: 从持续 CDC 到版本与时间回放，选择增量读取模式，并通过交互向导完成建表、SQL 查询和变更结果核验。
+slug: flink-incremental-reading
+authors: [maxcompute-team]
+tags: [flink-connector, flink-sql, incremental]
+---
+
+import FlinkIncrementalGuide from '@site/src/components/FlinkIncrementalGuide';
+
+第一次用 Flink 读取 MaxCompute 增量时，需要先回答两个问题：读完一个区间就结束，还是持续跟踪后续变化？只需要追加数据，还是还要处理更新与删除？本文从这两个选择出发，带你用 Flink SQL 完成一轮增量读取练习。文章内的操作向导会根据场景生成 SQL，并说明每一步的执行位置和预期结果。
+
+{/* truncate */}
+
+## 先选读取方式，再选启动位置
+
+MaxCompute Delta Table 是支持事务的表。CDC（Change Data Capture，变更数据捕获）记录行级插入、更新与删除，Flink 可以消费这些变化。目标项目需要具备 Storage API 和所选增量能力；CDC 当前属于邀测能力，使用前需确认目标项目已具备条件。服务端前提见 [CDC 官方说明](https://help.aliyun.com/zh/maxcompute/user-guide/change-data-capture)和[增量环境准备](/docs/products/flink-connector/incremental-prerequisites/)。
+
+如果要长期跟踪一张表，选择持续读取；如果要重放一段已知变化，选择有界增量。先看任务，再决定配置：
+
+| 要完成的任务                 | 读取方式 | 关键配置                                   |
+| ---------------------------- | -------- | ------------------------------------------ |
+| 只观察启动后的变化           | 持续读取 | `scan.mode=latest`                         |
+| 先读取当前存量，再跟踪变化   | 持续读取 | `scan.mode=latest-full`                    |
+| 从一个已知版本继续           | 持续读取 | `from-snapshot` 与 `scan.snapshot-version` |
+| 从一个已知时间继续           | 持续读取 | `from-timestamp` 与 `scan.timestamp`       |
+| 读取一个版本或时间区间后结束 | 有界增量 | `incremental` 与对应区间参数               |
+
+![持续读取的启动位置与增量时间线](/img/flink-connector/source-timeline.png)
+
+`latest` 在首次发现版本时建立起点。应先确认 Source 已建立起点，再写入测试数据，仅看到作业 RUNNING 还不够。`latest-full` 先读一次当前快照，适合同时验证存量和后续变更。指定版本或时间的持续模式不会补读一个初始全量快照。
+
+增量表达也需要明确选择。`APPEND` 用于读取追加增量；需要观察更新和删除时选择 `CDC`，并让下游接受变化行。文章内的持续练习默认选择 CDC，有界练习默认选择 APPEND。当前代码的有界 CDC 存在 SQL changelog 契约问题，向导会提示限制；`from-snapshot-full` 尚未实现，也不会生成运行配方。具体边界见[有界增量](/docs/products/flink-connector/source-incremental/)和[持续增量](/docs/products/flink-connector/source-continuous/)。
+
+## 用两个 SQL 窗口完成一次练习
+
+准备一个独立测试表，并打开两个窗口：MaxCompute SQL 窗口负责建表和改变数据，Flink SQL Client 负责注册映射和查询。向导使用 Connector 1.20.0 候选、Flink 1.20.4 和 JDK 17 作为示例环境。1.20.0 JAR 尚未上传 OSS，请按[构建与安装](/docs/products/flink-connector/installation/)取得候选包；已发布的 latest 下载入口见[JAR 下载页](/docs/products/flink-connector/downloads/)。
+
+首次练习建议选择“持续读取变更”，启动位置保留 `latest`，增量表达保留 `CDC`。使用向导生成的同步 CDC 建表配置，按照页面顺序执行：
+
+1. 在 MaxCompute SQL 窗口创建独立主键事务表。
+2. 在 Flink SQL Client 中创建临时映射并启动查询。
+3. 从作业日志确认首次版本发现和读取会话已经建立。
+4. 在 MaxCompute SQL 窗口执行新增、更新和删除的练习 SQL。
+5. 对照 changelog 和源表最终值核验结果。
+
+向导使用 `MERGE` 新增数据。按[当前 CDC 官方说明](https://help.aliyun.com/zh/maxcompute/user-guide/change-data-capture)，同步 CDC 在 SQL DML 完成后生成变化数据；Tunnel 实时写入场景需要异步 CDC。异步构建周期和 Connector 的版本发现间隔是两个独立设置，缩短发现间隔不会让尚未生成的 CDC 数据提前可读。
+
+下面的向导可以直接操作。连接字段只用于在浏览器生成模板；密钥使用占位符，不需要输入真实密钥。复制代码后，替换未填写的值，再在相应 SQL 窗口执行。分享按钮仅保留所选场景，不包含连接信息。
+
+<FlinkIncrementalGuide embedded />
+
+## 怎样判断读取结果正确
+
+持续 CDC 查询通过 SQL Client 的 `changelog` 模式展示变化行。新增对应 `+I`，更新可包含 `-U` 和 `+U`，删除对应 `-D`。向导中的卡片是变化类型示意，实际事件以目标服务输出为准。检查时应同时看变化行和源表最终状态：主键 1 更新后的值应为 `3`，主键 2 应已删除。选择 `latest-full` 时，还应先看到预置的主键 0 存量记录。
+
+如果需要验证区间回放，切换到“回放一段增量”，先记录真实起点，追加两条不同主键的数据，再记录终点。版本或时间区间为左开右闭，排除起点、包含终点；起止版本和数据必须仍在保留范围内。向导生成的 batch 查询应在读完区间后结束。版本获取和保留范围见 [Delta Table 查询说明](https://help.aliyun.com/zh/maxcompute/timetravel-query-and-incremental-query)。
+
+持续查询没有新输出时，先核对启动位置和变更发生顺序，再检查 CDC 数据是否就绪、起点是否过期，以及服务端构建周期和版本发现间隔。对接下游时，需要继续验证主键更新与删除、checkpoint 后恢复和最终结果；不能仅凭 SELECT 能输出数据就判断整条同步链路已经可用。下游配置见[主键 Sink](/docs/products/flink-connector/sink-upsert/)。
+
+需要反复查参数时，可以打开 [Source 下的独立操作向导](/docs/products/flink-connector/incremental-guide/)；要了解最新分区的就绪声明和切换语义，请参见[最新分区模式](/docs/products/flink-connector/source-latest-partition/)。本文提供操作模板与预期核验方法，尚未完成目标云端服务的端到端验收。

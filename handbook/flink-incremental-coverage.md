@@ -53,3 +53,10 @@
 - [移动向导](assets/flink-connector/incremental-guide-mobile.jpg)
 
 桌面与 390 px 移动视口均无页面横向溢出。浏览器实际切换后核对了 latest-full 的存量 SQL、超出 JavaScript 安全整数范围的版本号、版本与时间回放、非法区间时隐藏 SQL、受限 CDC 不生成运行步骤、分区声明确认及仅含场景的分享链接；无浏览器错误。
+
+## 博客入口与导航
+
+操作向导位于“Source · 读取”下，排在环境准备之后；产品首页和相关模式页保留入口。博客《用 Flink SQL 读取 MaxCompute 增量》复用同一组件，内嵌模式使用 h2／h3／h4，页面只有一个 h1。桌面与 390 px 移动视口检查无横向溢出，实际验证 latest-full 的初始存量 SQL 和受限模式隐藏 SQL；浏览器无错误。
+
+- [博客内嵌向导桌面预览](assets/flink-connector/incremental-blog-desktop.jpg)
+- [博客内嵌向导移动预览](assets/flink-connector/incremental-blog-mobile.jpg)
