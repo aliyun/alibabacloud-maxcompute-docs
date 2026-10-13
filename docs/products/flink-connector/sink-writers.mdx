@@ -1,0 +1,78 @@
+---
+title: 写入实现与调优
+description: 比较协调式、文件缓存、独立会话、Streaming Tunnel 与 Storage 写入，按实现选择适用参数并理解路由和恢复边界。
+product: flink-connector
+doc_type: reference
+status: draft
+tags:
+  - flink-connector
+  - flink-sql
+sidebar_position: 12
+---
+
+选择业务语义后再选择 writer。默认示例先使用协调式记录路径；切换实现时只替换相关参数，并重新验证写入、分区与恢复。
+
+## 实现选型
+
+| 实现                  | 配置组合                                                | 适用说明                                        |
+| --------------------- | ------------------------------------------------------- | ----------------------------------------------- |
+| 协调式记录            | coordinator=true，file-cached=false，standalone=false   | 默认起点，支持 insert／upsert                   |
+| 协调式文件缓存        | coordinator=true，file-cached=true                      | 本地缓存和 checkpoint 文件管理；监控空间与清理  |
+| 独立子任务会话        | coordinator=true，standalone=true                       | 独立提交；需要验证所选 writer 的组合            |
+| Streaming Tunnel 追加 | coordinator=true，`insert.streaming-tunnel.enable=true` | 自动启用 standalone；选 insert 业务语义         |
+| Storage               | `sink.coordinator.enable=false`                         | 按真实表主键选 writer，不支持 legacy 部分列更新 |
+
+前三行的缩写对应完整参数：`sink.coordinator.enable`、`sink.file-cached.enable`、`sink.standalone.enable`。不要无目的地同时打开所有开关。Storage 路径不会因设置 legacy file-cached 开关变成协调式文件 writer。
+
+## SQL 配置片段
+
+以下片段放在目标表的 `WITH` 中；其余连接和字段定义见[追加](./sink-append.mdx)或[主键](./sink-upsert.mdx)页面。
+
+```sql
+-- 协调式文件缓存
+'sink.coordinator.enable' = 'true',
+'sink.file-cached.enable' = 'true'
+```
+
+```sql
+-- Streaming Tunnel 追加
+'sink.coordinator.enable' = 'true',
+'sink.operation' = 'insert',
+'insert.streaming-tunnel.enable' = 'true'
+```
+
+```sql
+-- Storage 主键写入
+'sink.coordinator.enable' = 'false',
+'sink.operation' = 'upsert',
+'sink.shuffle.bucket-only.enable' = 'false'
+```
+
+`sink.operation=streaming_append` 虽可被枚举解析，但没有独立 SQL writer 选择分支，不能替代 `insert.streaming-tunnel.enable` 开关。`unknown` 不是可用业务模式。
+
+## 常用参数
+
+| 参数                              | 默认值                  | 适用范围与说明                                  |
+| --------------------------------- | ----------------------- | ----------------------------------------------- |
+| `sink.parallelism`                | 未指定                  | SQL Sink 并行度，planner 推导默认值             |
+| `insert.writer.buffer-size`       | `64mb`                  | 按 writer 与 SDK 调整；legacy Tunnel 至少 1 MiB |
+| `sink.read.timeout`               | `120 s`                 | SDK 网络读取超时                                |
+| `sink.flush.timeout`              | `30 s`                  | flush 超时                                      |
+| `sink.dynamic-partition.limit`    | `100`                   | legacy 动态分区相关限制，需按实际路径核验       |
+| `sink.group-partition.enable`     | `false`                 | legacy 分区分组开关                             |
+| `sink.commit.async.enable`        | `false`                 | legacy 异步提交                                 |
+| `sink.partition.default-value`    | `__DEFAULT_PARTITION__` | 动态 STRING null／空值替换                      |
+| `sink.dynamic-shuffle.enable`     | `false`                 | Storage 动态分区主键写入的分配统计与协调路径    |
+| `sink.shuffle.bucket-only.enable` | `false`                 | 实验路由，分区主键表不保证正确性                |
+
+网络超时与批大小、背压和重试一起评估。legacy upsert SDK 等待上界与读取超时、重试次数有关；超时失败允许 Flink 恢复，也可能导致追加重复。不要用缩短超时掩盖吞吐或资源不足。
+
+## 分区主键路由
+
+Storage 默认按 `(partitionSpec, bucketId)` 静态哈希路由。只有启用 dynamic shuffle 且实际存在动态分区时，才装配统计算子与协调器，以流量统计调整分配。该开关控制分配策略，不改变主键更新语义。
+
+`bucket-only` 仅用于性能对照，不能作为生产分区主键写入的配置。直接 Java DataStream 使用 Storage Sink 时，不会自动获得 SQL 适配层的这些路由算子。
+
+## 验证调优效果
+
+以相同输入、目标 schema、资源和故障方式对照：最终行值、重复与缺失、checkpoint 时长、背压、上传并发、内存和磁盘清理。先验证正确性再比较性能；本地 Emulator 的吞吐不能代替云服务性能结果。

@@ -1,0 +1,739 @@
+{
+  "checkedAt": "2026-10-13",
+  "prefix": "flink/connector/",
+  "objects": [
+    {
+      "date": "2023-12-20",
+      "size": 40254104,
+      "etag": "F5753B235221323A419D851807A86285",
+      "key": "flink/connector/flink-connector-maxcompute-1.13.10-odps-shaded.jar",
+      "url": "https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/flink-connector-maxcompute-1.13.10-odps-shaded.jar",
+      "status": 200,
+      "length": 40254104,
+      "target": null
+    },
+    {
+      "date": "2024-01-15",
+      "size": 40094182,
+      "etag": "54F060707B0D6799DB3C4A91F8620969",
+      "key": "flink/connector/flink-connector-maxcompute-1.13.10-shaded.jar",
+      "url": "https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/flink-connector-maxcompute-1.13.10-shaded.jar",
+      "status": 200,
+      "length": 40094182,
+      "target": null
+    },
+    {
+      "date": "2024-02-26",
+      "size": 39074094,
+      "etag": "8521DA90DE4B6BC2E00D1CD66B7938C6",
+      "key": "flink/connector/flink-connector-maxcompute-1.13.11-shaded.jar",
+      "url": "https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/flink-connector-maxcompute-1.13.11-shaded.jar",
+      "status": 200,
+      "length": 39074094,
+      "target": null
+    },
+    {
+      "date": "2024-03-11",
+      "size": 39075786,
+      "etag": "1DF78ACE5F223A904A932F02297110D7",
+      "key": "flink/connector/flink-connector-maxcompute-1.13.12-shaded.jar",
+      "url": "https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/flink-connector-maxcompute-1.13.12-shaded.jar",
+      "status": 200,
+      "length": 39075786,
+      "target": null
+    },
+    {
+      "date": "2024-04-19",
+      "size": 40200601,
+      "etag": "C99BB87BFD88AA3E9B73061D8BC854BF",
+      "key": "flink/connector/flink-connector-maxcompute-1.13.13-shaded.jar",
+      "url": "https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/flink-connector-maxcompute-1.13.13-shaded.jar",
+      "status": 200,
+      "length": 40200601,
+      "target": null
+    },
+    {
+      "date": "2024-05-08",
+      "size": 40200079,
+      "etag": "81BFCE4B9ACB2A81810C5947E13B8126",
+      "key": "flink/connector/flink-connector-maxcompute-1.13.14-shaded.jar",
+      "url": "https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/flink-connector-maxcompute-1.13.14-shaded.jar",
+      "status": 200,
+      "length": 40200079,
+      "target": null
+    },
+    {
+      "date": "2024-05-08",
+      "size": 40212522,
+      "etag": "C09C06A641CFD5DFBFCF73CBE8B496EF",
+      "key": "flink/connector/flink-connector-maxcompute-1.13.15-shaded.jar",
+      "url": "https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/flink-connector-maxcompute-1.13.15-shaded.jar",
+      "status": 200,
+      "length": 40212522,
+      "target": null
+    },
+    {
+      "date": "2024-06-06",
+      "size": 40218918,
+      "etag": "9C2C24F9D8B190BDA10E175F268C83DA",
+      "key": "flink/connector/flink-connector-maxcompute-1.13.16-shaded.jar",
+      "url": "https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/flink-connector-maxcompute-1.13.16-shaded.jar",
+      "status": 200,
+      "length": 40218918,
+      "target": null
+    },
+    {
+      "date": "2024-06-21",
+      "size": 40219036,
+      "etag": "B0FFCF82D463A7DC1E2B17D1A950888E",
+      "key": "flink/connector/flink-connector-maxcompute-1.13.17-shaded.jar",
+      "url": "https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/flink-connector-maxcompute-1.13.17-shaded.jar",
+      "status": 200,
+      "length": 40219036,
+      "target": null
+    },
+    {
+      "date": "2024-07-12",
+      "size": 40238145,
+      "etag": "D40326E9AD044CB8AE1022D3CE0C9A3B",
+      "key": "flink/connector/flink-connector-maxcompute-1.13.18-shaded.jar",
+      "url": "https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/flink-connector-maxcompute-1.13.18-shaded.jar",
+      "status": 200,
+      "length": 40238145,
+      "target": null
+    },
+    {
+      "date": "2024-07-29",
+      "size": 40244278,
+      "etag": "48C20E5CFFD50BDB271352AFC00D49AB",
+      "key": "flink/connector/flink-connector-maxcompute-1.13.19-shaded.jar",
+      "url": "https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/flink-connector-maxcompute-1.13.19-shaded.jar",
+      "status": 200,
+      "length": 40244278,
+      "target": null
+    },
+    {
+      "date": "2024-02-07",
+      "size": 40095980,
+      "etag": "F28DCDCB7266588DF2378BE040730B67",
+      "key": "flink/connector/flink-connector-maxcompute-1.13.4-shaded.jar",
+      "url": "https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/flink-connector-maxcompute-1.13.4-shaded.jar",
+      "status": 200,
+      "length": 40095980,
+      "target": null
+    },
+    {
+      "date": "2023-08-23",
+      "size": 44163358,
+      "etag": "F5E99519E7CCF94125427432E1EC6B3C",
+      "key": "flink/connector/flink-connector-maxcompute-1.13.4-shaded.jar_old",
+      "url": "https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/flink-connector-maxcompute-1.13.4-shaded.jar_old",
+      "status": 200,
+      "length": 44163358,
+      "target": null
+    },
+    {
+      "date": "2023-11-08",
+      "size": 44146522,
+      "etag": "3D0688E643BA6E64A2677882A67731AD",
+      "key": "flink/connector/flink-connector-maxcompute-1.13.4-shaded.jar_old2",
+      "url": "https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/flink-connector-maxcompute-1.13.4-shaded.jar_old2",
+      "status": 200,
+      "length": 44146522,
+      "target": null
+    },
+    {
+      "date": "2024-02-07",
+      "size": 46431749,
+      "etag": "78281C9371CBEFD495AFDEAA397C8DEC",
+      "key": "flink/connector/flink-connector-maxcompute-1.13.4-shaded.jar_old3",
+      "url": "https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/flink-connector-maxcompute-1.13.4-shaded.jar_old3",
+      "status": 200,
+      "length": 46431749,
+      "target": null
+    },
+    {
+      "date": "2023-08-02",
+      "size": 44146522,
+      "etag": "3D0688E643BA6E64A2677882A67731AD",
+      "key": "flink/connector/flink-connector-maxcompute-1.13.5-shaded.jar",
+      "url": "https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/flink-connector-maxcompute-1.13.5-shaded.jar",
+      "status": 200,
+      "length": 44146522,
+      "target": null
+    },
+    {
+      "date": "2023-08-30",
+      "size": 44169693,
+      "etag": "E252F3BA60FC66113E6CCFCF7640C519",
+      "key": "flink/connector/flink-connector-maxcompute-1.13.6-shaded.jar",
+      "url": "https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/flink-connector-maxcompute-1.13.6-shaded.jar",
+      "status": 200,
+      "length": 44169693,
+      "target": null
+    },
+    {
+      "date": "2023-11-08",
+      "size": 46431749,
+      "etag": "78281C9371CBEFD495AFDEAA397C8DEC",
+      "key": "flink/connector/flink-connector-maxcompute-1.13.7-shaded.jar",
+      "url": "https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/flink-connector-maxcompute-1.13.7-shaded.jar",
+      "status": 200,
+      "length": 46431749,
+      "target": null
+    },
+    {
+      "date": "2023-11-16",
+      "size": 46431961,
+      "etag": "8CCCF3EC2DD6EA8DEE06F0B30B0C4018",
+      "key": "flink/connector/flink-connector-maxcompute-1.13.8-shaded.jar",
+      "url": "https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/flink-connector-maxcompute-1.13.8-shaded.jar",
+      "status": 200,
+      "length": 46431961,
+      "target": null
+    },
+    {
+      "date": "2023-12-11",
+      "size": 46596973,
+      "etag": "6EC719C8A0B94445D6EA68556738FD1D",
+      "key": "flink/connector/flink-connector-maxcompute-1.13.9-odps-shaded.jar",
+      "url": "https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/flink-connector-maxcompute-1.13.9-odps-shaded.jar",
+      "status": 200,
+      "length": 46596973,
+      "target": null
+    },
+    {
+      "date": "2023-11-29",
+      "size": 46499187,
+      "etag": "8EE58E90497AB61E848D9E491B514F44",
+      "key": "flink/connector/flink-connector-maxcompute-1.13.9-shaded.jar",
+      "url": "https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/flink-connector-maxcompute-1.13.9-shaded.jar",
+      "status": 200,
+      "length": 46499187,
+      "target": null
+    },
+    {
+      "date": "2024-01-08",
+      "size": 39296131,
+      "etag": "6A20C0E4ACAC55BA28545AB3A8689D55",
+      "key": "flink/connector/flink-connector-maxcompute-1.15.0-shaded.jar",
+      "url": "https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/flink-connector-maxcompute-1.15.0-shaded.jar",
+      "status": 200,
+      "length": 39296131,
+      "target": null
+    },
+    {
+      "date": "2024-02-26",
+      "size": 38288359,
+      "etag": "EC62E0B01B4478A46FFFA098CC231159",
+      "key": "flink/connector/flink-connector-maxcompute-1.15.1-shaded.jar",
+      "url": "https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/flink-connector-maxcompute-1.15.1-shaded.jar",
+      "status": 200,
+      "length": 38288359,
+      "target": null
+    },
+    {
+      "date": "2024-03-11",
+      "size": 38290202,
+      "etag": "F09E11B6D974D6A37DFBEE7A7EE20508",
+      "key": "flink/connector/flink-connector-maxcompute-1.15.2-shaded.jar",
+      "url": "https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/flink-connector-maxcompute-1.15.2-shaded.jar",
+      "status": 200,
+      "length": 38290202,
+      "target": null
+    },
+    {
+      "date": "2024-04-19",
+      "size": 39410195,
+      "etag": "AEA3AC7F87B5530BE35D87BEA31976FE",
+      "key": "flink/connector/flink-connector-maxcompute-1.15.3-shaded.jar",
+      "url": "https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/flink-connector-maxcompute-1.15.3-shaded.jar",
+      "status": 200,
+      "length": 39410195,
+      "target": null
+    },
+    {
+      "date": "2024-05-08",
+      "size": 39421624,
+      "etag": "B95FF66E7032E19E731C8874B9C033D8",
+      "key": "flink/connector/flink-connector-maxcompute-1.15.4-shaded.jar",
+      "url": "https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/flink-connector-maxcompute-1.15.4-shaded.jar",
+      "status": 200,
+      "length": 39421624,
+      "target": null
+    },
+    {
+      "date": "2024-07-29",
+      "size": 39454609,
+      "etag": "5502E9998AB1471ADFEE95FD1B213036",
+      "key": "flink/connector/flink-connector-maxcompute-1.15.5-shaded.jar",
+      "url": "https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/flink-connector-maxcompute-1.15.5-shaded.jar",
+      "status": 200,
+      "length": 39454609,
+      "target": null
+    },
+    {
+      "date": "2023-11-29",
+      "size": 45640573,
+      "etag": "DA2BDD3B32AD8A6BB1EED65A1BF80C78",
+      "key": "flink/connector/flink-connector-maxcompute-1.16.0-shaded.jar",
+      "url": "https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/flink-connector-maxcompute-1.16.0-shaded.jar",
+      "status": 200,
+      "length": 45640573,
+      "target": null
+    },
+    {
+      "date": "2023-12-05",
+      "size": 45629549,
+      "etag": "CC203B6A27943CED986F86C8D333CF42",
+      "key": "flink/connector/flink-connector-maxcompute-1.16.1-shaded.jar",
+      "url": "https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/flink-connector-maxcompute-1.16.1-shaded.jar",
+      "status": 200,
+      "length": 45629549,
+      "target": null
+    },
+    {
+      "date": "2024-02-02",
+      "size": 39445876,
+      "etag": "0F57CC0CE26D10E6FB0597AE533EAA77",
+      "key": "flink/connector/flink-connector-maxcompute-1.16.10-odps-shaded.jar",
+      "url": "https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/flink-connector-maxcompute-1.16.10-odps-shaded.jar",
+      "status": 200,
+      "length": 39445876,
+      "target": null
+    },
+    {
+      "date": "2024-02-29",
+      "size": 38288985,
+      "etag": "4B2014DB4D18DDA939324C69BBC5B3BD",
+      "key": "flink/connector/flink-connector-maxcompute-1.16.10-shaded.jar",
+      "url": "https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/flink-connector-maxcompute-1.16.10-shaded.jar",
+      "status": 200,
+      "length": 38288985,
+      "target": null
+    },
+    {
+      "date": "2024-03-11",
+      "size": 38290587,
+      "etag": "7261A996FAA6B58952D2F17A561A4A13",
+      "key": "flink/connector/flink-connector-maxcompute-1.16.11-shaded.jar",
+      "url": "https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/flink-connector-maxcompute-1.16.11-shaded.jar",
+      "status": 200,
+      "length": 38290587,
+      "target": null
+    },
+    {
+      "date": "2024-04-15",
+      "size": 45888905,
+      "etag": "3F98FF558F533940846EC63D75A6CECC",
+      "key": "flink/connector/flink-connector-maxcompute-1.16.12-shaded.jar",
+      "url": "https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/flink-connector-maxcompute-1.16.12-shaded.jar",
+      "status": 200,
+      "length": 45888905,
+      "target": null
+    },
+    {
+      "date": "2024-05-08",
+      "size": 45900414,
+      "etag": "559D21C041CB3480DE6EA31F999C1FF7",
+      "key": "flink/connector/flink-connector-maxcompute-1.16.13-shaded.jar",
+      "url": "https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/flink-connector-maxcompute-1.16.13-shaded.jar",
+      "status": 200,
+      "length": 45900414,
+      "target": null
+    },
+    {
+      "date": "2024-06-07",
+      "size": 45907381,
+      "etag": "AA8B9665FD1A2A80CCE9D4B242E113F3",
+      "key": "flink/connector/flink-connector-maxcompute-1.16.14-shaded.jar",
+      "url": "https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/flink-connector-maxcompute-1.16.14-shaded.jar",
+      "status": 200,
+      "length": 45907381,
+      "target": null
+    },
+    {
+      "date": "2024-07-12",
+      "size": 45925669,
+      "etag": "126B239F3D7ECBC62E52B39D4248D4AA",
+      "key": "flink/connector/flink-connector-maxcompute-1.16.15-shaded.jar",
+      "url": "https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/flink-connector-maxcompute-1.16.15-shaded.jar",
+      "status": 200,
+      "length": 45925669,
+      "target": null
+    },
+    {
+      "date": "2024-07-30",
+      "size": 46072150,
+      "etag": "5FE742FEE022DDDDE4A380A6D88CE583",
+      "key": "flink/connector/flink-connector-maxcompute-1.16.16-odps-shaded.jar",
+      "url": "https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/flink-connector-maxcompute-1.16.16-odps-shaded.jar",
+      "status": 200,
+      "length": 46072150,
+      "target": null
+    },
+    {
+      "date": "2024-07-29",
+      "size": 45931727,
+      "etag": "FA57C96C9CAFC209B2F9F96BB41A5093",
+      "key": "flink/connector/flink-connector-maxcompute-1.16.16-shaded.jar",
+      "url": "https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/flink-connector-maxcompute-1.16.16-shaded.jar",
+      "status": 200,
+      "length": 45931727,
+      "target": null
+    },
+    {
+      "date": "2025-08-27",
+      "size": 48457682,
+      "etag": "36FECB42D97899C7EA29B87BF97B36F7-5",
+      "key": "flink/connector/flink-connector-maxcompute-1.16.18-odps-shaded.jar",
+      "url": "https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/flink-connector-maxcompute-1.16.18-odps-shaded.jar",
+      "status": 200,
+      "length": 48457682,
+      "target": null
+    },
+    {
+      "date": "2025-08-28",
+      "size": 48316619,
+      "etag": "790BBD1ACB1AE15D2EE73B302BD60C8A",
+      "key": "flink/connector/flink-connector-maxcompute-1.16.18-shaded.jar",
+      "url": "https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/flink-connector-maxcompute-1.16.18-shaded.jar",
+      "status": 200,
+      "length": 48316619,
+      "target": null
+    },
+    {
+      "date": "2025-08-28",
+      "size": 48458873,
+      "etag": "40BAFA9DB2B38A6E68CDABDA59E01182-5",
+      "key": "flink/connector/flink-connector-maxcompute-1.16.19-odps-shaded.jar",
+      "url": "https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/flink-connector-maxcompute-1.16.19-odps-shaded.jar",
+      "status": 200,
+      "length": 48458873,
+      "target": null
+    },
+    {
+      "date": "2025-09-16",
+      "size": 48317814,
+      "etag": "EAA20B34DE171BB511768B64E47A7F8E",
+      "key": "flink/connector/flink-connector-maxcompute-1.16.19-shaded.jar",
+      "url": "https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/flink-connector-maxcompute-1.16.19-shaded.jar",
+      "status": 200,
+      "length": 48317814,
+      "target": null
+    },
+    {
+      "date": "2023-12-06",
+      "size": 45628741,
+      "etag": "659707FBB104639205CD0AB19F26AA30",
+      "key": "flink/connector/flink-connector-maxcompute-1.16.2-shaded.jar",
+      "url": "https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/flink-connector-maxcompute-1.16.2-shaded.jar",
+      "status": 200,
+      "length": 45628741,
+      "target": null
+    },
+    {
+      "date": "2025-10-15",
+      "size": 48459276,
+      "etag": "DECCA69D17B2B94FE0FAE9C10EF63B3A",
+      "key": "flink/connector/flink-connector-maxcompute-1.16.20-odps-shaded.jar",
+      "url": "https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/flink-connector-maxcompute-1.16.20-odps-shaded.jar",
+      "status": 200,
+      "length": 48459276,
+      "target": null
+    },
+    {
+      "date": "2025-10-29",
+      "size": 48960976,
+      "etag": "808C6EC320A0857772CC65EC67AC856D",
+      "key": "flink/connector/flink-connector-maxcompute-1.16.20-shaded.jar",
+      "url": "https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/flink-connector-maxcompute-1.16.20-shaded.jar",
+      "status": 200,
+      "length": 48960976,
+      "target": null
+    },
+    {
+      "date": "2025-12-22",
+      "size": 48729367,
+      "etag": "041C165C3E41CB7A158408E2F2D06222",
+      "key": "flink/connector/flink-connector-maxcompute-1.16.21-delta-shaded.jar",
+      "url": "https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/flink-connector-maxcompute-1.16.21-delta-shaded.jar",
+      "status": 200,
+      "length": 48729367,
+      "target": null
+    },
+    {
+      "date": "2026-01-08",
+      "size": 48736376,
+      "etag": "AC1F54957DB3D0796202FBF2011C86CD",
+      "key": "flink/connector/flink-connector-maxcompute-1.16.21-shaded.jar",
+      "url": "https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/flink-connector-maxcompute-1.16.21-shaded.jar",
+      "status": 200,
+      "length": 48736376,
+      "target": null
+    },
+    {
+      "date": "2026-01-05",
+      "size": 48729226,
+      "etag": "D307B2107415115E2DB2DE65A76F2A76",
+      "key": "flink/connector/flink-connector-maxcompute-1.16.22-delta-shaded.jar",
+      "url": "https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/flink-connector-maxcompute-1.16.22-delta-shaded.jar",
+      "status": 200,
+      "length": 48729226,
+      "target": null
+    },
+    {
+      "date": "2026-01-13",
+      "size": 49046496,
+      "etag": "9A1E999A946777F3253E425423E01804",
+      "key": "flink/connector/flink-connector-maxcompute-1.16.22-shaded.jar",
+      "url": "https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/flink-connector-maxcompute-1.16.22-shaded.jar",
+      "status": 200,
+      "length": 49046496,
+      "target": null
+    },
+    {
+      "date": "2026-03-19",
+      "size": 53902628,
+      "etag": "25553BD29EB5912921811C3BFD2CA6B6",
+      "key": "flink/connector/flink-connector-maxcompute-1.16.23-delta-shaded.jar",
+      "url": "https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/flink-connector-maxcompute-1.16.23-delta-shaded.jar",
+      "status": 200,
+      "length": 53902628,
+      "target": null
+    },
+    {
+      "date": "2026-02-12",
+      "size": 50048009,
+      "etag": "DFB204CE84A6DE591291A4BB33E9F90D",
+      "key": "flink/connector/flink-connector-maxcompute-1.16.23-shaded.jar",
+      "url": "https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/flink-connector-maxcompute-1.16.23-shaded.jar",
+      "status": 200,
+      "length": 50048009,
+      "target": null
+    },
+    {
+      "date": "2026-02-12",
+      "size": 50048265,
+      "etag": "EF4A7B97E80AA5C169769D20E76BAE96",
+      "key": "flink/connector/flink-connector-maxcompute-1.16.23-shaded.jar-1",
+      "url": "https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/flink-connector-maxcompute-1.16.23-shaded.jar-1",
+      "status": 200,
+      "length": 50048265,
+      "target": null
+    },
+    {
+      "date": "2026-03-19",
+      "size": 53902711,
+      "etag": "D43DB48EF3B5202D3FD12F2722B8DA8A",
+      "key": "flink/connector/flink-connector-maxcompute-1.16.24-delta-shaded.jar",
+      "url": "https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/flink-connector-maxcompute-1.16.24-delta-shaded.jar",
+      "status": 200,
+      "length": 53902711,
+      "target": null
+    },
+    {
+      "date": "2026-03-11",
+      "size": 50048288,
+      "etag": "4C15261130A813913361F572CA89CB90",
+      "key": "flink/connector/flink-connector-maxcompute-1.16.24-shaded.jar",
+      "url": "https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/flink-connector-maxcompute-1.16.24-shaded.jar",
+      "status": 200,
+      "length": 50048288,
+      "target": null
+    },
+    {
+      "date": "2026-07-13",
+      "size": 54957851,
+      "etag": "82B5C43A135B84FE4BBE5451C0656176",
+      "key": "flink/connector/flink-connector-maxcompute-1.16.25-shaded.jar",
+      "url": "https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/flink-connector-maxcompute-1.16.25-shaded.jar",
+      "status": 200,
+      "length": 54957851,
+      "target": null
+    },
+    {
+      "date": "2023-12-08",
+      "size": 45630289,
+      "etag": "88B85E0E91C099F6FA112D348F493B0F",
+      "key": "flink/connector/flink-connector-maxcompute-1.16.3-shaded.jar",
+      "url": "https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/flink-connector-maxcompute-1.16.3-shaded.jar",
+      "status": 200,
+      "length": 45630289,
+      "target": null
+    },
+    {
+      "date": "2023-12-11",
+      "size": 45766155,
+      "etag": "C8078D9C16E3C3C895B11C2C00FA1DFA",
+      "key": "flink/connector/flink-connector-maxcompute-1.16.4-odps-shaded.jar",
+      "url": "https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/flink-connector-maxcompute-1.16.4-odps-shaded.jar",
+      "status": 200,
+      "length": 45766155,
+      "target": null
+    },
+    {
+      "date": "2023-12-08",
+      "size": 45630587,
+      "etag": "5B1351A923B10CCB32308146BAAB80D6",
+      "key": "flink/connector/flink-connector-maxcompute-1.16.4-shaded.jar",
+      "url": "https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/flink-connector-maxcompute-1.16.4-shaded.jar",
+      "status": 200,
+      "length": 45630587,
+      "target": null
+    },
+    {
+      "date": "2023-12-19",
+      "size": 39397092,
+      "etag": "1901B8B76D669F81EB28F25F9F690F0A",
+      "key": "flink/connector/flink-connector-maxcompute-1.16.5-odps-shaded.jar",
+      "url": "https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/flink-connector-maxcompute-1.16.5-odps-shaded.jar",
+      "status": 200,
+      "length": 39397092,
+      "target": null
+    },
+    {
+      "date": "2023-12-15",
+      "size": 45631727,
+      "etag": "12B74DC4A0F94127407D00F2BF393E79",
+      "key": "flink/connector/flink-connector-maxcompute-1.16.5-shaded.jar",
+      "url": "https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/flink-connector-maxcompute-1.16.5-shaded.jar",
+      "status": 200,
+      "length": 45631727,
+      "target": null
+    },
+    {
+      "date": "2024-01-02",
+      "size": 39430456,
+      "etag": "8FECD3078BE063009CB2E8EA7E10DF29",
+      "key": "flink/connector/flink-connector-maxcompute-1.16.6-odps-shaded.jar",
+      "url": "https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/flink-connector-maxcompute-1.16.6-odps-shaded.jar",
+      "status": 200,
+      "length": 39430456,
+      "target": null
+    },
+    {
+      "date": "2024-01-15",
+      "size": 39479369,
+      "etag": "52E23E897BFF87E1FCEAB3A4835B68DC",
+      "key": "flink/connector/flink-connector-maxcompute-1.16.6-shaded.jar",
+      "url": "https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/flink-connector-maxcompute-1.16.6-shaded.jar",
+      "status": 200,
+      "length": 39479369,
+      "target": null
+    },
+    {
+      "date": "2024-01-11",
+      "size": 39465382,
+      "etag": "4BCD9AF07A71B94359A5A0644B96DE69",
+      "key": "flink/connector/flink-connector-maxcompute-1.16.7-odps-shaded.jar",
+      "url": "https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/flink-connector-maxcompute-1.16.7-odps-shaded.jar",
+      "status": 200,
+      "length": 39465382,
+      "target": null
+    },
+    {
+      "date": "2024-01-23",
+      "size": 39479330,
+      "etag": "7E94B435D82BF417E03CE9B888119CDA",
+      "key": "flink/connector/flink-connector-maxcompute-1.16.8-odps-fix-shaded.jar",
+      "url": "https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/flink-connector-maxcompute-1.16.8-odps-fix-shaded.jar",
+      "status": 200,
+      "length": 39479330,
+      "target": null
+    },
+    {
+      "date": "2024-01-15",
+      "size": 39479374,
+      "etag": "745378985F3069D88938875D6771C2FD",
+      "key": "flink/connector/flink-connector-maxcompute-1.16.8-odps-shaded.jar",
+      "url": "https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/flink-connector-maxcompute-1.16.8-odps-shaded.jar",
+      "status": 200,
+      "length": 39479374,
+      "target": null
+    },
+    {
+      "date": "2024-01-18",
+      "size": 39480281,
+      "etag": "DC4CED1482B96B38690DD30AA1800233",
+      "key": "flink/connector/flink-connector-maxcompute-1.16.9-odps-shaded.jar",
+      "url": "https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/flink-connector-maxcompute-1.16.9-odps-shaded.jar",
+      "status": 200,
+      "length": 39480281,
+      "target": null
+    },
+    {
+      "date": "2024-11-20",
+      "size": 45983677,
+      "etag": "1B4A6EDDAAA1725FA97A8E7D61FB18A1",
+      "key": "flink/connector/flink-connector-maxcompute-1.17.0-odps-shaded.jar",
+      "url": "https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/flink-connector-maxcompute-1.17.0-odps-shaded.jar",
+      "status": 200,
+      "length": 45983677,
+      "target": null
+    },
+    {
+      "date": "2024-09-25",
+      "size": 45931849,
+      "etag": "FDCAD3666C3C3E41E61A0C2D138F46D1",
+      "key": "flink/connector/flink-connector-maxcompute-1.17.0-shaded.jar",
+      "url": "https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/flink-connector-maxcompute-1.17.0-shaded.jar",
+      "status": 200,
+      "length": 45931849,
+      "target": null
+    },
+    {
+      "date": "2024-09-25",
+      "size": 45983692,
+      "etag": "31FFD1499858184D7F16F650D0A7038F",
+      "key": "flink/connector/flink-connector-maxcompute-1.17.0-vvr-shaded.jar",
+      "url": "https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/flink-connector-maxcompute-1.17.0-vvr-shaded.jar",
+      "status": 200,
+      "length": 45983692,
+      "target": null
+    },
+    {
+      "date": "2025-05-21",
+      "size": 46011638,
+      "etag": "8CACA559F34F19148CAFD84B54E120F3",
+      "key": "flink/connector/flink-connector-maxcompute-VVR-8.0.11-SNAPSHOT-fix-shaded.jar",
+      "url": "https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/flink-connector-maxcompute-VVR-8.0.11-SNAPSHOT-fix-shaded.jar",
+      "status": 200,
+      "length": 46011638,
+      "target": null
+    },
+    {
+      "date": "2024-07-29",
+      "size": 61,
+      "etag": "9CEC5E0D86BD97E183B9411121655C7D",
+      "key": "flink/connector/latest/flink-connector-maxcompute-1.13.jar",
+      "url": "https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/latest/flink-connector-maxcompute-1.13.jar",
+      "status": 200,
+      "length": 40244278,
+      "target": "flink/connector/flink-connector-maxcompute-1.13.19-shaded.jar",
+      "response_etag": "48C20E5CFFD50BDB271352AFC00D49AB"
+    },
+    {
+      "date": "2024-07-29",
+      "size": 60,
+      "etag": "31D378BB366D8659F92706AADDE32A69",
+      "key": "flink/connector/latest/flink-connector-maxcompute-1.15.jar",
+      "url": "https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/latest/flink-connector-maxcompute-1.15.jar",
+      "status": 200,
+      "length": 39454609,
+      "target": "flink/connector/flink-connector-maxcompute-1.15.5-shaded.jar",
+      "response_etag": "5502E9998AB1471ADFEE95FD1B213036"
+    },
+    {
+      "date": "2026-07-13",
+      "size": 61,
+      "etag": "054325540A972EACD3C6EB633DBE1CA9",
+      "key": "flink/connector/latest/flink-connector-maxcompute-1.16.jar",
+      "url": "https://maxcompute-repo.oss-cn-hangzhou.aliyuncs.com/flink/connector/latest/flink-connector-maxcompute-1.16.jar",
+      "status": 200,
+      "length": 54957851,
+      "target": "flink/connector/flink-connector-maxcompute-1.16.25-shaded.jar",
+      "response_etag": "82B5C43A135B84FE4BBE5451C0656176"
+    }
+  ]
+}

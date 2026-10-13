@@ -1,0 +1,73 @@
+---
+title: Table API 与 DataStream
+description: 在 Java 作业中使用相同 SQL 配置或直接构造 Source、Sink，明确自动路由边界、依赖打包与主键作业注意事项。
+product: flink-connector
+doc_type: how-to
+status: draft
+tags:
+  - flink-connector
+  - flink-sql
+sidebar_position: 14
+---
+
+优先通过 Table API 执行与本空间一致的 SQL，复用工厂校验和 SQL 路由。直接 DataStream API 适合自定义数据结构、事件时间或处理拓扑，需要自行处理更多契约。
+
+## Table API
+
+在已经安装 Connector 的 Flink 1.20.4 环境中使用：
+
+```java
+import org.apache.flink.table.api.EnvironmentSettings;
+import org.apache.flink.table.api.TableEnvironment;
+
+TableEnvironment tableEnv = TableEnvironment.create(
+    EnvironmentSettings.inBatchMode());
+// createTableSql 是快速开始的完整 CREATE TABLE，或已替换连接值的 SQL。
+tableEnv.executeSql(createTableSql);
+tableEnv.executeSql(
+    "INSERT INTO mc_sample VALUES (1, 'hello')").await();
+// 按作业需要消费 TableResult，而不是假设异步提交后写入已完成。
+tableEnv.executeSql("SELECT id, v FROM mc_sample").print();
+```
+
+此片段在已有 Java 作业入口中使用，`createTableSql` 由调用方提供。流作业使用 `EnvironmentSettings.inStreamingMode()`，并参照[持续 Source](./source-continuous.mdx)配置启动模式。
+
+## DataStream Storage Sink
+
+以下为已有 `DataStream<RowData> input` 的接入片段：
+
+```java
+import com.aliyun.odps.table.TableIdentifier;
+import org.apache.flink.configuration.Configuration;
+import org.apache.flink.odps.sink.datastream.MaxComputeSink;
+import org.apache.flink.odps.sink.datastream.RowDataArrowWriterFactory;
+import org.apache.flink.odps.util.OdpsConf;
+import org.apache.flink.table.api.DataTypes;
+import org.apache.flink.table.types.logical.RowType;
+
+Configuration config = new Configuration();
+OdpsConf odpsConf = configuredOdpsConf;
+RowType rowType = (RowType) DataTypes.ROW(
+    DataTypes.FIELD("id", DataTypes.BIGINT()),
+    DataTypes.FIELD("v", DataTypes.STRING())
+).getLogicalType();
+
+input.sinkTo(new MaxComputeSink<>(
+    config, odpsConf,
+    TableIdentifier.of(projectName, "default", "sample"),
+    null, new RowDataArrowWriterFactory(), rowType));
+```
+
+`configuredOdpsConf`、`projectName` 和 `input` 由调用方提供，示例面向非分区普通表追加；字符串字段使用 Flink `StringData` 表示。调用 `env.execute(...)` 提交实际作业。
+
+主键表需要正确的 RowKind 和分区／bucket 路由；直接 `sinkTo` 没有 SQL 适配层自动装配的 shuffle。复杂分区主键作业先使用 SQL 接入路径，避免遗漏同组路由。
+
+## DataStream Source
+
+`BatchOdpsSource` 和 `ContinuousOdpsSource` 实现 Flink Source API，使用 `env.fromSource(source, watermarkStrategy, name)` 接入。构造参数包括 `OdpsConf`、`TableIdentifier`、数据列与分区列、`RowData` 类型、拆分配置及增量选项。连续源需传入启动模式与发现间隔。
+
+这些底层构造参数与 SQL 工厂的表类型、分区、启动模式校验不完全等价。应先用本空间 SQL 配方验证目标表，再在源码基线的 `SourceApiPlanningContractTest` 及 `MaxComputeSinkSystemTest` 中核对 API 签名。Java 自行设置 watermark 不能用来证明 SQL 持续分支的 watermark 下推已实现。
+
+## 打包与部署
+
+采用[构建与安装](./installation.mdx)的本地 shaded 坐标；本页选择集群提供依赖方式，Flink 和 Connector 均不重复嵌入作业包。自定义凭据提供者和实际业务类要完整分发。升级时单独验证 checkpoint／savepoint、序列化与 shaded namespace 的兼容性。

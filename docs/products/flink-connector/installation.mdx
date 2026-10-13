@@ -1,0 +1,73 @@
+---
+title: 构建与安装
+description: 从源码构建包含 SDK 依赖的 shaded JAR，安装到 Flink SQL Client 和集群，并检查运行版本、工厂发现与类路径。
+product: flink-connector
+doc_type: how-to
+status: draft
+tags:
+  - flink-connector
+  - flink-sql
+sidebar_position: 3
+---
+
+本空间对应的 1.20.0 目前从源码构建。已有历史版本可在[Connector JAR 下载](./downloads.mdx)查看完整 OSS 下载清单；不要把历史包作为候选基线示例的等价替代。本文构建候选 Connector，再安装到 Flink。开始前准备源码、JDK 17、Maven 3.9 和 Flink 1.20.4。其他 Flink 或发行版需要单独验证。
+
+## 1. 构建分发 JAR
+
+在 Connector 源码根目录执行：
+
+```bash
+mvn -s tools/maven-central-settings.xml -gs tools/maven-central-settings.xml \
+  -Ppublic,release-artifacts clean verify
+python3 tools/check-public.py
+```
+
+生成 `target/flink-connector-maxcompute-1.20.0-shaded.jar`。`public` profile 将 SDK 等运行依赖纳入分发包；Flink 本身的依赖由运行环境提供。普通薄 JAR 不能直接替代这个分发包。
+
+`verify` 包含源码基线的离线检查与隔离消费者检查。集成测试、云服务和发行审批属于独立验证，详见[兼容性](./compatibility.mdx)。目前不提供已发布 Maven Central 坐标或公共源码下载地址；先取得本空间[版本说明](./release-notes.mdx)对应的源码。
+
+## 2. 安装到运行环境
+
+在已停止的自管 Flink 环境中安装：
+
+```bash
+export FLINK_HOME=/path/to/flink-1.20.4
+cp target/flink-connector-maxcompute-1.20.0-shaded.jar "$FLINK_HOME/lib/"
+```
+
+将相同 JAR 分发到 SQL Client、JobManager 和所有 TaskManager 的有效类路径，然后按集群部署方式重启。容器环境需要把 JAR 固化到作业镜像或依赖配置中，不能只复制到开发机。
+
+避免同一类路径存在旧版 Connector 或另一份不兼容 SDK。受管 Flink 平台的依赖上传方式遵循该平台文档，本页命令针对自管发行包。
+
+## 3. 启动 SQL Client
+
+在已经启动、能访问目标服务的集群上执行：
+
+```bash
+"$FLINK_HOME/bin/sql-client.sh"
+```
+
+执行[快速开始](./quickstart.mdx)的 `CREATE TABLE`，再运行 `INSERT` 和 `SELECT`。工厂标识是 `maxcompute`，不是 `odps`。
+
+| 现象                     | 检查                                             |
+| ------------------------ | ------------------------------------------------ |
+| 找不到 `maxcompute` 工厂 | SQL Client 和集群是否加载同一分发 JAR            |
+| `ClassNotFoundException` | 是否安装 shaded 包；自定义凭据提供者是否完整分发 |
+| `NoSuchMethodError`      | 是否有重复 Connector／SDK；Flink 版本是否匹配    |
+| Client 能连接而任务失败  | TaskManager 网络、凭据和 JAR 是否一致            |
+
+## 4. 在 Java 作业中使用
+
+构建产生的本地 Maven 坐标为 `com.aliyun.odps:flink-connector-maxcompute:1.20.0`。需要本地安装时，将构建命令最后的 `verify` 改为 `install`；消费 shaded 产物时使用 `shaded` classifier。它是本地构建坐标，不表示远程仓库已发布。
+
+```xml
+<dependency>
+  <groupId>com.aliyun.odps</groupId>
+  <artifactId>flink-connector-maxcompute</artifactId>
+  <version>1.20.0</version>
+  <classifier>shaded</classifier>
+  <scope>provided</scope>
+</dependency>
+```
+
+上例选择由集群 `lib/` 提供 Connector；作业打包时不要再重复嵌入一份。Table API／DataStream 入口见[Java 使用指南](./java-api.mdx)。

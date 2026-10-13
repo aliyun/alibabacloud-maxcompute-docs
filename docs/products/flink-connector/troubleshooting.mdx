@@ -1,0 +1,60 @@
+---
+title: 故障排查
+description: 按工厂发现、连接、模式误选、分区与恢复症状定位问题，列出本基线的历史快照、CDC、metadata 和配额已知限制。
+product: flink-connector
+doc_type: troubleshooting
+status: draft
+tags:
+  - flink-connector
+  - flink-sql
+sidebar_position: 18
+---
+
+先记录 Flink、JDK、Connector JAR 来源、执行模式、表类型和脱敏后的完整表选项。按下面症状定位问题，避免把本地依赖错误误认为服务端问题。
+
+## 工厂或类加载失败
+
+**现象**：找不到 `maxcompute` 工厂，或出现 `ClassNotFoundException`／`NoSuchMethodError`。
+
+**排查**：确认安装 `1.20.0-shaded.jar`，SQL Client 与 TaskManager 均能加载，类路径没有旧版 Connector 或冲突 SDK。基线为 Flink 1.20.4／JDK 17。更正部署后重启，再验证快速开始。
+
+## 连接或认证失败
+
+**排查**：从 Client 和实际 TaskManager 检查 endpoint 可达；确认项目与 endpoint 成对提供、凭据提供者存在且构造参数正确。SQL 中的环境变量不会自动展开。不要在诊断材料中输出真实凭据。
+
+指定 Tunnel 配额或代理没有生效时，参见[连接配置边界](./connection.mdx)，当前 SQL 显式凭据路径接受了部分参数但没有完整传递。
+
+## streaming 读取很快结束
+
+**原因**：普通表或无主键事务表会回退有界读；`scan.mode=bounded` 也强制有界。核对目标表实际主键与事务属性，查看回退日志。持续增量需满足[持续读取](./source-continuous.mdx)条件。
+
+## 缺少初始数据或新分区数据
+
+`latest` 跳过初始存量，需要存量时选 `latest-full`。普通持续模式在启动时确定分区列表；新分区跟随需选择[最新分区模式](./source-latest-partition.mdx)，并接受切换舍弃旧分区数据的语义。
+
+## 启动模式被拒绝
+
+| 现象                         | 原因与处理                                                |
+| ---------------------------- | --------------------------------------------------------- |
+| streaming + incremental 报错 | incremental 是有界区间模式，切到 batch                    |
+| from-snapshot 缺参数         | 配置实际可读的 `scan.snapshot-version`                    |
+| from-timestamp 缺参数        | 配置 `scan.timestamp`，核对格式与时区                     |
+| interval 小于 30 秒          | SQL 持续路径要求至少 `30 s`                               |
+| from-snapshot-full 报错      | 当前流读取未实现                                          |
+| latest partition 报错        | 核对分区 PK 事务表、CDC、启动模式与就绪声明；不能固定分区 |
+
+## 历史 batch 数据、CDC 或 watermark 不符合预期
+
+当前 batch 历史快照参数没有接入会话；有界 CDC changelog 声明与底层变化行不一致；持续分支 metadata／watermark 没有接入运行源。修复并增加真实结果验收前，不依赖这些组合。用 bounded 读取当前存量、APPEND 回放有界追加区间，以及普通数据列的持续 CDC 作为各自独立的测试路径。
+
+## 主键更新失败
+
+确认 `sink.operation=upsert`、`NOT NULL` 与 `PRIMARY KEY ... NOT ENFORCED`，真实目标表主键和字段一致。Storage 路径不支持部分列更新；分区 PK 表保持 bucket-only=false。不要将 CDC 更新／删除接到 insert-only Sink。
+
+## 追加恢复后重复或文件缓存压力大
+
+重复符合当前至少一次恢复边界。检查业务键与去重方案。文件缓存另查临时目录空间、容器盘生命周期、上传线程和恢复后的清理；单机磁盘文件不等于共享持久存储。
+
+## 提交可复现诊断
+
+提供脱敏 SQL、目标表类型与字段、版本、作业状态、故障时间、预期／实际结果、关键异常与 checkpoint 位置。若只有 Emulator 结果，明确标注本地模拟验证范围，避免把它写成云服务已经复现。

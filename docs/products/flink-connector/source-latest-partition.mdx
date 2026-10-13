@@ -1,0 +1,72 @@
+---
+title: Source：跟随最新分区
+description: 使用最新分区 CDC 跟随按序发布的分区，说明初始游标、字典序、分区就绪协议、切换舍弃行为和故障恢复边界。
+product: flink-connector
+doc_type: how-to
+status: draft
+tags:
+  - flink-connector
+  - flink-sql
+sidebar_position: 9
+---
+
+最新分区模式用于持续跟随按序发布的分区。它启动于当前字典序最大的分区，之后按序处理新发现的分区。它读取 CDC 变更，不会自动补齐所有旧分区的存量。
+
+## 前提与限制
+
+目标必须是分区主键事务表（主键 Delta 表，或具备相应能力的主键 DLMV），运行在 `streaming` 模式，选择 CDC。普通表、Append Delta 表和非分区表不支持此模式。
+
+生产者需要在数据提交或刷新完成、CDC 可读后再发布分区，使“分区可见”代表“数据就绪”。`partition-visible` 是对这一生产协议的显式声明，Connector 不会替生产者完成提交。
+
+## SQL 配置
+
+先确认目标表 `daily_events` 包含 `id BIGINT, v STRING` 和分区列 `ds STRING`，主键及事务能力与映射匹配。替换连接占位符：
+
+```sql
+SET 'execution.runtime-mode' = 'streaming';
+SET 'execution.checkpointing.interval' = '60 s';
+
+CREATE TABLE mc_latest_partition (
+  id BIGINT NOT NULL,
+  v STRING,
+  ds STRING,
+  PRIMARY KEY (id) NOT ENFORCED
+) PARTITIONED BY (ds) WITH (
+  'connector' = 'maxcompute',
+  'table.name' = '<project_name>.daily_events',
+  'odps.project.name' = '<project_name>',
+  'odps.end.point' = '<endpoint>',
+  'odps.credentials.provider' = '<provider_class>',
+  'scan.mode' = 'latest',
+  'scan.incremental.mode' = 'CDC',
+  'scan.partition.latest' = 'true',
+  'scan.partition.ready-mode' = 'partition-visible',
+  'continuousDiscoveryInterval' = '60 s'
+);
+
+SELECT id, v, ds FROM mc_latest_partition;
+```
+
+仅支持 `latest` 或 `from-snapshot`。从保留范围内的指定版本开始时，将 `scan.mode` 改成 `from-snapshot` 并增加非负 `scan.snapshot-version`。不允许固定 `scan.partition` 或已裁剪的分区列表；SQL 分区过滤应保留在动态 Source 之上。
+
+## 分区切换语义
+
+| 阶段       | 行为                                                          |
+| ---------- | ------------------------------------------------------------- |
+| 初次发现   | 选择当前字典序最大的分区；latest 以可读 CDC 版本为起点        |
+| 新分区出现 | 按分区规范字符串的字典序排队                                  |
+| 切换       | 停止旧 delegate，等待 reader 响应后读取新分区                 |
+| 新分区游标 | 保留启动版本下界，不继承旧分区已推进的游标                    |
+| 恢复       | 使用 checkpoint 中的分区进度与 reader epoch，仍需云端恢复验证 |
+
+使用固定宽度、按时间单调递增的分区值，例如 `20261013`、`20261014`；字典序不等于任意数字的自然顺序。多级分区按完整 PartitionSpec 字符串排序。删除活跃分区会使读取失败。
+
+:::warning 切换会舍弃旧分区后续数据
+
+此实现不等待旧分区所有已规划数据读完再切换。切换时旧分区尚未读取的数据及之后的变更会被舍弃。因此它不能用于要求所有分区完整回放的任务。需要完整处理时，使用固定分区或[有界区间回放](./source-incremental.mdx)并独立核对完成状态。
+
+:::
+
+## 验证发布协议
+
+至少使用三个按序分区，验证启动选中范围、延迟发现、切换时旧分区未读数据、迟到更新、checkpoint 后重启与活跃分区删除。将可接受的舍弃范围写入作业验收条件；未能接受该语义时不要使用本模式。

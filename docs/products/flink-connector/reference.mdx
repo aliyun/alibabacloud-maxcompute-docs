@@ -1,0 +1,66 @@
+---
+title: 配置与类型参考
+description: 集中查询 Connector SQL 的连接、Source、Sink 参数与类型映射，标出默认值、使用范围和已知实现限制。
+product: flink-connector
+doc_type: reference
+status: draft
+tags:
+  - flink-connector
+  - flink-sql
+sidebar_position: 15
+---
+
+工厂标识为 `maxcompute`。SQL 参数名由 `OdpsOptions` 定义、`OdpsDynamicTableFactory` 的 required／optional 集合决定是否接受。当前工厂对已登记的参数名做大小写归一；建议使用下表规范拼写。参数值与枚举仍需遵循对应类型。
+
+## Source 参数
+
+| 参数                                 | 类型     | 默认值           | 说明                                          |
+| ------------------------------------ | -------- | ---------------- | --------------------------------------------- |
+| `scan.mode`                          | 枚举     | `latest`         | 见[模式总览](./modes.mdx)，依执行模式解释     |
+| `scan.partition`                     | 字符串   | 无               | 一个显式分区规范                              |
+| `scan.snapshot-version`              | long     | 无               | 持续 from-snapshot 起点                       |
+| `scan.timestamp`                     | 字符串   | 无               | 持续 from-timestamp 起点                      |
+| `scan.incremental-between`           | 字符串   | 无               | 有界版本 `(start,end]`                        |
+| `scan.incremental-between-timestamp` | 字符串   | 无               | 有界时间 `(start,end]`                        |
+| `scan.incremental.mode`              | 枚举     | `APPEND`         | 所选服务的增量表达；CDC 有实现限制            |
+| `continuousDiscoveryInterval`        | duration | `60 s`           | SQL 持续源至少 30 秒                          |
+| `maxSplitsPerTask`                   | int      | `10`             | 枚举器待分配拆分缓存目标，按并行度计算        |
+| `splitstrategy`                      | 枚举     | `ROW_OFFSET`     | 存量策略；增量强制 bucket                     |
+| `splitbytesize`                      | long     | `268435456`      | 字节拆分请求大小                              |
+| `splitbatchreadsize`                 | int      | `4096`           | 每批读取行数                                  |
+| `dynamicloadbalancing`               | boolean  | `false`          | 有界普通读 SDK 动态均衡；增量禁用             |
+| `compressCodec`                      | 枚举     | `NO_COMPRESSION` | SDK Arrow 压缩类型                            |
+| `scan.partition.latest`              | boolean  | `false`          | [最新分区 CDC](./source-latest-partition.mdx) |
+| `scan.partition.ready-mode`          | 字符串   | 无               | 最新分区要求 `partition-visible`              |
+
+可选磁盘缓冲参数 `scan.disk-spill.enabled` 默认 false，`scan.disk-spill.memory-capacity` 和 `scan.disk-spill.max-bytes` 按运行依赖能力核验，详见[存量读取](./source-bounded.mdx)。当前 `LIMIT` 未实际下推，历史 batch snapshot 参数未生效，持续 metadata／watermark 未接入。
+
+## Sink 与连接
+
+完整的常用参数、默认值和路径适用范围见[连接与认证](./connection.mdx)和[写入实现](./sink-writers.mdx)。`sink.operation` 使用 `insert` 或 `upsert`；枚举中其他值不作为推荐 SQL 模式。未知参数会在工厂校验时失败。
+
+## 类型映射
+
+以下为 `OdpsTypeUtil` 的元数据映射；具体 writer、Arrow 表示与服务的往返精度仍需验证。
+
+| MaxCompute 类型                | Flink 类型          | 注意事项                                |
+| ------------------------------ | ------------------- | --------------------------------------- |
+| BOOLEAN                        | BOOLEAN             | —                                       |
+| TINYINT／SMALLINT／INT／BIGINT | 对应整数类型        | 核对溢出与 null                         |
+| FLOAT／DOUBLE                  | 对应浮点类型        | 对账需要考虑浮点误差                    |
+| CHAR(n)／VARCHAR(n)            | CHAR(n)／VARCHAR(n) | 长度满足目标服务限制                    |
+| STRING／JSON                   | STRING              | JSON 元数据映射为字符串，写回类型需核验 |
+| BINARY                         | BYTES               | Java 内部值为 byte 数组                 |
+| DECIMAL(p,s)                   | DECIMAL(p,s)        | 核对精度、scale 与 writer               |
+| DATE                           | DATE                | —                                       |
+| DATETIME                       | TIMESTAMP(3)        | 毫秒级元数据映射                        |
+| TIMESTAMP／TIMESTAMP_NTZ       | TIMESTAMP(9)        | 读会话时间单位与精度需真实往返验证      |
+| ARRAY                          | ARRAY               | 递归映射元素类型                        |
+| MAP                            | MAP                 | 递归映射键和值类型                      |
+| STRUCT                         | ROW                 | 字段名、顺序和类型保持一致              |
+
+不将 VECTOR、BLOB 等类型列为本基线已支持类型。Flink 主键列声明 `NOT NULL`，分区列单独使用 `PARTITIONED BY`。复杂 ARRAY 字面量可能先在 Flink planner／代码生成阶段失败，测试时可从类型明确的源做 `INSERT SELECT`。
+
+## SQL 配方索引
+
+[存量](./source-bounded.mdx) · [有界增量](./source-incremental.mdx) · [持续增量](./source-continuous.mdx) · [最新分区](./source-latest-partition.mdx) · [追加](./sink-append.mdx) · [主键](./sink-upsert.mdx) · [Catalog](./catalog.mdx)

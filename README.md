@@ -9,6 +9,7 @@
 - MaxCompute CLI（`cli`）
 - MaxCompute MCP Server（`mcp-server`）
 - MaxCompute Desktop（`desktop`）
+- MaxCompute Flink Connector（`flink-connector`，文档草稿）
 
 后续候选范围只记录在 [handbook/roadmap.md](handbook/roadmap.md)，未完成接入评审前不创建公开入口。
 

@@ -87,7 +87,7 @@ const config: Config = {
     metadata: [
       {
         name: 'keywords',
-        content: 'MaxCompute,文档,CLI,MCP Server,Desktop',
+        content: 'MaxCompute,文档,CLI,MCP Server,Desktop,Flink SQL,Source,Sink',
       },
     ],
     colorMode: {
@@ -152,6 +152,7 @@ const config: Config = {
           items: [
             {label: '产品总览', to: '/docs/products/'},
             {label: 'MaxCompute CLI', to: '/docs/products/cli/'},
+            {label: 'Flink Connector', to: '/docs/products/flink-connector/'},
             {
               label: 'MaxCompute MCP Server',
               to: '/docs/products/mcp-server/',

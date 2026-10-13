@@ -1,0 +1,10 @@
+{
+  "label": "MaxCompute Flink Connector",
+  "position": 4,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "doc",
+    "id": "products/flink-connector/index"
+  }
+}

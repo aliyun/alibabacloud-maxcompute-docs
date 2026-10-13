@@ -1,0 +1,80 @@
+---
+title: 连接与认证
+description: 配置项目、表路径、服务地址和凭据提供者，解释 schema 命名空间、Catalog 配置来源与分布式部署要求。
+product: flink-connector
+doc_type: how-to
+status: draft
+tags:
+  - flink-connector
+  - flink-sql
+sidebar_position: 5
+---
+
+Standalone Flink 表需要明确项目、表名、服务地址和认证来源。先确认 JobManager、TaskManager 与 SQL Client 均能访问目标服务，再配置表。
+
+## 表路径
+
+| 命名空间                              | `table.name`           | 解析结果                   |
+| ------------------------------------- | ---------------------- | -------------------------- |
+| `odps.namespace.schema=false`（默认） | `table`                | 默认项目下的表             |
+| 同上                                  | `project.table`        | 指定项目的表               |
+| `odps.namespace.schema=true`          | `schema.table`         | 默认项目、指定 schema 的表 |
+| 同上                                  | `project.schema.table` | 指定项目、schema 和表      |
+
+schema 模式下两段式路径表示 `schema.table`，不要把 `project.table` 沿用到该模式。
+
+## 连接参数
+
+| 参数                         | 默认值   | 说明                                     |
+| ---------------------------- | -------- | ---------------------------------------- |
+| `connector`                  | 必填     | `maxcompute`                             |
+| `table.name`                 | 必填     | 见上表                                   |
+| `odps.project.name`          | 无       | 默认项目；与服务 endpoint 成对提供       |
+| `odps.end.point`             | 无       | MaxCompute 元数据与服务 endpoint         |
+| `odps.tunnel.end.point`      | 空字符串 | 显式 Tunnel endpoint，按目标地域配置     |
+| `odps.namespace.schema`      | `false`  | schema 命名空间                          |
+| `odps.region.id`             | 无       | 签名地域；需与部署匹配                   |
+| `odps.signature.corporation` | `aliyun` | 签名配置；保持默认，除非目标环境要求修改 |
+
+endpoint 值从目标 MaxCompute 服务配置取得，本空间不提供跨地域通用地址。
+
+## 凭据提供者
+
+支持 `com.aliyun.credentials.api.ICredentialsProvider` 实现类。部署时将实现类及依赖安装到所有相关进程：无参数时使用无参构造，有参数时使用 `Map<String, String>` 构造。构造失败会使作业失败。
+
+以下是需要替换的 SQL 模板，不能原样执行：
+
+```sql
+CREATE TABLE mc_events (id BIGINT, v STRING) WITH (
+  'connector' = 'maxcompute',
+  'table.name' = '<project_name>.events',
+  'odps.project.name' = '<project_name>',
+  'odps.end.point' = '<endpoint>',
+  'odps.tunnel.end.point' = '<tunnel_endpoint>',
+  'odps.region.id' = '<region_id>',
+  'odps.credentials.provider' = '<provider_class>',
+  'scan.mode' = 'bounded'
+);
+```
+
+凭据由提供者从部署的凭据机制取得。不要在已提交 SQL、日志或截图中放真实 AccessKey。`odps.access.id` 和 `odps.access.key` 是显式凭据配置，入门示例仅使用模拟值；Connector 不会展开 SQL 中的 `${ENV_VAR}`。
+
+## 使用配置文件
+
+Catalog 可以通过 `odps-conf-dir` 指向目录。Connector 读取目录下的 `odps.conf`；未指定目录时查找 `ODPS_CONF_DIR`，然后回退到 classpath 中的 `odps.conf`。
+
+```properties
+odps.project.name=<project_name>
+odps.end.point=<endpoint>
+odps.tunnel.end.point=<tunnel_endpoint>
+odps.access.id=<injected_access_key_id>
+odps.access.key=<injected_access_key_secret>
+```
+
+由部署的凭据机制生成受保护的配置文件，并一致挂载到 Client 与集群；占位符不能原样执行。当前文件读取只初始化基础连接字段，未把 provider、region 等属性填入专用字段。因此文件方式不能按上述 provider 模板配置无密钥认证，需要凭据提供者时先使用显式 SQL 表映射。不要提交真实凭据文件。
+
+:::caution 当前配置边界
+
+SQL 工厂接受 `odps.tunnel.quota.name` 及代理参数，但当前显式凭据构造路径未完整传入 Source 使用的连接对象。Source 读取不能据此认定已使用指定配额或代理；Sink 的另一条配置路径会读取配额，需按实际 writer 分开验证。配置文件的配额与 provider 字段同样需要修复后核验。
+
+:::

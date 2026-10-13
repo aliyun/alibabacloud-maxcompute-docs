@@ -110,6 +110,41 @@
           "href": "/docs/products/mcp-server/security/"
         }
       ]
+    },
+    {
+      "id": "flink-connector",
+      "name": "MaxCompute Flink Connector",
+      "shortName": "Flink Connector",
+      "description": "使用 Flink SQL 读取存量与增量数据，将追加或主键变更写入 MaxCompute。",
+      "path": "docs/products/flink-connector",
+      "href": "/docs/products/flink-connector/",
+      "status": "draft",
+      "owner": "@odps",
+      "icon": "cube",
+      "accent": "green",
+      "featured": true,
+      "navigation": [
+        {
+          "label": "快速开始",
+          "href": "/docs/products/flink-connector/quickstart/"
+        },
+        {
+          "label": "模式总览",
+          "href": "/docs/products/flink-connector/modes/"
+        },
+        {
+          "label": "JAR 下载",
+          "href": "/docs/products/flink-connector/downloads/"
+        },
+        {
+          "label": "构建与安装",
+          "href": "/docs/products/flink-connector/installation/"
+        },
+        {
+          "label": "参数参考",
+          "href": "/docs/products/flink-connector/reference/"
+        }
+      ]
     }
   ]
 }

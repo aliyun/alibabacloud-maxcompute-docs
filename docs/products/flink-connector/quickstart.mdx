@@ -1,0 +1,82 @@
+---
+title: Flink SQL 快速开始
+description: 用本地 Emulator 创建测试表，在 Flink SQL 中完成追加写入与存量读取，明确服务 DDL 与 Flink 映射的区别。
+product: flink-connector
+doc_type: quickstart
+status: draft
+tags:
+  - flink-connector
+  - flink-sql
+sidebar_position: 4
+---
+
+本教程在本地 MaxCompute Emulator（用于开发测试的服务模拟器）上完成“建表 → 写入两行 → 读取两行”。先完成[构建与安装](./installation.mdx)，运行 Flink 1.20.4 集群。
+
+## 1. 准备服务端测试表
+
+在本机终端生成初始化 SQL，并启动 Emulator 1.2.0：
+
+```bash
+cat > sample.sql <<'SQL'
+CREATE TABLE sample (id BIGINT, v STRING);
+SQL
+docker run --rm --platform linux/amd64 -p 127.0.0.1:8080:8080 \
+  -v "$PWD/sample.sql:/fixtures.sql:ro" maxcompute/maxcompute-emulator:1.2.0 \
+  --listen 0.0.0.0:8080 --project test_project --seed /fixtures.sql
+```
+
+默认自动化测试使用源码 `tools/emulator-image.json` 中固定的镜像 digest；手动教程使用版本 tag。Emulator 的发布资料见[上游项目](https://github.com/dingxin-tech/maxcompute-emulator)。
+
+## 2. 在 Flink SQL 中映射表
+
+以下语句在 Flink SQL Client 执行。它建立 Flink 表映射，服务表已由上一步创建。
+
+```sql
+SET 'execution.runtime-mode' = 'batch';
+
+CREATE TABLE mc_sample (
+  id BIGINT,
+  v STRING
+) WITH (
+  'connector' = 'maxcompute',
+  'table.name' = 'test_project.sample',
+  'odps.project.name' = 'test_project',
+  'odps.end.point' = 'http://127.0.0.1:8080',
+  'odps.tunnel.end.point' = 'http://127.0.0.1:8080',
+  'odps.access.id' = 'test-ak',
+  'odps.access.key' = 'test-sk',
+  'scan.mode' = 'bounded',
+  'sink.operation' = 'insert'
+);
+```
+
+`test-ak`／`test-sk` 仅用于本地模拟器。`127.0.0.1` 适用于 Flink 与服务都在同一主机的示例；容器或分布式集群必须替换为 JobManager、TaskManager 均能访问的服务地址。
+
+## 3. 追加写入
+
+```sql
+INSERT INTO mc_sample VALUES (1, 'hello'), (2, 'MaxCompute');
+```
+
+在 Flink 作业状态中确认该 INSERT 作业完成，再提交下一步查询。异步返回作业 ID 不代表已经完成写入。
+
+## 4. 读取并检查结果
+
+```sql
+SELECT id, v FROM mc_sample;
+```
+
+预期返回两行，顺序不固定：
+
+| id  | v          |
+| --- | ---------- |
+| 1   | hello      |
+| 2   | MaxCompute |
+
+重复执行 INSERT 会追加新的两行。Emulator 停止后，以上容器内的临时服务数据不会保留。
+
+## 5. 切换真实 MaxCompute
+
+先在获准使用的测试项目中创建同结构普通表，再替换项目、表名和两个服务 endpoint。准备 Flink 集群的网络访问与服务权限，按[连接与认证](./connection.mdx)配置凭据提供者。SQL 字符串中的环境变量不会由 Connector 自动展开。
+
+本地往返示例没有验证真实服务的权限、配额、CDC 或吞吐。选择下一步：[分区存量读取](./source-bounded.mdx)、[持续增量](./source-continuous.mdx)、[主键写入](./sink-upsert.mdx)。

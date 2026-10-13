@@ -1,0 +1,84 @@
+---
+title: Source：持续读取增量
+description: 在主键事务表上选择 latest、latest-full、from-snapshot 或 from-timestamp，设置发现间隔并验证变更、恢复和下游语义。
+product: flink-connector
+doc_type: how-to
+status: draft
+tags:
+  - flink-connector
+  - flink-sql
+sidebar_position: 8
+---
+
+持续 Source 周期性发现表的新版本并读取增量，不会在读取当前数据后自动结束。目标表必须是带主键的事务表，并具备所选增量模式的服务端能力。
+
+## 选择启动位置
+
+| `scan.mode`      | 初次启动行为                                   | 必要补充参数            |
+| ---------------- | ---------------------------------------------- | ----------------------- |
+| `latest`         | 以初次发现的版本为起点，跳过初始存量           | 无                      |
+| `latest-full`    | 读取一次当前快照，然后读取后续变更             | 无                      |
+| `from-snapshot`  | 从指定版本开始读取后续变更，不做该版本全量快照 | `scan.snapshot-version` |
+| `from-timestamp` | 从指定时间开始读取后续变更，不做初始快照       | `scan.timestamp`        |
+
+`latest` 的起点建立在首次枚举时；部署前已经存在的数据通常不会输出。`latest-full` 的快照与后续版本衔接需要在实际服务验收。流读取 `from-snapshot-full` 当前显式拒绝。
+
+## Flink SQL 配置
+
+先确认服务端 `pk_events` 的主键为 `id`，其余字段与以下映射一致。替换所有连接占位符：
+
+```sql
+SET 'execution.runtime-mode' = 'streaming';
+SET 'execution.checkpointing.interval' = '60 s';
+
+CREATE TABLE mc_live (
+  id BIGINT NOT NULL,
+  v STRING,
+  PRIMARY KEY (id) NOT ENFORCED
+) WITH (
+  'connector' = 'maxcompute',
+  'table.name' = '<project_name>.pk_events',
+  'odps.project.name' = '<project_name>',
+  'odps.end.point' = '<endpoint>',
+  'odps.credentials.provider' = '<provider_class>',
+  'scan.mode' = 'latest-full',
+  'scan.incremental.mode' = 'CDC',
+  'continuousDiscoveryInterval' = '60 s'
+);
+
+SELECT id, v FROM mc_live;
+```
+
+这是需真实服务验证的模板。查询持续运行，更新／删除可能以变化行展示。若需要写入另一张表，按[主键 Sink](./sink-upsert.mdx)定义兼容下游，不能接仅支持 INSERT 的追加 Sink。
+
+## 从版本或时间继续读取
+
+在创建映射时，把启动相关参数替换为以下一种组合：
+
+```sql
+'scan.mode' = 'from-snapshot',
+'scan.snapshot-version' = '5'
+```
+
+```sql
+'scan.mode' = 'from-timestamp',
+'scan.timestamp' = '2026-10-13 00:00:00.000'
+```
+
+替换为实际可读版本或时间；不要使用 `scan.snapshot-id`、`scan.timestamp-millis` 等其他 Connector 的参数名。`continuousDiscoveryInterval` 默认 60 秒，SQL 持续读取路径要求至少 30 秒。
+
+## 分区与变更语义
+
+普通持续模式会在启动时确定分区列表，不能视作新分区自动发现。固定分区使用 `scan.partition`；持续跟随新发布分区使用[最新分区模式](./source-latest-partition.mdx)。
+
+`scan.incremental.mode` 默认 APPEND；同步更新和删除时应明确选择 CDC 并核验底层服务。当前持续 SQL Source 声明全部 changelog 类型；下游需要按真实变化设计。
+
+:::caution metadata 与 watermark
+
+Source 对外列出了 `bucket_id`、`bucket_time` metadata 并接受 watermark 下推，但当前持续分支未把它们接入 Continuous Source。不要在此模式依赖 metadata 列或下推 watermark 驱动事件时间计算；需要修复后验证。普通数据列的增量读取与这一限制分开验收。
+
+:::
+
+## 上线前验证
+
+在独立测试表中依次验证初始存量、新增、同主键更新、删除、checkpoint 后重启，并核对下游最终值与重复记录。保存起点版本、服务版本、作业配置与结果；Emulator 有界读写通过不证明云端 CDC 或分布式恢复已经通过。
