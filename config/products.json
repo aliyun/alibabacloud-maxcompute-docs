@@ -149,6 +149,134 @@
           "href": "/docs/products/flink-connector/reference/"
         }
       ]
+    },
+    {
+      "id": "jdbc",
+      "name": "MaxCompute JDBC",
+      "shortName": "JDBC",
+      "description": "通过标准 JDBC 接口连接 MaxCompute，提交 SQL 并读取结果。",
+      "path": "docs/products/jdbc",
+      "href": "/docs/products/jdbc/",
+      "status": "draft",
+      "owner": "@odps",
+      "icon": "cube",
+      "accent": "cyan",
+      "category": "interface",
+      "featured": true,
+      "navigation": [
+        {
+          "label": "快速开始",
+          "href": "/docs/products/jdbc/quickstart/"
+        },
+        {
+          "label": "配置参考",
+          "href": "/docs/products/jdbc/reference/"
+        },
+        {
+          "label": "Agent 执行指南",
+          "href": "/docs/products/jdbc/agent-guide/"
+        },
+        {
+          "label": "故障排查",
+          "href": "/docs/products/jdbc/troubleshooting/"
+        }
+      ]
+    },
+    {
+      "id": "odbc",
+      "name": "MaxCompute ODBC",
+      "shortName": "ODBC",
+      "description": "连接 Python 与 ODBC 应用，完成驱动安装、注册和查询。",
+      "path": "docs/products/odbc",
+      "href": "/docs/products/odbc/",
+      "status": "draft",
+      "owner": "@odps",
+      "icon": "cube",
+      "accent": "cyan",
+      "category": "interface",
+      "featured": true,
+      "navigation": [
+        {
+          "label": "快速开始",
+          "href": "/docs/products/odbc/quickstart/"
+        },
+        {
+          "label": "配置参考",
+          "href": "/docs/products/odbc/reference/"
+        },
+        {
+          "label": "Agent 执行指南",
+          "href": "/docs/products/odbc/agent-guide/"
+        },
+        {
+          "label": "故障排查",
+          "href": "/docs/products/odbc/troubleshooting/"
+        }
+      ]
+    },
+    {
+      "id": "spark",
+      "name": "MaxCompute Spark Connector",
+      "shortName": "Spark Connector",
+      "description": "在外部 Spark 中通过 Catalog 与 Storage API 访问 MaxCompute 表。",
+      "path": "docs/products/spark",
+      "href": "/docs/products/spark/",
+      "status": "draft",
+      "owner": "@odps",
+      "icon": "cube",
+      "accent": "amber",
+      "category": "connector",
+      "featured": true,
+      "navigation": [
+        {
+          "label": "快速开始",
+          "href": "/docs/products/spark/quickstart/"
+        },
+        {
+          "label": "配置参考",
+          "href": "/docs/products/spark/reference/"
+        },
+        {
+          "label": "Agent 执行指南",
+          "href": "/docs/products/spark/agent-guide/"
+        },
+        {
+          "label": "故障排查",
+          "href": "/docs/products/spark/troubleshooting/"
+        }
+      ]
+    },
+    {
+      "id": "dbt",
+      "name": "dbt-maxcompute",
+      "shortName": "dbt",
+      "description": "用 SQL 模型、依赖与数据测试构建可维护的 MaxCompute 数据流水线。",
+      "path": "docs/products/dbt",
+      "href": "/docs/products/dbt/",
+      "status": "draft",
+      "owner": "@odps",
+      "icon": "cube",
+      "accent": "emerald",
+      "category": "connector",
+      "featured": true,
+      "navigation": [
+        {
+          "label": "快速开始",
+          "href": "/docs/products/dbt/quickstart/"
+        },
+        {
+          "label": "配置参考",
+          "href": "/docs/products/dbt/reference/"
+        },
+        {
+          "label": "Agent 执行指南",
+          "href": "/docs/products/dbt/agent-guide/"
+        },
+        {
+          "label": "故障排查",
+          "href": "/docs/products/dbt/troubleshooting/"
+        }
+      ]
     }
   ]
 }

@@ -1,0 +1,49 @@
+---
+title: JDBC 配置参考
+description: 区分 URL 与 Properties 键名，配置凭据、STS、查询模式和结果下载限制。
+product: jdbc
+doc_type: reference
+status: draft
+tags:
+  - jdbc
+  - maxcompute
+sidebar_position: 4
+---
+
+## URL 与 Properties 使用不同键名
+
+URL 形式是 `jdbc:odps:<endpoint>?project=<project_name>`。Endpoint 位于 URL 的主段；Properties 使用下表的右列。URL 值含特殊字符时须按上游规则编码。
+
+| 用途             | URL 键              | Properties 键         | 说明                                   |
+| ---------------- | ------------------- | --------------------- | -------------------------------------- |
+| 项目             | `project`           | `project_name`        | 必填                                   |
+| AccessKey ID     | `accessId`          | `access_id`           | 建议通过 Properties 或工具凭据框提供   |
+| AccessKey Secret | `accessKey`         | `access_key`          | 不放入可记录的 URL                     |
+| 字符编码         | `charset`           | `charset`             | 默认 UTF-8                             |
+| STS Token        | `stsToken`          | `sts_token`           | STS 的临时 ID、Secret、Token 必须配套  |
+| 查询模式         | `interactiveMode`   | `interactive_mode`    | 默认普通模式；进阶模式按版本和服务确认 |
+| Tunnel 地址      | `tunnelEndpoint`    | `tunnel_endpoint`     | 不设置时由服务提供                     |
+| 结果限制         | `enableLimit`       | `enable_limit`        | 默认 true，受限结果最多 10,000 条      |
+| 限制回退         | `autoLimitFallback` | `auto_limit_fallback` | 默认 false，避免把受限结果当完整导出   |
+
+`end_point` 可作为 Properties 提供的服务地址；快速开始采用 URL 主段，避免两处设置互相覆盖。
+
+## STS
+
+在快速开始程序创建连接前加入：
+
+```java
+props.setProperty("sts_token", required("ALIBABA_CLOUD_SECURITY_TOKEN"));
+```
+
+此时 ID、Secret 也必须是同一组 STS 临时凭据；过期后重新获取整组，不要只替换 Token。
+
+## 下载完整结果
+
+确实需要超过受限结果时，显式设置 `enable_limit=false`，并核对下载权限、数据规模与网络。结果限制是驱动下载行为；它与 SQL 的 `LIMIT`、分区裁剪和服务端扫描量是不同概念。
+
+## 兼容性边界
+
+驱动不是完整 JDBC 规范实现。不要从 JDBC 接口的存在推导多语句事务、所有元数据方法或查询超时一定可用。对查询超时与取消，先查所选版本对应方法的实现，再验证服务端作业是否终止。
+
+完整参数来自[上游连接参数表](https://github.com/aliyun/aliyun-odps-jdbc#connection-string-parameters)。升级时对照版本记录，不把旧版本的默认值直接当成新版本保证。

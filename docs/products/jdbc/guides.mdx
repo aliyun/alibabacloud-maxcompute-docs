@@ -1,0 +1,56 @@
+---
+title: JDBC 使用指南
+description: 接入 SQL 工具、绑定查询值、读取数据类型并管理连接和结果资源。
+product: jdbc
+doc_type: how-to
+status: draft
+tags:
+  - jdbc
+  - maxcompute
+sidebar_position: 3
+---
+
+## 接入支持 JDBC 的工具
+
+1. 从 [GitHub Releases](https://github.com/aliyun/aliyun-odps-jdbc/releases) 选择驱动版本，下载该版本的独立 `jar-with-dependencies` 文件。
+2. 在工具的自定义驱动配置中添加 JAR，驱动类填写 `com.aliyun.odps.jdbc.OdpsDriver`。
+3. URL 使用下面的格式；用户名、密码分别填 AccessKey ID 和 Secret，优先使用工具的凭据存储功能。
+4. 先执行[快速开始](./quickstart.mdx)中的常量查询，再读取一张已授权的小表。
+
+```text
+jdbc:odps:<endpoint>?project=<project_name>&charset=UTF-8
+```
+
+具体按钮位置随工具版本变化。工具能加载 JAR，不代表元数据枚举、事务、参数绑定等所有功能都兼容。
+
+## 查询值用 PreparedStatement 绑定
+
+下面代码放在已有 `Connection conn` 的作用域内，针对实际表替换 `demo_events` 与列名：
+
+```java
+try (java.sql.PreparedStatement stmt = conn.prepareStatement(
+    "SELECT id, message FROM demo_events WHERE id = ? LIMIT 10")) {
+  stmt.setLong(1, 1L);
+  try (java.sql.ResultSet rs = stmt.executeQuery()) {
+    while (rs.next()) {
+      System.out.println(rs.getLong("id") + " " + rs.getString("message"));
+    }
+  }
+}
+```
+
+参数绑定用于数据值。表名、列名等 SQL 标识符需要来自已校验的允许列表。MaxCompute JDBC 的具体绑定实现与服务端预编译机制不等同，不应据此推导性能或事务保证。
+
+## 结果读取与资源
+
+- 使用 `getLong`、`getString`、`getBigDecimal` 等类型化 getter。整数 getter 遇到 SQL NULL 后需要用 `wasNull()` 区分 NULL 与零。
+- 金额和高精度值使用 `BigDecimal`；不要自动转成 `double`。
+- 时间列在显示时受到 Java 和工具时区影响，迁移时同时核对项目、程序和 BI 工具时区。
+- 按 `ResultSet → Statement → Connection` 关闭；`try-with-resources` 会按声明的逆序完成。
+- 连接池初次接入应验证连接检查 SQL、资源关闭和目标查询模式；避免套用数据库事务探活逻辑。
+
+完整类型映射以[上游 JDBC README](https://github.com/aliyun/aliyun-odps-jdbc#data-type-mapping)为准。
+
+## 从普通模式切换交互查询
+
+先在普通模式完成最小查询，再按项目实际支持的交互服务配置 `interactive_mode`、服务名或 quota。回退可能改变执行引擎与费用，不能只凭查询变快判断配置正确。使用[配置参考](./reference.mdx)核对参数名，并在日志中保留脱敏的作业 ID、实际模式和错误信息。

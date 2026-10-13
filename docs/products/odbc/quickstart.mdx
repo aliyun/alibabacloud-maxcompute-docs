@@ -1,0 +1,111 @@
+---
+title: ODBC 快速开始
+description: 按 Windows 或 Linux/macOS 安装并注册驱动，再用 pyodbc 执行最小只读查询。
+product: odbc
+doc_type: quickstart
+status: draft
+tags:
+  - odbc
+  - maxcompute
+sidebar_position: 2
+---
+
+## 1. 安装原生驱动
+
+### Windows
+
+从[驱动官方 README 的 Windows 下载入口](https://github.com/aliyun/alibabacloud-maxcompute-odbc-driver#building)获取 MSI，按说明安装 Visual C++ Runtime 与驱动。当前安装定义是 **x64**；Python 或 BI 程序也应为 64 位。
+
+MSI 注册 `MaxCompute ODBC Driver` 并提供 `MaxComputeTestDSN` 示例。当前驱动没有 DSN 配置 GUI，推荐通过连接字符串提供参数。不要用 `regsvr32` 注册 ODBC 驱动；该命令用于 COM 注册。
+
+### Linux / macOS
+
+准备 CMake 3.20+、C++20 编译器、vcpkg 和 unixODBC。驱动、Driver Manager、Python 必须使用兼容架构（例如全部为 arm64，或全部为 x86_64）。
+
+```shell
+git clone https://github.com/aliyun/alibabacloud-maxcompute-odbc-driver.git
+cd alibabacloud-maxcompute-odbc-driver
+cmake -S . -B build \
+  -DCMAKE_TOOLCHAIN_FILE="$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake" \
+  -DCMAKE_BUILD_TYPE=Release
+cmake --build build --parallel
+odbcinst -j
+```
+
+`VCPKG_ROOT` 应指向你已有的 vcpkg 安装目录。CMake 的共享库输出目录是 `build/lib`。用 `odbcinst -j` 确认当前 Driver Manager 的配置文件位置，然后在它读取的 `odbcinst.ini` 中注册：
+
+```ini
+[MaxCompute ODBC Driver]
+Description=MaxCompute ODBC Driver
+Driver=/absolute/path/to/libmaxcompute_odbc.so
+```
+
+Linux 使用 `.so`，macOS 使用实际生成的 `.dylib` 路径；`/absolute/path/to/` 必须替换为绝对路径。库依赖也要能被系统动态加载器找到。注册文件仅包含库位置，不放凭据。
+
+## 2. 检查 Python 能看见驱动
+
+```shell
+python -m pip install pyodbc
+python -c "import pyodbc; print(pyodbc.drivers())"
+```
+
+列表应包含 `MaxCompute ODBC Driver`。如果没有，先排查[驱动注册](./troubleshooting.mdx)，此时还不需要云端凭据。
+
+## 3. 注入连接信息
+
+通过已有凭据管理机制为当前进程提供下列变量：
+
+| 变量                              | 内容                                                  |
+| --------------------------------- | ----------------------------------------------------- |
+| `ALIBABA_CLOUD_ENDPOINT`          | 对应项目地域和网络的 MaxCompute Endpoint，包含 `/api` |
+| `ALIBABA_CLOUD_PROJECT`           | 项目名                                                |
+| `ALIBABA_CLOUD_ACCESS_KEY_ID`     | AccessKey ID                                          |
+| `ALIBABA_CLOUD_ACCESS_KEY_SECRET` | AccessKey Secret                                      |
+
+这四个变量由驱动读取。Endpoint 参见[官方 Endpoint 列表](https://help.aliyun.com/zh/maxcompute/user-guide/endpoints)。
+
+## 4. 执行最小查询
+
+保存为 `odbc_quickstart.py`：
+
+```python
+import os
+import pyodbc
+
+for name in (
+    "ALIBABA_CLOUD_ENDPOINT",
+    "ALIBABA_CLOUD_PROJECT",
+    "ALIBABA_CLOUD_ACCESS_KEY_ID",
+    "ALIBABA_CLOUD_ACCESS_KEY_SECRET",
+):
+    if not os.environ.get(name):
+        raise RuntimeError(f"Missing environment variable: {name}")
+
+# 原生驱动日志可能包含连接信息；首次验证关闭它，勿输出连接字符串。
+os.environ["MCO_LOG_LEVEL"] = "NONE"
+conn = pyodbc.connect(
+    "DRIVER={MaxCompute ODBC Driver};InteractiveMode=false;",
+    autocommit=True,
+)
+try:
+    cursor = conn.cursor()
+    try:
+        cursor.execute(
+            "SELECT 1 AS id, 'hello' AS message, CAST(NULL AS STRING) AS optional_value"
+        )
+        row = cursor.fetchone()
+        assert row is not None
+        assert row[0] == 1 and row[1] == "hello" and row[2] is None
+        assert cursor.fetchone() is None
+        print("ODBC smoke passed")
+    finally:
+        cursor.close()
+finally:
+    conn.close()
+```
+
+```shell
+python odbc_quickstart.py
+```
+
+预期输出 `ODBC smoke passed`。这里显式关闭事务管理，先验证普通查询路径。失败时保存脱敏错误与 SQLSTATE，继续[故障排查](./troubleshooting.mdx)。

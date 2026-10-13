@@ -1,0 +1,29 @@
+---
+title: JDBC 故障排查
+description: 按驱动加载、认证、SQL 执行、结果下载与类型处理逐层排查。
+product: jdbc
+doc_type: troubleshooting
+status: draft
+tags:
+  - jdbc
+  - maxcompute
+sidebar_position: 5
+---
+
+## 先确定失败层
+
+| 现象                                             | 先检查                                                         | 最小验证                                            |
+| ------------------------------------------------ | -------------------------------------------------------------- | --------------------------------------------------- |
+| `ClassNotFoundException` 或 `No suitable driver` | 驱动 JAR 是否在实际运行的 classpath，驱动类和 URL 前缀是否正确 | 显式加载 `OdpsDriver`                               |
+| `NoSuchMethodError` 或依赖类冲突                 | 普通 JAR、独立 JAR 和额外 SDK 是否重复                         | 执行 `mvn dependency:tree`，记录驱动和 SDK 实际版本 |
+| 认证或项目不存在                                 | Endpoint、项目名、Properties 键和 STS 有效期                   | 常量 SELECT                                         |
+| 能连但 SELECT 失败                               | 作业错误、执行权限、quota 与查询模式                           | 普通模式下运行常量 SELECT                           |
+| SQL 成功但下载失败                               | Tunnel 网络、下载权限、结果策略                                | 小结果查询与下载分别记录                            |
+| 返回行数少于预期                                 | SQL LIMIT 与 `enable_limit`、下载回退                          | 核对期望数量和结果策略                              |
+| 时间、金额或 NULL 不对                           | getter、精度、时区、`wasNull()`                                | 常量类型样例与目标表分别对照                        |
+
+## 可共享的诊断材料
+
+记录驱动版本、JDK 版本、依赖树摘要、查询模式、脱敏 SQL、作业 ID 和完整错误类型。删除 AccessKey、Token、签名 LogView 参数与客户数据。问题反馈至 [JDBC Issues](https://github.com/aliyun/aliyun-odps-jdbc/issues)。
+
+云端 SQL 失败时不要无限重试；先查作业状态。包含写入的失败请求尤其需要核对是否已经提交。

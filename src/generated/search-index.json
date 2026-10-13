@@ -21,6 +21,13 @@
     "keywords": "maxcompute getting-started 选择入口 推荐阅读顺序 文档中心按产品和使用场景组织内容。先选择产品，再根据任务进入快速开始、使用指南、参考或故障排查。 选择入口 目标 入口 -------------- --------------------------------------- 了解某个产品 产品文档 查找跨产品方案 最佳实践 了解版本变化 更新日志 查询公共术语 参考 解决常见问题 常见问题 推荐阅读顺序 1. 从产品的“快速开始”完成首次操作。 2. 在“使用指南”中按目标查找步骤。 3. 通过“参考”确认命令、参数或配置。 4. 遇到异常时进入“故障排查”。"
   },
   {
+    "title": "选择 SDK、驱动与连接器",
+    "description": "按使用场景选择 SDK、JDBC、ODBC、Spark 或 dbt，准备首个连接与验证。",
+    "href": "/docs/getting-started/client-selection/",
+    "group": "MaxCompute 文档",
+    "keywords": "maxcompute clients 按你的工作选择 每条路径都要确认的输入 按你的工作选择 Java 程序通过 JDBC，BI 或 Python 通过 ODBC，Spark 作业通过 Connector，dbt 模型通过 Adapter 连接 MaxCompute。 图中的箭头表示连接关系，各工具的执行位置与结果读取方式不同。下面的表给出具体选择： 你的任务 使用入口 第一项验证 ---------------------------------------- -------------------------------------------------------------- --------------------------- 在 Java 程序中管理项目、表、资源、函数等 SDK 官方文档 按 SDK 快速开始连接 接入已有 Java SQL 程序或 JDBC 工具 JDBC 常量 SELECT 与 ResultSet 使用 Python pyodbc 或支持 ODBC 的工具 ODBC 驱动注册，然后常量 SELECT 在外部 Spark 中访问 MaxCompute 表 Spark Connector Catalog 发现与小表读取 用 SQL 模型构建数据转换、依赖与数据测试 dbt parse、连接、测试模型 build 在命令行或 Agent 中执行结构化操作 CLI 登录与首条查询 每条路径都要确认的输入 准备项目、地域和网络对应的 Endpoint、授权身份、工具版本与目标对象。连接成功、查询成功、结果读取成功各自验证。涉及数据写入时，先确定测试表、影响范围与清理条件；配置或身份缺失时继续本地检查，不猜测云端输入。 SDK 的完整指南保留在已有官方站点。驱动与连接器的快速开始、参数、排障和 Agent 检查单可以从上表进入。"
+  },
+  {
     "title": "查找所需文档",
     "description": "根据产品、任务和页面类型在 MaxCompute 文档中心定位所需内容。",
     "href": "/docs/getting-started/find-docs/",
@@ -36,7 +43,7 @@
   },
   {
     "title": "产品文档",
-    "description": "从统一入口进入 MaxCompute CLI、MaxCompute MCP Server、MaxCompute Desktop 和 Flink Connector 的独立文档空间。",
+    "description": "进入 SDK 官方文档，或浏览 JDBC、ODBC、Spark、dbt、CLI、MCP Server、Desktop 与 Flink 的使用指南。",
     "href": "/docs/products/",
     "group": "MaxCompute 文档",
     "keywords": "products maxcompute 从产品目录进入相应的快速开始、使用指南、参考和故障排查内容。"
@@ -117,6 +124,55 @@
     "href": "/docs/products/cli/troubleshooting/",
     "group": "MaxCompute CLI",
     "keywords": "cli troubleshooting 安装问题 maxc 命令未找到 预编译二进制无法运行 认证问题 OAuth 回调超时 auth whoami 提示未配置 agent context 显示 auth status=configured 但查询失败 查询问题 READ ONLY VIOLATION COST LIMIT EXCEEDED TABLE NOT FOUND 作业超时 Agent 集成问题 Skill 安装后 Agent 不认识 maxc 命令 agent doctor --online 失败 仍未解决 本页提供 MaxCompute CLI 常见问题的诊断与恢复方法。 安装问题 maxc 命令未找到 检查阿里云 CLI 是否安装且 = 3.3.3 aliyun version 检查 PyPI 独立入口 python3 -m pip show maxc-cli 确认 PATH 包含安装目录 which maxc 预编译二进制无法运行 - Linux： GLIBC 版本不兼容；使用 PyPI 入口或阿里云 CLI 入口 - macOS：检查 Apple Silicon/Intel 架构是否匹配；Gatekeeper 可能阻止未签名二进制 - Windows：不支持 ARM64；确保下载的是 windows-amd64 认证问题 OAuth 回调超时 - OAuth 回调监听 127.0.0.1 ，确认浏览器与 CLI 在同一主机 - SSH 场景需配置端口转发，或在 CLI 同机浏览器完成授权 - 防火墙/代理可能阻止回调端口 auth whoami 提示未配置 - 凭证是否写入用户级 ~/.maxc/config.yaml （文件权限 0600） - 是否使用了自动发现的工作区配置定义了 auth （已禁止） - 尝试 maxc auth login --from-env 或显式重新登录 agent context 显示 auth status=configured 但查询失败 - agent context 是纯本地检查，不验证凭证有效性 - 运行 maxc agent doctor --online --json 进行在线验证 - 检查 AccessKey 是否过期或权限不足 查询问题 READ ONLY VIOLATION maxc 在客户端拦截 DDL/DML。如需执行写操作，显式传入 --force （Agent 不应自行添加）。 COST LIMIT EXCEEDED - 先用 maxc query cost 预估成本 - 添加分区过滤减少扫描范围 - 提高 --cost-check 阈值（如需） TABLE NOT FOUND - 检查项目名和 Schema 是否正确（ --project / --schema ） - 用 maxc meta search 查找相似表名 - 确认对目标表有 SELECT 权限 作业超时 - query --wait 超时返回 job id ，用 maxc job wait 继续跟踪 - 大查询建议先 job submit ，再用 job wait --timeout 3600 Agent 集成问题 Skill 安装后 Agent 不认识 maxc 命令 - 确认 Skill 已正确安装到对应目录： maxc agent skill path - 检查 agent context 中的 min cli version 是否满足 - 重新启动 Agent 客户端以加载新 Skill agent doctor --online 失败 - 检查网络连通性（能否访问阿里云 MaxCompute endpoint） - 确认凭证未过期： maxc auth whoami --json - 查看 agent doctor 返回的详细诊断信息 仍未解决 通过以下渠道提交版本、环境和经过脱敏的错误信息： - CLI 仓库 Issues（GitHub） - MaxCompute 控制台工单"
+  },
+  {
+    "title": "dbt-maxcompute",
+    "description": "用 SQL 文件声明模型，以 ref 建依赖，在 MaxCompute 构建表并执行数据测试。",
+    "href": "/docs/products/dbt/",
+    "group": "dbt-maxcompute",
+    "keywords": "dbt maxcompute 开始使用 dbt 把 SQL 转换逻辑组织为一个工程。你写模型，使用 ref() 声明依赖，dbt 编译并通过 dbt-maxcompute Adapter 把 SQL 提交给 MaxCompute，再运行数据测试和生成文档。 dbt 流程：本地 SQL 与 ref 依赖经过编译，在 MaxCompute 中构建模型，再执行数据测试与生成文档。 本地执行 dbt 命令，SQL 计算发生在 MaxCompute。dbt 是 ELT 的转换层；原始数据采集和加载需要另外的工具。 开始使用 目标 入口 ------------------------------ ----------------------------------- 创建首个模型、测试并生成文档 快速开始 依赖、增量、分区和 Delta Table 模型指南 Profile 和模型配置 配置参考 Agent 自动检查与受控构建 Agent 执行指南 Profile、权限、模型和依赖问题 故障排查 稳定版与预发布版本 版本说明 入门示例采用 PyPI 稳定版 1.11.2 、Python 3.11 ，SQL 模型作为主线。源码中的 MaxFrame Python 模型、UDF 等能力须按实际发布版本和能力成熟度另行核对；不要把 master 文档中的功能自动当成稳定版已发布。 事实来源：dbt-maxcompute 仓库、PyPI、dbt 官方文档。"
+  },
+  {
+    "title": "dbt-maxcompute Agent 执行指南",
+    "description": "为 Agent 提供 dbt-maxcompute 执行前输入、最小验证、成功判据和停止条件。",
+    "href": "/docs/products/dbt/agent-guide/",
+    "group": "dbt-maxcompute",
+    "keywords": "dbt maxcompute 执行前输入 最小执行顺序 成功与停止条件 记录格式 执行前输入 Python、Core/Adapter 版本、Profile、target、项目/schema、选中的节点与依赖。 凭据只检查是否由授权机制提供，不输出原值。缺少项目、Endpoint、目标对象或写入授权时，先完成本地检查，再报告所缺输入。 最小执行顺序 1. 读取本空间快速开始与配置参考，按实际版本核对参数。 2. 先 dbt parse 与 dbt ls 确认范围；用户已授权测试表构建时，再 debug、build，并核对 run results 与实际表读回。 3. dbt build 会写表；table 和 full-refresh 涉及重建，先核对目标、授权与数据保留。parse 不等于远端 SQL 验证。 4. 记录本地准备、连接、SQL/模型运行、结果读回各层状态。失败后读取作业或对象状态，再决定下一动作。 成功与停止条件 - 成功：命令正常结束，实际返回值或目标数据符合预期，资源已关闭；授权写入还须读回并记录清理状态。 - 配置或身份缺失：停止依赖该输入的操作，保留已完成的本地检查。 - 认证、权限、quota、类加载或版本不匹配：报告具体失败层，使用故障排查，避免循环重试。 - 提交结果不明确：先查服务端状态；不把客户端超时解释为“未执行”。 记录格式 下面是输出格式示例，各字段填写实际观察值： \"component\": \"dbt\", \"version\": \" \", \"local check\": \"PASS FAIL NOT RUN\", \"connection\": \"PASS FAIL NOT RUN\", \"execution\": \"PASS FAIL NOT RUN\", \"readback\": \"PASS FAIL NOT RUN\", \"cleanup\": \"PASS FAIL NOT APPLICABLE\", \"evidence\": [\" \"], \"next action\": \" \" 只填实际结果。构建和站点校验通过不能填成云端执行 PASS；不把凭据、签名链接或客户数据写入输出。"
+  },
+  {
+    "title": "dbt 模型指南",
+    "description": "组织 ref 依赖，选择 table 或 incremental 物化，并理解分区与 Delta Table 配置。",
+    "href": "/docs/products/dbt/guides/",
+    "group": "dbt-maxcompute",
+    "keywords": "dbt maxcompute 用 ref 声明依赖 选择物化方式 增量模型 Delta Table 配置 分区与生命周期 Python 模型与 UDF 用 ref 声明依赖 模型查询使用 ref() ，让 dbt 解析依赖和实际表名： -- models/greeting.sql select id, message from ref('hello maxcompute') where id 0 dbt build --select +greeting 还会构建它的上游依赖。执行前用 dbt ls --select +greeting 检查选中的对象，防止把重建范围扩得过大。 选择物化方式 方式 适用场景 注意 ------------- ---------------------- -------------------------------- table 首个模型、可重建派生表 每次运行重建目标表 incremental 只处理本批新数据或变更 必须定义筛选、匹配与迟到数据策略 view 轻量逻辑层 以目标项目和所选版本支持为准 增量模型 下面示例按 updated at 水位取增量，用 id 匹配；首次运行取全部源数据。 source('raw','events') 必须先在项目 YAML 中定义。 config( materialized='incremental', incremental strategy='merge', unique key='id', tblproperties= 'table.format.version': '2' ) select id, message, updated at from source('raw', 'events') % if is incremental() % where updated at = ( select coalesce(max(updated at), cast('1970-01-01 00:00:00' as datetime)) from this ) % endif % 同一批次业务键需唯一；源时间类型要与水位比较一致。仅用最大时间不能自动解决迟到数据、空水位或删除同步；生产流水线应明确回看窗口和去重规则。 Delta Table 配置 SQL 模型的基线为 dbt-maxcompute 1.11.2 / 1.11.3b3 ： 目标 配置 边界 ------------------ --------------------------------------------- ------------------------------------------------------------------ Append Delta Table tblproperties= 'table.format.version': '2' table 、 incremental 新建表时生效 PK Delta Table transactional=true, primary keys=['id'] table 创建物理主键表 增量匹配键 unique key='id' 不是物理主键；SQL incremental 不会因 primary keys 自动创建 PK 表 Append Delta 是表格式名称，不代表只能用 append 策略。属性不会自动转换已有目标表；普通增量运行保留已有表定义， --full-refresh 会重建，当前 SQL incremental 重建路径不能保留物理主键。详见上游 Delta Table 指南。 分区与生命周期 模型可通过 partition by 声明分区，列必须出现在模型输出中。 lifecycle 是数据保留天数，不要给需要长期保留的表随意配置。具体参数见配置参考。 Python 模型与 UDF SQL 路径跑通后，再根据目标版本查上游指南。MaxFrame 是可选依赖和独立执行路径；预发布功能、Python 运行时及依赖兼容性需单独验收，不由本页 SQL 入门样例保证。"
+  },
+  {
+    "title": "dbt 快速开始",
+    "description": "创建最小 dbt 项目并在测试项目构建一个 SQL 表模型，执行数据测试并生成文档。",
+    "href": "/docs/products/dbt/quickstart/",
+    "group": "dbt-maxcompute",
+    "keywords": "dbt maxcompute 1. 安装并固定版本 2. 创建文件 3. 分阶段运行 4. 读回与清理 本例会在你指定的测试项目与 schema 中创建 hello maxcompute 表。 table 物化每次构建会重建目标，所以先确认该表名可以由 dbt 管理，不使用已有业务表。 1. 安装并固定版本 准备 Python 3.11，在新目录建立虚拟环境： python -m venv .venv Linux/macOS 执行 source .venv/bin/activate ；Windows PowerShell 执行 .venv\\Scripts\\Activate.ps1 。然后安装： python -m pip install \"dbt-maxcompute==1.11.2\" \"dbt-core =1.11.2, . .hello maxcompute LIMIT 10; 期望一行 1, hello 。不使用 schema 层级的项目按实际表名规则读取。 dbt clean 只清理配置的本地产物，不删除云端表；确认本次测试表可删除后，再用 SQL 客户端清理该表。"
+  },
+  {
+    "title": "dbt 配置参考",
+    "description": "核对 Profile、模型属性、产物含义和无传统事务的执行边界。",
+    "href": "/docs/products/dbt/reference/",
+    "group": "dbt-maxcompute",
+    "keywords": "dbt maxcompute Profile 模型配置 命令与产物的含义 Profile 字段 含义 入门值 / 约束 ------------------------------------- ------------------- ----------------------------------------------- type Adapter 类型 maxcompute project 项目 必填 schema 模型 schema 填已存在且获准使用的命名空间 endpoint MaxCompute Endpoint 必填，与项目地域和网络匹配 auth type 认证方式 入门使用 access key access key id / access key secret 身份凭据 通过 env var 引用 security token STS Token STS 认证须核对上游对应 auth type 与整组临时凭据 threads dbt 并发 入门为 1，不是 Spark 并行度 dbt project.yml 的 profile 必须与 profiles.yml 顶层名称相同。schema 命名和自定义 schema 宏应以项目实际策略为准；不要假定 dbt 自动把数据隔离进某个个人 schema。 完整认证配置见上游认证文档。 模型配置 配置 用途 注意 --------------- -------------- ----------------------------------------------- materialized 物化方式 table 会重建目标 tblproperties 表属性字典 例如 table.format.version: '2' transactional 事务表属性 表属性不意味着 dbt 支持 BEGIN/ROLLBACK primary keys 物理主键列 SQL table 的 PK Delta 建表配置 unique key 增量数据匹配键 不创建物理主键 partition by 分区字段与类型 例如 'fields': 'ds', 'data types': 'string' lifecycle 表保留天数 谨慎配置 sql hints SQL 设置 修改前核对服务端语义与版本 模型配置基于官方 Adapter README，新建表属性与已有表迁移分别处理。 命令与产物的含义 命令 / 产物 能证明什么 ------------------------- ---------------------------------------------------- dbt parse 项目可解析，生成 manifest；不验证模型 SQL 的云端执行 dbt compile 模板编译；宏可调用数据库，不应视为完全离线 dbt debug Profile 与连接检查 dbt build 所选模型及相关测试的运行结果 target/manifest.json 模型、依赖、配置与编译信息 target/run results.json 各节点运行状态、耗时与 Adapter 响应 dbt docs generate 文档和元数据 catalog 生成 这些产物可能含 SQL、对象名和元数据，应在分享前脱敏。MaxCompute 不返回可靠 DML 影响行数， rows affected 不用作写入完整性依据。Adapter 的 BEGIN 、 COMMIT 、 ROLLBACK 不提供传统多语句事务；失败后需逐对象核对。 命令定义参见 dbt 官方命令文档。"
+  },
+  {
+    "title": "dbt-maxcompute 版本与升级",
+    "description": "查阅 dbt-maxcompute 上游发布入口并记录升级基线，区分源码、下载与实际运行验证。",
+    "href": "/docs/products/dbt/release-notes/",
+    "group": "dbt-maxcompute",
+    "keywords": "dbt maxcompute 版本入口 升级检查 版本入口 - 上游版本与变更记录 - 下载或安装入口 - 源码与问题反馈入口 本空间的示例基线为 1.11.2 。文档核对日期： 2026-10-13 。没有在本空间复制完整上游 release notes，避免多处记录漂移。 升级检查 1. 记录现有运行时、组件版本、配置与查询模式。 2. 阅读目标版本说明，固定下载版本或源码 commit。 3. 在隔离环境验证常量查询、目标小表、数据类型和权限。 4. 使用写入能力时，另外核对提交、读回、重试和清理。 5. 把依赖安装、连接成功、真实查询与生产切换分别记录。 下载成功、构建成功或站点 CI 通过，都不是目标项目的运行验收。示例云端验证需由你的授权身份在目标环境执行。"
+  },
+  {
+    "title": "dbt 故障排查",
+    "description": "从 Python 安装、Profile、项目解析和云端模型运行逐层定位问题。",
+    "href": "/docs/products/dbt/troubleshooting/",
+    "group": "dbt-maxcompute",
+    "keywords": "dbt maxcompute MaxFrame 可选依赖 故障证据与恢复 现象 先检查 动作 -------------------------- ------------------------------------------ ---------------------------------------- 找不到 Adapter 或版本冲突 当前虚拟环境、Python、Core 与 Adapter 版本 python -m pip check 与 dbt --version Profile 找不到 profile 名称、工作目录、 --profiles-dir 使用快速开始的明确目录参数 环境变量缺失 env var 名称与当前进程环境 只报告变量是否存在，不输出值 dbt parse 失败 YAML、模型命名、ref/source 定义 修复本地配置再连服务 dbt debug 连接失败 Endpoint、项目、schema、身份 核对授权项目与凭据有效期 连接成功，build 失败 目标表权限、编译 SQL、quota、SQL 类型 看失败节点和服务端作业 ID incremental 出现重复或丢数 unique key、源批次去重、水位、迟到数据 先读回差异，不自动 full-refresh docs generate 失败 元数据权限、对象范围 模型成功与 catalog 成功分别记录 MaxFrame 可选依赖 本空间入门仅使用 SQL。Python/MaxFrame 路径遇到 Arrow/NumPy 导入错误时，先核对实际安装版本与上游 MaxFrame 指南。不要在已有工程中盲目升级所有 Python 依赖；可选功能也不能由 SQL build 成功推导可用。 故障证据与恢复 保留 dbt --version 、失败节点、脱敏编译 SQL、作业 ID 和 run results.json 状态摘要。不要提交完整日志、Profile 或客户数据。Adapter 不提供整个 DAG 的原子回滚；失败后先确认哪些模型完成，再选择范围恢复。 向 dbt-maxcompute Issues反馈。重建目标的 --full-refresh 必须确认数据保留、物理表属性与影响范围，不作为自动修错的默认选项。"
   },
   {
     "title": "MaxCompute AI数据探索",
@@ -441,6 +497,55 @@
     "keywords": "flink-connector flink-sql 工厂或类加载失败 连接或认证失败 streaming 读取很快结束 缺少初始数据或新分区数据 启动模式被拒绝 历史 batch 数据、CDC 或 watermark 不符合预期 主键更新失败 追加恢复后重复或文件缓存压力大 提交可复现诊断 先记录 Flink、JDK、Connector JAR 来源、执行模式、表类型和脱敏后的完整表选项。按下面症状定位问题，避免把本地依赖错误误认为服务端问题。 工厂或类加载失败 现象 ：找不到 maxcompute 工厂，或出现 ClassNotFoundException ／ NoSuchMethodError 。 排查 ：确认安装 1.20.0-shaded.jar ，SQL Client 与 TaskManager 均能加载，类路径没有旧版 Connector 或冲突 SDK。基线为 Flink 1.20.4／JDK 17。更正部署后重启，再验证快速开始。 连接或认证失败 排查 ：从 Client 和实际 TaskManager 检查 endpoint 可达；确认项目与 endpoint 成对提供、凭据提供者存在且构造参数正确。SQL 中的环境变量不会自动展开。不要在诊断材料中输出真实凭据。 指定 Tunnel 配额或代理没有生效时，参见连接配置边界，当前 SQL 显式凭据路径接受了部分参数但没有完整传递。 streaming 读取很快结束 原因 ：普通表或无主键事务表会回退有界读； scan.mode=bounded 也强制有界。核对目标表实际主键与事务属性，查看回退日志。持续增量需满足持续读取条件。 缺少初始数据或新分区数据 latest 跳过初始存量，需要存量时选 latest-full 。普通持续模式在启动时确定分区列表；新分区跟随需选择最新分区模式，并接受切换舍弃旧分区数据的语义。 启动模式被拒绝 现象 原因与处理 ---------------------------- --------------------------------------------------------- streaming + incremental 报错 incremental 是有界区间模式，切到 batch from-snapshot 缺参数 配置实际可读的 scan.snapshot-version from-timestamp 缺参数 配置 scan.timestamp ，核对格式与时区 interval 小于 30 秒 SQL 持续路径要求至少 30 s from-snapshot-full 报错 当前流读取未实现 latest partition 报错 核对分区 PK 事务表、CDC、启动模式与就绪声明；不能固定分区 历史 batch 数据、CDC 或 watermark 不符合预期 当前 batch 历史快照参数没有接入会话；有界 CDC changelog 声明与底层变化行不一致；持续分支 metadata／watermark 没有接入运行源。修复并增加真实结果验收前，不依赖这些组合。用 bounded 读取当前存量、APPEND 回放有界追加区间，以及普通数据列的持续 CDC 作为各自独立的测试路径。 主键更新失败 确认 sink.operation=upsert 、 NOT NULL 与 PRIMARY KEY ... NOT ENFORCED ，真实目标表主键和字段一致。Storage 路径不支持部分列更新；分区 PK 表保持 bucket-only=false。不要将 CDC 更新／删除接到 insert-only Sink。 追加恢复后重复或文件缓存压力大 重复符合当前至少一次恢复边界。检查业务键与去重方案。文件缓存另查临时目录空间、容器盘生命周期、上传线程和恢复后的清理；单机磁盘文件不等于共享持久存储。 提交可复现诊断 提供脱敏 SQL、目标表类型与字段、版本、作业状态、故障时间、预期／实际结果、关键异常与 checkpoint 位置。若只有 Emulator 结果，明确标注本地模拟验证范围，避免把它写成云服务已经复现。"
   },
   {
+    "title": "MaxCompute JDBC",
+    "description": "从 Java 程序或 JDBC 工具连接 MaxCompute，理解提交、等待、取结果和关闭资源的流程。",
+    "href": "/docs/products/jdbc/",
+    "group": "MaxCompute JDBC",
+    "keywords": "jdbc maxcompute 按你的目标开始 选择 JDBC 还是 SDK 事实来源 JDBC 是 Java 的标准数据库接口。MaxCompute JDBC Driver 把 Connection 、 Statement 、 ResultSet 接到 MaxCompute，适合已有 JDBC 程序和支持自定义 JDBC 驱动的 SQL 工具。 JDBC 查询生命周期：建立连接，提交 SQL，遍历 ResultSet，关闭资源。SQL 在 MaxCompute 执行。 建立连接后，SQL 仍要经历服务端执行和结果下载；连接成功不代表查询或下载权限已经验证。 按你的目标开始 目标 入口 ----------------------------- ----------------------------------- 跑通第一条 Java 查询 快速开始 给现有程序或 SQL 工具接入驱动 使用指南 查连接参数、STS 和结果限制 配置参考 让 Agent 做有界验证 Agent 执行指南 连接失败、结果缺失、依赖冲突 故障排查 查驱动升级记录 版本说明 选择 JDBC 还是 SDK 只需要标准 SQL 接口时使用 JDBC；需要操作项目、表、资源、函数或上传数据等 MaxCompute 专用 API 时，阅读 MaxCompute SDK 文档。 本指南入门示例使用公开驱动 3.10.14 ，默认普通 SQL 模式。交互查询、连接池和具体 BI 工具应在目标环境单独验证；MaxCompute 的批处理语义与传统关系数据库不同。 事实来源 连接及参数来自 JDBC 官方仓库 和 阿里云 JDBC 文档。版本以 Maven Central 为准。"
+  },
+  {
+    "title": "MaxCompute JDBC Agent 执行指南",
+    "description": "为 Agent 提供 MaxCompute JDBC 执行前输入、最小验证、成功判据和停止条件。",
+    "href": "/docs/products/jdbc/agent-guide/",
+    "group": "MaxCompute JDBC",
+    "keywords": "jdbc maxcompute 执行前输入 最小执行顺序 成功与停止条件 记录格式 执行前输入 JDK、驱动与 SDK 实际版本、查询模式、项目、Endpoint、是否需要 STS。 凭据只检查是否由授权机制提供，不输出原值。缺少项目、Endpoint、目标对象或写入授权时，先完成本地检查，再报告所缺输入。 最小执行顺序 1. 读取本空间快速开始与配置参考，按实际版本核对参数。 2. 先编译快速开始的 Java 程序；再运行常量 SELECT，要求数值、字符串、NULL 与结果耗尽检查通过。 3. 授权范围只读时使用 Statement/PreparedStatement 的 SELECT 路径，关闭 ResultSet、Statement 和 Connection。 4. 记录本地准备、连接、SQL/模型运行、结果读回各层状态。失败后读取作业或对象状态，再决定下一动作。 成功与停止条件 - 成功：命令正常结束，实际返回值或目标数据符合预期，资源已关闭；授权写入还须读回并记录清理状态。 - 配置或身份缺失：停止依赖该输入的操作，保留已完成的本地检查。 - 认证、权限、quota、类加载或版本不匹配：报告具体失败层，使用故障排查，避免循环重试。 - 提交结果不明确：先查服务端状态；不把客户端超时解释为“未执行”。 记录格式 下面是输出格式示例，各字段填写实际观察值： \"component\": \"jdbc\", \"version\": \" \", \"local check\": \"PASS FAIL NOT RUN\", \"connection\": \"PASS FAIL NOT RUN\", \"execution\": \"PASS FAIL NOT RUN\", \"readback\": \"PASS FAIL NOT RUN\", \"cleanup\": \"PASS FAIL NOT APPLICABLE\", \"evidence\": [\" \"], \"next action\": \" \" 只填实际结果。构建和站点校验通过不能填成云端执行 PASS；不把凭据、签名链接或客户数据写入输出。"
+  },
+  {
+    "title": "JDBC 使用指南",
+    "description": "接入 SQL 工具、绑定查询值、读取数据类型并管理连接和结果资源。",
+    "href": "/docs/products/jdbc/guides/",
+    "group": "MaxCompute JDBC",
+    "keywords": "jdbc maxcompute 接入支持 JDBC 的工具 查询值用 PreparedStatement 绑定 结果读取与资源 从普通模式切换交互查询 接入支持 JDBC 的工具 1. 从 GitHub Releases 选择驱动版本，下载该版本的独立 jar-with-dependencies 文件。 2. 在工具的自定义驱动配置中添加 JAR，驱动类填写 com.aliyun.odps.jdbc.OdpsDriver 。 3. URL 使用下面的格式；用户名、密码分别填 AccessKey ID 和 Secret，优先使用工具的凭据存储功能。 4. 先执行快速开始中的常量查询，再读取一张已授权的小表。 jdbc:odps: ?project= &charset=UTF-8 具体按钮位置随工具版本变化。工具能加载 JAR，不代表元数据枚举、事务、参数绑定等所有功能都兼容。 查询值用 PreparedStatement 绑定 下面代码放在已有 Connection conn 的作用域内，针对实际表替换 demo events 与列名： try (java.sql.PreparedStatement stmt = conn.prepareStatement( \"SELECT id, message FROM demo events WHERE id = ? LIMIT 10\")) stmt.setLong(1, 1L); try (java.sql.ResultSet rs = stmt.executeQuery()) while (rs.next()) System.out.println(rs.getLong(\"id\") + \" \" + rs.getString(\"message\")); 参数绑定用于数据值。表名、列名等 SQL 标识符需要来自已校验的允许列表。MaxCompute JDBC 的具体绑定实现与服务端预编译机制不等同，不应据此推导性能或事务保证。 结果读取与资源 - 使用 getLong 、 getString 、 getBigDecimal 等类型化 getter。整数 getter 遇到 SQL NULL 后需要用 wasNull() 区分 NULL 与零。 - 金额和高精度值使用 BigDecimal ；不要自动转成 double 。 - 时间列在显示时受到 Java 和工具时区影响，迁移时同时核对项目、程序和 BI 工具时区。 - 按 ResultSet → Statement → Connection 关闭； try-with-resources 会按声明的逆序完成。 - 连接池初次接入应验证连接检查 SQL、资源关闭和目标查询模式；避免套用数据库事务探活逻辑。 完整类型映射以上游 JDBC README为准。 从普通模式切换交互查询 先在普通模式完成最小查询，再按项目实际支持的交互服务配置 interactive mode 、服务名或 quota。回退可能改变执行引擎与费用，不能只凭查询变快判断配置正确。使用配置参考核对参数名，并在日志中保留脱敏的作业 ID、实际模式和错误信息。"
+  },
+  {
+    "title": "JDBC 快速开始",
+    "description": "安装驱动并用一个可编译的 Java 程序执行只读查询，核对数字、字符串和空值。",
+    "href": "/docs/products/jdbc/quickstart/",
+    "group": "MaxCompute JDBC",
+    "keywords": "jdbc maxcompute 1. 准备连接信息 2. 创建 Maven 项目 3. 编译并运行 4. 读取已有表 本例先执行 SELECT 常量，不创建表。成功时输出 1 hello true ，分别验证数值、文本与 SQL NULL。 1. 准备连接信息 准备 JDK 8 或更高版本、Maven，以及已经开通的 MaxCompute 项目。确认身份能访问项目并执行 SQL。 环境变量 内容 --------------------------------- ----------------------------------------- ALIBABA CLOUD ACCESS KEY ID AccessKey ID，由已有凭据管理机制注入 ALIBABA CLOUD ACCESS KEY SECRET AccessKey Secret，由已有凭据管理机制注入 MAXCOMPUTE ENDPOINT 项目地域和网络对应的服务地址，包含 /api MAXCOMPUTE PROJECT 项目名称 Endpoint 以官方地域与 Endpoint 列表为准。下面的环境变量是示例程序的输入约定，Java 程序会显式映射到驱动 Properties。 2. 创建 Maven 项目 新建目录 jdbc-quickstart ，在其中保存 pom.xml ： 4.0.0 example jdbc-quickstart 1.0.0 8 8 UTF-8 com.aliyun.odps odps-jdbc 3.10.14 org.apache.maven.plugins maven-compiler-plugin 3.13.0 org.codehaus.mojo exec-maven-plugin 3.5.0 在 src/main/java/JdbcQuickstart.java 保存： public class JdbcQuickstart private static String required(String name) String value = System.getenv(name); if (value == null value.trim().isEmpty()) throw new IllegalArgumentException(\"Missing environment variable: \" + name); return value; public static void main(String[] args) throws Exception Properties props = new Properties(); props.setProperty(\"access id\", required(\"ALIBABA CLOUD ACCESS KEY ID\")); props.setProperty(\"access key\", required(\"ALIBABA CLOUD ACCESS KEY SECRET\")); props.setProperty(\"project name\", required(\"MAXCOMPUTE PROJECT\")); props.setProperty(\"charset\", \"UTF-8\"); Class.forName(\"com.aliyun.odps.jdbc.OdpsDriver\"); String url = \"jdbc:odps:\" + required(\"MAXCOMPUTE ENDPOINT\"); try (Connection conn = DriverManager.getConnection(url, props); Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery( \"SELECT 1 AS id, 'hello' AS message, CAST(NULL AS STRING) AS optional value\")) if (!rs.next()) throw new IllegalStateException(\"Expected one row\"); long id = rs.getLong(\"id\"); String message = rs.getString(\"message\"); String optional = rs.getString(\"optional value\"); if (id != 1 !\"hello\".equals(message) optional != null) throw new IllegalStateException(\"Unexpected result\"); System.out.println(id + \" \" + message + \" \" + (optional == null)); if (rs.next()) throw new IllegalStateException(\"Expected exactly one row\"); 3. 编译并运行 凭据已由你的环境注入后执行： mvn -q compile exec:java -Dexec.mainClass=JdbcQuickstart 输出包含 1 hello true 即通过本例；驱动可能另有普通运行日志。不要打印 props 、完整连接字符串或凭据。 4. 读取已有表 把示例 SQL 换成下面的形式，并替换表名和分区值： SELECT id, message FROM WHERE ds = ' ' LIMIT 10; 字段必须来自你的表结构。 LIMIT 限制返回行数，分区条件用于控制扫描范围。结果数受驱动下载策略影响，继续阅读配置参考。"
+  },
+  {
+    "title": "JDBC 配置参考",
+    "description": "区分 URL 与 Properties 键名，配置凭据、STS、查询模式和结果下载限制。",
+    "href": "/docs/products/jdbc/reference/",
+    "group": "MaxCompute JDBC",
+    "keywords": "jdbc maxcompute URL 与 Properties 使用不同键名 STS 下载完整结果 兼容性边界 URL 与 Properties 使用不同键名 URL 形式是 jdbc:odps: ?project= 。Endpoint 位于 URL 的主段；Properties 使用下表的右列。URL 值含特殊字符时须按上游规则编码。 用途 URL 键 Properties 键 说明 ---------------- ------------------- --------------------- -------------------------------------- 项目 project project name 必填 AccessKey ID accessId access id 建议通过 Properties 或工具凭据框提供 AccessKey Secret accessKey access key 不放入可记录的 URL 字符编码 charset charset 默认 UTF-8 STS Token stsToken sts token STS 的临时 ID、Secret、Token 必须配套 查询模式 interactiveMode interactive mode 默认普通模式；进阶模式按版本和服务确认 Tunnel 地址 tunnelEndpoint tunnel endpoint 不设置时由服务提供 结果限制 enableLimit enable limit 默认 true，受限结果最多 10,000 条 限制回退 autoLimitFallback auto limit fallback 默认 false，避免把受限结果当完整导出 end point 可作为 Properties 提供的服务地址；快速开始采用 URL 主段，避免两处设置互相覆盖。 STS 在快速开始程序创建连接前加入： props.setProperty(\"sts token\", required(\"ALIBABA CLOUD SECURITY TOKEN\")); 此时 ID、Secret 也必须是同一组 STS 临时凭据；过期后重新获取整组，不要只替换 Token。 下载完整结果 确实需要超过受限结果时，显式设置 enable limit=false ，并核对下载权限、数据规模与网络。结果限制是驱动下载行为；它与 SQL 的 LIMIT 、分区裁剪和服务端扫描量是不同概念。 兼容性边界 驱动不是完整 JDBC 规范实现。不要从 JDBC 接口的存在推导多语句事务、所有元数据方法或查询超时一定可用。对查询超时与取消，先查所选版本对应方法的实现，再验证服务端作业是否终止。 完整参数来自上游连接参数表。升级时对照版本记录，不把旧版本的默认值直接当成新版本保证。"
+  },
+  {
+    "title": "MaxCompute JDBC 版本与升级",
+    "description": "查阅 MaxCompute JDBC 上游发布入口并记录升级基线，区分源码、下载与实际运行验证。",
+    "href": "/docs/products/jdbc/release-notes/",
+    "group": "MaxCompute JDBC",
+    "keywords": "jdbc maxcompute 版本入口 升级检查 版本入口 - 上游版本与变更记录 - 下载或安装入口 - 源码与问题反馈入口 本空间的示例基线为 3.10.14 。文档核对日期： 2026-10-13 。没有在本空间复制完整上游 release notes，避免多处记录漂移。 升级检查 1. 记录现有运行时、组件版本、配置与查询模式。 2. 阅读目标版本说明，固定下载版本或源码 commit。 3. 在隔离环境验证常量查询、目标小表、数据类型和权限。 4. 使用写入能力时，另外核对提交、读回、重试和清理。 5. 把依赖安装、连接成功、真实查询与生产切换分别记录。 下载成功、构建成功或站点 CI 通过，都不是目标项目的运行验收。示例云端验证需由你的授权身份在目标环境执行。"
+  },
+  {
+    "title": "JDBC 故障排查",
+    "description": "按驱动加载、认证、SQL 执行、结果下载与类型处理逐层排查。",
+    "href": "/docs/products/jdbc/troubleshooting/",
+    "group": "MaxCompute JDBC",
+    "keywords": "jdbc maxcompute 先确定失败层 可共享的诊断材料 先确定失败层 现象 先检查 最小验证 ------------------------------------------------ -------------------------------------------------------------- --------------------------------------------------- ClassNotFoundException 或 No suitable driver 驱动 JAR 是否在实际运行的 classpath，驱动类和 URL 前缀是否正确 显式加载 OdpsDriver NoSuchMethodError 或依赖类冲突 普通 JAR、独立 JAR 和额外 SDK 是否重复 执行 mvn dependency:tree ，记录驱动和 SDK 实际版本 认证或项目不存在 Endpoint、项目名、Properties 键和 STS 有效期 常量 SELECT 能连但 SELECT 失败 作业错误、执行权限、quota 与查询模式 普通模式下运行常量 SELECT SQL 成功但下载失败 Tunnel 网络、下载权限、结果策略 小结果查询与下载分别记录 返回行数少于预期 SQL LIMIT 与 enable limit 、下载回退 核对期望数量和结果策略 时间、金额或 NULL 不对 getter、精度、时区、 wasNull() 常量类型样例与目标表分别对照 可共享的诊断材料 记录驱动版本、JDK 版本、依赖树摘要、查询模式、脱敏 SQL、作业 ID 和完整错误类型。删除 AccessKey、Token、签名 LogView 参数与客户数据。问题反馈至 JDBC Issues。 云端 SQL 失败时不要无限重试；先查作业状态。包含写入的失败请求尤其需要核对是否已经提交。"
+  },
+  {
     "title": "MaxCompute MCP Server",
     "description": "进入 MaxCompute MCP Server 的快速开始、部署与配置、工具参考、安全权限和故障排查文档。",
     "href": "/docs/products/mcp-server/",
@@ -502,6 +607,104 @@
     "href": "/docs/products/mcp-server/troubleshooting/",
     "group": "MaxCompute MCP Server",
     "keywords": "mcp-server troubleshooting 开始前收集信息 按阶段定位 仍未解决 本页提供 MaxCompute MCP Server 常见问题的诊断与恢复方法。 开始前收集信息 开始排查前，请记录服务端版本、客户端名称与版本、部署方式、完整错误信息、请求追踪信息和问题发生时间。 按阶段定位 请先判断问题发生在进程启动、协议连接、工具发现、实际调用、权限校验还是结果处理阶段，再进入对应条目。 仍未解决 如果问题仍未解决，请通过产品支持渠道提交版本、环境和经过脱敏的日志、配置及调用样本。"
+  },
+  {
+    "title": "MaxCompute ODBC",
+    "description": "理解应用、Driver Manager、原生驱动与 MaxCompute 的连接关系，按平台完成首次查询。",
+    "href": "/docs/products/odbc/",
+    "group": "MaxCompute ODBC",
+    "keywords": "odbc maxcompute 阅读路径 本指南范围 ODBC 是应用访问数据源的标准接口。Python 的 pyodbc 和部分 BI 工具通过 Driver Manager 加载 MaxCompute 原生驱动，再访问 MaxCompute 服务。 ODBC 连接层：pyodbc 或 BI 应用通过 unixODBC 或 Windows Driver Manager 加载 MaxCompute 原生驱动，连接云端服务。 pip install pyodbc 只安装 Python 接口；还需要原生驱动、驱动注册以及匹配的进程架构。 阅读路径 - 快速开始：安装、注册并执行一条只读 SQL。 - 使用指南：连接字符串、BI 接入、资源与类型。 - 配置参考：参数、环境变量和 STS。 - Agent 执行指南：先检查本地加载，再验证服务。 - 故障排查：区分 Driver Manager 和服务端问题。 - 版本说明：下载和源码版本入口。 本指南范围 来源是 MaxCompute ODBC 公共仓库 的 main 分支，Windows MSI 的注册行为对照安装定义。不同安装包可能落后于源码；把版本和平台记录下来，再使用相应参数。能够执行查询不代表某个 BI 工具的元数据、事务或参数绑定路径都已适配。"
+  },
+  {
+    "title": "MaxCompute ODBC Agent 执行指南",
+    "description": "为 Agent 提供 MaxCompute ODBC 执行前输入、最小验证、成功判据和停止条件。",
+    "href": "/docs/products/odbc/agent-guide/",
+    "group": "MaxCompute ODBC",
+    "keywords": "odbc maxcompute 执行前输入 最小执行顺序 成功与停止条件 记录格式 执行前输入 操作系统、进程架构、Driver Manager、原生驱动版本与注册名称。 凭据只检查是否由授权机制提供，不输出原值。缺少项目、Endpoint、目标对象或写入授权时，先完成本地检查，再报告所缺输入。 最小执行顺序 1. 读取本空间快速开始与配置参考，按实际版本核对参数。 2. 先运行 pyodbc.drivers()；找到驱动后再执行快速开始的常量 SELECT，检查 SQLSTATE、三列值和结果耗尽。 3. 使用 autocommit=True，显式关闭 cursor 与连接；初次验证关闭原生驱动日志。 4. 记录本地准备、连接、SQL/模型运行、结果读回各层状态。失败后读取作业或对象状态，再决定下一动作。 成功与停止条件 - 成功：命令正常结束，实际返回值或目标数据符合预期，资源已关闭；授权写入还须读回并记录清理状态。 - 配置或身份缺失：停止依赖该输入的操作，保留已完成的本地检查。 - 认证、权限、quota、类加载或版本不匹配：报告具体失败层，使用故障排查，避免循环重试。 - 提交结果不明确：先查服务端状态；不把客户端超时解释为“未执行”。 记录格式 下面是输出格式示例，各字段填写实际观察值： \"component\": \"odbc\", \"version\": \" \", \"local check\": \"PASS FAIL NOT RUN\", \"connection\": \"PASS FAIL NOT RUN\", \"execution\": \"PASS FAIL NOT RUN\", \"readback\": \"PASS FAIL NOT RUN\", \"cleanup\": \"PASS FAIL NOT APPLICABLE\", \"evidence\": [\" \"], \"next action\": \" \" 只填实际结果。构建和站点校验通过不能填成云端执行 PASS；不把凭据、签名链接或客户数据写入输出。"
+  },
+  {
+    "title": "ODBC 使用指南",
+    "description": "使用连接字符串或 DSN 接入 ODBC 应用，控制查询范围并正确关闭资源。",
+    "href": "/docs/products/odbc/guides/",
+    "group": "MaxCompute ODBC",
+    "keywords": "odbc maxcompute 连接字符串与 DSN 接入 BI 工具 Python 读取结果 日志 连接字符串与 DSN Driver 是已注册的驱动名称；DSN 是 Driver Manager 保存的一组数据源配置。优先使用快速开始的无 DSN 字符串，减少配置文件与用户/系统数据源差异。 DRIVER= MaxCompute ODBC Driver ;Endpoint= ;Project= ;Schema=default;InteractiveMode=false; 实际使用时，凭据由环境注入。Windows 应用必须使用 DSN 时，可使用 MSI 创建的 MaxComputeTestDSN ，并通过应用提供其余连接参数；这个 DSN 的存在不表示连接信息已经配好。 接入 BI 工具 1. 确认工具支持通用 ODBC，并检查进程位数、驱动名称和注册位置。 2. 使用测试项目完成连接和常量查询，再选一张已授权的小表。 3. 先限定列、分区与返回数量，再扩展数据范围。 4. 分别验证类型、NULL、日期显示与刷新；可连接不代表完整工具兼容。 ODBC 元数据方法和参数绑定的支持范围依驱动版本而定。工具如果要求当前驱动未实现的 API，需要调整集成方式或反馈上游，不能仅靠反复修改 Endpoint 解决。 Python 读取结果 在已有 cursor 上执行下面的 SQL，替换实际列名、表名和分区值： SELECT id, message FROM WHERE ds = ' ' LIMIT 10; 使用 fetchone() 或分批 fetchmany() 读取，避免对大结果直接 fetchall() 。Python None 表示 SQL NULL。高精度金额和时间列应核对实际转换与显示，不能只验证数据“看起来有值”。 用 finally 显式关闭 cursor 和连接。 pyodbc 的连接上下文管理器涉及提交/回滚语义，资源关闭宜采用快速开始中的明确流程。 日志 驱动提供 MCO LOG LEVEL 和 MCO LOG FILE 。首次连接验证使用 MCO LOG LEVEL=NONE ；排障启用日志前，先确认所用版本对连接字符串和凭据的脱敏行为。共享日志前移除凭据、签名链接和客户数据。"
+  },
+  {
+    "title": "ODBC 快速开始",
+    "description": "按 Windows 或 Linux/macOS 安装并注册驱动，再用 pyodbc 执行最小只读查询。",
+    "href": "/docs/products/odbc/quickstart/",
+    "group": "MaxCompute ODBC",
+    "keywords": "odbc maxcompute 1. 安装原生驱动 Windows Linux / macOS 2. 检查 Python 能看见驱动 3. 注入连接信息 4. 执行最小查询 1. 安装原生驱动 Windows 从驱动官方 README 的 Windows 下载入口获取 MSI，按说明安装 Visual C++ Runtime 与驱动。当前安装定义是 x64 ；Python 或 BI 程序也应为 64 位。 MSI 注册 MaxCompute ODBC Driver 并提供 MaxComputeTestDSN 示例。当前驱动没有 DSN 配置 GUI，推荐通过连接字符串提供参数。不要用 regsvr32 注册 ODBC 驱动；该命令用于 COM 注册。 Linux / macOS 准备 CMake 3.20+、C++20 编译器、vcpkg 和 unixODBC。驱动、Driver Manager、Python 必须使用兼容架构（例如全部为 arm64，或全部为 x86 64）。 git clone https://github.com/aliyun/alibabacloud-maxcompute-odbc-driver.git cd alibabacloud-maxcompute-odbc-driver cmake -S . -B build \\ -DCMAKE TOOLCHAIN FILE=\"$VCPKG ROOT/scripts/buildsystems/vcpkg.cmake\" \\ -DCMAKE BUILD TYPE=Release cmake --build build --parallel odbcinst -j VCPKG ROOT 应指向你已有的 vcpkg 安装目录。CMake 的共享库输出目录是 build/lib 。用 odbcinst -j 确认当前 Driver Manager 的配置文件位置，然后在它读取的 odbcinst.ini 中注册： [MaxCompute ODBC Driver] Description=MaxCompute ODBC Driver Driver=/absolute/path/to/libmaxcompute odbc.so Linux 使用 .so ，macOS 使用实际生成的 .dylib 路径； /absolute/path/to/ 必须替换为绝对路径。库依赖也要能被系统动态加载器找到。注册文件仅包含库位置，不放凭据。 2. 检查 Python 能看见驱动 python -m pip install pyodbc python -c \"import pyodbc; print(pyodbc.drivers())\" 列表应包含 MaxCompute ODBC Driver 。如果没有，先排查驱动注册，此时还不需要云端凭据。 3. 注入连接信息 通过已有凭据管理机制为当前进程提供下列变量： 变量 内容 --------------------------------- ----------------------------------------------------- ALIBABA CLOUD ENDPOINT 对应项目地域和网络的 MaxCompute Endpoint，包含 /api ALIBABA CLOUD PROJECT 项目名 ALIBABA CLOUD ACCESS KEY ID AccessKey ID ALIBABA CLOUD ACCESS KEY SECRET AccessKey Secret 这四个变量由驱动读取。Endpoint 参见官方 Endpoint 列表。 4. 执行最小查询 保存为 odbc quickstart.py ： for name in ( \"ALIBABA CLOUD ENDPOINT\", \"ALIBABA CLOUD PROJECT\", \"ALIBABA CLOUD ACCESS KEY ID\", \"ALIBABA CLOUD ACCESS KEY SECRET\", ): if not os.environ.get(name): raise RuntimeError(f\"Missing environment variable: name \") 原生驱动日志可能包含连接信息；首次验证关闭它，勿输出连接字符串。 os.environ[\"MCO LOG LEVEL\"] = \"NONE\" conn = pyodbc.connect( \"DRIVER= MaxCompute ODBC Driver ;InteractiveMode=false;\", autocommit=True, ) try: cursor = conn.cursor() try: cursor.execute( \"SELECT 1 AS id, 'hello' AS message, CAST(NULL AS STRING) AS optional value\" ) row = cursor.fetchone() assert row is not None assert row[0] == 1 and row[1] == \"hello\" and row[2] is None assert cursor.fetchone() is None print(\"ODBC smoke passed\") finally: cursor.close() finally: conn.close() python odbc quickstart.py 预期输出 ODBC smoke passed 。这里显式关闭事务管理，先验证普通查询路径。失败时保存脱敏错误与 SQLSTATE，继续故障排查。"
+  },
+  {
+    "title": "ODBC 配置参考",
+    "description": "核对连接参数、环境变量、交互查询和 STS 临时凭据的配置方式。",
+    "href": "/docs/products/odbc/reference/",
+    "group": "MaxCompute ODBC",
+    "keywords": "odbc maxcompute 基本连接参数 STS 与字符串编码 驱动日志与代理 支持范围 基本连接参数 参数 用途 默认 / 约束 ----------------- ------------------ ------------------------------------------- DRIVER 已注册的驱动名称 示例为 MaxCompute ODBC Driver Endpoint 服务地址 必填，或由 ALIBABA CLOUD ENDPOINT 提供 Project 项目名 必填，或由 ALIBABA CLOUD PROJECT 提供 AccessKeyId AccessKey ID 或由 ALIBABA CLOUD ACCESS KEY ID 提供 AccessKeySecret AccessKey Secret 或由 ALIBABA CLOUD ACCESS KEY SECRET 提供 Schema 默认命名空间 默认 default LoginTimeout 连接超时，秒 默认 30 ReadTimeout 网络读取超时，秒 默认 60；不等同于 SQL 作业总时长 SecurityToken STS Token 与同组临时 ID、Secret 配套 InteractiveMode MaxQA 交互查询 默认 false QuotaName quota 名称 按项目服务与执行模式配置 TunnelEndpoint 自定义 Tunnel 地址 有明确网络需求时设置 TunnelQuotaName Tunnel quota 按资源配置提供 以上名称来自驱动配置解析与默认配置。环境变量补齐行为来自ODBC 连接入口。 STS 与字符串编码 SecurityToken 是连接参数；不要假设驱动自动读取通用 STS 环境变量。由应用将 Token 传入参数时必须保证不输出连接字符串，并按该版本解析器规则编码含分号、引号的值。临时凭据过期后重新获取整组，再建立新连接。 不要把其他 ODBC 驱动的花括号转义规则直接套到当前驱动。复杂连接参数先以所用版本的解析实现和小范围验证为准。 驱动日志与代理 日志级别由 MCO LOG LEVEL 控制，文件由 MCO LOG FILE 控制；示例关闭日志以避免连接信息进入终端。 HttpProxy 、 HttpsProxy 及代理凭据参见上游参数说明。 支持范围 通过 ODBC 提交的 SQL 使用 MaxCompute SQL 语义。不要把 autocommit=True 理解为驱动获得多语句事务能力。依赖特定 catalog API、参数绑定或 BI 刷新方式前，核对所选版本的实现和实际运行结果。"
+  },
+  {
+    "title": "MaxCompute ODBC 版本与升级",
+    "description": "查阅 MaxCompute ODBC 上游发布入口并记录升级基线，区分源码、下载与实际运行验证。",
+    "href": "/docs/products/odbc/release-notes/",
+    "group": "MaxCompute ODBC",
+    "keywords": "odbc maxcompute 版本入口 升级检查 版本入口 - 上游版本与变更记录 - 下载或安装入口 - 源码与问题反馈入口 本空间的示例基线为 安装包实际版本 。文档核对日期： 2026-10-13 。没有在本空间复制完整上游 release notes，避免多处记录漂移。 升级检查 1. 记录现有运行时、组件版本、配置与查询模式。 2. 阅读目标版本说明，固定下载版本或源码 commit。 3. 在隔离环境验证常量查询、目标小表、数据类型和权限。 4. 使用写入能力时，另外核对提交、读回、重试和清理。 5. 把依赖安装、连接成功、真实查询与生产切换分别记录。 下载成功、构建成功或站点 CI 通过，都不是目标项目的运行验收。示例云端验证需由你的授权身份在目标环境执行。"
+  },
+  {
+    "title": "ODBC 故障排查",
+    "description": "按驱动发现、库加载、认证、SQL 与结果读取分层定位 ODBC 问题。",
+    "href": "/docs/products/odbc/troubleshooting/",
+    "group": "MaxCompute ODBC",
+    "keywords": "odbc maxcompute 驱动发现与加载 云端连接与执行 结果与工具行为 驱动发现与加载 现象 检查 下一步 ------------------------------- -------------------------------------- --------------------------------------------------------------- pyodbc.drivers() 无驱动 Driver Manager、注册文件、当前用户 Linux/macOS 执行 odbcinst -j ，检查它实际读取的 odbcinst.ini 找不到驱动或数据源 DRIVER 名称、DSN 名称、注册位置 先改用无 DSN 连接字符串 无法加载 .so / .dylib / DLL 绝对路径、依赖库、CPU 架构和位数 Linux 用 ldd ，macOS 用 otool -L 检查所选驱动库 Windows 安装后仍找不到 Python/BI 是否 64 位、MSI 是否完成注册 检查 64 位 ODBC 驱动列表 加载失败发生在服务端认证之前，修改 AccessKey 通常无助于解决。 云端连接与执行 先确认 Endpoint、项目和身份，再运行常量查询。常量查询成功后再查实际表；这样可以区分认证与表权限、schema、字段或分区问题。 MaxQA 失败时记录执行模式、quota、SQLSTATE 和服务端错误。网络 ReadTimeout 不代表作业已经取消；不要因为客户端超时便重复提交写入。 结果与工具行为 - 能执行 SQL 但 BI 无法列出表：检查工具调用的元数据 API 与驱动版本支持。 - 字符串被截断：记录字段类型、缓冲区长度和具体读取方法，先用 Python 小结果复现。 - 时间偏移：同时检查项目与应用时区，保存脱敏类型样例。 - 某个 ODBC API 不支持：查询版本实现；不要仅凭上游 README 的总体介绍推导完整规范兼容。 反馈至 ODBC Issues，附平台、架构、驱动包版本、Driver Manager 版本、脱敏 SQLSTATE 与最小复现。不要附完整连接字符串。"
+  },
+  {
+    "title": "MaxCompute Spark Connector",
+    "description": "区分外部 Spark Connector 与 MaxCompute 集群内 Spark，选择匹配的安装和访问方式。",
+    "href": "/docs/products/spark/",
+    "group": "MaxCompute Spark Connector",
+    "keywords": "spark maxcompute 先选对路径 阅读路径与基线 事实来源 Spark Connector 把 MaxCompute 表接入外部 Apache Spark。Spark 的 Driver 和 Executor 运行在你的 Spark 环境中；Connector 访问表元数据与数据，Spark 负责执行自己的计算任务。 外部 Spark 的 Driver 使用 Catalog 发现表，Executor 通过 Storage API 访问 MaxCompute 表；计算在 Spark 环境中执行。 先选对路径 场景 入口 --------------------------------------------- ------------------------------------------------------------------------------- 已有 Spark 集群，希望访问 MaxCompute 表 本空间的 Connector 快速开始 希望把 Spark 作业提交到 MaxCompute 集群内运行 MaxCompute Spark 集群模式 使用旧 spark-datasource-v2.3 / v3.1 模块 对照原模块文档，迁移前核对 API 和版本 上述路径的安装包、参数与运行位置不同，不能混用。 阅读路径与基线 先看快速开始，再查读写指南、配置参考、故障排查和Agent 执行指南。 官方外部 Connector 文档描述 Spark 3.2.x—3.5.x ；当前公开构建默认 Spark 3.3.1 / Scala 2.12 。本空间以此作为示例基线，其他 Spark/Scala 组合需核对并重新构建验证，不能假定 Spark 4.x 二进制兼容。 事实来源 官方 Spark Connector 指南；公开 Connector 源码；上游文档。"
+  },
+  {
+    "title": "MaxCompute Spark Connector Agent 执行指南",
+    "description": "为 Agent 提供 MaxCompute Spark Connector 执行前输入、最小验证、成功判据和停止条件。",
+    "href": "/docs/products/spark/agent-guide/",
+    "group": "MaxCompute Spark Connector",
+    "keywords": "spark maxcompute 执行前输入 最小执行顺序 成功与停止条件 记录格式 执行前输入 Spark/Scala/JDK、Connector commit/JAR、运行位置、provider、项目、quota 和 Driver/Executor 网络。 凭据只检查是否由授权机制提供，不输出原值。缺少项目、Endpoint、目标对象或写入授权时，先完成本地检查，再报告所缺输入。 最小执行顺序 1. 读取本空间快速开始与配置参考，按实际版本核对参数。 2. 先检查类加载与 SHOW TABLES；再对用户指定的小表执行带分区条件的 LIMIT 查询，核对预期列和值。 3. Spark 惰性执行必须通过 action 验证读取；保存实际扫描范围，不把 show 成功当成全量验收。 4. 记录本地准备、连接、SQL/模型运行、结果读回各层状态。失败后读取作业或对象状态，再决定下一动作。 成功与停止条件 - 成功：命令正常结束，实际返回值或目标数据符合预期，资源已关闭；授权写入还须读回并记录清理状态。 - 配置或身份缺失：停止依赖该输入的操作，保留已完成的本地检查。 - 认证、权限、quota、类加载或版本不匹配：报告具体失败层，使用故障排查，避免循环重试。 - 提交结果不明确：先查服务端状态；不把客户端超时解释为“未执行”。 记录格式 下面是输出格式示例，各字段填写实际观察值： \"component\": \"spark\", \"version\": \" \", \"local check\": \"PASS FAIL NOT RUN\", \"connection\": \"PASS FAIL NOT RUN\", \"execution\": \"PASS FAIL NOT RUN\", \"readback\": \"PASS FAIL NOT RUN\", \"cleanup\": \"PASS FAIL NOT APPLICABLE\", \"evidence\": [\" \"], \"next action\": \" \" 只填实际结果。构建和站点校验通过不能填成云端执行 PASS；不把凭据、签名链接或客户数据写入输出。"
+  },
+  {
+    "title": "Spark Connector 读写指南",
+    "description": "通过 Catalog 读取表并在隔离测试表上验证追加写入，理解分区、覆盖和集群边界。",
+    "href": "/docs/products/spark/guides/",
+    "group": "MaxCompute Spark Connector",
+    "keywords": "spark maxcompute 通过 Catalog 使用 DataFrame 分区和执行计划 在测试表验证追加写入 集群部署 通过 Catalog 使用 DataFrame 假设 Spark Session 已加载快速开始的配置与 JAR，可用 PySpark 读取已授权表： df = spark.table(\"odps. . \") df.select(\"id\", \"message\").limit(10).show(truncate=False) 表名必须来自已核对的配置。Python 的 .show() 和 .collect() 会触发计算；只构造 DataFrame 不代表数据已经读取。 分区和执行计划 对分区表，先指定分区谓词再读取。用 EXPLAIN 查看计划，并对所选 Connector 版本验证裁剪和下推的实际行为。不能只因为 SQL 写了 WHERE 就认为传输量一定下降。 EXPLAIN SELECT id FROM odps. . WHERE ds = ' '; 启用 schema 命名空间时，表名层级发生变化，参见配置参考。 在测试表验证追加写入 下面操作会创建表并写数据。先将项目和表名替换成获准使用的测试对象，确认没有同名业务表；不要让 Agent 自动使用生产表。 CREATE TABLE odps. . (id BIGINT, message STRING); INSERT INTO odps. . VALUES (1, 'hello'); SELECT id, message FROM odps. . LIMIT 10; 先验证建表、提交和读回；失败后查询表与作业状态，再决定是否重试。覆盖写、动态分区写和 Delta 表更新需要按所选版本与表类型单独验证；不要把上述普通表追加样例推广为所有写入模式保证。 确认测试对象确实由本次创建、且数据无需保留后，才执行清理： DROP TABLE odps. . ; 集群部署 - Driver 和所有 Executor 使用匹配的 Connector 与依赖。 - 核对 Spark、Scala 二进制版本、JDK，以及依赖树； NoSuchMethodError 常是组合不匹配。 - 从 Executor 所在网络验证服务和数据端点，不能只测试开发机。 - .limit(10) 只是返回结果控制。大表任务还要评估分区、并行度、数据传输资源与费用。 配置和兼容范围以官方指南及公开源码为准。"
+  },
+  {
+    "title": "Spark Connector 快速开始",
+    "description": "构建匹配 Spark 版本的 Connector，通过 odps Catalog 读取一张已有小表。",
+    "href": "/docs/products/spark/quickstart/",
+    "group": "MaxCompute Spark Connector",
+    "keywords": "spark maxcompute 1. 准备环境 2. 从源码构建 3. 创建私有配置文件 4. 启动 Spark SQL 5. 下一步 本例只读取已有表。先用本地 Spark 验证，再部署到集群。 1. 准备环境 准备 Git、Maven、与所选 Spark 版本兼容的 JDK 和 Spark 发行包。确认项目访问、表读权限、Driver/Executor 网络，以及可用的 MaxCompute 开放存储或数据传输资源。 本例采用公开源码默认 Spark 3.3.1 / Scala 2.12。先执行 spark-submit --version 查看实际版本；Spark 3.5 等组合需要采用对应依赖重新构建，而不是只改 JAR 文件名。 2. 从源码构建 git clone https://github.com/aliyun/aliyun-maxcompute-data-collectors.git cd aliyun-maxcompute-data-collectors/spark-connector mvn clean package find datasource/target -maxdepth 1 -name 'spark-odps-datasource- .jar' 选择实际构建得到的 DataSource JAR，保存它的绝对路径用于 --jars 。依赖打包方式以所选源码 POM 为准；构建通过后再核对运行时 SDK、Arrow 与其他依赖是否完整，避免同时放入多个版本。构建操作不会证明云端读写通过。 3. 创建私有配置文件 在工作目录新建 spark-maxcompute.conf ，由你的凭据管理机制填入占位内容。限制文件读取权限，加入 .gitignore ，不要粘贴真实内容到 issue 或聊天中。 spark.hadoop.odps.project.name= spark.hadoop.odps.access.id= spark.hadoop.odps.access.key= spark.hadoop.odps.end.point= spark.hadoop.odps.tunnel.quota.name= spark.sql.catalog.odps=org.apache.spark.sql.execution.datasources.v2.odps.OdpsTableCatalog spark.sql.extensions=org.apache.spark.sql.execution.datasources.v2.odps.extension.OdpsExtensions spark.redaction.regex=(?i)secret password token access[.]?key access[.]?id Endpoint 必须与项目地域、网络相符，参见官方列表。quota 来自你实际配置的开放存储/数据传输资源；不要照抄其他项目名称。该配置中的 AccessKey 值通过 Spark Hadoop 配置传递，不能仅导出通用环境变量便认为 Connector 已获得它们。 Linux/macOS 可执行： chmod 600 spark-maxcompute.conf Spark 的日志脱敏设置不能代替凭据生命周期管理；集群提交前确认配置和密钥只暴露给授权进程。 4. 启动 Spark SQL 替换下面的 JAR 绝对路径： spark-sql --master 'local[2]' \\ --jars /absolute/path/to/spark-odps-datasource.jar \\ --properties-file ./spark-maxcompute.conf 在 Spark SQL 中执行，替换项目、表名、列名和分区值： SHOW TABLES IN odps. ; SELECT id, message FROM odps. . WHERE ds = ' ' LIMIT 10; 非分区表去掉分区条件。期望看到与你已知样本一致的列和值；表列表可访问和数据可读取应分别记录。 LIMIT 限制返回量，实际扫描量仍需结合分区与执行计划检查。 5. 下一步 本地成功后，确认所有 Executor 都能获得 Connector 和依赖，并访问同一服务网络。集群类加载和网络差异见故障排查。写入示例放在使用指南，须先选择专用测试表。"
+  },
+  {
+    "title": "Spark Connector 配置参考",
+    "description": "核对 Spark Hadoop 连接配置、Catalog 选项与 schema 表名规则。",
+    "href": "/docs/products/spark/reference/",
+    "group": "MaxCompute Spark Connector",
+    "keywords": "spark maxcompute Spark 连接配置 Catalog 选项 来源和版本 Spark 连接配置 键 用途 ------------------------------------- ----------------------------------------------------------------------------- spark.hadoop.odps.project.name 默认项目 spark.hadoop.odps.access.id AccessKey ID spark.hadoop.odps.access.key AccessKey Secret spark.hadoop.odps.end.point MaxCompute 服务 Endpoint spark.hadoop.odps.tunnel.quota.name 数据传输 quota，按资源实际配置 spark.sql.catalog.odps org.apache.spark.sql.execution.datasources.v2.odps.OdpsTableCatalog spark.sql.extensions org.apache.spark.sql.execution.datasources.v2.odps.extension.OdpsExtensions 这些键用于外部 Connector；集群内 Spark 的运行时参数应使用其独立文档。 Catalog 选项 Catalog 名称为 odps 时，选项前缀为 spark.sql.catalog.odps. ： 选项 当前源码默认值 作用 ------------------------ -------------- ---------------------------------------- tableReadProvider v1 读取 provider； tunnel 是另一条读取路径 tableWriteProvider v1 写入 provider，按版本和服务验证 enableNamespaceSchema false 启用 schema 层级 defaultSchema default 默认 schema splitSizeInMB 256 读取切分大小 enableVectorizedReader true 向量化读取 enableFilterPushDown false 筛选下推开关，开启后需核对实际计划 例如，使用 schema 命名空间： spark.sql.catalog.odps.enableNamespaceSchema=true 默认表名形式是 odps. . ；启用 schema 后使用 odps. . . 。同时确认项目的 schema 功能与权限。 不要通过修改默认 provider 来绕过未知错误；先记录当前路径，再核对对应服务资源、权限与数据类型支持。 来源和版本 上表对照公开 OdpsOptions。官方指南还列出了开放存储前提与表类型限制。示例不是 Spark 4.x、Streaming 或所有表格式的兼容承诺。"
+  },
+  {
+    "title": "MaxCompute Spark Connector 版本与升级",
+    "description": "查阅 MaxCompute Spark Connector 上游发布入口并记录升级基线，区分源码、下载与实际运行验证。",
+    "href": "/docs/products/spark/release-notes/",
+    "group": "MaxCompute Spark Connector",
+    "keywords": "spark maxcompute 版本入口 升级检查 版本入口 - 上游版本与变更记录 - 下载或安装入口 - 源码与问题反馈入口 本空间的示例基线为 源码所选 commit 与 POM 版本 。文档核对日期： 2026-10-13 。没有在本空间复制完整上游 release notes，避免多处记录漂移。 升级检查 1. 记录现有运行时、组件版本、配置与查询模式。 2. 阅读目标版本说明，固定下载版本或源码 commit。 3. 在隔离环境验证常量查询、目标小表、数据类型和权限。 4. 使用写入能力时，另外核对提交、读回、重试和清理。 5. 把依赖安装、连接成功、真实查询与生产切换分别记录。 下载成功、构建成功或站点 CI 通过，都不是目标项目的运行验收。示例云端验证需由你的授权身份在目标环境执行。"
+  },
+  {
+    "title": "Spark Connector 故障排查",
+    "description": "区分类加载、Catalog、元数据、Executor 网络和实际读写错误。",
+    "href": "/docs/products/spark/troubleshooting/",
+    "group": "MaxCompute Spark Connector",
+    "keywords": "spark maxcompute 提供可复现信息 现象 检查 最小动作 ------------------------------------ ---------------------------------- ---------------------------------------- 找不到 OdpsTableCatalog JAR 未加载或类名错误 核对 --jars 及 Catalog 全限定类名 NoSuchMethodError / Scala 链接错误 Spark、Scala、SDK、Arrow 版本冲突 保存实际版本和依赖树，重建匹配组合 找不到表或 namespace 项目、schema 开关、表名层级 先 SHOW TABLES ，再使用相同命名空间读取 能列出表但数据读取失败 数据权限、provider、开放存储 quota 小表读取，分别保存元数据与数据错误 本地成功、集群失败 Executor 的 JAR、依赖、网络和身份 检查 Executor 日志与节点网络 读取很慢或结果量意外增大 分区裁剪、下推、并行度与表规模 EXPLAIN 并核对实际读取范围 写入失败或重试出现重复 提交状态、写入模式、目标分区 先读回目标数据，再决定是否重试 提供可复现信息 记录 Spark/Scala/JDK 版本、Connector 来源 commit 或 JAR 校验值、部署模式、provider、脱敏配置键、SQL、Driver 与 Executor 的错误摘要。配置值中的凭据和签名链接需移除。 向 Data Collectors Issues反馈时，注明 spark-connector 模块，避免与旧 spark-datasource-v3.1 或集群内 Spark 混淆。失败的写入应先核对服务端状态，不能直接把 Spark 任务失败当成“未写入”。"
   },
   {
     "title": "公共参考",

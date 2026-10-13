@@ -1,0 +1,81 @@
+---
+title: Spark Connector 快速开始
+description: 构建匹配 Spark 版本的 Connector，通过 odps Catalog 读取一张已有小表。
+product: spark
+doc_type: quickstart
+status: draft
+tags:
+  - spark
+  - maxcompute
+sidebar_position: 2
+---
+
+本例只读取已有表。先用本地 Spark 验证，再部署到集群。
+
+## 1. 准备环境
+
+准备 Git、Maven、与所选 Spark 版本兼容的 JDK 和 Spark 发行包。确认项目访问、表读权限、Driver/Executor 网络，以及可用的 MaxCompute 开放存储或数据传输资源。
+
+本例采用公开源码默认 Spark 3.3.1 / Scala 2.12。先执行 `spark-submit --version` 查看实际版本；Spark 3.5 等组合需要采用对应依赖重新构建，而不是只改 JAR 文件名。
+
+## 2. 从源码构建
+
+```shell
+git clone https://github.com/aliyun/aliyun-maxcompute-data-collectors.git
+cd aliyun-maxcompute-data-collectors/spark-connector
+mvn clean package
+find datasource/target -maxdepth 1 -name 'spark-odps-datasource-*.jar'
+```
+
+选择实际构建得到的 DataSource JAR，保存它的绝对路径用于 `--jars`。依赖打包方式以所选源码 POM 为准；构建通过后再核对运行时 SDK、Arrow 与其他依赖是否完整，避免同时放入多个版本。构建操作不会证明云端读写通过。
+
+## 3. 创建私有配置文件
+
+在工作目录新建 `spark-maxcompute.conf`，由你的凭据管理机制填入占位内容。限制文件读取权限，加入 `.gitignore`，不要粘贴真实内容到 issue 或聊天中。
+
+```properties
+spark.hadoop.odps.project.name=<project_name>
+spark.hadoop.odps.access.id=<accessKeyId>
+spark.hadoop.odps.access.key=<accessKeySecret>
+spark.hadoop.odps.end.point=<endpoint>
+spark.hadoop.odps.tunnel.quota.name=<quota_name>
+spark.sql.catalog.odps=org.apache.spark.sql.execution.datasources.v2.odps.OdpsTableCatalog
+spark.sql.extensions=org.apache.spark.sql.execution.datasources.v2.odps.extension.OdpsExtensions
+spark.redaction.regex=(?i)secret|password|token|access[.]?key|access[.]?id
+```
+
+Endpoint 必须与项目地域、网络相符，参见[官方列表](https://help.aliyun.com/zh/maxcompute/user-guide/endpoints)。quota 来自你实际配置的开放存储/数据传输资源；不要照抄其他项目名称。该配置中的 AccessKey 值通过 Spark Hadoop 配置传递，不能仅导出通用环境变量便认为 Connector 已获得它们。
+
+Linux/macOS 可执行：
+
+```shell
+chmod 600 spark-maxcompute.conf
+```
+
+Spark 的日志脱敏设置不能代替凭据生命周期管理；集群提交前确认配置和密钥只暴露给授权进程。
+
+## 4. 启动 Spark SQL
+
+替换下面的 JAR 绝对路径：
+
+```shell
+spark-sql --master 'local[2]' \
+  --jars /absolute/path/to/spark-odps-datasource.jar \
+  --properties-file ./spark-maxcompute.conf
+```
+
+在 Spark SQL 中执行，替换项目、表名、列名和分区值：
+
+```sql
+SHOW TABLES IN odps.<project_name>;
+SELECT id, message
+FROM odps.<project_name>.<table_name>
+WHERE ds = '<partition_value>'
+LIMIT 10;
+```
+
+非分区表去掉分区条件。期望看到与你已知样本一致的列和值；表列表可访问和数据可读取应分别记录。`LIMIT` 限制返回量，实际扫描量仍需结合分区与执行计划检查。
+
+## 5. 下一步
+
+本地成功后，确认所有 Executor 都能获得 Connector 和依赖，并访问同一服务网络。集群类加载和网络差异见[故障排查](./troubleshooting.mdx)。写入示例放在[使用指南](./guides.mdx)，须先选择专用测试表。

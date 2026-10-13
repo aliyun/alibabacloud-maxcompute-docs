@@ -14,16 +14,13 @@
 
 ## Flink Connector 文档接入
 
-2026-10-13 根据明确的产品文档接入请求，新增 `flink-connector` 空间，以 Flink SQL 为主线覆盖安装、Source、Sink 与 Catalog。分析来源为指定分支的已提交源码，文档保持 `draft`；`@odps` 为现有命名空间兜底所有者，实际发布责任组仍需在 published 前确认。其他 Connector 不随本次接入进入公开范围。
+2026-10-13 根据明确的产品文档接入请求，新增 `flink-connector` 空间，以 Flink SQL 为主线覆盖安装、Source、Sink 与 Catalog。分析来源为指定分支的已提交源码，文档保持 `draft`；`@odps` 为现有命名空间兜底所有者，实际发布责任组仍需在 published 前确认。该接入只覆盖 Flink。
 
-## 二期候选
+## SDK 与 Clients 文档接入
 
-| 候选产品                   | 当前状态 | 一期约束                                     |
-| -------------------------- | -------- | -------------------------------------------- |
-| MaxCompute SDK             | 候选     | 不创建公开产品空间，不加入首页、导航或注册表 |
-| 其他 MaxCompute Connectors | 候选     | 不创建公开产品空间，不加入首页、导航或注册表 |
+2026-10-13 按明确请求补齐首页预留入口：SDK 直接链接已有官方站点；JDBC、ODBC、Spark、dbt 新增独立文档空间。每个空间覆盖快速开始、指南、参考、故障排查、上游版本入口与 Agent 执行指南，并提供 imagegen 概念配图和中文替代文本。
 
-候选项不构成接入承诺。进入公开范围前必须完成目标读者、内容边界、权威来源、维护者、版本策略和下线责任人评审，并按 [产品接入契约](product-onboarding.md) 提交完整变更。
+内容基于公开源码、已发布包与官方文档，页面保持 `draft`。沿用 `@odps` 的兜底所有权；进入 `published` 前确认实际维护组和发布责任。版本来源与示例边界写在各产品页，配图来源见 [Clients 配图记录](clients-illustrations.md)。其他尚未登记的 Connector 仍属候选，按 [产品接入契约](product-onboarding.md) 完成范围评审。
 
 ## 调整规则
 

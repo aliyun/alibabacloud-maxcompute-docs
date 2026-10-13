@@ -1,0 +1,49 @@
+---
+title: ODBC 使用指南
+description: 使用连接字符串或 DSN 接入 ODBC 应用，控制查询范围并正确关闭资源。
+product: odbc
+doc_type: how-to
+status: draft
+tags:
+  - odbc
+  - maxcompute
+sidebar_position: 3
+---
+
+## 连接字符串与 DSN
+
+Driver 是已注册的驱动名称；DSN 是 Driver Manager 保存的一组数据源配置。优先使用快速开始的无 DSN 字符串，减少配置文件与用户/系统数据源差异。
+
+```text
+DRIVER={MaxCompute ODBC Driver};Endpoint=<endpoint>;Project=<project_name>;Schema=default;InteractiveMode=false;
+```
+
+实际使用时，凭据由环境注入。Windows 应用必须使用 DSN 时，可使用 MSI 创建的 `MaxComputeTestDSN`，并通过应用提供其余连接参数；这个 DSN 的存在不表示连接信息已经配好。
+
+## 接入 BI 工具
+
+1. 确认工具支持通用 ODBC，并检查进程位数、驱动名称和注册位置。
+2. 使用测试项目完成连接和常量查询，再选一张已授权的小表。
+3. 先限定列、分区与返回数量，再扩展数据范围。
+4. 分别验证类型、NULL、日期显示与刷新；可连接不代表完整工具兼容。
+
+ODBC 元数据方法和参数绑定的支持范围依驱动版本而定。工具如果要求当前驱动未实现的 API，需要调整集成方式或反馈上游，不能仅靠反复修改 Endpoint 解决。
+
+## Python 读取结果
+
+在已有 cursor 上执行下面的 SQL，替换实际列名、表名和分区值：
+
+```sql
+SELECT id, message
+FROM <table_name>
+WHERE ds = '<partition_value>'
+LIMIT 10;
+```
+
+使用 `fetchone()` 或分批 `fetchmany()` 读取，避免对大结果直接 `fetchall()`。Python `None` 表示 SQL NULL。高精度金额和时间列应核对实际转换与显示，不能只验证数据“看起来有值”。
+
+用 `finally` 显式关闭 cursor 和连接。`pyodbc` 的连接上下文管理器涉及提交/回滚语义，资源关闭宜采用快速开始中的明确流程。
+
+## 日志
+
+驱动提供 `MCO_LOG_LEVEL` 和 `MCO_LOG_FILE`。首次连接验证使用 `MCO_LOG_LEVEL=NONE`；排障启用日志前，先确认所用版本对连接字符串和凭据的脱敏行为。共享日志前移除凭据、签名链接和客户数据。

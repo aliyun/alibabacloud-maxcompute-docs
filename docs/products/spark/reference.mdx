@@ -1,0 +1,53 @@
+---
+title: Spark Connector 配置参考
+description: 核对 Spark Hadoop 连接配置、Catalog 选项与 schema 表名规则。
+product: spark
+doc_type: reference
+status: draft
+tags:
+  - spark
+  - maxcompute
+sidebar_position: 4
+---
+
+## Spark 连接配置
+
+| 键                                    | 用途                                                                          |
+| ------------------------------------- | ----------------------------------------------------------------------------- |
+| `spark.hadoop.odps.project.name`      | 默认项目                                                                      |
+| `spark.hadoop.odps.access.id`         | AccessKey ID                                                                  |
+| `spark.hadoop.odps.access.key`        | AccessKey Secret                                                              |
+| `spark.hadoop.odps.end.point`         | MaxCompute 服务 Endpoint                                                      |
+| `spark.hadoop.odps.tunnel.quota.name` | 数据传输 quota，按资源实际配置                                                |
+| `spark.sql.catalog.odps`              | `org.apache.spark.sql.execution.datasources.v2.odps.OdpsTableCatalog`         |
+| `spark.sql.extensions`                | `org.apache.spark.sql.execution.datasources.v2.odps.extension.OdpsExtensions` |
+
+这些键用于外部 Connector；集群内 Spark 的运行时参数应使用其独立文档。
+
+## Catalog 选项
+
+Catalog 名称为 `odps` 时，选项前缀为 `spark.sql.catalog.odps.`：
+
+| 选项                     | 当前源码默认值 | 作用                                     |
+| ------------------------ | -------------- | ---------------------------------------- |
+| `tableReadProvider`      | `v1`           | 读取 provider；`tunnel` 是另一条读取路径 |
+| `tableWriteProvider`     | `v1`           | 写入 provider，按版本和服务验证          |
+| `enableNamespaceSchema`  | false          | 启用 schema 层级                         |
+| `defaultSchema`          | `default`      | 默认 schema                              |
+| `splitSizeInMB`          | 256            | 读取切分大小                             |
+| `enableVectorizedReader` | true           | 向量化读取                               |
+| `enableFilterPushDown`   | false          | 筛选下推开关，开启后需核对实际计划       |
+
+例如，使用 schema 命名空间：
+
+```properties
+spark.sql.catalog.odps.enableNamespaceSchema=true
+```
+
+默认表名形式是 `odps.<project>.<table>`；启用 schema 后使用 `odps.<project>.<schema>.<table>`。同时确认项目的 schema 功能与权限。
+
+不要通过修改默认 provider 来绕过未知错误；先记录当前路径，再核对对应服务资源、权限与数据类型支持。
+
+## 来源和版本
+
+上表对照[公开 OdpsOptions](https://github.com/aliyun/aliyun-maxcompute-data-collectors/blob/59550835bf6865b210c572c13a9b139f6dc04f10/spark-connector/datasource/src/main/scala/org/apache/spark/sql/execution/datasources/v2/odps/OdpsOptions.scala)。官方指南还列出了开放存储前提与表类型限制。示例不是 Spark 4.x、Streaming 或所有表格式的兼容承诺。

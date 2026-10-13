@@ -85,7 +85,9 @@ function PlaceholderCard({
         <span className={styles.placeholderIcon}>
           <ProductIcon name={item.icon} size={24} />
         </span>
-        <span className={styles.placeholderBadge}>即将上线</span>
+        <span className={styles.placeholderBadge}>
+          {item.external ? '官方文档 ↗' : '即将上线'}
+        </span>
       </div>
       <Heading as="h4">{item.label}</Heading>
     </>

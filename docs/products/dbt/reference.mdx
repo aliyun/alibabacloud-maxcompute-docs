@@ -1,0 +1,59 @@
+---
+title: dbt 配置参考
+description: 核对 Profile、模型属性、产物含义和无传统事务的执行边界。
+product: dbt
+doc_type: reference
+status: draft
+tags:
+  - dbt
+  - maxcompute
+sidebar_position: 4
+---
+
+## Profile
+
+| 字段                                  | 含义                | 入门值 / 约束                                   |
+| ------------------------------------- | ------------------- | ----------------------------------------------- |
+| `type`                                | Adapter 类型        | `maxcompute`                                    |
+| `project`                             | 项目                | 必填                                            |
+| `schema`                              | 模型 schema         | 填已存在且获准使用的命名空间                    |
+| `endpoint`                            | MaxCompute Endpoint | 必填，与项目地域和网络匹配                      |
+| `auth_type`                           | 认证方式            | 入门使用 `access_key`                           |
+| `access_key_id` / `access_key_secret` | 身份凭据            | 通过 `env_var` 引用                             |
+| `security_token`                      | STS Token           | STS 认证须核对上游对应 auth_type 与整组临时凭据 |
+| `threads`                             | dbt 并发            | 入门为 1，不是 Spark 并行度                     |
+
+`dbt_project.yml` 的 `profile` 必须与 `profiles.yml` 顶层名称相同。schema 命名和自定义 schema 宏应以项目实际策略为准；不要假定 dbt 自动把数据隔离进某个个人 schema。
+
+完整认证配置见[上游认证文档](https://github.com/aliyun/dbt-maxcompute/blob/master/docs/authentication.md)。
+
+## 模型配置
+
+| 配置            | 用途           | 注意                                            |
+| --------------- | -------------- | ----------------------------------------------- |
+| `materialized`  | 物化方式       | `table` 会重建目标                              |
+| `tblproperties` | 表属性字典     | 例如 `table.format.version: '2'`                |
+| `transactional` | 事务表属性     | 表属性不意味着 dbt 支持 BEGIN/ROLLBACK          |
+| `primary_keys`  | 物理主键列     | SQL table 的 PK Delta 建表配置                  |
+| `unique_key`    | 增量数据匹配键 | 不创建物理主键                                  |
+| `partition_by`  | 分区字段与类型 | 例如 `{'fields': 'ds', 'data_types': 'string'}` |
+| `lifecycle`     | 表保留天数     | 谨慎配置                                        |
+| `sql_hints`     | SQL 设置       | 修改前核对服务端语义与版本                      |
+
+模型配置基于[官方 Adapter README](https://github.com/aliyun/dbt-maxcompute#configure-your-dbt-models)，新建表属性与已有表迁移分别处理。
+
+## 命令与产物的含义
+
+| 命令 / 产物               | 能证明什么                                           |
+| ------------------------- | ---------------------------------------------------- |
+| `dbt parse`               | 项目可解析，生成 manifest；不验证模型 SQL 的云端执行 |
+| `dbt compile`             | 模板编译；宏可调用数据库，不应视为完全离线           |
+| `dbt debug`               | Profile 与连接检查                                   |
+| `dbt build`               | 所选模型及相关测试的运行结果                         |
+| `target/manifest.json`    | 模型、依赖、配置与编译信息                           |
+| `target/run_results.json` | 各节点运行状态、耗时与 Adapter 响应                  |
+| `dbt docs generate`       | 文档和元数据 catalog 生成                            |
+
+这些产物可能含 SQL、对象名和元数据，应在分享前脱敏。MaxCompute 不返回可靠 DML 影响行数，`rows_affected` 不用作写入完整性依据。Adapter 的 `BEGIN`、`COMMIT`、`ROLLBACK` 不提供传统多语句事务；失败后需逐对象核对。
+
+命令定义参见 [dbt 官方命令文档](https://docs.getdbt.com/reference/dbt-commands)。

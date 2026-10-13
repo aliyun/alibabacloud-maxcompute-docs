@@ -1,0 +1,8 @@
+{
+  "label": "dbt-maxcompute",
+  "position": 8,
+  "link": {
+    "type": "doc",
+    "id": "products/dbt/index"
+  }
+}

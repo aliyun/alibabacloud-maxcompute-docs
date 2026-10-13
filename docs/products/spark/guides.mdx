@@ -1,0 +1,61 @@
+---
+title: Spark Connector 读写指南
+description: 通过 Catalog 读取表并在隔离测试表上验证追加写入，理解分区、覆盖和集群边界。
+product: spark
+doc_type: how-to
+status: draft
+tags:
+  - spark
+  - maxcompute
+sidebar_position: 3
+---
+
+## 通过 Catalog 使用 DataFrame
+
+假设 Spark Session 已加载快速开始的配置与 JAR，可用 PySpark 读取已授权表：
+
+```python
+df = spark.table("odps.<project_name>.<table_name>")
+df.select("id", "message").limit(10).show(truncate=False)
+```
+
+表名必须来自已核对的配置。Python 的 `.show()` 和 `.collect()` 会触发计算；只构造 DataFrame 不代表数据已经读取。
+
+## 分区和执行计划
+
+对分区表，先指定分区谓词再读取。用 `EXPLAIN` 查看计划，并对所选 Connector 版本验证裁剪和下推的实际行为。不能只因为 SQL 写了 WHERE 就认为传输量一定下降。
+
+```sql
+EXPLAIN SELECT id
+FROM odps.<project_name>.<table_name>
+WHERE ds = '<partition_value>';
+```
+
+启用 schema 命名空间时，表名层级发生变化，参见[配置参考](./reference.mdx)。
+
+## 在测试表验证追加写入
+
+下面操作会创建表并写数据。先将项目和表名替换成获准使用的测试对象，确认没有同名业务表；不要让 Agent 自动使用生产表。
+
+```sql
+CREATE TABLE odps.<test_project>.<new_test_table> (id BIGINT, message STRING);
+INSERT INTO odps.<test_project>.<new_test_table> VALUES (1, 'hello');
+SELECT id, message FROM odps.<test_project>.<new_test_table> LIMIT 10;
+```
+
+先验证建表、提交和读回；失败后查询表与作业状态，再决定是否重试。覆盖写、动态分区写和 Delta 表更新需要按所选版本与表类型单独验证；不要把上述普通表追加样例推广为所有写入模式保证。
+
+确认测试对象确实由本次创建、且数据无需保留后，才执行清理：
+
+```sql
+DROP TABLE odps.<test_project>.<new_test_table>;
+```
+
+## 集群部署
+
+- Driver 和所有 Executor 使用匹配的 Connector 与依赖。
+- 核对 Spark、Scala 二进制版本、JDK，以及依赖树；`NoSuchMethodError` 常是组合不匹配。
+- 从 Executor 所在网络验证服务和数据端点，不能只测试开发机。
+- `.limit(10)` 只是返回结果控制。大表任务还要评估分区、并行度、数据传输资源与费用。
+
+配置和兼容范围以[官方指南](https://help.aliyun.com/en/maxcompute/spark-connector)及[公开源码](https://github.com/aliyun/aliyun-maxcompute-data-collectors/tree/master/spark-connector)为准。

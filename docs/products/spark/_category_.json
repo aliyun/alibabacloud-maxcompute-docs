@@ -1,0 +1,8 @@
+{
+  "label": "MaxCompute Spark Connector",
+  "position": 7,
+  "link": {
+    "type": "doc",
+    "id": "products/spark/index"
+  }
+}

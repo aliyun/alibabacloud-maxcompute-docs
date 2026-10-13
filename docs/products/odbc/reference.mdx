@@ -1,0 +1,45 @@
+---
+title: ODBC 配置参考
+description: 核对连接参数、环境变量、交互查询和 STS 临时凭据的配置方式。
+product: odbc
+doc_type: reference
+status: draft
+tags:
+  - odbc
+  - maxcompute
+sidebar_position: 4
+---
+
+## 基本连接参数
+
+| 参数              | 用途               | 默认 / 约束                                 |
+| ----------------- | ------------------ | ------------------------------------------- |
+| `DRIVER`          | 已注册的驱动名称   | 示例为 `{MaxCompute ODBC Driver}`           |
+| `Endpoint`        | 服务地址           | 必填，或由 `ALIBABA_CLOUD_ENDPOINT` 提供    |
+| `Project`         | 项目名             | 必填，或由 `ALIBABA_CLOUD_PROJECT` 提供     |
+| `AccessKeyId`     | AccessKey ID       | 或由 `ALIBABA_CLOUD_ACCESS_KEY_ID` 提供     |
+| `AccessKeySecret` | AccessKey Secret   | 或由 `ALIBABA_CLOUD_ACCESS_KEY_SECRET` 提供 |
+| `Schema`          | 默认命名空间       | 默认 `default`                              |
+| `LoginTimeout`    | 连接超时，秒       | 默认 30                                     |
+| `ReadTimeout`     | 网络读取超时，秒   | 默认 60；不等同于 SQL 作业总时长            |
+| `SecurityToken`   | STS Token          | 与同组临时 ID、Secret 配套                  |
+| `InteractiveMode` | MaxQA 交互查询     | 默认 false                                  |
+| `QuotaName`       | quota 名称         | 按项目服务与执行模式配置                    |
+| `TunnelEndpoint`  | 自定义 Tunnel 地址 | 有明确网络需求时设置                        |
+| `TunnelQuotaName` | Tunnel quota       | 按资源配置提供                              |
+
+以上名称来自[驱动配置解析](https://github.com/aliyun/alibabacloud-maxcompute-odbc-driver/blob/main/src/config/config.cpp)与[默认配置](https://github.com/aliyun/alibabacloud-maxcompute-odbc-driver/blob/main/include/maxcompute_odbc/config/config.h)。环境变量补齐行为来自[ODBC 连接入口](https://github.com/aliyun/alibabacloud-maxcompute-odbc-driver/blob/main/src/odbc_api/entry_points.cpp)。
+
+## STS 与字符串编码
+
+`SecurityToken` 是连接参数；不要假设驱动自动读取通用 STS 环境变量。由应用将 Token 传入参数时必须保证不输出连接字符串，并按该版本解析器规则编码含分号、引号的值。临时凭据过期后重新获取整组，再建立新连接。
+
+不要把其他 ODBC 驱动的花括号转义规则直接套到当前驱动。复杂连接参数先以所用版本的解析实现和小范围验证为准。
+
+## 驱动日志与代理
+
+日志级别由 `MCO_LOG_LEVEL` 控制，文件由 `MCO_LOG_FILE` 控制；示例关闭日志以避免连接信息进入终端。`HttpProxy`、`HttpsProxy` 及代理凭据参见[上游参数说明](https://github.com/aliyun/alibabacloud-maxcompute-odbc-driver#connection-parameters)。
+
+## 支持范围
+
+通过 ODBC 提交的 SQL 使用 MaxCompute SQL 语义。不要把 `autocommit=True` 理解为驱动获得多语句事务能力。依赖特定 catalog API、参数绑定或 BI 刷新方式前，核对所选版本的实现和实际运行结果。

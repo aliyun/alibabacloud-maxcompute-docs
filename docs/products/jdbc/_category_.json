@@ -1,0 +1,8 @@
+{
+  "label": "MaxCompute JDBC",
+  "position": 5,
+  "link": {
+    "type": "doc",
+    "id": "products/jdbc/index"
+  }
+}
