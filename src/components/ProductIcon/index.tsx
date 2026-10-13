@@ -1,13 +1,37 @@
 import type {ComponentProps, ReactNode} from 'react';
-import {Cube, Desktop, Robot, TerminalWindow} from '@phosphor-icons/react';
+import {
+  Code,
+  Cube,
+  Database,
+  Desktop,
+  FlowArrow,
+  Lightning,
+  Plugs,
+  Robot,
+  TerminalWindow,
+} from '@phosphor-icons/react';
 
-export type ProductIconName = 'terminal' | 'robot' | 'desktop' | 'cube';
+export type ProductIconName =
+  | 'terminal'
+  | 'robot'
+  | 'desktop'
+  | 'cube'
+  | 'code'
+  | 'database'
+  | 'flow'
+  | 'plug'
+  | 'lightning';
 
 const iconComponents = {
   terminal: TerminalWindow,
   robot: Robot,
   desktop: Desktop,
   cube: Cube,
+  code: Code,
+  database: Database,
+  flow: FlowArrow,
+  plug: Plugs,
+  lightning: Lightning,
 } as const;
 
 type ProductIconProps = Omit<ComponentProps<typeof Cube>, 'ref'> & {

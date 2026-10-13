@@ -314,3 +314,107 @@
   margin-top: 0.25rem;
   flex-shrink: 0;
 }
+
+/* ===== Dark mode overrides ===== */
+[data-theme='dark'] .guide {
+  color: var(--mc-ink);
+}
+
+[data-theme='dark'] .hero {
+  background: linear-gradient(
+    120deg,
+    color-mix(in srgb, #2a72a5 18%, var(--mc-card)),
+    color-mix(in srgb, #287153 14%, var(--mc-card))
+  );
+  border-color: var(--mc-border);
+}
+
+[data-theme='dark'] .eyebrow {
+  color: #6ee7b7;
+}
+
+[data-theme='dark'] .hero p {
+  color: var(--mc-muted);
+}
+
+[data-theme='dark'] .version {
+  color: var(--mc-muted);
+}
+
+[data-theme='dark'] .heroLinks button {
+  background: var(--mc-card);
+  border-color: var(--mc-border);
+  color: var(--mc-ink);
+}
+
+[data-theme='dark'] .steps {
+  background: var(--mc-card);
+  border-bottom-color: var(--mc-border);
+}
+
+[data-theme='dark'] .steps a {
+  background: var(--mc-surface);
+  color: var(--mc-ink);
+}
+
+[data-theme='dark'] .scenarios button,
+[data-theme='dark'] .fields input,
+[data-theme='dark'] .fields select,
+[data-theme='dark'] .prerequisites > div,
+[data-theme='dark'] .events > div {
+  background: var(--mc-card);
+  border-color: var(--mc-border);
+  color: var(--mc-ink);
+}
+
+[data-theme='dark'] .scenarios button.selected {
+  background: rgba(147, 197, 253, 0.12);
+  border-color: #60a5fa;
+}
+
+[data-theme='dark'] .scenarios span,
+[data-theme='dark'] .scenarios p,
+[data-theme='dark'] .prerequisites p,
+[data-theme='dark'] .help,
+[data-theme='dark'] .sqlPanel > p,
+[data-theme='dark'] .events p {
+  color: var(--mc-muted);
+}
+
+[data-theme='dark'] .explanation {
+  background: var(--mc-surface);
+}
+
+[data-theme='dark'] .warning {
+  background: rgba(245, 158, 11, 0.08);
+  color: var(--mc-ink);
+}
+
+[data-theme='dark'] .templateNote {
+  background: rgba(147, 197, 253, 0.08);
+  border-color: var(--mc-border);
+}
+
+[data-theme='dark'] .insert {
+  color: #86efac;
+  background: rgba(134, 239, 172, 0.12);
+}
+
+[data-theme='dark'] .update {
+  color: #93c5fd;
+  background: rgba(147, 197, 253, 0.12);
+}
+
+[data-theme='dark'] .remove {
+  color: #fca5a5;
+  background: rgba(252, 165, 165, 0.12);
+}
+
+[data-theme='dark'] .result {
+  background: rgba(134, 239, 172, 0.08);
+  border-left-color: #4ade80;
+}
+
+[data-theme='dark'] .troubleshooting {
+  border-color: var(--mc-border);
+}

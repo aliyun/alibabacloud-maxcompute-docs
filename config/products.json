@@ -13,6 +13,7 @@
       "owner": "@odps",
       "icon": "desktop",
       "accent": "violet",
+      "category": "ai",
       "featured": true,
       "navigation": [
         {
@@ -44,6 +45,7 @@
       "owner": "@odps",
       "icon": "terminal",
       "accent": "orange",
+      "category": "ai",
       "featured": true,
       "navigation": [
         {
@@ -91,6 +93,7 @@
       "owner": "@odps",
       "icon": "robot",
       "accent": "blue",
+      "category": "ai",
       "featured": true,
       "navigation": [
         {
@@ -122,6 +125,7 @@
       "owner": "@odps",
       "icon": "cube",
       "accent": "green",
+      "category": "connector",
       "featured": true,
       "navigation": [
         {

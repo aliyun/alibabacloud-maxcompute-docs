@@ -6,6 +6,7 @@ import registry from '@site/config/products.json';
 import ProductIcon, {
   type ProductIconName,
 } from '@site/src/components/ProductIcon';
+import {useReveal} from '@site/src/lib/motion';
 
 import styles from './styles.module.css';
 
@@ -24,6 +25,16 @@ export default function ProductDocLanding({
 }: {
   productId: string;
 }): ReactNode {
+  const heroRef = useReveal<HTMLElement>(':scope > *', {
+    y: 22,
+    stagger: 0.09,
+    start: 'top 88%',
+  });
+  const pathsRef = useReveal<HTMLElement>(':scope > *', {
+    y: 24,
+    stagger: 0.06,
+    start: 'top 90%',
+  });
   const product = (registry.products as ProductEntry[]).find(
     (entry) => entry.id === productId,
   );
@@ -32,7 +43,7 @@ export default function ProductDocLanding({
 
   return (
     <div className={`${styles.landing} ${styles[product.accent]}`}>
-      <section className={styles.hero}>
+      <section className={styles.hero} ref={heroRef}>
         <div className={styles.heroIcon}>
           <ProductIcon name={product.icon} size={34} />
         </div>
@@ -43,7 +54,7 @@ export default function ProductDocLanding({
         </div>
       </section>
 
-      <section className={styles.paths}>
+      <section className={styles.paths} ref={pathsRef}>
         {product.navigation.map((item, index) => (
           <Link key={item.href} to={item.href}>
             <span className={styles.pathIndex}>

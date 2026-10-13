@@ -1,5 +1,5 @@
 import type {ReactNode} from 'react';
-import {useEffect, useState} from 'react';
+import {useRef, useState} from 'react';
 import {
   ArrowRight,
   BookOpenText,
@@ -12,8 +12,18 @@ import Layout from '@theme/Layout';
 import Heading from '@theme/Heading';
 import {DocSearchTrigger} from '@site/src/components/DocSearch';
 import ProductGrid from '@site/src/components/ProductGrid';
+import {
+  EASE_OUT,
+  ensureGsap,
+  prefersReducedMotion,
+  useGsap,
+  useIsomorphicLayoutEffect,
+  useReveal,
+} from '@site/src/lib/motion';
 
 import styles from './index.module.css';
+
+const SHOWCASE_CYCLE = 6;
 
 function CliPanel(): ReactNode {
   return (
@@ -148,21 +158,59 @@ const showcases = [
 function Showcase(): ReactNode {
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
+  const stageRef = useRef<HTMLDivElement>(null);
+  const barRef = useRef<HTMLSpanElement>(null);
+  const firstPaint = useRef(true);
 
-  useEffect(() => {
-    if (paused) return undefined;
-    if (
-      typeof window !== 'undefined' &&
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    ) {
+  // Autoplay and the progress bar share one tween so they never drift apart.
+  useGsap(
+    ({gsap}) => {
+      if (prefersReducedMotion()) return;
+      const bar = barRef.current;
+      if (!bar) return;
+      const tween = gsap.fromTo(
+        bar,
+        {scaleX: 0},
+        {
+          scaleX: 1,
+          duration: SHOWCASE_CYCLE,
+          ease: 'none',
+          onComplete: () =>
+            setActive((value) => (value + 1) % showcases.length),
+        },
+      );
+      if (paused) tween.pause();
+    },
+    {deps: [active, paused]},
+  );
+
+  // Cross-fade the incoming panel (skip the initial one — the hero handles it).
+  useIsomorphicLayoutEffect(() => {
+    if (firstPaint.current) {
+      firstPaint.current = false;
       return undefined;
     }
-    const timer = window.setInterval(
-      () => setActive((value) => (value + 1) % showcases.length),
-      6000,
+    if (prefersReducedMotion()) return undefined;
+    const panel = stageRef.current?.querySelector<HTMLElement>(
+      `[data-panel="${active}"]`,
     );
-    return () => window.clearInterval(timer);
-  }, [paused]);
+    if (!panel) return undefined;
+    const {gsap} = ensureGsap();
+    const tween = gsap.fromTo(
+      panel,
+      {autoAlpha: 0, y: 16},
+      {
+        autoAlpha: 1,
+        y: 0,
+        duration: 0.55,
+        ease: EASE_OUT,
+        clearProps: 'opacity,visibility,transform',
+      },
+    );
+    return () => {
+      tween.kill();
+    };
+  }, [active]);
 
   return (
     <div
@@ -187,13 +235,17 @@ function Showcase(): ReactNode {
           </button>
         ))}
       </div>
-      <div className={styles.showcaseStage}>
+      <span aria-hidden="true" className={styles.showcaseProgress}>
+        <span className={styles.showcaseProgressBar} ref={barRef} />
+      </span>
+      <div className={styles.showcaseStage} ref={stageRef}>
         {showcases.map((item, index) => (
           <div
             aria-hidden={active !== index}
             className={`${styles.showcasePanel} ${
               active === index ? styles.showcasePanelActive : ''
             }`}
+            data-panel={index}
             key={item.id}
           >
             {item.panel}
@@ -206,19 +258,52 @@ function Showcase(): ReactNode {
 }
 
 function Hero(): ReactNode {
+  const heroRef = useRef<HTMLElement>(null);
+  const showcaseClass = styles.showcase;
+
+  useGsap(
+    ({gsap}) => {
+      if (prefersReducedMotion()) return;
+
+      const tl = gsap.timeline({defaults: {ease: EASE_OUT, duration: 0.7}});
+      tl.from(`.${styles.heroCopy} > *`, {
+        y: 22,
+        autoAlpha: 0,
+        stagger: 0.1,
+      }).from(
+        `.${showcaseClass}`,
+        {y: 32, autoAlpha: 0, duration: 0.85},
+        '-=0.55',
+      );
+
+      gsap.to(`.${styles.heroGlow}`, {
+        yPercent: 16,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: heroRef.current,
+          start: 'top top',
+          end: 'bottom top',
+          scrub: true,
+        },
+      });
+    },
+    {scope: heroRef},
+  );
+
   return (
-    <header className={styles.hero}>
+    <header className={styles.hero} ref={heroRef}>
+      <div aria-hidden="true" className={styles.heroGrid} />
       <div aria-hidden="true" className={styles.heroGlow} />
+      <div aria-hidden="true" className={styles.heroOrbs} />
       <div className={`container ${styles.heroInner}`}>
         <div className={styles.heroCopy}>
           <span className={styles.badge}>MAXCOMPUTE DOCS</span>
           <Heading as="h1" className={styles.heroTitle}>
-            给人用，也给 Agent 用的 MaxCompute 文档
+            MaxCompute：企业级云原生数据平台，为 AI 与分析而生
           </Heading>
           <p className={styles.heroSubtitle}>
-            CLI、MCP Server 与 Desktop
-            的统一文档入口。命令行、协议与桌面三种形态，共享同一套 MaxCompute
-            数据底座。
+            统一、安全、可扩展的大数据计算与分析平台，支撑 PB
+            级数据仓库、实时分析与 AI 工作流。
           </p>
           <div className={styles.heroActions}>
             <Link className={styles.primaryAction} to="/docs/products/">
@@ -228,16 +313,16 @@ function Hero(): ReactNode {
           </div>
           <dl className={styles.heroStats}>
             <div>
-              <dt>3</dt>
-              <dd>产品形态</dd>
+              <dt>4</dt>
+              <dd>产品文档</dd>
             </div>
             <div>
               <dt>36+</dt>
               <dd>篇文档</dd>
             </div>
             <div>
-              <dt>4</dt>
-              <dd>资源板块</dd>
+              <dt>3</dt>
+              <dd>大分类</dd>
             </div>
           </dl>
         </div>
@@ -275,6 +360,12 @@ const paths = [
 ];
 
 function QuickPaths(): ReactNode {
+  const gridRef = useReveal<HTMLDivElement>(':scope > *', {
+    y: 28,
+    stagger: 0.08,
+    start: 'top 88%',
+  });
+
   return (
     <section className={styles.pathSection}>
       <div className="container">
@@ -286,7 +377,7 @@ function QuickPaths(): ReactNode {
           />
           <Heading as="h2">按产品开始</Heading>
         </div>
-        <div className={styles.pathGrid}>
+        <div className={styles.pathGrid} ref={gridRef}>
           {paths.map((path) => (
             <Link className={styles.pathCard} href={path.href} key={path.step}>
               <span>{path.step}</span>
@@ -304,7 +395,7 @@ export default function Home(): ReactNode {
   return (
     <Layout
       title="MaxCompute 文档"
-      description="MaxCompute CLI、MCP Server 与 Desktop 的统一产品文档入口，面向人与 AI Agent。"
+      description="MaxCompute 产品文档中心，覆盖 CLI、MCP Server、Desktop、Flink Connector 等产品，面向开发者与 AI Agent。"
     >
       <Hero />
       <main>

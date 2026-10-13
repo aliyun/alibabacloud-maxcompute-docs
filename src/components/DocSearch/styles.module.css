@@ -13,17 +13,17 @@
   gap: 0.45rem;
   min-width: 134px;
   padding: 0.5rem 0.72rem;
-  color: var(--mc-muted);
+  color: rgba(245, 247, 251, 0.65);
   font-size: 0.82rem;
-  background: var(--mc-surface);
-  border: 1px solid var(--mc-border);
-  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
 }
 
 .navbar:hover {
-  color: var(--mc-ink);
-  background: var(--mc-card);
-  border-color: #c9d0dc;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
 }
 
 .hero {
@@ -31,18 +31,20 @@
   width: min(510px, 100%);
   min-height: 58px;
   padding: 0.8rem 0.95rem;
-  color: var(--mc-muted);
+  color: rgba(245, 247, 251, 0.65);
   font-size: 0.98rem;
   text-align: left;
-  background: var(--mc-card);
-  border: 1px solid #d8dde6;
-  border-radius: 12px;
-  box-shadow: 0 9px 25px rgba(43, 54, 78, 0.06);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  box-shadow: 0 9px 25px rgba(0, 0, 0, 0.18);
+  backdrop-filter: blur(8px);
 }
 
 .hero:hover {
-  color: var(--mc-ink);
-  border-color: #bfc7d5;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.09);
+  border-color: rgba(255, 255, 255, 0.22);
 }
 
 .hero span {
@@ -62,8 +64,8 @@
   display: flex;
   justify-content: center;
   padding: min(14vh, 120px) 1rem 1rem;
-  background: rgba(18, 24, 36, 0.5);
-  backdrop-filter: blur(8px);
+  background: rgba(5, 8, 14, 0.65);
+  backdrop-filter: blur(12px);
 }
 
 .dialog {
@@ -71,10 +73,12 @@
   height: fit-content;
   max-height: min(720px, 80vh);
   overflow: hidden;
-  background: var(--mc-card);
-  border: 1px solid var(--mc-border);
-  border-radius: 18px;
-  box-shadow: 0 30px 90px rgba(13, 20, 34, 0.28);
+  background: #151b29;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  box-shadow:
+    0 30px 90px rgba(0, 0, 0, 0.45),
+    0 1px 0 rgba(255, 255, 255, 0.04) inset;
 }
 
 .searchBox {
@@ -90,7 +94,7 @@
   width: 100%;
   min-width: 0;
   padding: 0;
-  color: var(--mc-ink);
+  color: #fff;
   font: inherit;
   font-size: 1.04rem;
   background: transparent;
@@ -185,11 +189,12 @@
   padding: 0.8rem 1rem;
   color: var(--mc-muted);
   font-size: 0.76rem;
-  background: var(--mc-surface);
+  background: rgba(255, 255, 255, 0.03);
   border-top: 1px solid var(--mc-border);
 }
 
 .footer a {
+  color: var(--ifm-color-primary);
   font-weight: 700;
   white-space: nowrap;
 }
@@ -210,4 +215,50 @@
   .footer {
     justify-content: flex-end;
   }
+}
+
+/* ===== Light mode overrides ===== */
+[data-theme='light'] .navbar {
+  color: rgba(23, 32, 51, 0.65);
+  background: rgba(23, 32, 51, 0.04);
+  border-color: rgba(23, 32, 51, 0.1);
+}
+
+[data-theme='light'] .navbar:hover {
+  color: var(--mc-ink);
+  background: rgba(23, 32, 51, 0.07);
+  border-color: rgba(23, 32, 51, 0.2);
+}
+
+[data-theme='light'] .hero {
+  color: rgba(23, 32, 51, 0.65);
+  background: rgba(23, 32, 51, 0.05);
+  border-color: rgba(23, 32, 51, 0.12);
+  box-shadow: 0 9px 25px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme='light'] .hero:hover {
+  color: var(--mc-ink);
+  background: rgba(23, 32, 51, 0.08);
+  border-color: rgba(23, 32, 51, 0.22);
+}
+
+[data-theme='light'] .overlay {
+  background: rgba(247, 248, 251, 0.75);
+}
+
+[data-theme='light'] .dialog {
+  background: var(--mc-card);
+  border-color: var(--mc-border);
+  box-shadow:
+    0 30px 90px rgba(0, 0, 0, 0.18),
+    0 1px 0 rgba(23, 32, 51, 0.04) inset;
+}
+
+[data-theme='light'] .searchBox input {
+  color: var(--mc-ink);
+}
+
+[data-theme='light'] .footer {
+  background: rgba(23, 32, 51, 0.03);
 }
