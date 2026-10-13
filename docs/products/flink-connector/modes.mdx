@@ -1,6 +1,6 @@
 ---
-title: 模式总览与选型
-description: 按数据方向、执行模式、表类型和启动位置选择 Source 或 Sink，区分存量、有界增量、持续增量与写入实现。
+title: Source、Sink 与参数总览
+description: 理解 Flink Source 和 Sink 的读写方向，比较存量、增量与写入模式，检索完整 SQL 与 Catalog 参数、默认值和实现限制。
 product: flink-connector
 doc_type: concept
 status: draft
@@ -9,6 +9,14 @@ tags:
   - flink-sql
 sidebar_position: 2
 ---
+
+import ParameterTable, {Concepts} from '@site/src/components/FlinkOverview';
+
+本页集中介绍读写方向、模式选型与参数。已经确定模式时，可以[直接检索完整参数表](#完整参数表)。
+
+## 理解 Source 与 Sink
+
+<Concepts />
 
 先确定读写方向，再选择业务语义，最后决定实现参数。Flink 的 `execution.runtime-mode` 控制作业执行模式，Connector 的 `scan.mode` 控制读取方式，两者需要一起配置。
 
@@ -56,3 +64,9 @@ sidebar_position: 2
 | Storage 写入           | `sink.coordinator.enable=false`                                 | 根据真实目标表主键选择追加或 upsert；SQL 变更协商仍需 `sink.operation=upsert` |
 
 从[追加写入](./sink-append.mdx)或[主键写入](./sink-upsert.mdx)开始，再阅读[写入实现与调优](./sink-writers.mdx)。各实现的参数适用范围不同。追加恢复可能产生重复记录，不能仅凭 checkpoint 或主键声明推导端到端 exactly-once。
+
+## 完整参数表
+
+<ParameterTable />
+
+参数依据 `OdpsOptions`、`OdpsDynamicTableFactory` 与 `OdpsCatalogFactory` 的文档代码基线核对。工厂接受的参数不一定在每个运行路径生效，表中已标出未注册、未接入与实验选项。类型映射见[配置与类型参考](./reference.mdx)，连接继承与认证见[连接与认证](./connection.mdx)。

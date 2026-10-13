@@ -1,0 +1,857 @@
+[
+  {
+    "key": "connector",
+    "type": "string",
+    "default": "无",
+    "group": "连接",
+    "status": "SQL 必填",
+    "description": "Flink 工厂选择标识，固定为 maxcompute。",
+    "symbol": "Factory identifier"
+  },
+  {
+    "key": "odps.project.name",
+    "type": "string",
+    "default": "无",
+    "group": "连接",
+    "status": "SQL 可选",
+    "description": "默认项目；与 odps.end.point 成对提供，或从 Catalog 继承。",
+    "symbol": "PROJECT_NAME"
+  },
+  {
+    "key": "odps.access.id",
+    "type": "string",
+    "default": "无",
+    "group": "连接",
+    "status": "SQL 可选",
+    "description": "显式 AccessKey ID；推荐凭据提供者，不要提交真实凭据。",
+    "symbol": "ACCESS_ID"
+  },
+  {
+    "key": "odps.access.key",
+    "type": "string",
+    "default": "无",
+    "group": "连接",
+    "status": "SQL 可选",
+    "description": "显式 AccessKey Secret；不要写入仓库、日志或截图。",
+    "symbol": "ACCESS_KEY"
+  },
+  {
+    "key": "odps.end.point",
+    "type": "string",
+    "default": "无",
+    "group": "连接",
+    "status": "SQL 可选",
+    "description": "目标 MaxCompute 服务地址；与默认项目成对提供。",
+    "symbol": "END_POINT"
+  },
+  {
+    "key": "odps.region.id",
+    "type": "string",
+    "default": "无",
+    "group": "连接",
+    "status": "SQL 可选",
+    "description": "V4 签名地域，按目标部署配置。",
+    "symbol": "REGION_ID"
+  },
+  {
+    "key": "odps.signature.corporation",
+    "type": "string",
+    "default": "aliyun",
+    "group": "连接",
+    "status": "SQL 可选",
+    "description": "V4 签名主体，默认 aliyun；仅按部署要求修改。",
+    "symbol": "SIGNATURE_CORPORATION"
+  },
+  {
+    "key": "odps.credentials.provider",
+    "type": "string",
+    "default": "无",
+    "group": "连接",
+    "status": "SQL 可选",
+    "description": "ICredentialsProvider 实现类，所有相关进程安装同一类和依赖。",
+    "symbol": "CREDENTIALS_PROVIDER"
+  },
+  {
+    "key": "odps.credentials.provider.params",
+    "type": "map",
+    "default": "无",
+    "group": "连接",
+    "status": "SQL 可选",
+    "description": "提供者构造参数 Map；避免把真实密钥放入分享 SQL。",
+    "symbol": "CREDENTIALS_PROVIDER_PARAM"
+  },
+  {
+    "key": "odps.http.proxy",
+    "type": "string",
+    "default": "无",
+    "group": "连接",
+    "status": "SQL 可选",
+    "description": "HTTP 代理；当前显式 SQL Source 连接构造未传入。",
+    "symbol": "HTTP_PROXY"
+  },
+  {
+    "key": "odps.https.proxy",
+    "type": "string",
+    "default": "无",
+    "group": "连接",
+    "status": "SQL 可选",
+    "description": "HTTPS 代理；当前显式 SQL Source 连接构造未传入。",
+    "symbol": "HTTPS_PROXY"
+  },
+  {
+    "key": "odps.proxy.disable.resolver",
+    "type": "boolean",
+    "default": "false",
+    "group": "连接",
+    "status": "SQL 可选",
+    "description": "关闭代理本地 DNS 解析；当前 Source 构造路径未传入。",
+    "symbol": "ODPS_PROXY_DISABLE_RESOLVER"
+  },
+  {
+    "key": "odps.tunnel.end.point",
+    "type": "string",
+    "default": "空字符串",
+    "group": "连接",
+    "status": "SQL 可选",
+    "description": "显式 Tunnel endpoint；默认空字符串。",
+    "symbol": "TUNNEL_END_POINT"
+  },
+  {
+    "key": "odps.tunnel.quota.name",
+    "type": "string",
+    "default": "无",
+    "group": "连接",
+    "status": "SQL 可选",
+    "description": "指定 Tunnel 配额；Source 构造未传入，Sink 按 writer 路径验证。",
+    "symbol": "TUNNEL_QUOTA_NAME"
+  },
+  {
+    "key": "odps.namespace.schema",
+    "type": "boolean",
+    "default": "false",
+    "group": "连接",
+    "status": "SQL 可选",
+    "description": "启用三层命名空间；两段表路径将解释为 schema.table。",
+    "symbol": "ODPS_NAMESPACE_SCHEMA_ENABLE"
+  },
+  {
+    "key": "table.name",
+    "type": "string",
+    "default": "无",
+    "group": "连接",
+    "status": "SQL 必填",
+    "description": "必填表路径，目标表需存在；普通模式 table 或 project.table。",
+    "symbol": "TABLE_PATH"
+  },
+  {
+    "key": "compressCodec",
+    "type": "enum",
+    "default": "NO_COMPRESSION",
+    "group": "Source",
+    "status": "SQL 可选",
+    "description": "Source SDK Arrow 压缩枚举；按 SDK 支持的 codec 配置。",
+    "symbol": "COMPRESS_CODEC"
+  },
+  {
+    "key": "splitstrategy",
+    "type": "enum",
+    "default": "ROW_OFFSET",
+    "group": "Source",
+    "status": "SQL 可选",
+    "description": "BYTE_SIZE、ROW_OFFSET 或 BUCKET 存量拆分策略；增量路径强制 bucket，配置不会改变该行为。",
+    "symbol": "SPLIT_STRATEGY"
+  },
+  {
+    "key": "dynamicloadbalancing",
+    "type": "boolean",
+    "default": "false",
+    "group": "Source",
+    "status": "SQL 可选",
+    "description": "有界普通读取的 SDK 动态均衡；增量路径禁用。",
+    "symbol": "DYNAMIC_LOAD_BALANCING"
+  },
+  {
+    "key": "splitbytesize",
+    "type": "long",
+    "default": "268435456",
+    "group": "Source",
+    "status": "SQL 可选",
+    "description": "存量拆分请求大小，单位字节；默认 256 MiB。",
+    "symbol": "SPLIT_BYTE_SIZE"
+  },
+  {
+    "key": "splitrowoffsetgranularity",
+    "type": "int",
+    "default": "1",
+    "group": "Source",
+    "status": "SQL 可选",
+    "description": "SQL 接受的行偏移粒度选项；当前 Source 未读取此选项。",
+    "symbol": "SPLIT_ROW_OFFSET_GRANULARITY"
+  },
+  {
+    "key": "partition",
+    "type": "string",
+    "default": "无",
+    "group": "Source",
+    "status": "SQL 可选",
+    "description": "SQL 接受的历史分区选项；当前 Source 未读取，使用 scan.partition。",
+    "symbol": "PARTITION"
+  },
+  {
+    "key": "splitbatchreadsize",
+    "type": "int",
+    "default": "4096",
+    "group": "Source",
+    "status": "SQL 可选",
+    "description": "每批读取行数。",
+    "symbol": "SPLIT_BATCH_READ_SIZE"
+  },
+  {
+    "key": "continuousDiscoveryInterval",
+    "type": "duration",
+    "default": "60 s",
+    "group": "Source",
+    "status": "SQL 可选",
+    "description": "持续版本发现间隔；SQL 路径至少 30 s，与 CDC 构建周期不同。",
+    "symbol": "CONTINUOUS_DISCOVERY_INTERVAL"
+  },
+  {
+    "key": "maxSplitsPerTask",
+    "type": "int",
+    "default": "10",
+    "group": "Source",
+    "status": "SQL 可选",
+    "description": "枚举器待分配 split 的缓存目标，按任务数计算。",
+    "symbol": "SCAN_MAX_SPLITS_PER_TASK"
+  },
+  {
+    "key": "scan.partition.latest",
+    "type": "boolean",
+    "default": "false",
+    "group": "Source",
+    "status": "SQL 可选",
+    "description": "跟随最新发布分区；仅 CDC，要求显式就绪协议，切换会舍弃旧分区未读数据。",
+    "symbol": "SCAN_PARTITION_LATEST"
+  },
+  {
+    "key": "scan.partition.ready-mode",
+    "type": "string",
+    "default": "无",
+    "group": "Source",
+    "status": "SQL 可选",
+    "description": "最新分区必填 partition-visible，生产者保证可见即就绪。",
+    "symbol": "SCAN_PARTITION_READY_MODE"
+  },
+  {
+    "key": "scan.partition",
+    "type": "string",
+    "default": "无",
+    "group": "Source",
+    "status": "SQL 可选",
+    "description": "一个显式分区规范，例如 pt=0；与最新分区跟随互斥。",
+    "symbol": "SCAN_PARTITION"
+  },
+  {
+    "key": "scan.mode",
+    "type": "enum",
+    "default": "latest",
+    "group": "Source",
+    "status": "SQL 可选",
+    "description": "bounded、incremental、latest、latest-full、from-snapshot、from-timestamp；from-snapshot-full 流读取未实现。",
+    "symbol": "SCAN_MODE"
+  },
+  {
+    "key": "scan.snapshot-version",
+    "type": "long",
+    "default": "无",
+    "group": "Source",
+    "status": "SQL 可选",
+    "description": "from-snapshot 起点，非负 long；batch 历史快照选择当前未接入。",
+    "symbol": "SCAN_SNAPSHOT_VERSION"
+  },
+  {
+    "key": "scan.timestamp",
+    "type": "string",
+    "default": "无",
+    "group": "Source",
+    "status": "SQL 可选",
+    "description": "from-timestamp 起点，yyyy-MM-dd HH:mm:ss.SSS；按服务时区，batch 历史时点未接入。",
+    "symbol": "SCAN_TIMESTAMP"
+  },
+  {
+    "key": "scan.incremental.mode",
+    "type": "enum",
+    "default": "APPEND",
+    "group": "Source",
+    "status": "SQL 可选",
+    "description": "APPEND 或 CDC；有界 CDC 的 SQL changelog 契约待修复。",
+    "symbol": "SCAN_INCREMENTAL_MODE"
+  },
+  {
+    "key": "scan.incremental-between",
+    "type": "string",
+    "default": "无",
+    "group": "Source",
+    "status": "SQL 可选",
+    "description": "有界版本区间 start,end，左开右闭；与时间区间择一。",
+    "symbol": "INCREMENTAL_BETWEEN"
+  },
+  {
+    "key": "scan.incremental-between-timestamp",
+    "type": "string",
+    "default": "无",
+    "group": "Source",
+    "status": "SQL 可选",
+    "description": "有界时间区间，毫秒格式；同时填版本时版本参数优先。",
+    "symbol": "INCREMENTAL_BETWEEN_TIMESTAMP"
+  },
+  {
+    "key": "sink.operation",
+    "type": "string",
+    "default": "insert",
+    "group": "Sink",
+    "status": "SQL 可选",
+    "description": "insert 追加，upsert 需 Flink 主键；其他枚举值无推荐独立 SQL writer。",
+    "symbol": "SINK_OPERATION"
+  },
+  {
+    "key": "sink.parallelism",
+    "type": "int",
+    "default": "无",
+    "group": "Sink",
+    "status": "SQL 可选",
+    "description": "Sink 并行度；未指定时由 planner 推导。",
+    "symbol": "SINK_PARALLELISM"
+  },
+  {
+    "key": "sink.partition",
+    "type": "string",
+    "default": "无",
+    "group": "Sink",
+    "status": "SQL 可选",
+    "description": "静态分区规范；与 Flink 分区定义一起核对。",
+    "symbol": "SINK_PARTITION"
+  },
+  {
+    "key": "sink.dynamic-partition.limit",
+    "type": "int",
+    "default": "100",
+    "group": "Sink",
+    "status": "SQL 可选",
+    "description": "legacy 动态分区数量限制，按实际 writer 核验。",
+    "symbol": "SINK_DYNAMIC_PARTITION_LIMIT"
+  },
+  {
+    "key": "sink.group-partition.enable",
+    "type": "boolean",
+    "default": "false",
+    "group": "Sink",
+    "status": "SQL 可选",
+    "description": "legacy 分区分组开关。",
+    "symbol": "SINK_GROUP_PARTITION"
+  },
+  {
+    "key": "sink.file-cached.enable",
+    "type": "boolean",
+    "default": "false",
+    "group": "文件缓存",
+    "status": "SQL 可选",
+    "description": "协调式文件缓存 writer 开关；需要本地磁盘。",
+    "symbol": "SINK_FILE_CACHED_ENABLE"
+  },
+  {
+    "key": "sink.commit.async.enable",
+    "type": "boolean",
+    "default": "false",
+    "group": "Sink",
+    "status": "SQL 可选",
+    "description": "legacy 异步提交开关，按 writer 验证恢复语义。",
+    "symbol": "SINK_ASYNC_COMMIT_ENABLE"
+  },
+  {
+    "key": "sink.partition.default-value",
+    "type": "string",
+    "default": "__DEFAULT_PARTITION__",
+    "group": "Sink",
+    "status": "SQL 可选",
+    "description": "动态 STRING 分区 null 或空值的替换值。",
+    "symbol": "PARTITION_DEFAULT_VALUE"
+  },
+  {
+    "key": "sink.partition.assigner.class",
+    "type": "string",
+    "default": "无",
+    "group": "Sink",
+    "status": "SQL 可选",
+    "description": "自定义 PartitionAssigner 实现类。",
+    "symbol": "PARTITION_ASSIGNER_CLASS"
+  },
+  {
+    "key": "upsert.write.bucket.num",
+    "type": "int",
+    "default": "无",
+    "group": "Sink",
+    "status": "SQL 可选",
+    "description": "legacy upsert 写入 bucket 数量。",
+    "symbol": "UPSERT_WRITE_BUCKET_NUM"
+  },
+  {
+    "key": "upsert.write.slot-num",
+    "type": "int",
+    "default": "1",
+    "group": "Sink",
+    "status": "SQL 可选",
+    "description": "legacy upsert 写入 slot 数量。",
+    "symbol": "UPSERT_WRITE_SLOT_NUM"
+  },
+  {
+    "key": "upsert.writer.thread-num",
+    "type": "int",
+    "default": "1",
+    "group": "未注册",
+    "status": "SQL 不接受",
+    "description": "源码定义但 SQL 工厂未注册，不可放入 SQL WITH。",
+    "symbol": "UPSERT_WRITER_THREAD_NUM"
+  },
+  {
+    "key": "upsert.writer.connection.limit",
+    "type": "int",
+    "default": "1",
+    "group": "未注册",
+    "status": "SQL 不接受",
+    "description": "源码定义但 SQL 工厂未注册，不可放入 SQL WITH。",
+    "symbol": "UPSERT_WRITER_CONNECTION_LIMIT"
+  },
+  {
+    "key": "upsert.writer.bucket.buffer-size",
+    "type": "memory",
+    "default": "1mb",
+    "group": "Sink",
+    "status": "SQL 可选",
+    "description": "legacy upsert 单 bucket 缓冲大小。",
+    "symbol": "UPSERT_WRITER_BUCKET_BUFFER_SIZE"
+  },
+  {
+    "key": "upsert.writer.buffer-size",
+    "type": "memory",
+    "default": "64mb",
+    "group": "Sink",
+    "status": "SQL 可选",
+    "description": "legacy upsert writer 总缓冲上限。",
+    "symbol": "UPSERT_WRITER_MAX_BUFFER_SIZE"
+  },
+  {
+    "key": "upsert.writer.max-retries",
+    "type": "int",
+    "default": "3",
+    "group": "Sink",
+    "status": "SQL 可选",
+    "description": "legacy upsert flush 最大重试次数。",
+    "symbol": "UPSERT_WRITER_FLUSH_MAX_RETRIES"
+  },
+  {
+    "key": "upsert.commit.thread-num",
+    "type": "int",
+    "default": "16",
+    "group": "Sink",
+    "status": "SQL 可选",
+    "description": "legacy upsert 提交线程数。",
+    "symbol": "UPSERT_COMMIT_THREAD_NUM"
+  },
+  {
+    "key": "upsert.commit.max-retries",
+    "type": "int",
+    "default": "3",
+    "group": "Sink",
+    "status": "SQL 可选",
+    "description": "legacy upsert 提交重试次数。",
+    "symbol": "UPSERT_COMMIT_MAX_RETRIES"
+  },
+  {
+    "key": "upsert.commit.timeout",
+    "type": "int",
+    "default": "600",
+    "group": "Sink",
+    "status": "SQL 可选",
+    "description": "legacy upsert SDK 异步提交超时，单位秒。",
+    "symbol": "UPSERT_COMMIT_TIMEOUT"
+  },
+  {
+    "key": "upsert.flush.concurrent",
+    "type": "int",
+    "default": "2",
+    "group": "Sink",
+    "status": "SQL 可选",
+    "description": "legacy upsert flush 并发配置。",
+    "symbol": "UPSERT_FLUSH_CONCURRENT"
+  },
+  {
+    "key": "upsert.nio.thread-num",
+    "type": "int",
+    "default": "1",
+    "group": "Sink",
+    "status": "SQL 可选",
+    "description": "legacy upsert Netty event loop 线程数。",
+    "symbol": "UPSERT_NIO_THREAD_NUM"
+  },
+  {
+    "key": "upsert.major-compact.enable",
+    "type": "boolean",
+    "default": "false",
+    "group": "Sink",
+    "status": "SQL 可选",
+    "description": "legacy upsert major compact 开关。",
+    "symbol": "UPSERT_MAJOR_COMPACT_ENABLE"
+  },
+  {
+    "key": "upsert.major-compact.min-commits",
+    "type": "int",
+    "default": "100",
+    "group": "Sink",
+    "status": "SQL 可选",
+    "description": "触发 major compact 的最少提交次数。",
+    "symbol": "UPSERT_MAJOR_COMPACT_MIN_COMMITS"
+  },
+  {
+    "key": "upsert.partial-column.enable",
+    "type": "boolean",
+    "default": "false",
+    "group": "Sink",
+    "status": "SQL 可选",
+    "description": "legacy 部分列更新；Storage writer 不支持该路径。",
+    "symbol": "UPSERT_PARTIAL_COLUMN_ENABLE"
+  },
+  {
+    "key": "upsert.partial-column.name",
+    "type": "string",
+    "default": "无",
+    "group": "Sink",
+    "status": "SQL 可选",
+    "description": "legacy 部分列更新的列名配置，与 enable 配合使用。",
+    "symbol": "UPSERT_PARTIAL_COLUMN_NAME"
+  },
+  {
+    "key": "insert.streaming-tunnel.enable",
+    "type": "boolean",
+    "default": "false",
+    "group": "Sink",
+    "status": "SQL 可选",
+    "description": "Streaming Tunnel 追加；自动开启 standalone，需 insert 语义。",
+    "symbol": "INSERT_STREAMING_TUNNEL_ENABLE"
+  },
+  {
+    "key": "insert.streaming-tunnel.slot-num",
+    "type": "int",
+    "default": "0",
+    "group": "Sink",
+    "status": "SQL 可选",
+    "description": "Streaming Tunnel slot 数量，默认 0，按 SDK 和目标服务核验。",
+    "symbol": "INSERT_STREAMING_TUNNEL_SLOT_NUM"
+  },
+  {
+    "key": "insert.arrow-writer.enable",
+    "type": "boolean",
+    "default": "false",
+    "group": "Sink",
+    "status": "SQL 可选",
+    "description": "legacy 追加 Arrow writer 开关。",
+    "symbol": "INSERT_ARROW_WRITER_ENABLE"
+  },
+  {
+    "key": "insert.arrow-writer.batch-size",
+    "type": "long",
+    "default": "512",
+    "group": "Sink",
+    "status": "SQL 可选",
+    "description": "legacy Arrow 写入批行数。",
+    "symbol": "INSERT_ARROW_WRITE_BATCH_SIZE"
+  },
+  {
+    "key": "insert.writer.buffer-size",
+    "type": "memory",
+    "default": "64mb",
+    "group": "Sink",
+    "status": "SQL 可选",
+    "description": "追加 writer 缓冲；legacy Tunnel 要求至少 1 MiB。",
+    "symbol": "INSERT_WRITER_BUFFER_SIZE"
+  },
+  {
+    "key": "insert.writer.max-pending-buffers",
+    "type": "int",
+    "default": "1",
+    "group": "Sink",
+    "status": "SQL 可选",
+    "description": "异步上传在途缓冲上限；增大时需评估内存。",
+    "symbol": "INSERT_WRITER_MAX_PENDING_BUFFERS"
+  },
+  {
+    "key": "insert.arrow-writer.flush-interval",
+    "type": "long",
+    "default": "100000",
+    "group": "Sink",
+    "status": "SQL 可选",
+    "description": "legacy Arrow writer flush 间隔，单位毫秒。",
+    "symbol": "INSERT_ARROW_WRITER_FLUSH_INTERVAL"
+  },
+  {
+    "key": "insert.commit.thread-num",
+    "type": "int",
+    "default": "16",
+    "group": "Sink",
+    "status": "SQL 可选",
+    "description": "legacy 追加提交线程数。",
+    "symbol": "INSERT_COMMIT_THREAD_NUM"
+  },
+  {
+    "key": "sink.async-flush.thread-num",
+    "type": "int",
+    "default": "4",
+    "group": "Sink",
+    "status": "SQL 可选",
+    "description": "动态 Streaming Tunnel 异步 flush 线程数。",
+    "symbol": "SINK_ASYNC_FLUSH_THREAD_NUM"
+  },
+  {
+    "key": "sink.file-cached.writer.num",
+    "type": "int",
+    "default": "16",
+    "group": "文件缓存",
+    "status": "SQL 可选",
+    "description": "文件缓存 writer 数量。",
+    "symbol": "SINK_THREAD_NUM"
+  },
+  {
+    "key": "sink.bucket.check-interval",
+    "type": "long",
+    "default": "60000",
+    "group": "Sink",
+    "status": "SQL 可选",
+    "description": "legacy bucket 检查间隔，单位毫秒。",
+    "symbol": "SINK_BUCKET_CHECK_INTERVAL"
+  },
+  {
+    "key": "sink.meta.cache.time",
+    "type": "int",
+    "default": "4000",
+    "group": "Sink",
+    "status": "SQL 可选",
+    "description": "legacy 元数据缓存容量；名称含 time，但类型和用途是条目数量。",
+    "symbol": "SINK_META_CACHE_SIZE"
+  },
+  {
+    "key": "sink.meta.cache.expire.time",
+    "type": "int",
+    "default": "1200",
+    "group": "Sink",
+    "status": "SQL 可选",
+    "description": "legacy 元数据缓存过期配置，单位秒。",
+    "symbol": "SINK_META_EXPIRE_TIME"
+  },
+  {
+    "key": "sink.file-cached.memory",
+    "type": "memory",
+    "default": "64m",
+    "group": "文件缓存",
+    "status": "SQL 可选",
+    "description": "文件缓存内存预算。",
+    "symbol": "SINK_FILE_CACHE_MEMORY"
+  },
+  {
+    "key": "sink.file-cached.memory.segment-size",
+    "type": "memory",
+    "default": "128kb",
+    "group": "文件缓存",
+    "status": "SQL 可选",
+    "description": "文件缓存内存分段大小。",
+    "symbol": "SINK_FILE_MEMORY_SEGMENT_SIZE"
+  },
+  {
+    "key": "sink.file-cached.write.max-retries",
+    "type": "int",
+    "default": "3",
+    "group": "文件缓存",
+    "status": "SQL 可选",
+    "description": "文件缓存写入重试次数。",
+    "symbol": "SINK_FILE_WRITER_MAX_RETRIES"
+  },
+  {
+    "key": "sink.file-cached.rolling.max-size",
+    "type": "memory",
+    "default": "16m",
+    "group": "文件缓存",
+    "status": "SQL 可选",
+    "description": "文件缓存滚动文件大小阈值。",
+    "symbol": "SINK_FILE_ROLLING_MAX_SIZE"
+  },
+  {
+    "key": "sink.file-cached.flush.always",
+    "type": "boolean",
+    "default": "true",
+    "group": "文件缓存",
+    "status": "SQL 可选",
+    "description": "文件缓存 flush 开关，按实际 writer 核验。",
+    "symbol": "SINK_FILE_FLUSH_ALWAYS"
+  },
+  {
+    "key": "sink.file-cached.tmp.dirs",
+    "type": "string",
+    "default": "./local",
+    "group": "文件缓存",
+    "status": "SQL 可选",
+    "description": "本地临时目录，所有 writer 进程需具备可写空间。",
+    "symbol": "SINK_FILE_TMP_DIRS"
+  },
+  {
+    "key": "sink.file-cached.file-threshold",
+    "type": "memory",
+    "default": "4m",
+    "group": "文件缓存",
+    "status": "SQL 可选",
+    "description": "文件状态数据大小阈值。",
+    "symbol": "STATE_FILE_THRESHOLD"
+  },
+  {
+    "key": "sink.standalone.enable",
+    "type": "boolean",
+    "default": "false",
+    "group": "Sink",
+    "status": "SQL 可选",
+    "description": "legacy 子任务独立会话；保留协调器但减少通信，需验证状态兼容。",
+    "symbol": "SINK_STANDALONE_ENABLE"
+  },
+  {
+    "key": "sink.coordinator.enable",
+    "type": "boolean",
+    "default": "true",
+    "group": "Sink",
+    "status": "SQL 可选",
+    "description": "false 选择 Storage 写入路径；源码标为 deprecated，切换涉及状态兼容。",
+    "symbol": "SINK_COORDINATOR_ENABLE"
+  },
+  {
+    "key": "sink.retry.times",
+    "type": "int",
+    "default": "3",
+    "group": "Sink",
+    "status": "SQL 可选",
+    "description": "Sink 网络 IO 重试次数，按 writer 路径生效。",
+    "symbol": "RETRY_MAX_TIMES"
+  },
+  {
+    "key": "sink.retry.delay",
+    "type": "long",
+    "default": "2000",
+    "group": "Sink",
+    "status": "SQL 可选",
+    "description": "网络 IO 重试间隔，单位毫秒。",
+    "symbol": "RETRY_DELAY_MILLIS"
+  },
+  {
+    "key": "sink.compress.algorithm",
+    "type": "string",
+    "default": "zlib",
+    "group": "Sink",
+    "status": "SQL 可选",
+    "description": "legacy Sink 压缩算法，默认 zlib。",
+    "symbol": "SINK_COMPRESS_ALGO"
+  },
+  {
+    "key": "sink.idle-partition.timeout",
+    "type": "long",
+    "default": "10（源码数值）",
+    "group": "未注册",
+    "status": "SQL 不接受",
+    "description": "源码定义但 SQL 工厂未注册；默认表达式结果为 10，不作可用 SQL 配置。",
+    "symbol": "SINK_IDLE_PARTITION_TIMEOUT"
+  },
+  {
+    "key": "scan.disk-spill.enabled",
+    "type": "boolean",
+    "default": "false",
+    "group": "Source",
+    "status": "SQL 可选",
+    "description": "Source 磁盘溢写缓冲；需运行 SDK 支持并核验磁盘空间。",
+    "symbol": "SCAN_DISK_SPILL_ENABLED"
+  },
+  {
+    "key": "scan.disk-spill.memory-capacity",
+    "type": "int",
+    "default": "64",
+    "group": "Source",
+    "status": "SQL 可选",
+    "description": "溢写前内存最多保存的 Arrow 批次数。",
+    "symbol": "SCAN_DISK_SPILL_MEMORY_CAPACITY"
+  },
+  {
+    "key": "scan.disk-spill.max-bytes",
+    "type": "long",
+    "default": "10737418240",
+    "group": "Source",
+    "status": "SQL 可选",
+    "description": "磁盘溢写总字节上限，默认 10 GiB。",
+    "symbol": "SCAN_DISK_SPILL_MAX_BYTES"
+  },
+  {
+    "key": "sink.flush.timeout",
+    "type": "duration",
+    "default": "30 s",
+    "group": "Sink",
+    "status": "SQL 可选",
+    "description": "Sink flush 超时；按实际 writer 路径核验。",
+    "symbol": "SINK_FLUSH_MAX_INTERVAL"
+  },
+  {
+    "key": "sink.read.timeout",
+    "type": "duration",
+    "default": "120 s",
+    "group": "Sink",
+    "status": "SQL 可选",
+    "description": "Sink SDK 网络读取超时，与重试和背压一起评估。",
+    "symbol": "READ_TIMEOUT"
+  },
+  {
+    "key": "sink.dynamic-shuffle.enable",
+    "type": "boolean",
+    "default": "false",
+    "group": "Sink",
+    "status": "SQL 可选",
+    "description": "仅 Storage 动态分区主键写入的流量感知路由。",
+    "symbol": "SINK_DYNAMIC_SHUFFLE_ENABLE"
+  },
+  {
+    "key": "sink.shuffle.bucket-only.enable",
+    "type": "boolean",
+    "default": "false",
+    "group": "Sink",
+    "status": "SQL 可选",
+    "description": "仅 Storage 主键写入实验路由；分区表不保证主键正确性。",
+    "symbol": "SINK_SHUFFLE_BUCKET_ONLY_ENABLE"
+  },
+  {
+    "key": "type",
+    "type": "string",
+    "default": "无",
+    "group": "Catalog",
+    "status": "Catalog 必填",
+    "description": "Catalog 工厂选择标识，固定为 maxcompute。",
+    "symbol": "OdpsCatalogFactory"
+  },
+  {
+    "key": "default-database",
+    "type": "string",
+    "default": "odps.conf 中的项目",
+    "group": "Catalog",
+    "status": "Catalog 可选",
+    "description": "Catalog 默认数据库／项目。",
+    "symbol": "OdpsCatalogFactory"
+  },
+  {
+    "key": "odps-conf-dir",
+    "type": "string",
+    "default": "环境变量或 classpath",
+    "group": "Catalog",
+    "status": "Catalog 可选",
+    "description": "odps.conf 所在目录；未指定时查找 ODPS_CONF_DIR，再回退 classpath。",
+    "symbol": "OdpsCatalogFactory"
+  }
+]

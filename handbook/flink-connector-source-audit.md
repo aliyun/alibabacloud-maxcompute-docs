@@ -80,3 +80,15 @@ metadata keys、produced data type 和 watermark 会被保存。batch 分支使�
 - [JAR 下载页](assets/flink-connector/latest-downloads.jpg)
 
 - [提示框渲染验证](assets/flink-connector/warning-rendered.jpg)
+
+## 参数完整性核对
+
+总览和配置参考页共用参数数据与可搜索表格。逐项对照 SQL 工厂 required／optional 集合，共 88 个选项，无遗漏、无重复；另列 connector 标识、3 个 Catalog 配置及 3 个未注册定义，共 95 项。未注册的 upsert.writer.thread-num、upsert.writer.connection.limit、sink.idle-partition.timeout 不作为可运行 SQL 参数。partition 和 splitrowoffsetgranularity 虽注册，但当前 Source 无读取调用；已在表中标明。
+
+对照本次分析快照的文件摘要：
+
+| 文件                                           | SHA-256                                                            |
+| ---------------------------------------------- | ------------------------------------------------------------------ |
+| `table/OdpsOptions.java`                       | `eabab3038b1ffac874aa0bb37ee39b89e4892d27fdf237bb18bc96a61accfa3e` |
+| `table/factories/OdpsDynamicTableFactory.java` | `5f4a4c93d318293b7d8cc9bf18b49a2ce890cd43b5e6d895945646ae5e98748d` |
+| `catalog/factories/OdpsCatalogFactory.java`    | `839ce8e6617641b53af2235a5a970a66565f222f134c3def21a19009af01334c` |
