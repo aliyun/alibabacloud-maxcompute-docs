@@ -125,6 +125,7 @@
     "WebDAV",
     "whl",
     "windsurf",
-    "xattr"
+    "xattr",
+    "TBLPROPERTIES"
   ]
 }

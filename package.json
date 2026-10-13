@@ -21,10 +21,11 @@
     "spellcheck": "cspell --no-progress --no-summary \"**/*.{md,mdx,ts,tsx,json,yml,yaml}\"",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "validate": "npm run format:check && npm run lint:md && npm run spellcheck && npm run check:docs && npm run check:products && npm run check:search && npm run typecheck",
+    "validate": "npm run format:check && npm run lint:md && npm run spellcheck && npm run check:docs && npm run check:flink-guide && npm run check:products && npm run check:search && npm run typecheck",
     "ci": "npm run validate && npm run build",
     "write-translations": "docusaurus write-translations",
-    "write-heading-ids": "docusaurus write-heading-ids"
+    "write-heading-ids": "docusaurus write-heading-ids",
+    "check:flink-guide": "node scripts/check-flink-guide.mjs"
   },
   "dependencies": {
     "@docusaurus/core": "3.10.2",

@@ -94,6 +94,9 @@ export default function FlinkLanding(): ReactNode {
           <Link className={styles.primary} to={`${base}/quickstart/`}>
             运行第一个 SQL 作业 <ArrowRight aria-hidden="true" size={18} />
           </Link>
+          <Link className={styles.secondary} to={`${base}/incremental-guide/`}>
+            按步骤学习增量读取
+          </Link>
           <Link className={styles.secondary} to={`${base}/modes/`}>
             比较全部模式
           </Link>

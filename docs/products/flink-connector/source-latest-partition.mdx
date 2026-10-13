@@ -12,6 +12,8 @@ sidebar_position: 9
 
 最新分区模式用于持续跟随按序发布的分区。它启动于当前字典序最大的分区，之后按序处理新发现的分区。它读取 CDC 变更，不会自动补齐所有旧分区的存量。
 
+首次使用先完成[增量环境准备](./incremental-prerequisites.mdx)，再进入[交互操作向导](./incremental-guide.mdx)生成模板和核验结果。
+
 ## 前提与限制
 
 目标必须是分区主键事务表（主键 Delta 表，或具备相应能力的主键 DLMV），运行在 `streaming` 模式，选择 CDC。普通表、Append Delta 表和非分区表不支持此模式。

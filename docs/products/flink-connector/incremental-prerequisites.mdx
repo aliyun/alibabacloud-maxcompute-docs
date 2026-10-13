@@ -1,0 +1,90 @@
+---
+title: 准备增量读取环境
+description: 安装 Connector、启动 Flink Standalone、确认 Storage API 与权限，准备同步或异步 CDC 主键表，并取得真实读取版本和时间范围。
+product: flink-connector
+doc_type: how-to
+status: draft
+tags:
+  - flink-connector
+  - incremental
+sidebar_position: 6
+---
+
+增量读取需要目标服务的 Storage API（开放存储接口）、可读取的 Delta Table（支持事务和版本变化的表）以及匹配的 Flink Connector。先在独立测试项目核验，再使用[增量读取操作向导](./incremental-guide.mdx)生成 SQL。
+
+## 安装并启动 Flink
+
+本空间配方对应 Connector 1.20.0 候选与 Flink 1.20.4／JDK 17。历史 1.16–1.17 系列共用另一个 latest 包，不能把本空间新增模式直接当作旧包能力。完成[JAR 获取](./downloads.mdx)和[构建安装](./installation.mdx)后，在本地 Standalone 发行包中启动：
+
+```bash
+export FLINK_HOME=/path/to/flink-1.20.4
+"$FLINK_HOME/bin/start-cluster.sh"
+"$FLINK_HOME/bin/sql-client.sh"
+```
+
+这两个启动命令用于本地 Standalone；集群部署方式不同则使用对应运维入口。确认 Flink 作业管理界面可访问，SQL Client 与 TaskManager 都加载相同 JAR。具体操作见 [Flink SQL Client](https://nightlies.apache.org/flink/flink-docs-release-1.20/zh/docs/dev/table/sqlclient/)。
+
+## 确认服务能力与权限
+
+请项目管理员确认目标环境可使用 [Storage API](https://help.aliyun.com/zh/maxcompute/open-storage-overview-1)、表支持所选增量表达、用户可以读取元数据和数据，并执行获取版本的 SQL。普通存量读取成功不等于 CDC 已开启。
+
+Client 与实际 TaskManager 均需可访问服务地址并取得凭据。凭据提供者要完整安装到每个相关进程；SQL 字符串不自动展开环境变量。当前 Source 的配额传递存在限制，要求固定配额路由的环境先核验实际请求路径，见[连接与认证](./connection.mdx)。
+
+## 准备同步 CDC 练习表
+
+以下在 **MaxCompute SQL** 执行，使用全新的测试表名。同步 CDC 适合本页的 SQL 操作练习，不能用于 Tunnel 实时写入。
+
+```sql
+CREATE TABLE flink_incremental_demo (
+  id BIGINT NOT NULL PRIMARY KEY,
+  val STRING
+)
+TBLPROPERTIES (
+  'transactional' = 'true',
+  'acid.cdc.mode.enable' = 'true',
+  'acid.cdc.build.async' = 'false',
+  'cdc.data.retain.hours' = '24'
+);
+```
+
+建表后确认主键、事务属性和 CDC 构建方式。当前官方 CDC 说明建议使用 `MERGE INTO` 新增和更新数据；向导采用这一操作方式，不依赖旧例中的 INSERT passthrough 属性。详见 [Delta Table CDC](https://help.aliyun.com/zh/maxcompute/user-guide/change-data-capture)。
+
+## 使用异步 CDC
+
+若源表含 Tunnel 实时写入，则采用异步 CDC。创建另一张测试表时，将同步设置替换为：
+
+```sql
+'acid.cdc.build.async' = 'true',
+'acid.cdc.build.interval' = '300'
+```
+
+服务端构建周期与 Flink 的 `continuousDiscoveryInterval` 是两层等待，调整 Flink 轮询不能消除服务端 CDC 尚未构建的等待。向导会按所选构建方式生成建表 SQL。
+
+## 取得版本与可读范围
+
+以下在 **MaxCompute SQL** 执行。跨项目使用 `project.table`，启用 schema 时使用 `project.schema.table`，替换占位符：
+
+```sql
+SELECT get_latest_version('<project_name>.flink_incremental_demo');
+SHOW HISTORY FOR TABLE <project_name>.flink_incremental_demo;
+```
+
+有界版本回放时，先记录实际起点版本，再产生变化并记录终点版本；不要直接使用说明中的 `1,5` 或 `5,10`。版本与时间区间均为 `(start, end]`。读取范围需要处于服务的保留范围内，CDC 历史与普通表历史保留设置分别核对。
+
+历史版本获取和时间区间规则见 [Delta Table 查询说明](https://help.aliyun.com/zh/maxcompute/timetravel-query-and-incremental-query)。Connector 的 batch 历史快照选择尚未接入，本页的版本回放指变更区间。
+
+## 打开两个 SQL 窗口
+
+| 窗口             | 操作                                                                   |
+| ---------------- | ---------------------------------------------------------------------- |
+| MaxCompute SQL   | 建表、查版本、MERGE 新增、UPDATE 更新、DELETE 测试主键、检查源表最终值 |
+| Flink SQL Client | 选择执行模式、注册临时映射、执行 SELECT，并观察 changelog 或有界结果   |
+
+CDC 变化展示使用：
+
+```sql
+SET 'execution.runtime-mode' = 'streaming';
+SET 'sql-client.execution.result-mode' = 'changelog';
+```
+
+持续模式先确认 Source 建立起点，再产生测试变化。对于 `latest-full`，先准备初始数据、确认读到快照，再验证后续变化。完整步骤和预期结果见[操作向导](./incremental-guide.mdx)。

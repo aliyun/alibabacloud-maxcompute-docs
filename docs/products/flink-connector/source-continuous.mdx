@@ -12,6 +12,8 @@ sidebar_position: 8
 
 持续 Source 周期性发现表的新版本并读取增量，不会在读取当前数据后自动结束。目标表必须是带主键的事务表，并具备所选增量模式的服务端能力。
 
+首次使用先完成[增量环境准备](./incremental-prerequisites.mdx)，再进入[交互操作向导](./incremental-guide.mdx)生成模板和核验结果。
+
 ## 选择启动位置
 
 | `scan.mode`      | 初次启动行为                                   | 必要补充参数            |
@@ -29,6 +31,7 @@ sidebar_position: 8
 
 ```sql
 SET 'execution.runtime-mode' = 'streaming';
+SET 'sql-client.execution.result-mode' = 'changelog';
 SET 'execution.checkpointing.interval' = '60 s';
 
 CREATE TABLE mc_live (
