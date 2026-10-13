@@ -1,0 +1,119 @@
+.concepts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+.concepts section {
+  padding: 1.3rem;
+  border: 1px solid #d8e3ec;
+  border-radius: 12px;
+  background: #f2f8fc;
+}
+.concepts section:last-child {
+  background: #f1f8f4;
+}
+.concepts span {
+  color: #526c7b;
+  font-size: 0.85rem;
+}
+.concepts h3 {
+  margin: 0.7rem 0;
+}
+.concepts p {
+  font-size: 0.92rem;
+}
+.parameters {
+  min-width: 0;
+}
+.controls {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1rem;
+  padding: 1rem;
+  background: #f3f7fa;
+  border-radius: 10px;
+}
+.controls label {
+  display: grid;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+.controls input[type='search'],
+.controls select {
+  width: 100%;
+  min-width: 0;
+  padding: 0.7rem;
+  border: 1px solid #b9cad5;
+  border-radius: 6px;
+  background: white;
+  color: #27384c;
+  font-size: 0.9rem;
+}
+.controls .checkbox {
+  display: flex;
+  align-items: center;
+  grid-column: 1 / -1;
+}
+.scroll {
+  overflow-x: auto;
+  max-width: 100%;
+  border: 1px solid #dce5ec;
+  border-radius: 8px;
+}
+.scroll table {
+  display: table;
+  width: 100%;
+  min-width: 640px;
+  margin: 0;
+  font-size: 0.85rem;
+}
+.scroll caption {
+  text-align: left;
+  padding: 0.8rem;
+  font-weight: 700;
+  background: #eef5fa;
+}
+.scroll th,
+.scroll td {
+  vertical-align: top;
+  padding: 0.75rem;
+}
+.scroll th:first-child {
+  width: 30%;
+  overflow-wrap: anywhere;
+}
+.scroll th:last-child {
+  width: 40%;
+}
+.scroll code {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+.scroll small {
+  display: block;
+  margin-top: 0.4rem;
+  color: #526273;
+}
+.scroll .warning {
+  color: #995400;
+  font-weight: 700;
+}
+.note {
+  margin-top: 1rem;
+  color: #526273;
+  font-size: 0.88rem;
+}
+.parameters input:focus-visible,
+.parameters select:focus-visible,
+.scroll:focus-visible {
+  outline: 3px solid #2a72a5;
+  outline-offset: 3px;
+}
+@media (max-width: 640px) {
+  .concepts,
+  .controls {
+    grid-template-columns: 1fr;
+  }
+}

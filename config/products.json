@@ -129,7 +129,7 @@
           "href": "/docs/products/flink-connector/quickstart/"
         },
         {
-          "label": "模式总览",
+          "label": "Source / Sink 总览",
           "href": "/docs/products/flink-connector/modes/"
         },
         {
