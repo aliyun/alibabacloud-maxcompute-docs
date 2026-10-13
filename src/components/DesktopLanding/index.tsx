@@ -9,6 +9,7 @@ import Link from '@docusaurus/Link';
 import Heading from '@theme/Heading';
 import registry from '@site/config/products.json';
 import ProductIcon from '@site/src/components/ProductIcon';
+import {useReveal} from '@site/src/lib/motion';
 
 import styles from './styles.module.css';
 
@@ -169,6 +170,22 @@ type ProductEntry = {
 };
 
 export default function DesktopLanding(): ReactNode {
+  const heroRef = useReveal<HTMLElement>(':scope > *', {
+    y: 22,
+    stagger: 0.09,
+    start: 'top 88%',
+  });
+  const downloadsRef = useReveal<HTMLElement>(':scope > *', {
+    y: 24,
+    stagger: 0.08,
+    start: 'top 90%',
+  });
+  const archRef = useReveal<HTMLDivElement>(':scope > *', {
+    x: 24,
+    y: 0,
+    stagger: 0.08,
+    start: 'top 90%',
+  });
   const product = (registry.products as ProductEntry[]).find(
     (entry) => entry.id === 'desktop',
   );
@@ -177,7 +194,7 @@ export default function DesktopLanding(): ReactNode {
 
   return (
     <div className={styles.landing}>
-      <section className={styles.hero}>
+      <section className={styles.hero} ref={heroRef}>
         <div className={styles.heroIcon}>
           <ProductIcon name="desktop" size={34} />
         </div>
@@ -213,7 +230,7 @@ export default function DesktopLanding(): ReactNode {
         </div>
       </section>
 
-      <section className={styles.downloads}>
+      <section className={styles.downloads} ref={downloadsRef}>
         {DOWNLOADS.map((item) => (
           <Link
             key={item.platform}
@@ -246,7 +263,7 @@ export default function DesktopLanding(): ReactNode {
         <p className={styles.sectionDesc}>
           单击架构中的模块，进入对应的文档页面。
         </p>
-        <div className={styles.archLayers}>
+        <div className={styles.archLayers} ref={archRef}>
           {ARCH_LAYERS.map((layer) => (
             <div key={layer.label} className={styles.archLayer}>
               <div className={styles.archLayerLabel}>

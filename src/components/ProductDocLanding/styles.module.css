@@ -1,29 +1,29 @@
 .landing {
-  --product-accent: #e85d04;
-  --product-accent-soft: #fff1e7;
+  --product-accent: #f59e0b;
+  --product-accent-soft: rgba(245, 158, 11, 0.12);
   display: grid;
   gap: 1.35rem;
   max-width: 980px;
 }
 
 .orange {
-  --product-accent: #e85d04;
-  --product-accent-soft: #fff1e7;
+  --product-accent: #f59e0b;
+  --product-accent-soft: rgba(245, 158, 11, 0.12);
 }
 
 .blue {
-  --product-accent: #2772d4;
-  --product-accent-soft: #eaf3ff;
+  --product-accent: #3b82f6;
+  --product-accent-soft: rgba(59, 130, 246, 0.12);
 }
 
 .violet {
-  --product-accent: #7057d9;
-  --product-accent-soft: #f0edff;
+  --product-accent: #8b5cf6;
+  --product-accent-soft: rgba(139, 92, 246, 0.12);
 }
 
 .green {
-  --product-accent: #238a68;
-  --product-accent-soft: #e8f7f1;
+  --product-accent: #10b981;
+  --product-accent-soft: rgba(16, 185, 129, 0.12);
 }
 
 .hero {

@@ -1,4 +1,29 @@
 :root {
+  --ifm-color-primary: #f59e0b;
+  --ifm-color-primary-dark: #d97706;
+  --ifm-color-primary-darker: #b45309;
+  --ifm-color-primary-darkest: #78350f;
+  --ifm-color-primary-light: #fbbf24;
+  --ifm-color-primary-lighter: #fcd34d;
+  --ifm-color-primary-lightest: #fde68a;
+  --ifm-font-family-base:
+    Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    sans-serif;
+  --ifm-heading-font-weight: 720;
+  --ifm-code-font-size: 95%;
+  --ifm-navbar-height: 4.6rem;
+  --docusaurus-highlighted-code-line-bg: rgba(255, 255, 255, 0.08);
+  --mc-bg: #0b0f19;
+  --mc-bg-elevated: #111827;
+  --mc-ink: #f5f7fb;
+  --mc-muted: #9aa4b6;
+  --mc-border: rgba(255, 255, 255, 0.1);
+  --mc-surface: rgba(255, 255, 255, 0.03);
+  --mc-card: #151b29;
+  --mc-grid: rgba(255, 255, 255, 0.06);
+}
+
+[data-theme='light'] {
   --ifm-color-primary: #e85d04;
   --ifm-color-primary-dark: #d55304;
   --ifm-color-primary-darker: #c94f03;
@@ -6,44 +31,35 @@
   --ifm-color-primary-light: #fb6908;
   --ifm-color-primary-lighter: #fc7419;
   --ifm-color-primary-lightest: #fd9147;
-  --ifm-font-family-base:
-    Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI',
-    sans-serif;
-  --ifm-heading-font-weight: 720;
-  --ifm-code-font-size: 95%;
-  --ifm-navbar-height: 4.6rem;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+  --mc-bg: #f7f8fb;
+  --mc-bg-elevated: #fff;
   --mc-ink: #172033;
   --mc-muted: #5d687c;
   --mc-border: #e2e7f0;
-  --mc-surface: #f7f8fb;
+  --mc-surface: #f1f4f9;
   --mc-card: #fff;
   --mc-grid: rgba(69, 84, 115, 0.12);
 }
 
-[data-theme='dark'] {
-  --ifm-color-primary: #ff873d;
-  --ifm-color-primary-dark: #ff7625;
-  --ifm-color-primary-darker: #ff6e18;
-  --ifm-color-primary-darkest: #df4f00;
-  --ifm-color-primary-light: #ff9855;
-  --ifm-color-primary-lighter: #ffa062;
-  --ifm-color-primary-lightest: #ffba89;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
-  --mc-ink: #f5f7fb;
-  --mc-muted: #aeb8ca;
-  --mc-border: #30394b;
-  --mc-surface: #161c28;
-  --mc-card: #1a2130;
-  --mc-grid: rgba(255, 255, 255, 0.08);
+html {
+  background: var(--mc-bg);
+}
+
+body {
+  background: var(--mc-bg);
 }
 
 .navbar {
   padding-inline: 1.5rem;
-  background: color-mix(in srgb, var(--ifm-background-color) 96%, transparent);
+  background: color-mix(in srgb, var(--mc-bg) 86%, transparent);
   border-bottom: 1px solid var(--mc-border);
-  box-shadow: none;
-  backdrop-filter: blur(12px);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.04) inset;
+  backdrop-filter: blur(16px);
+}
+
+[data-theme='light'] .navbar {
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04) inset;
 }
 
 .navbar__inner {
@@ -59,13 +75,19 @@
 }
 
 .navbar__title {
+  color: var(--mc-ink);
   font-weight: 720;
   letter-spacing: -0.02em;
 }
 
 .navbar__link {
+  color: var(--mc-muted);
   font-size: 0.9rem;
   font-weight: 580;
+}
+
+.navbar__link:hover {
+  color: var(--mc-ink);
 }
 
 .navbar__item {
@@ -91,7 +113,13 @@
 }
 
 .footer--dark {
-  --ifm-footer-background-color: #101725;
+  --ifm-footer-background-color: var(--mc-bg);
+  border-top: 1px solid var(--mc-border);
+}
+
+[data-theme='light'] .footer--dark {
+  --ifm-footer-link-color: var(--mc-ink);
+  --ifm-footer-title-color: var(--mc-ink);
 }
 
 @media screen and (max-width: 1280px) {
@@ -105,7 +133,6 @@
 }
 
 /* ===== Sidebar category hierarchy enhancement ===== */
-/* Category headers */
 .theme-doc-sidebar-menu
   .theme-doc-sidebar-item-category
   > .menu__list-item-collapsible {
@@ -150,7 +177,7 @@
   .menu__link--active {
   color: var(--ifm-color-primary);
   font-weight: 700;
-  background: #fff1e7;
+  background: rgba(245, 158, 11, 0.1);
 }
 
 /* Hover on leaf */

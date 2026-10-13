@@ -3,6 +3,12 @@ import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {ArrowRight, MagnifyingGlass, X} from '@phosphor-icons/react';
 import Link from '@docusaurus/Link';
 import generatedSearchIndex from '@site/src/generated/search-index.json';
+import {
+  EASE_OUT,
+  ensureGsap,
+  prefersReducedMotion,
+  useIsomorphicLayoutEffect,
+} from '@site/src/lib/motion';
 
 import styles from './styles.module.css';
 
@@ -44,6 +50,7 @@ export function DocSearchTrigger({
   const [query, setQuery] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
+  const dialogRef = useRef<HTMLElement>(null);
 
   const close = useCallback(() => {
     setOpen(false);
@@ -61,6 +68,17 @@ export function DocSearchTrigger({
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, [close, open]);
+
+  useIsomorphicLayoutEffect(() => {
+    if (!open || prefersReducedMotion()) return undefined;
+    const dialog = dialogRef.current;
+    if (!dialog) return undefined;
+    const {gsap} = ensureGsap();
+    const ctx = gsap.context(() => {
+      gsap.from(dialog, {y: -14, autoAlpha: 0, duration: 0.3, ease: EASE_OUT});
+    }, dialog);
+    return () => ctx.revert();
+  }, [open]);
 
   const results = useMemo(() => {
     const normalized = query.trim().toLocaleLowerCase('zh-CN');
@@ -93,6 +111,7 @@ export function DocSearchTrigger({
             aria-modal="true"
             className={styles.dialog}
             onMouseDown={(event) => event.stopPropagation()}
+            ref={dialogRef}
             role="dialog"
           >
             <div className={styles.searchBox}>

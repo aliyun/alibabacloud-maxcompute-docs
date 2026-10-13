@@ -44,7 +44,18 @@
           "status": {"enum": ["draft", "published", "deprecated"]},
           "owner": {"type": "string", "pattern": "^@[^\\s]+$"},
           "icon": {"enum": ["terminal", "robot", "desktop", "cube"]},
-          "accent": {"enum": ["orange", "blue", "violet", "green"]},
+          "accent": {
+            "enum": [
+              "orange",
+              "blue",
+              "violet",
+              "green",
+              "cyan",
+              "amber",
+              "emerald"
+            ]
+          },
+          "category": {"enum": ["ai", "interface", "connector"]},
           "featured": {"type": "boolean"},
           "navigation": {
             "type": "array",

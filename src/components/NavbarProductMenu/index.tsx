@@ -3,9 +3,16 @@ import {useEffect, useRef, useState} from 'react';
 import {CaretDown, Plus} from '@phosphor-icons/react';
 import Link from '@docusaurus/Link';
 import registry from '@site/config/products.json';
+import {productCategories} from '@site/src/config/product-categories';
 import ProductIcon, {
   type ProductIconName,
 } from '@site/src/components/ProductIcon';
+import {
+  EASE_OUT,
+  ensureGsap,
+  prefersReducedMotion,
+  useIsomorphicLayoutEffect,
+} from '@site/src/lib/motion';
 
 import styles from './styles.module.css';
 
@@ -16,7 +23,8 @@ type ProductEntry = {
   description: string;
   href: string;
   icon: ProductIconName;
-  accent: 'orange' | 'blue' | 'violet' | 'green';
+  accent: 'orange' | 'blue' | 'violet' | 'green' | 'cyan' | 'amber' | 'emerald';
+  category?: 'ai' | 'interface' | 'connector';
   navigation: Array<{label: string; href: string}>;
 };
 
@@ -26,6 +34,12 @@ type NavbarProductMenuProps = {
   onClick?: () => void;
 };
 
+const categoryGradient: Record<string, string> = {
+  ai: 'violet',
+  interface: 'cyan',
+  connector: 'amber',
+};
+
 export default function NavbarProductMenu({
   label = '产品文档',
   mobile = false,
@@ -33,7 +47,32 @@ export default function NavbarProductMenu({
 }: NavbarProductMenuProps): ReactNode {
   const [open, setOpen] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
+  const mobilePanelRef = useRef<HTMLDivElement>(null);
   const products = registry.products as ProductEntry[];
+
+  useIsomorphicLayoutEffect(() => {
+    if (!open) return undefined;
+    const panel = mobile ? mobilePanelRef.current : panelRef.current;
+    if (!panel || prefersReducedMotion()) return undefined;
+    const {gsap} = ensureGsap();
+    const columns = panel.querySelectorAll(
+      `.${styles.productColumn}, .${styles.categoryColumn}, .${styles.expansionColumn}, .${styles.mobileProduct}`,
+    );
+    const ctx = gsap.context(() => {
+      gsap.from(panel, {y: -10, autoAlpha: 0, duration: 0.3, ease: EASE_OUT});
+      gsap.from(columns, {
+        y: 12,
+        autoAlpha: 0,
+        duration: 0.36,
+        ease: EASE_OUT,
+        stagger: 0.05,
+        delay: 0.04,
+        clearProps: 'opacity,visibility,transform',
+      });
+    }, panel);
+    return () => ctx.revert();
+  }, [mobile, open]);
 
   useEffect(() => {
     if (!open) return undefined;
@@ -63,6 +102,15 @@ export default function NavbarProductMenu({
     setOpen((value) => !value);
   };
 
+  const productsByCategory = (categoryId: string) =>
+    products.filter((product) => product.category === categoryId);
+
+  const placeholdersByCategory = (categoryId: string) => {
+    const realIds = new Set(productsByCategory(categoryId).map((p) => p.id));
+    const category = productCategories.find((c) => c.id === categoryId);
+    return category?.items.filter((item) => !realIds.has(item.id)) ?? [];
+  };
+
   if (mobile) {
     return (
       <li className={styles.mobileListItem}>
@@ -81,20 +129,23 @@ export default function NavbarProductMenu({
             />
           </button>
           {open ? (
-            <div className={styles.mobilePanel}>
-              {products.map((product) => (
-                <section className={styles.mobileProduct} key={product.id}>
-                  <Link onClick={closeAfterNavigation} to={product.href}>
-                    {product.name}
-                  </Link>
-                  {product.navigation.map((item) => (
+            <div className={styles.mobilePanel} ref={mobilePanelRef}>
+              {productCategories.map((category) => (
+                <section className={styles.mobileCategory} key={category.id}>
+                  <strong>{category.label}</strong>
+                  {productsByCategory(category.id).map((product) => (
                     <Link
-                      key={item.href}
+                      key={product.id}
                       onClick={closeAfterNavigation}
-                      to={item.href}
+                      to={product.href}
                     >
-                      {item.label}
+                      {product.name}
                     </Link>
+                  ))}
+                  {placeholdersByCategory(category.id).map((item) => (
+                    <span className={styles.mobileComingSoon} key={item.id}>
+                      {item.label}
+                    </span>
                   ))}
                 </section>
               ))}
@@ -136,33 +187,50 @@ export default function NavbarProductMenu({
 
       {open ? (
         <div className={styles.panel}>
-          <div className={styles.panelGrid}>
-            <div className={styles.productsGrid}>
-              {products.map((product) => (
-                <section
-                  className={`${styles.productColumn} ${styles[product.accent]}`}
-                  key={product.id}
-                >
-                  <div className={styles.productHeading}>
-                    <span className={styles.productIcon}>
-                      <ProductIcon name={product.icon} size={26} />
-                    </span>
-                    <div>
-                      <span className={styles.groupLabel}>产品文档</span>
+          <div className={styles.panelGrid} ref={panelRef}>
+            {productCategories.map((category) => (
+              <section
+                className={`${styles.categoryColumn} ${styles[categoryGradient[category.id]]}`}
+                key={category.id}
+              >
+                <div className={styles.categoryHeader}>
+                  <span>{category.label}</span>
+                  <small>{category.description}</small>
+                </div>
+                {productsByCategory(category.id).map((product) => (
+                  <div
+                    className={`${styles.productColumn} ${styles[product.accent]}`}
+                    key={product.id}
+                  >
+                    <div className={styles.productHeading}>
+                      <span className={styles.productIcon}>
+                        <ProductIcon name={product.icon} size={22} />
+                      </span>
                       <Link to={product.href}>{product.name}</Link>
                     </div>
+                    <div className={styles.productLinks}>
+                      {product.navigation.slice(0, 4).map((item) => (
+                        <Link key={item.href} to={item.href}>
+                          {item.label}
+                        </Link>
+                      ))}
+                    </div>
                   </div>
-                  <p>{product.description}</p>
-                  <div className={styles.productLinks}>
-                    {product.navigation.map((item) => (
-                      <Link key={item.href} to={item.href}>
-                        {item.label}
-                      </Link>
-                    ))}
-                  </div>
-                </section>
-              ))}
-            </div>
+                ))}
+                <div className={styles.placeholderList}>
+                  {placeholdersByCategory(category.id).map((item) => (
+                    <span
+                      className={`${styles.placeholderItem} ${styles[item.accent]}`}
+                      key={item.id}
+                    >
+                      <ProductIcon name={item.icon} size={18} />
+                      {item.label}
+                      <small>即将上线</small>
+                    </span>
+                  ))}
+                </div>
+              </section>
+            ))}
 
             <aside className={styles.expansionColumn}>
               <span className={styles.expansionIcon}>
