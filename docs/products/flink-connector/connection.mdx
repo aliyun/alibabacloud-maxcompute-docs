@@ -73,7 +73,7 @@ odps.access.key=<injected_access_key_secret>
 
 由部署的凭据机制生成受保护的配置文件，并一致挂载到 Client 与集群；占位符不能原样执行。当前文件读取只初始化基础连接字段，未把 provider、region 等属性填入专用字段。因此文件方式不能按上述 provider 模板配置无密钥认证，需要凭据提供者时先使用显式 SQL 表映射。不要提交真实凭据文件。
 
-:::caution 当前配置边界
+:::caution[当前配置边界]
 
 SQL 工厂接受 `odps.tunnel.quota.name` 及代理参数，但当前显式凭据构造路径未完整传入 Source 使用的连接对象。Source 读取不能据此认定已使用指定配额或代理；Sink 的另一条配置路径会读取配额，需按实际 writer 分开验证。配置文件的配额与 provider 字段同样需要修复后核验。
 

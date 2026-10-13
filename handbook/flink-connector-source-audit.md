@@ -60,13 +60,13 @@ metadata keys、produced data type 和 watermark 会被保存。batch 分支使�
 - 首轮探针误用默认 Configuration 的 streaming 值，并假定空配额是 null，导致两个断言失败。修正探针为显式 BATCH 和比较实际指定配额后通过；未修改产品代码来迎合断言。
 - 1.20.0 候选以 JDK 17 执行 `-Ppublic,release-artifacts clean verify`：166 个离线检查和 4 个隔离分发 JAR 消费者检查通过。没有运行 Emulator／云端增量矩阵，也不以本次 JaCoCo 输出作为覆盖率门槛；隔离消费者导致一项类执行数据匹配警告。
 - `tools/check-public.py` candidate 检查通过，95 个捆绑组件；JavaCsv 2.0 再分发审查仍未关闭。未上传 1.20.0 到 OSS 或 Central。
-- 文档下载目录来自 OSS 全量列举，73 个非空对象的未签名 HEAD 均为 HTTP 200；最新别名以 ETag 与内容长度匹配具体产物。另验证 CDC pipeline JAR 下载可达。
+- 下载页只保留三个 latest 系列入口，均通过未签名 HEAD 验证，并以 ETag 与内容长度核对其当前版本。
 
 ## 文档质量审查
 
 按安全、用户视角、内容准确、信息完整、主题结构、语言、标点、视觉、可译性与 SEO 十个维度检查。无真实密钥、内部 endpoint 或业务数据；所有能力回溯实现，模拟器与云端验证分开描述。操作页面含输入、步骤、预期结果和失败处理，所有 SQL 占位符标明需要替换。
 
-反模式扫描未保留营销承诺、无来源性能数据或多方案无选型；图片的 Source／Sink 方向、时间线和中文文字已人工检查，并配替代文本与正文表格。格式、Markdown、拼写、front matter、产品登记、搜索索引、TypeScript 和生产站构建由 `npm run ci` 验证。
+反模式扫描未保留营销承诺、无来源性能数据或多方案无选型；图片的 Source／Sink 方向、时间线和中文文字已人工检查，并配替代文本与正文表格。格式、Markdown、拼写、front matter、产品登记、搜索索引、TypeScript 和生产站构建由 `npm run ci` 验证。提示框使用 `:::warning[标题]`／`:::caution[标题]`，并检查构建 HTML 中实际生成的提示框，避免构建成功但语法仍作为普通文本显示。
 
 审查方法参见 [文档测试 Checklist](https://icms.alibaba-inc.com/portal/spec/gcs/t2356239.html) 和 [绘图规范](https://icms.alibaba-inc.com/portal/spec/gcs/t18937.html)。用户文档不依赖这些内部规范链接。文档保持 draft，真实产品发布责任组与云端能力验收仍需维护者确认。
 
@@ -77,4 +77,6 @@ metadata keys、produced data type 和 watermark 会被保存。batch 分支使�
 - [桌面首页](assets/flink-connector/desktop-home.jpg)
 - [移动首页](assets/flink-connector/mobile-home.jpg)
 - [模式与时间线](assets/flink-connector/desktop-modes.jpg)
-- [JAR 下载页](assets/flink-connector/desktop-downloads.jpg)
+- [JAR 下载页](assets/flink-connector/latest-downloads.jpg)
+
+- [提示框渲染验证](assets/flink-connector/warning-rendered.jpg)

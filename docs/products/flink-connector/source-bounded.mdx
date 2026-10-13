@@ -72,7 +72,7 @@ SELECT id FROM mc_partitioned WHERE ds = '20261013' LIMIT 100;
 
 先构造两个分区的少量不同数据，确认指定分区只返回目标数据，再扩展到业务规模。检查行数、字段值和 Source 结束状态。
 
-:::warning 历史快照限制
+:::warning[历史快照限制]
 
 当前 batch 路径没有将 `scan.snapshot-version` 或 `scan.timestamp` 接入快照会话。不要在 batch 下使用 `from-snapshot`、`from-timestamp`、`from-snapshot-full` 期望取得历史时点的数据；它们可能读取当前快照。有界变更区间使用[有界增量](./source-incremental.mdx)。
 

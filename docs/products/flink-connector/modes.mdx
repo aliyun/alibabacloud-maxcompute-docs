@@ -29,7 +29,7 @@ sidebar_position: 2
 
 持续模式详见[持续增量 Source](./source-continuous.mdx)。`scan.incremental.mode=APPEND` 与 `CDC` 决定区间的变更表达，不改变作业的有界性；不要把 APPEND 当作更新与删除的完整同步模式。
 
-:::warning 容易误选的模式
+:::warning[容易误选的模式]
 
 普通表、无主键事务表在 `streaming` 下会回退到有界读取，不能靠设置 `latest` 获得持续增量。`from-snapshot-full` 的流读取显式不支持。当前 batch 路径没有接入历史快照选择，不能用 `from-snapshot` 或 `from-timestamp` 做历史时点快照查询。Lookup Join 没有实现。
 

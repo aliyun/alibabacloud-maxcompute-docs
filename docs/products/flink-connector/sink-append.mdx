@@ -70,7 +70,7 @@ SELECT id, v, ds FROM events_input;
 
 `events_input` 由实际上游 Connector 注册。如果查询产生更新或删除（例如持续聚合），不要直接接追加目标；改用支持变化行的主键 Sink。
 
-:::warning 恢复和重跑可能重复
+:::warning[恢复和重跑可能重复]
 
 追加写入按至少一次恢复设计。写入成功但响应丢失、作业重试或重跑都可能产生重复记录。业务要求唯一事件时，需要应用主键或去重策略。checkpoint 不等于端到端 exactly-once。
 

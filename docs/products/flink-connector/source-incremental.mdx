@@ -57,7 +57,7 @@ SELECT id, v FROM mc_changes;
 | `APPEND`（默认） | 读取追加增量 | 不用于完整同步更新与删除           |
 | `CDC`            | 读取变更操作 | 目标服务必须支持；下游需接受变化行 |
 
-:::warning 有界 CDC 的 SQL 契约待修复
+:::warning[有界 CDC 的 SQL 契约待修复]
 
 当前 batch Source 的 SQL changelog 声明为 insert-only，而底层 CDC 读取器可以发出更新／删除 RowKind。二者可能导致 planner 接受不兼容的下游，或产生错误统计。此版本先使用 APPEND 有界示例；有界 CDC 不作为可直接上线的 SQL 配方，需要修复并在真实服务校验变更类型与下游结果。
 

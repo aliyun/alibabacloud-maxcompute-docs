@@ -51,7 +51,7 @@ SELECT id, v FROM sample /*+ OPTIONS('scan.mode'='bounded') */;
 
 源码包含表与分区的创建、删除、修改及缓存失效逻辑，具体组合需按目标服务验收。建议先在测试项目验证表结构读取、分区列表和 schema 命名空间，再开放 DDL 权限。
 
-:::warning Catalog DDL 修改真实对象
+:::warning[Catalog DDL 修改真实对象]
 
 通过 Catalog 执行创建、修改或删除操作可能修改真实 MaxCompute 表与分区。与 default catalog 中只注册 Connector 映射的 `CREATE TABLE ... WITH` 区分开；先确认当前 Catalog 和项目，不在业务表上试运行删除操作。
 

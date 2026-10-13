@@ -73,7 +73,7 @@ SELECT id, v FROM mc_live;
 
 `scan.incremental.mode` 默认 APPEND；同步更新和删除时应明确选择 CDC 并核验底层服务。当前持续 SQL Source 声明全部 changelog 类型；下游需要按真实变化设计。
 
-:::caution metadata 与 watermark
+:::caution[metadata 与 watermark]
 
 Source 对外列出了 `bucket_id`、`bucket_time` metadata 并接受 watermark 下推，但当前持续分支未把它们接入 Continuous Source。不要在此模式依赖 metadata 列或下推 watermark 驱动事件时间计算；需要修复后验证。普通数据列的增量读取与这一限制分开验收。
 
