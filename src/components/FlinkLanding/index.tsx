@@ -98,7 +98,7 @@ export default function FlinkLanding(): ReactNode {
             按步骤学习增量读取
           </Link>
           <Link className={styles.secondary} to={`${base}/modes/`}>
-            比较全部模式
+            Source、Sink 与完整参数
           </Link>
         </div>
         <div className={styles.baseline}>

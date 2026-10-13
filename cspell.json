@@ -126,6 +126,7 @@
     "whl",
     "windsurf",
     "xattr",
-    "TBLPROPERTIES"
+    "TBLPROPERTIES",
+    "splitrowoffsetgranularity"
   ]
 }
