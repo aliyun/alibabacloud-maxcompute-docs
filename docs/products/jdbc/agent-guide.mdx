@@ -1,0 +1,49 @@
+---
+title: MaxCompute JDBC Agent 执行指南
+description: 为 Agent 提供 MaxCompute JDBC 执行前输入、最小验证、成功判据和停止条件。
+product: jdbc
+doc_type: how-to
+status: draft
+tags:
+  - jdbc
+  - maxcompute
+sidebar_position: 7
+---
+
+## 执行前输入
+
+JDK、驱动与 SDK 实际版本、查询模式、项目、Endpoint、是否需要 STS。 凭据只检查是否由授权机制提供，不输出原值。缺少项目、Endpoint、目标对象或写入授权时，先完成本地检查，再报告所缺输入。
+
+## 最小执行顺序
+
+1. 读取本空间[快速开始](./quickstart.mdx)与[配置参考](./reference.mdx)，按实际版本核对参数。
+2. 先编译快速开始的 Java 程序；再运行常量 SELECT，要求数值、字符串、NULL 与结果耗尽检查通过。
+3. 授权范围只读时使用 Statement/PreparedStatement 的 SELECT 路径，关闭 ResultSet、Statement 和 Connection。
+4. 记录本地准备、连接、SQL/模型运行、结果读回各层状态。失败后读取作业或对象状态，再决定下一动作。
+
+## 成功与停止条件
+
+- 成功：命令正常结束，实际返回值或目标数据符合预期，资源已关闭；授权写入还须读回并记录清理状态。
+- 配置或身份缺失：停止依赖该输入的操作，保留已完成的本地检查。
+- 认证、权限、quota、类加载或版本不匹配：报告具体失败层，使用[故障排查](./troubleshooting.mdx)，避免循环重试。
+- 提交结果不明确：先查服务端状态；不把客户端超时解释为“未执行”。
+
+## 记录格式
+
+下面是输出格式示例，各字段填写实际观察值：
+
+```json
+{
+  "component": "jdbc",
+  "version": "<observed_version>",
+  "local_check": "PASS | FAIL | NOT_RUN",
+  "connection": "PASS | FAIL | NOT_RUN",
+  "execution": "PASS | FAIL | NOT_RUN",
+  "readback": "PASS | FAIL | NOT_RUN",
+  "cleanup": "PASS | FAIL | NOT_APPLICABLE",
+  "evidence": ["<sanitized_summary>"],
+  "next_action": "<specific_action>"
+}
+```
+
+只填实际结果。构建和站点校验通过不能填成云端执行 PASS；不把凭据、签名链接或客户数据写入输出。

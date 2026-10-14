@@ -1,0 +1,136 @@
+---
+title: dbt 快速开始
+description: 创建最小 dbt 项目并在测试项目构建一个 SQL 表模型，执行数据测试并生成文档。
+product: dbt
+doc_type: quickstart
+status: draft
+tags:
+  - dbt
+  - maxcompute
+sidebar_position: 2
+---
+
+本例会在你指定的测试项目与 schema 中创建 `hello_maxcompute` 表。`table` 物化每次构建会重建目标，所以先确认该表名可以由 dbt 管理，不使用已有业务表。
+
+## 1. 安装并固定版本
+
+准备 Python 3.11，在新目录建立虚拟环境：
+
+```shell
+python -m venv .venv
+```
+
+Linux/macOS 执行 `source .venv/bin/activate`；Windows PowerShell 执行 `.venv\Scripts\Activate.ps1`。然后安装：
+
+```shell
+python -m pip install "dbt-maxcompute==1.11.2" "dbt-core>=1.11.2,<1.12"
+dbt --version
+```
+
+输出应显示 MaxCompute Adapter 1.11.2 和兼容的 dbt Core 1.11.x。安装本身不验证服务连接。
+
+## 2. 创建文件
+
+```text
+maxcompute_demo/
+  dbt_project.yml
+  profiles.yml
+  .gitignore
+  models/
+    hello_maxcompute.sql
+    schema.yml
+```
+
+进入 `maxcompute_demo`，保存 `dbt_project.yml`：
+
+```yaml
+name: maxcompute_demo
+version: '1.0.0'
+config-version: 2
+profile: maxcompute_demo
+model-paths: ['models']
+models:
+  maxcompute_demo:
+    +materialized: table
+```
+
+保存 `profiles.yml`，所有值从运行环境获取：
+
+```yaml
+maxcompute_demo:
+  target: dev
+  outputs:
+    dev:
+      type: maxcompute
+      project: "{{ env_var('MAXCOMPUTE_PROJECT') }}"
+      schema: "{{ env_var('MAXCOMPUTE_SCHEMA', 'default') }}"
+      endpoint: "{{ env_var('MAXCOMPUTE_ENDPOINT') }}"
+      auth_type: access_key
+      access_key_id: "{{ env_var('ALIBABA_CLOUD_ACCESS_KEY_ID') }}"
+      access_key_secret: "{{ env_var('ALIBABA_CLOUD_ACCESS_KEY_SECRET') }}"
+      threads: 1
+```
+
+准备这些环境变量：测试项目、已存在且可访问的 schema、对应地域/网络的 Endpoint、已授权身份的 AccessKey。凭据由已有管理机制注入，勿写明文进 Profile。Endpoint 参见[官方列表](https://help.aliyun.com/zh/maxcompute/user-guide/endpoints)。
+
+保存 `models/hello_maxcompute.sql`：
+
+```sql
+select
+  cast(1 as bigint) as id,
+  cast('hello' as string) as message
+```
+
+保存 `models/schema.yml`：
+
+```yaml
+version: 2
+models:
+  - name: hello_maxcompute
+    description: 最小 MaxCompute SQL 表模型。
+    columns:
+      - name: id
+        data_tests:
+          - not_null
+          - unique
+      - name: message
+        data_tests:
+          - not_null
+```
+
+保存 `.gitignore`：
+
+```gitignore
+.venv/
+profiles.yml
+target/
+logs/
+```
+
+## 3. 分阶段运行
+
+以下命令都在包含 `dbt_project.yml` 的目录执行：
+
+```shell
+dbt parse --profiles-dir .
+dbt debug --profiles-dir .
+dbt build --profiles-dir . --select hello_maxcompute
+dbt docs generate --profiles-dir .
+```
+
+- `parse` 验证项目解析，不证明连接或模型 SQL 有效。
+- `debug` 检查配置和连接；成功仍不代表全部模型权限通过。
+- `build` 运行所选模型和数据测试。应看到模型成功、三项测试通过，以及 `target/run_results.json` 中的成功状态。
+- `docs generate` 生成文档与 catalog；会访问元数据，也可能失败于元数据权限。
+
+`run_results.json` 的 `rows_affected` 不是 MaxCompute 可靠的写入数量。数据测试和实际读回是另一层证据。
+
+## 4. 读回与清理
+
+用你已有的 MaxCompute SQL 客户端读取最终表，替换项目和 schema：
+
+```sql
+SELECT id, message FROM <test_project>.<schema>.hello_maxcompute LIMIT 10;
+```
+
+期望一行 `1, hello`。不使用 schema 层级的项目按实际表名规则读取。`dbt clean` 只清理配置的本地产物，不删除云端表；确认本次测试表可删除后，再用 SQL 客户端清理该表。

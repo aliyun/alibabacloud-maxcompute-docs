@@ -4,11 +4,14 @@
 
 当前阶段交付平台骨架与贡献契约。产品页面允许先提供入口和目录，再由对应维护者补充经过验证的内容。
 
-## 一期产品
+## 产品文档
 
 - MaxCompute CLI（`cli`）
 - MaxCompute MCP Server（`mcp-server`）
 - MaxCompute Desktop（`desktop`）
+- Flink Connector（`flink-connector`）
+- JDBC、ODBC、Spark Connector、dbt-maxcompute
+- [SDK 官方文档](https://aliyun.github.io/aliyun-odps-java-sdk/)（外链）
 - MaxCompute Flink Connector（`flink-connector`，文档草稿）
 
 后续候选范围只记录在 [handbook/roadmap.md](handbook/roadmap.md)，未完成接入评审前不创建公开入口。

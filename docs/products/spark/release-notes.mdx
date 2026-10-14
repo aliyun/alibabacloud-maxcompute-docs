@@ -1,0 +1,29 @@
+---
+title: MaxCompute Spark Connector 版本与升级
+description: 查阅 MaxCompute Spark Connector 上游发布入口并记录升级基线，区分源码、下载与实际运行验证。
+product: spark
+doc_type: release-note
+status: draft
+tags:
+  - spark
+  - maxcompute
+sidebar_position: 6
+---
+
+## 版本入口
+
+- [上游版本与变更记录](https://github.com/aliyun/aliyun-maxcompute-data-collectors/commits/master/spark-connector)
+- [下载或安装入口](https://help.aliyun.com/en/maxcompute/spark-connector)
+- [源码与问题反馈入口](https://github.com/aliyun/aliyun-maxcompute-data-collectors/tree/master/spark-connector)
+
+本空间的示例基线为 **源码所选 commit 与 POM 版本**。文档核对日期：**2026-10-13**。没有在本空间复制完整上游 release notes，避免多处记录漂移。
+
+## 升级检查
+
+1. 记录现有运行时、组件版本、配置与查询模式。
+2. 阅读目标版本说明，固定下载版本或源码 commit。
+3. 在隔离环境验证常量查询、目标小表、数据类型和权限。
+4. 使用写入能力时，另外核对提交、读回、重试和清理。
+5. 把依赖安装、连接成功、真实查询与生产切换分别记录。
+
+下载成功、构建成功或站点 CI 通过，都不是目标项目的运行验收。示例云端验证需由你的授权身份在目标环境执行。

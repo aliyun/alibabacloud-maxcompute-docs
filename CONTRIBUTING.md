@@ -35,7 +35,7 @@ npm run ci
 - 贡献流程放在根目录 `CONTRIBUTING.md` 和 `handbook/`，不混入面向用户的产品文档。
 - 平台维护决策放在 `handbook/`，不要混入用户内容。
 
-`<product-id>` 使用稳定的英文 kebab-case。一期使用 `cli`、`mcp-server` 和 `desktop`。展示名称放在 `_category_.json`、front matter 和产品注册表中。目录名一旦发布，不因中文名称或品牌文案调整而改变。
+`<product-id>` 使用稳定的英文 kebab-case。当前空间以 `config/products.json` 为准。展示名称放在 `_category_.json`、front matter 和产品注册表中。目录名一旦发布，不因中文名称或品牌文案调整而改变。
 
 ## Front matter
 

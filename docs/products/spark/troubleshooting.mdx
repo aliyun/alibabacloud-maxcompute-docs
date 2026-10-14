@@ -1,0 +1,27 @@
+---
+title: Spark Connector 故障排查
+description: 区分类加载、Catalog、元数据、Executor 网络和实际读写错误。
+product: spark
+doc_type: troubleshooting
+status: draft
+tags:
+  - spark
+  - maxcompute
+sidebar_position: 5
+---
+
+| 现象                                 | 检查                               | 最小动作                                 |
+| ------------------------------------ | ---------------------------------- | ---------------------------------------- |
+| 找不到 `OdpsTableCatalog`            | JAR 未加载或类名错误               | 核对 `--jars` 及 Catalog 全限定类名      |
+| `NoSuchMethodError` / Scala 链接错误 | Spark、Scala、SDK、Arrow 版本冲突  | 保存实际版本和依赖树，重建匹配组合       |
+| 找不到表或 namespace                 | 项目、schema 开关、表名层级        | 先 `SHOW TABLES`，再使用相同命名空间读取 |
+| 能列出表但数据读取失败               | 数据权限、provider、开放存储 quota | 小表读取，分别保存元数据与数据错误       |
+| 本地成功、集群失败                   | Executor 的 JAR、依赖、网络和身份  | 检查 Executor 日志与节点网络             |
+| 读取很慢或结果量意外增大             | 分区裁剪、下推、并行度与表规模     | `EXPLAIN` 并核对实际读取范围             |
+| 写入失败或重试出现重复               | 提交状态、写入模式、目标分区       | 先读回目标数据，再决定是否重试           |
+
+## 提供可复现信息
+
+记录 Spark/Scala/JDK 版本、Connector 来源 commit 或 JAR 校验值、部署模式、provider、脱敏配置键、SQL、Driver 与 Executor 的错误摘要。配置值中的凭据和签名链接需移除。
+
+向 [Data Collectors Issues](https://github.com/aliyun/aliyun-maxcompute-data-collectors/issues)反馈时，注明 `spark-connector` 模块，避免与旧 `spark-datasource-v3.1` 或集群内 Spark 混淆。失败的写入应先核对服务端状态，不能直接把 Spark 任务失败当成“未写入”。

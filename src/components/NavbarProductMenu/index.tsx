@@ -142,11 +142,21 @@ export default function NavbarProductMenu({
                       {product.name}
                     </Link>
                   ))}
-                  {placeholdersByCategory(category.id).map((item) => (
-                    <span className={styles.mobileComingSoon} key={item.id}>
-                      {item.label}
-                    </span>
-                  ))}
+                  {placeholdersByCategory(category.id).map((item) =>
+                    item.external ? (
+                      <a
+                        href={item.href}
+                        key={item.id}
+                        onClick={closeAfterNavigation}
+                      >
+                        {item.label} 官方文档 ↗
+                      </a>
+                    ) : (
+                      <span className={styles.mobileComingSoon} key={item.id}>
+                        {item.label}
+                      </span>
+                    ),
+                  )}
                 </section>
               ))}
               <Link
@@ -218,16 +228,27 @@ export default function NavbarProductMenu({
                   </div>
                 ))}
                 <div className={styles.placeholderList}>
-                  {placeholdersByCategory(category.id).map((item) => (
-                    <span
-                      className={`${styles.placeholderItem} ${styles[item.accent]}`}
-                      key={item.id}
-                    >
-                      <ProductIcon name={item.icon} size={18} />
-                      {item.label}
-                      <small>即将上线</small>
-                    </span>
-                  ))}
+                  {placeholdersByCategory(category.id).map((item) => {
+                    const content = (
+                      <>
+                        <ProductIcon name={item.icon} size={18} />
+                        {item.label}
+                        <small>
+                          {item.external ? '官方文档 ↗' : '即将上线'}
+                        </small>
+                      </>
+                    );
+                    const className = `${styles.placeholderItem} ${styles[item.accent]}`;
+                    return item.external ? (
+                      <a className={className} href={item.href} key={item.id}>
+                        {content}
+                      </a>
+                    ) : (
+                      <span className={className} key={item.id}>
+                        {content}
+                      </span>
+                    );
+                  })}
                 </div>
               </section>
             ))}

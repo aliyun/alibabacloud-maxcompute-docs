@@ -18,3 +18,7 @@
 /docs/products/mcp-server/ @odps
 /docs/products/desktop/ @odps
 /docs/products/flink-connector/ @odps
+/docs/products/jdbc/ @odps
+/docs/products/odbc/ @odps
+/docs/products/spark/ @odps
+/docs/products/dbt/ @odps

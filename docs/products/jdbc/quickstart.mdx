@@ -1,0 +1,134 @@
+---
+title: JDBC 快速开始
+description: 安装驱动并用一个可编译的 Java 程序执行只读查询，核对数字、字符串和空值。
+product: jdbc
+doc_type: quickstart
+status: draft
+tags:
+  - jdbc
+  - maxcompute
+sidebar_position: 2
+---
+
+本例先执行 `SELECT` 常量，不创建表。成功时输出 `1 hello true`，分别验证数值、文本与 SQL NULL。
+
+## 1. 准备连接信息
+
+准备 JDK 8 或更高版本、Maven，以及已经开通的 MaxCompute 项目。确认身份能访问项目并执行 SQL。
+
+| 环境变量                          | 内容                                      |
+| --------------------------------- | ----------------------------------------- |
+| `ALIBABA_CLOUD_ACCESS_KEY_ID`     | AccessKey ID，由已有凭据管理机制注入      |
+| `ALIBABA_CLOUD_ACCESS_KEY_SECRET` | AccessKey Secret，由已有凭据管理机制注入  |
+| `MAXCOMPUTE_ENDPOINT`             | 项目地域和网络对应的服务地址，包含 `/api` |
+| `MAXCOMPUTE_PROJECT`              | 项目名称                                  |
+
+Endpoint 以[官方地域与 Endpoint 列表](https://help.aliyun.com/zh/maxcompute/user-guide/endpoints)为准。下面的环境变量是示例程序的输入约定，Java 程序会显式映射到驱动 Properties。
+
+## 2. 创建 Maven 项目
+
+新建目录 `jdbc-quickstart`，在其中保存 `pom.xml`：
+
+```xml
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>example</groupId>
+  <artifactId>jdbc-quickstart</artifactId>
+  <version>1.0.0</version>
+  <properties>
+    <maven.compiler.source>8</maven.compiler.source>
+    <maven.compiler.target>8</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+  <dependencies>
+    <dependency>
+      <groupId>com.aliyun.odps</groupId>
+      <artifactId>odps-jdbc</artifactId>
+      <version>3.10.14</version>
+    </dependency>
+  </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.13.0</version>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>3.5.0</version>
+      </plugin>
+    </plugins>
+  </build>
+</project>
+```
+
+在 `src/main/java/JdbcQuickstart.java` 保存：
+
+```java
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.Properties;
+
+public class JdbcQuickstart {
+  private static String required(String name) {
+    String value = System.getenv(name);
+    if (value == null || value.trim().isEmpty()) {
+      throw new IllegalArgumentException("Missing environment variable: " + name);
+    }
+    return value;
+  }
+
+  public static void main(String[] args) throws Exception {
+    Properties props = new Properties();
+    props.setProperty("access_id", required("ALIBABA_CLOUD_ACCESS_KEY_ID"));
+    props.setProperty("access_key", required("ALIBABA_CLOUD_ACCESS_KEY_SECRET"));
+    props.setProperty("project_name", required("MAXCOMPUTE_PROJECT"));
+    props.setProperty("charset", "UTF-8");
+    Class.forName("com.aliyun.odps.jdbc.OdpsDriver");
+    String url = "jdbc:odps:" + required("MAXCOMPUTE_ENDPOINT");
+    try (Connection conn = DriverManager.getConnection(url, props);
+         Statement stmt = conn.createStatement();
+         ResultSet rs = stmt.executeQuery(
+             "SELECT 1 AS id, 'hello' AS message, CAST(NULL AS STRING) AS optional_value")) {
+      if (!rs.next()) throw new IllegalStateException("Expected one row");
+      long id = rs.getLong("id");
+      String message = rs.getString("message");
+      String optional = rs.getString("optional_value");
+      if (id != 1 || !"hello".equals(message) || optional != null) {
+        throw new IllegalStateException("Unexpected result");
+      }
+      System.out.println(id + " " + message + " " + (optional == null));
+      if (rs.next()) throw new IllegalStateException("Expected exactly one row");
+    }
+  }
+}
+```
+
+## 3. 编译并运行
+
+凭据已由你的环境注入后执行：
+
+```shell
+mvn -q compile exec:java -Dexec.mainClass=JdbcQuickstart
+```
+
+输出包含 `1 hello true` 即通过本例；驱动可能另有普通运行日志。不要打印 `props`、完整连接字符串或凭据。
+
+## 4. 读取已有表
+
+把示例 SQL 换成下面的形式，并替换表名和分区值：
+
+```sql
+SELECT id, message
+FROM <table_name>
+WHERE ds = '<partition_value>'
+LIMIT 10;
+```
+
+字段必须来自你的表结构。`LIMIT` 限制返回行数，分区条件用于控制扫描范围。结果数受驱动下载策略影响，继续阅读[配置参考](./reference.mdx)。

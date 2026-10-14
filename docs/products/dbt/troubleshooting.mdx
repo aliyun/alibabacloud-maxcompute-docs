@@ -1,0 +1,32 @@
+---
+title: dbt 故障排查
+description: 从 Python 安装、Profile、项目解析和云端模型运行逐层定位问题。
+product: dbt
+doc_type: troubleshooting
+status: draft
+tags:
+  - dbt
+  - maxcompute
+sidebar_position: 5
+---
+
+| 现象                       | 先检查                                     | 动作                                     |
+| -------------------------- | ------------------------------------------ | ---------------------------------------- |
+| 找不到 Adapter 或版本冲突  | 当前虚拟环境、Python、Core 与 Adapter 版本 | `python -m pip check` 与 `dbt --version` |
+| Profile 找不到             | `profile` 名称、工作目录、`--profiles-dir` | 使用快速开始的明确目录参数               |
+| 环境变量缺失               | `env_var` 名称与当前进程环境               | 只报告变量是否存在，不输出值             |
+| `dbt parse` 失败           | YAML、模型命名、ref/source 定义            | 修复本地配置再连服务                     |
+| `dbt debug` 连接失败       | Endpoint、项目、schema、身份               | 核对授权项目与凭据有效期                 |
+| 连接成功，build 失败       | 目标表权限、编译 SQL、quota、SQL 类型      | 看失败节点和服务端作业 ID                |
+| incremental 出现重复或丢数 | unique_key、源批次去重、水位、迟到数据     | 先读回差异，不自动 full-refresh          |
+| docs generate 失败         | 元数据权限、对象范围                       | 模型成功与 catalog 成功分别记录          |
+
+## MaxFrame 可选依赖
+
+本空间入门仅使用 SQL。Python/MaxFrame 路径遇到 Arrow/NumPy 导入错误时，先核对实际安装版本与[上游 MaxFrame 指南](https://github.com/aliyun/dbt-maxcompute/blob/master/docs/maxframe-python-models.md)。不要在已有工程中盲目升级所有 Python 依赖；可选功能也不能由 SQL build 成功推导可用。
+
+## 故障证据与恢复
+
+保留 `dbt --version`、失败节点、脱敏编译 SQL、作业 ID 和 `run_results.json` 状态摘要。不要提交完整日志、Profile 或客户数据。Adapter 不提供整个 DAG 的原子回滚；失败后先确认哪些模型完成，再选择范围恢复。
+
+向 [dbt-maxcompute Issues](https://github.com/aliyun/dbt-maxcompute/issues)反馈。重建目标的 `--full-refresh` 必须确认数据保留、物理表属性与影响范围，不作为自动修错的默认选项。

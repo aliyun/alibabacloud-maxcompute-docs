@@ -1,6 +1,7 @@
 import {themes as prismThemes} from 'prism-react-renderer';
 import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
+import registry from './config/products.json';
 
 const algoliaConfig =
   process.env.ALGOLIA_APP_ID &&
@@ -87,7 +88,8 @@ const config: Config = {
     metadata: [
       {
         name: 'keywords',
-        content: 'MaxCompute,文档,CLI,MCP Server,Desktop,Flink SQL,Source,Sink',
+        content:
+          'MaxCompute,文档,CLI,MCP Server,Desktop,JDBC,ODBC,Spark,dbt,Flink SQL,Source,Sink',
       },
     ],
     colorMode: {
@@ -151,16 +153,14 @@ const config: Config = {
           title: '文档',
           items: [
             {label: '产品总览', to: '/docs/products/'},
-            {label: 'MaxCompute CLI', to: '/docs/products/cli/'},
-            {label: 'Flink Connector', to: '/docs/products/flink-connector/'},
             {
-              label: 'MaxCompute MCP Server',
-              to: '/docs/products/mcp-server/',
+              label: 'SDK 官方文档',
+              href: 'https://aliyun.github.io/aliyun-odps-java-sdk/',
             },
-            {
-              label: 'MaxCompute Desktop',
-              to: '/docs/products/desktop/',
-            },
+            ...registry.products.map((product) => ({
+              label: product.shortName,
+              to: product.href,
+            })),
           ],
         },
         {

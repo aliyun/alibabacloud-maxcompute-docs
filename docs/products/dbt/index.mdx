@@ -1,0 +1,33 @@
+---
+title: dbt-maxcompute
+description: 用 SQL 文件声明模型，以 ref 建依赖，在 MaxCompute 构建表并执行数据测试。
+product: dbt
+doc_type: overview
+status: draft
+tags:
+  - dbt
+  - maxcompute
+sidebar_position: 1
+slug: /products/dbt/
+---
+
+dbt 把 SQL 转换逻辑组织为一个工程。你写模型，使用 `ref()` 声明依赖，dbt 编译并通过 `dbt-maxcompute` Adapter 把 SQL 提交给 MaxCompute，再运行数据测试和生成文档。
+
+![dbt 流程：本地 SQL 与 ref 依赖经过编译，在 MaxCompute 中构建模型，再执行数据测试与生成文档。](./assets/model-workflow.png)
+
+本地执行 dbt 命令，SQL 计算发生在 MaxCompute。dbt 是 ELT 的转换层；原始数据采集和加载需要另外的工具。
+
+## 开始使用
+
+| 目标                           | 入口                                |
+| ------------------------------ | ----------------------------------- |
+| 创建首个模型、测试并生成文档   | [快速开始](./quickstart.mdx)        |
+| 依赖、增量、分区和 Delta Table | [模型指南](./guides.mdx)            |
+| Profile 和模型配置             | [配置参考](./reference.mdx)         |
+| Agent 自动检查与受控构建       | [Agent 执行指南](./agent-guide.mdx) |
+| Profile、权限、模型和依赖问题  | [故障排查](./troubleshooting.mdx)   |
+| 稳定版与预发布版本             | [版本说明](./release-notes.mdx)     |
+
+入门示例采用 PyPI 稳定版 **1.11.2**、Python **3.11**，SQL 模型作为主线。源码中的 MaxFrame Python 模型、UDF 等能力须按实际发布版本和能力成熟度另行核对；不要把 `master` 文档中的功能自动当成稳定版已发布。
+
+事实来源：[dbt-maxcompute 仓库](https://github.com/aliyun/dbt-maxcompute)、[PyPI](https://pypi.org/project/dbt-maxcompute/)、[dbt 官方文档](https://docs.getdbt.com/docs/introduction)。

@@ -1,0 +1,8 @@
+{
+  "label": "MaxCompute ODBC",
+  "position": 6,
+  "link": {
+    "type": "doc",
+    "id": "products/odbc/index"
+  }
+}

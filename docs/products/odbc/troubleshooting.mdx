@@ -1,0 +1,37 @@
+---
+title: ODBC 故障排查
+description: 按驱动发现、库加载、认证、SQL 与结果读取分层定位 ODBC 问题。
+product: odbc
+doc_type: troubleshooting
+status: draft
+tags:
+  - odbc
+  - maxcompute
+sidebar_position: 5
+---
+
+## 驱动发现与加载
+
+| 现象                            | 检查                                   | 下一步                                                          |
+| ------------------------------- | -------------------------------------- | --------------------------------------------------------------- |
+| `pyodbc.drivers()` 无驱动       | Driver Manager、注册文件、当前用户     | Linux/macOS 执行 `odbcinst -j`，检查它实际读取的 `odbcinst.ini` |
+| 找不到驱动或数据源              | `DRIVER` 名称、DSN 名称、注册位置      | 先改用无 DSN 连接字符串                                         |
+| 无法加载 `.so` / `.dylib` / DLL | 绝对路径、依赖库、CPU 架构和位数       | Linux 用 `ldd`，macOS 用 `otool -L` 检查所选驱动库              |
+| Windows 安装后仍找不到          | Python/BI 是否 64 位、MSI 是否完成注册 | 检查 64 位 ODBC 驱动列表                                        |
+
+加载失败发生在服务端认证之前，修改 AccessKey 通常无助于解决。
+
+## 云端连接与执行
+
+先确认 Endpoint、项目和身份，再运行常量查询。常量查询成功后再查实际表；这样可以区分认证与表权限、schema、字段或分区问题。
+
+MaxQA 失败时记录执行模式、quota、SQLSTATE 和服务端错误。网络 `ReadTimeout` 不代表作业已经取消；不要因为客户端超时便重复提交写入。
+
+## 结果与工具行为
+
+- 能执行 SQL 但 BI 无法列出表：检查工具调用的元数据 API 与驱动版本支持。
+- 字符串被截断：记录字段类型、缓冲区长度和具体读取方法，先用 Python 小结果复现。
+- 时间偏移：同时检查项目与应用时区，保存脱敏类型样例。
+- 某个 ODBC API 不支持：查询版本实现；不要仅凭上游 README 的总体介绍推导完整规范兼容。
+
+反馈至 [ODBC Issues](https://github.com/aliyun/alibabacloud-maxcompute-odbc-driver/issues)，附平台、架构、驱动包版本、Driver Manager 版本、脱敏 SQLSTATE 与最小复现。不要附完整连接字符串。

@@ -1,0 +1,76 @@
+---
+title: dbt 模型指南
+description: 组织 ref 依赖，选择 table 或 incremental 物化，并理解分区与 Delta Table 配置。
+product: dbt
+doc_type: how-to
+status: draft
+tags:
+  - dbt
+  - maxcompute
+sidebar_position: 3
+---
+
+## 用 ref 声明依赖
+
+模型查询使用 `ref()`，让 dbt 解析依赖和实际表名：
+
+```sql
+-- models/greeting.sql
+select id, message
+from {{ ref('hello_maxcompute') }}
+where id > 0
+```
+
+`dbt build --select +greeting` 还会构建它的上游依赖。执行前用 `dbt ls --select +greeting` 检查选中的对象，防止把重建范围扩得过大。
+
+## 选择物化方式
+
+| 方式          | 适用场景               | 注意                             |
+| ------------- | ---------------------- | -------------------------------- |
+| `table`       | 首个模型、可重建派生表 | 每次运行重建目标表               |
+| `incremental` | 只处理本批新数据或变更 | 必须定义筛选、匹配与迟到数据策略 |
+| `view`        | 轻量逻辑层             | 以目标项目和所选版本支持为准     |
+
+## 增量模型
+
+下面示例按 `updated_at` 水位取增量，用 `id` 匹配；首次运行取全部源数据。`source('raw','events')` 必须先在项目 YAML 中定义。
+
+```sql
+{{ config(
+    materialized='incremental',
+    incremental_strategy='merge',
+    unique_key='id',
+    tblproperties={'table.format.version': '2'}
+) }}
+
+select id, message, updated_at
+from {{ source('raw', 'events') }}
+{% if is_incremental() %}
+where updated_at >= (
+  select coalesce(max(updated_at), cast('1970-01-01 00:00:00' as datetime))
+  from {{ this }}
+)
+{% endif %}
+```
+
+同一批次业务键需唯一；源时间类型要与水位比较一致。仅用最大时间不能自动解决迟到数据、空水位或删除同步；生产流水线应明确回看窗口和去重规则。
+
+## Delta Table 配置
+
+SQL 模型的基线为 dbt-maxcompute **1.11.2 / 1.11.3b3**：
+
+| 目标               | 配置                                          | 边界                                                               |
+| ------------------ | --------------------------------------------- | ------------------------------------------------------------------ |
+| Append Delta Table | `tblproperties={'table.format.version': '2'}` | `table`、`incremental` 新建表时生效                                |
+| PK Delta Table     | `transactional=true, primary_keys=['id']`     | `table` 创建物理主键表                                             |
+| 增量匹配键         | `unique_key='id'`                             | 不是物理主键；SQL incremental 不会因 `primary_keys` 自动创建 PK 表 |
+
+Append Delta 是表格式名称，不代表只能用 append 策略。属性不会自动转换已有目标表；普通增量运行保留已有表定义，`--full-refresh` 会重建，当前 SQL incremental 重建路径不能保留物理主键。详见[上游 Delta Table 指南](https://github.com/aliyun/dbt-maxcompute/blob/master/docs/delta-tables.md)。
+
+## 分区与生命周期
+
+模型可通过 `partition_by` 声明分区，列必须出现在模型输出中。`lifecycle` 是数据保留天数，不要给需要长期保留的表随意配置。具体参数见[配置参考](./reference.mdx)。
+
+## Python 模型与 UDF
+
+SQL 路径跑通后，再根据目标版本查[上游指南](https://github.com/aliyun/dbt-maxcompute#maxframe-python-models)。MaxFrame 是可选依赖和独立执行路径；预发布功能、Python 运行时及依赖兼容性需单独验收，不由本页 SQL 入门样例保证。

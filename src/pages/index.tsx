@@ -22,6 +22,7 @@ import {
 } from '@site/src/lib/motion';
 
 import styles from './index.module.css';
+import registry from '@site/config/products.json';
 
 const SHOWCASE_CYCLE = 6;
 
@@ -313,7 +314,7 @@ function Hero(): ReactNode {
           </div>
           <dl className={styles.heroStats}>
             <div>
-              <dt>4</dt>
+              <dt>{registry.products.length}</dt>
               <dd>产品文档</dd>
             </div>
             <div>
@@ -395,7 +396,7 @@ export default function Home(): ReactNode {
   return (
     <Layout
       title="MaxCompute 文档"
-      description="MaxCompute 产品文档中心，覆盖 CLI、MCP Server、Desktop、Flink Connector 等产品，面向开发者与 AI Agent。"
+      description="MaxCompute 产品文档中心，覆盖 SDK、JDBC、ODBC、Spark、dbt、CLI、MCP Server、Desktop、Flink Connector 等产品，面向开发者与 AI Agent。"
     >
       <Hero />
       <main>
