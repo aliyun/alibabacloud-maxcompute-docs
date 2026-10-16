@@ -1,29 +1,7 @@
 .landing {
-  --product-accent: #f59e0b;
-  --product-accent-soft: rgba(245, 158, 11, 0.12);
   display: grid;
   gap: 1.35rem;
   max-width: 980px;
-}
-
-.orange {
-  --product-accent: #f59e0b;
-  --product-accent-soft: rgba(245, 158, 11, 0.12);
-}
-
-.blue {
-  --product-accent: #3b82f6;
-  --product-accent-soft: rgba(59, 130, 246, 0.12);
-}
-
-.violet {
-  --product-accent: #8b5cf6;
-  --product-accent-soft: rgba(139, 92, 246, 0.12);
-}
-
-.green {
-  --product-accent: #10b981;
-  --product-accent-soft: rgba(16, 185, 129, 0.12);
 }
 
 .hero {
@@ -98,7 +76,8 @@
   border-radius: 12px;
 }
 
-.paths a:hover {
+.paths a:hover,
+.paths a:focus-visible {
   color: var(--product-accent);
   text-decoration: none;
   border-color: color-mix(in srgb, var(--product-accent) 38%, var(--mc-border));
@@ -119,4 +98,9 @@
   .paths {
     grid-template-columns: 1fr;
   }
+}
+
+.paths a:focus-visible {
+  outline: 2px solid var(--product-accent);
+  outline-offset: 3px;
 }

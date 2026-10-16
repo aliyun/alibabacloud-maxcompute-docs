@@ -209,7 +209,8 @@ export default function NavbarProductMenu({
                 </div>
                 {productsByCategory(category.id).map((product) => (
                   <div
-                    className={`${styles.productColumn} ${styles[product.accent]}`}
+                    className={styles.productColumn}
+                    data-product-accent={product.accent}
                     key={product.id}
                   >
                     <div className={styles.productHeading}>
@@ -238,13 +239,22 @@ export default function NavbarProductMenu({
                         </small>
                       </>
                     );
-                    const className = `${styles.placeholderItem} ${styles[item.accent]}`;
+                    const className = styles.placeholderItem;
                     return item.external ? (
-                      <a className={className} href={item.href} key={item.id}>
+                      <a
+                        className={className}
+                        data-product-accent={item.accent}
+                        href={item.href}
+                        key={item.id}
+                      >
                         {content}
                       </a>
                     ) : (
-                      <span className={className} key={item.id}>
+                      <span
+                        className={className}
+                        data-product-accent={item.accent}
+                        key={item.id}
+                      >
                         {content}
                       </span>
                     );

@@ -126,34 +126,10 @@
   margin-bottom: 0.7rem;
 }
 
-.productColumn:hover {
+.productColumn:hover,
+.productColumn:focus-within {
   transform: translateY(-2px);
   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
-}
-
-.orange {
-  --product-accent: #e85d04;
-  --product-accent-soft: rgba(232, 93, 4, 0.1);
-}
-
-.blue {
-  --product-accent: #2772d4;
-  --product-accent-soft: rgba(39, 114, 212, 0.1);
-}
-
-.violet {
-  --product-accent: #7057d9;
-  --product-accent-soft: rgba(112, 87, 217, 0.1);
-}
-
-.cyan {
-  --product-accent: #06b6d4;
-  --product-accent-soft: rgba(6, 182, 212, 0.1);
-}
-
-.amber {
-  --product-accent: #f59e0b;
-  --product-accent-soft: rgba(245, 158, 11, 0.1);
 }
 
 .productHeading {
@@ -373,6 +349,29 @@
     0 1px 0 rgba(23, 32, 51, 0.04) inset;
 }
 
-[data-theme='light'] .productColumn:hover {
+[data-theme='light'] .productColumn:hover,
+[data-theme='light'] .productColumn:focus-within {
   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.06);
+}
+
+.placeholderItem > svg {
+  color: var(--product-accent);
+}
+
+.productColumn a:focus-visible,
+.placeholderItem:focus-visible {
+  outline: 2px solid var(--product-accent);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .productColumn {
+    transition: none;
+  }
+
+  .productColumn:hover,
+  .productColumn:focus-within {
+    transform: none;
+  }
 }

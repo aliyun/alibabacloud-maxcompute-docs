@@ -49,7 +49,10 @@ function CategoryHeader({
 
 function ProductCard({product}: {product: ProductEntry}): ReactNode {
   return (
-    <article className={`${styles.productCard} ${styles[product.accent]}`}>
+    <article
+      className={styles.productCard}
+      data-product-accent={product.accent}
+    >
       <div className={styles.productCardTop}>
         <span className={styles.productCardIcon}>
           <ProductIcon name={product.icon} size={28} />
@@ -79,31 +82,42 @@ function PlaceholderCard({
 }: {
   item: ProductCategory['items'][number];
 }): ReactNode {
+  if (item.external) {
+    return (
+      <article className={styles.productCard} data-product-accent={item.accent}>
+        <div className={styles.productCardTop}>
+          <span className={styles.productCardIcon}>
+            <ProductIcon name={item.icon} size={28} />
+          </span>
+          <span className={styles.productCardTag}>官方文档 ↗</span>
+        </div>
+        <Heading as="h3">{item.label}</Heading>
+        <p>{item.description}</p>
+        <a
+          className={styles.productCardOpen}
+          href={item.href}
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          查看官方文档 <ArrowRight aria-hidden="true" size={14} />
+        </a>
+      </article>
+    );
+  }
   const content = (
     <>
       <div className={styles.placeholderTop}>
         <span className={styles.placeholderIcon}>
           <ProductIcon name={item.icon} size={24} />
         </span>
-        <span className={styles.placeholderBadge}>
-          {item.external ? '官方文档 ↗' : '即将上线'}
-        </span>
+        <span className={styles.placeholderBadge}>即将上线</span>
       </div>
       <Heading as="h4">{item.label}</Heading>
     </>
   );
 
-  return item.external ? (
-    <a
-      className={`${styles.placeholderCard} ${styles[item.accent]}`}
-      href={item.href}
-      rel="noopener noreferrer"
-      target="_blank"
-    >
-      {content}
-    </a>
-  ) : (
-    <span className={`${styles.placeholderCard} ${styles[item.accent]}`}>
+  return (
+    <span className={styles.placeholderCard} data-product-accent={item.accent}>
       {content}
     </span>
   );
