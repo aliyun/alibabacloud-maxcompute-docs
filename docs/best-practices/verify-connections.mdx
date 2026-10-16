@@ -1,0 +1,49 @@
+---
+title: 用 CLI 与 JDBC 核对同一项目的连接
+description: 在不创建表的情况下，对照两个客户端的配置、常量查询与结果读回。
+product: platform
+doc_type: how-to
+status: draft
+tags:
+  - maxcompute
+  - getting-started
+---
+
+## 适用范围与准备
+
+你已有可执行 SQL 的测试项目，计划接入 Java 程序。此实践只运行常量 SELECT，不创建表；无需为了对照查询新增授权或共享凭据。
+
+准备项目名、地域、Endpoint，以及两个工具各自获准使用的身份。不同身份可以拥有不同权限，因此结果相同只说明本次查询通过，不代表权限完全相同。
+
+## 1. 先验证一个入口
+
+按[第一次查询](../getting-started/first-query.mdx)完成 CLI 安装、登录和在线检查，执行：
+
+```shell
+aliyun maxc query "SELECT 1 AS id, 'hello' AS message" --json
+```
+
+核对一行 `id=1, message=hello`。CLI 失败时先在此入口排查，不同时修改 Java 依赖和云端配置。
+
+## 2. 再验证 JDBC
+
+按[JDBC 快速开始](../products/jdbc/quickstart.mdx)创建 Maven 项目，由已有机制注入凭据，并映射相同项目与对应 Endpoint。其示例额外检查 SQL NULL，期望输出 `1 hello true`。
+
+## 3. 对照完成条件
+
+| 检查       | 应观察到什么                                         |
+| ---------- | ---------------------------------------------------- |
+| 项目与地域 | 两个入口确实访问预期项目                             |
+| 常量值     | 都能读到 `1` 与 `hello`                              |
+| JDBC NULL  | 示例检查结果为 `true`                                |
+| 资源释放   | Java 示例退出并关闭 Connection、Statement、ResultSet |
+
+本次没有创建数据对象，无需删除云端表。若两边结果不同，分别保留工具版本、脱敏 SQL、作业 ID 和实际错误，不分享 Profile 或凭据。
+
+## 失败后怎么做
+
+- CLI 成功、JDBC 驱动加载失败：检查 Java classpath 与依赖，见[JDBC 排障](../products/jdbc/troubleshooting.mdx)。
+- 身份或项目失败：回到[准备清单](../getting-started/prepare.mdx)，分别核对两个身份。
+- SQL 成功但下载失败：区分服务端执行与结果读取，见[JDBC 下载配置](../products/jdbc/reference.mdx)。
+
+下一步再使用你已获准读取的小表，指定真实字段与分区；不要把常量结果当成业务表权限和数据完整性的证明。

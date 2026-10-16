@@ -1,39 +1,37 @@
 import type {ReactNode} from 'react';
-import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import {useCallback, useEffect, useId, useMemo, useRef, useState} from 'react';
 import {ArrowRight, MagnifyingGlass, X} from '@phosphor-icons/react';
 import Link from '@docusaurus/Link';
+import {useLocation} from '@docusaurus/router';
+import registry from '@site/config/products.json';
 import generatedSearchIndex from '@site/src/generated/search-index.json';
+import {
+  searchDocs,
+  searchTerms,
+  type SearchEntry,
+} from '@site/src/lib/doc-search';
 import {
   EASE_OUT,
   ensureGsap,
   prefersReducedMotion,
   useIsomorphicLayoutEffect,
 } from '@site/src/lib/motion';
-
 import styles from './styles.module.css';
 
-type SearchEntry = {
-  title: string;
-  description: string;
-  href: string;
-  group: string;
-  keywords: string;
-};
+const searchEntries: SearchEntry[] = generatedSearchIndex;
+const resultLimit = 20;
 
-const siteEntries: SearchEntry[] = [
-  {
-    title: 'MaxCompute 文档首页',
-    description: '浏览产品文档、最佳实践和常见问题。',
-    href: '/',
-    group: 'MaxCompute 文档',
-    keywords: '产品文档 最佳实践 常见问题 更新日志',
-  },
-];
-
-const searchEntries: SearchEntry[] = [
-  ...siteEntries,
-  ...(generatedSearchIndex as SearchEntry[]),
-];
+function Highlight({text, query}: {text: string; query: string}): ReactNode {
+  const terms = searchTerms(query).sort((a, b) => b.length - a.length);
+  if (!terms.length) return text;
+  const escaped = terms.map((term) =>
+    term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'),
+  );
+  const parts = text.split(new RegExp(`(${escaped.join('|')})`, 'gi'));
+  return parts.map((part, index) =>
+    terms.includes(part.toLowerCase()) ? <mark key={index}>{part}</mark> : part,
+  );
+}
 
 type DocSearchTriggerProps = {
   variant?: 'navbar' | 'hero';
@@ -48,31 +46,107 @@ export function DocSearchTrigger({
 }: DocSearchTriggerProps): ReactNode {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState('');
+  const [product, setProduct] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const dialogRef = useRef<HTMLElement>(null);
+  const dialogId = useId();
+  const {pathname} = useLocation();
+  const currentProduct =
+    registry.products.find((entry) =>
+      pathname.includes(`/docs/products/${entry.id}/`),
+    )?.id ?? '';
 
   const close = useCallback(() => {
     setOpen(false);
     setQuery('');
+    setProduct('');
     onClick?.();
     window.requestAnimationFrame(() => triggerRef.current?.focus());
   }, [onClick]);
 
   useEffect(() => {
+    if (variant !== 'navbar' || mobile) return undefined;
+    const shortcut = (event: KeyboardEvent) => {
+      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') {
+        event.preventDefault();
+        if (!document.querySelector('[aria-label="搜索 MaxCompute 文档"]'))
+          setOpen(true);
+      }
+    };
+    document.addEventListener('keydown', shortcut);
+    return () => document.removeEventListener('keydown', shortcut);
+  }, [variant, mobile]);
+
+  useEffect(() => {
     if (!open) return undefined;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
     inputRef.current?.focus();
+    const focusable = () =>
+      Array.from(
+        dialogRef.current?.querySelectorAll<HTMLElement>(
+          'input, select, button, a[href]',
+        ) ?? [],
+      ).filter((element) => !element.hasAttribute('disabled'));
+    const keepFocus = (event: FocusEvent) => {
+      if (!dialogRef.current?.contains(event.target as Node))
+        inputRef.current?.focus();
+    };
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') close();
+      if (
+        event.key === 'Escape' ||
+        ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k')
+      ) {
+        event.preventDefault();
+        close();
+      }
+      if (event.key === 'Tab') {
+        const elements = focusable();
+        const first = elements[0];
+        const last = elements.at(-1);
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last?.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first?.focus();
+        }
+      }
+      if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+        if (document.activeElement?.tagName === 'SELECT') return;
+        const links = Array.from(
+          dialogRef.current?.querySelectorAll<HTMLAnchorElement>(
+            '[data-search-result]',
+          ) ?? [],
+        );
+        if (!links.length) return;
+        event.preventDefault();
+        const index = links.findIndex(
+          (link) => link === document.activeElement,
+        );
+        const next =
+          index < 0
+            ? event.key === 'ArrowDown'
+              ? 0
+              : links.length - 1
+            : (index + (event.key === 'ArrowDown' ? 1 : -1) + links.length) %
+              links.length;
+        links[next].focus();
+      }
     };
     document.addEventListener('keydown', handleKeyDown);
-    return () => document.removeEventListener('keydown', handleKeyDown);
+    document.addEventListener('focusin', keepFocus);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener('focusin', keepFocus);
+    };
   }, [close, open]);
 
   useIsomorphicLayoutEffect(() => {
-    if (!open || prefersReducedMotion()) return undefined;
     const dialog = dialogRef.current;
-    if (!dialog) return undefined;
+    if (!open || !dialog || prefersReducedMotion()) return undefined;
     const {gsap} = ensureGsap();
     const ctx = gsap.context(() => {
       gsap.from(dialog, {y: -14, autoAlpha: 0, duration: 0.3, ease: EASE_OUT});
@@ -80,36 +154,32 @@ export function DocSearchTrigger({
     return () => ctx.revert();
   }, [open]);
 
-  const results = useMemo(() => {
-    const normalized = query.trim().toLocaleLowerCase('zh-CN');
-    if (!normalized) return searchEntries.slice(0, 8);
-    return searchEntries
-      .filter((entry) =>
-        `${entry.title} ${entry.description} ${entry.group} ${entry.keywords}`
-          .toLocaleLowerCase('zh-CN')
-          .includes(normalized),
-      )
-      .slice(0, 10);
-  }, [query]);
+  const results = useMemo(
+    () => searchDocs(searchEntries, query, {product, currentProduct}),
+    [query, product, currentProduct],
+  );
 
   return (
     <>
       <button
+        aria-expanded={open}
+        aria-haspopup="dialog"
+        aria-controls={open ? dialogId : undefined}
         className={`${styles.trigger} ${styles[variant]} ${mobile ? styles.mobile : ''}`}
         onClick={() => setOpen(true)}
         ref={triggerRef}
         type="button"
       >
         <MagnifyingGlass aria-hidden="true" size={18} weight="bold" />
-        <span>{variant === 'hero' ? '搜索产品、指南和参考' : '搜索文档'}</span>
+        <span>{variant === 'hero' ? '搜索任务、产品或错误' : '搜索文档'}</span>
       </button>
-
       {open ? (
         <div className={styles.overlay} onMouseDown={close}>
           <section
             aria-label="搜索 MaxCompute 文档"
             aria-modal="true"
             className={styles.dialog}
+            id={dialogId}
             onMouseDown={(event) => event.stopPropagation()}
             ref={dialogRef}
             role="dialog"
@@ -119,7 +189,7 @@ export function DocSearchTrigger({
               <input
                 aria-label="搜索关键词"
                 onChange={(event) => setQuery(event.target.value)}
-                placeholder="搜索产品、指南和参考"
+                placeholder="例如：JDBC 连接、创建项目、dbt 升级"
                 ref={inputRef}
                 type="search"
                 value={query}
@@ -128,15 +198,50 @@ export function DocSearchTrigger({
                 <X aria-hidden="true" size={18} />
               </button>
             </div>
-
-            <div aria-live="polite" className={styles.results}>
-              {results.length > 0 ? (
-                results.map((entry) => (
-                  <Link key={entry.href} onClick={close} to={entry.href}>
+            <div className={styles.filters}>
+              <label>
+                搜索范围{' '}
+                <select
+                  aria-label="搜索范围"
+                  value={product}
+                  onChange={(event) => setProduct(event.target.value)}
+                >
+                  <option value="">全部文档</option>
+                  <option value="platform">入门与公共文档</option>
+                  {registry.products.map((entry) => (
+                    <option key={entry.id} value={entry.id}>
+                      {entry.shortName}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <span role="status">
+                找到 {results.length} 项
+                {results.length > resultLimit
+                  ? `，显示前 ${resultLimit} 项`
+                  : ''}
+              </span>
+            </div>
+            <div className={styles.results}>
+              {results.length ? (
+                results.slice(0, resultLimit).map((entry) => (
+                  <Link
+                    data-search-result="true"
+                    key={entry.href}
+                    onClick={close}
+                    to={entry.href}
+                  >
                     <span className={styles.resultGroup}>{entry.group}</span>
                     <span className={styles.resultCopy}>
-                      <strong>{entry.title}</strong>
-                      <small>{entry.description}</small>
+                      <strong>
+                        <Highlight text={entry.title} query={query} />
+                      </strong>
+                      <small>
+                        <Highlight text={entry.snippet} query={query} />
+                      </small>
+                      {entry.status === 'draft' ? (
+                        <span className={styles.resultStatus}>文档草稿</span>
+                      ) : null}
                     </span>
                     <ArrowRight aria-hidden="true" size={17} />
                   </Link>
@@ -144,14 +249,23 @@ export function DocSearchTrigger({
               ) : (
                 <div className={styles.empty}>
                   <strong>没有找到匹配页面</strong>
-                  <span>试试产品名称、快速开始或故障排查。</span>
+                  <span>试试减少关键词或切换为“全部文档”。</span>
+                  <Link
+                    onClick={close}
+                    to="/docs/getting-started/client-selection/"
+                  >
+                    按任务选择工具
+                  </Link>
+                  <Link onClick={close} to="/docs/faq/">
+                    查看连接与权限常见问题
+                  </Link>
                 </div>
               )}
             </div>
             <footer className={styles.footer}>
-              <span>搜索当前产品文档与公共资源。</span>
-              <Link onClick={close} to="/docs/products/">
-                浏览全部产品
+              <span>↑ ↓ 选择结果 · Enter 打开 · Esc 关闭 · ⌘/Ctrl K 搜索</span>
+              <Link onClick={close} to="/docs/getting-started/">
+                第一次使用
               </Link>
             </footer>
           </section>
@@ -164,13 +278,11 @@ export function DocSearchTrigger({
 export default function NavbarDocSearch(
   props: Omit<DocSearchTriggerProps, 'variant'>,
 ): ReactNode {
-  if (props.mobile) {
-    return (
-      <li className="menu__list-item">
-        <DocSearchTrigger {...props} variant="navbar" />
-      </li>
-    );
-  }
-
-  return <DocSearchTrigger {...props} variant="navbar" />;
+  return props.mobile ? (
+    <li className="menu__list-item">
+      <DocSearchTrigger {...props} variant="navbar" />
+    </li>
+  ) : (
+    <DocSearchTrigger {...props} variant="navbar" />
+  );
 }

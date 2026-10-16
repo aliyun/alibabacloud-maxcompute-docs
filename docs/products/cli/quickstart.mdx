@@ -1,6 +1,6 @@
 ---
 title: CLI 快速开始
-description: 五分钟完成 MaxCompute CLI 安装、认证和第一条查询，建立最小可用闭环。
+description: 完成 MaxCompute CLI 安装、认证和第一条查询，建立最小可用闭环。
 product: cli
 doc_type: quickstart
 status: draft
@@ -10,6 +10,8 @@ tags:
 sidebar_position: 2
 ---
 
+第一次接入 MaxCompute？先核对[账号、项目与权限准备](../../getting-started/prepare.mdx)；只想先看到确定结果时，走[第一条查询](../../getting-started/first-query.mdx)，再继续本页的产品步骤。
+
 通过本页完成 MaxCompute CLI（`maxc`）的首次安装、认证和查询。
 
 ## 完成目标
@@ -18,14 +20,14 @@ sidebar_position: 2
 
 ## 前提条件
 
-- 一个可访问的 MaxCompute 项目，以及对目标表的 SELECT 权限
+- 一个可访问且允许执行 SQL 的 MaxCompute 项目；读取真实表时另需目标表的 SELECT 权限
 - 公共云环境可访问阿里云服务；独立入口要求 Python 3.9 或更高版本
 
 ## 操作步骤
 
 ### 1. 安装 CLI
 
-推荐使用阿里云 CLI 分发（需要 Alibaba Cloud CLI >= 3.3.3）：
+推荐使用阿里云 CLI 分发（需要 Alibaba Cloud CLI >= 3.3.19）：
 
 ```bash
 # 安装或更新阿里云 CLI
@@ -86,6 +88,18 @@ aliyun maxc agent doctor --online --json
 只有 `agent doctor --online` 能证明远端已就绪；`agent context` 中的 `auth_status=configured` 不代表已通过在线认证。
 
 ### 4. 第一次查询
+
+先执行不依赖已有表的常量查询：
+
+```shell
+aliyun maxc query "SELECT 1 AS id, 'hello' AS message" --json
+```
+
+核对 `data.result.rows` 中一行 `1, hello`。此步骤不创建表；完整的前提准备、内联样例与恢复路径见[第一条查询教程](../../getting-started/first-query.mdx)。
+
+## 读取已有表
+
+已获准访问业务表后，再根据实际表结构修改下列模板的项目、Schema、表名、字段和分区值，不要原样执行占位名称：
 
 ```bash
 # 发现表

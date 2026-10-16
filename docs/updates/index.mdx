@@ -11,12 +11,28 @@ tags:
 
 更新日志按产品组织，便于确认版本变化、兼容性影响和需要执行的操作。
 
-## 产品版本说明
+## 按产品查版本与兼容性
 
-- [MaxCompute CLI 版本说明](../products/cli/release-notes.mdx)
-- [MaxCompute MCP Server 版本说明](../products/mcp-server/release-notes.mdx)
-- [MaxCompute Desktop 版本说明](../products/desktop/release-notes.mdx)
+各产品独立发布，本站没有一个可替代所有工具版本的统一版本号。先记录实际工具版本，再核对对应页面和上游发布说明。
 
-## 记录要求
+| 产品            | 版本说明                                                  | 升级时重点检查                          |
+| --------------- | --------------------------------------------------------- | --------------------------------------- |
+| CLI             | [版本说明](../products/cli/release-notes.mdx)             | 安装入口、认证和输出协议                |
+| MCP Server      | [版本说明](../products/mcp-server/release-notes.mdx)      | 传输方式、配置和工具清单                |
+| 桌面客户端      | [版本说明](../products/desktop/release-notes.mdx)         | 安装更新与已有连接配置                  |
+| JDBC            | [版本与升级](../products/jdbc/release-notes.mdx)          | JDK、驱动依赖和查询模式                 |
+| ODBC            | [版本与升级](../products/odbc/release-notes.mdx)          | 系统架构、原生驱动与 Driver Manager     |
+| Spark Connector | [版本与升级](../products/spark/release-notes.mdx)         | Spark / Scala / JDK 与依赖组合          |
+| dbt-maxcompute  | [版本与升级](../products/dbt/release-notes.mdx)           | Core / Adapter、Python 运行时与模型策略 |
+| Flink Connector | [版本说明](../products/flink-connector/release-notes.mdx) | Flink / JDK、连接参数与读写模式         |
 
-每条版本说明包含发布日期、主要变化、兼容性影响和必要操作。
+SDK 的发布与 API 说明继续见[既有官方文档](https://aliyun.github.io/aliyun-odps-java-sdk/)。
+
+## 升级前后分别核对
+
+1. 记录当前工具版本、实际依赖与所用功能。
+2. 阅读目标版本的兼容性和已知限制，固定安装版本。
+3. 在测试环境先运行最小查询，再核对真实对象的读写与结果。
+4. 保留失败信息与恢复方案，再决定是否切换生产工程。
+
+页面标记“文档草稿”不等于产品 Beta。下载成功、站点构建成功和目标环境执行成功是不同的检查结果。

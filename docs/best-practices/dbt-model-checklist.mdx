@@ -1,0 +1,38 @@
+---
+title: 从可查询项目到可测试的 dbt 模型
+description: 以 dbt 1.11.3 快速开始为主线，核对配置、构建、测试、读回和清理。
+product: platform
+doc_type: how-to
+status: draft
+tags:
+  - maxcompute
+  - getting-started
+---
+
+## 适用范围与准备
+
+你已经能连接 MaxCompute，并决定用 dbt 管理 SQL 转换。与只读入门不同，此实践会在获准的测试项目和 Schema 中创建 `hello_maxcompute` 表。先确认该名字没有已有业务数据，并具备构建、读取和清理所需权限。
+
+## 1. 固定版本并创建最小工程
+
+完整文件与命令以[dbt 快速开始](../products/dbt/quickstart.mdx)为准，基线为 **1.11.3** 与 Python **3.11**。只准备这条路径需要的依赖，不必另装 Spark、Flink 或 MaxFrame。
+
+从 1.11.2 升级且调用已有 CP27/CP37 UDF 时，先检查[运行时兼容配置](../products/dbt/reference.mdx#python-运行时兼容)。
+
+## 2. 逐阶段核对
+
+| 阶段       | 操作                                                   | 完成判据                       |
+| ---------- | ------------------------------------------------------ | ------------------------------ |
+| 项目解析   | `dbt parse --profiles-dir .`                           | 本地项目解析通过               |
+| 连接       | `dbt debug --profiles-dir .`                           | 目标配置与连接检查通过         |
+| 构建与测试 | `dbt build --profiles-dir . --select hello_maxcompute` | 所选模型成功、三项数据测试通过 |
+| 实际读回   | 按快速开始用已有 SQL 工具读取目标表                    | 一行 `1, hello`                |
+| 清理       | 确认本次测试表可删除后由 SQL 工具清理                  | 测试对象清理状态明确           |
+
+每次 `table` 构建会重建目标表，执行前确认它是本次测试对象。parse、连接成功和模型成功各自证明不同的事情；`rows_affected` 不作为可靠的写入数量依据。
+
+## 3. 失败与恢复
+
+失败时记录当前阶段、节点、版本与脱敏错误，使用[dbt 故障排查](../products/dbt/troubleshooting.mdx)。不要自动扩大选择范围或添加 `--full-refresh`。`dbt clean` 只清理本地产物，不删除云端表。
+
+下一步按[模型指南](../products/dbt/guides.mdx)选择增量策略。`truncate_insert` 需要完整结果且仅支持非分区目标，不是入门必须开启的配置。

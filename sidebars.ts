@@ -43,6 +43,7 @@ const sidebars: SidebarsConfig = {
         'products/cli/guides',
         'products/cli/reference',
         'products/cli/release-notes',
+        'products/cli/troubleshooting',
       ],
     },
     {
