@@ -23,7 +23,11 @@ sidebar_position: 5
 
 ## MaxFrame 可选依赖
 
-本空间入门仅使用 SQL。Python/MaxFrame 路径遇到 Arrow/NumPy 导入错误时，先核对实际安装版本与[上游 MaxFrame 指南](https://github.com/aliyun/dbt-maxcompute/blob/master/docs/maxframe-python-models.md)。不要在已有工程中盲目升级所有 Python 依赖；可选功能也不能由 SQL build 成功推导可用。
+本空间入门仅使用 SQL。1.11.3 已通过 MaxFrame extra 的 `pyarrow<26` 约束修复与 MaxFrame 2.x / NumPy 1 的依赖兼容问题。Python/MaxFrame 路径遇到 Arrow/NumPy 导入错误时，先确认当前环境安装了 `dbt-maxcompute[maxframe]==1.11.3`，执行 `python -m pip check`，再核对实际安装版本与[1.11.3 MaxFrame 指南](https://github.com/aliyun/dbt-maxcompute/blob/v1.11.3/docs/maxframe-python-models.md)。不要在已有工程中盲目升级所有 Python 依赖；可选功能也不能由 SQL build 成功推导可用。
+
+## 升级后旧版 Python UDF 调用失败
+
+先检查函数所需 CP27/CP37 运行时及实际 SQL hint。1.11.3 全局默认 CP311，旧模型需显式覆盖；hook 与预览也需匹配，见[运行时兼容配置](./reference.mdx#python-运行时兼容)。不要只修改函数 YAML 的 `runtime_version`，或直接重建已有函数来规避调用端问题。
 
 ## 故障证据与恢复
 

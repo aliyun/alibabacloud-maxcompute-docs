@@ -108,6 +108,7 @@
     "parquet",
     "Phosphor",
     "Ppublic",
+    "pyarrow",
     "pyodbc",
     "pyspark",
     "Qoder",

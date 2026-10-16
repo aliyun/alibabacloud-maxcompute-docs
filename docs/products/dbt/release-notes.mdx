@@ -16,7 +16,14 @@ sidebar_position: 6
 - [下载或安装入口](https://pypi.org/project/dbt-maxcompute/)
 - [源码与问题反馈入口](https://github.com/aliyun/dbt-maxcompute)
 
-本空间的示例基线为 **1.11.2**。文档核对日期：**2026-10-13**。没有在本空间复制完整上游 release notes，避免多处记录漂移。
+本空间的示例基线为 **1.11.3**，于 **2026-10-15** 正式发布。文档核对日期：**2026-10-16**。已核对 [GitHub Release](https://github.com/aliyun/dbt-maxcompute/releases/tag/v1.11.3) 和 [PyPI 1.11.3](https://pypi.org/project/dbt-maxcompute/1.11.3/)；以下仅列与本空间相关的升级要点，完整变更以上游为准。
+
+## 1.11.3 升级要点
+
+- **限定范围内 GA**：MaxFrame Python `table` / `incremental` 模型及 Python 标量、聚合 UDF 正式 GA。MaxFrame 可选依赖、模型返回类型、远端 DAG 取消和 UDF 未支持能力仍有限制，见[模型指南](./guides.mdx#python-模型与-udf)。
+- **可选策略**：新增 `truncate_insert`，保留非分区目标表对象并整表替换数据；需显式启用、设置 `full_refresh=false` 并返回完整结果。空结果会清空目标，不改变已有策略默认行为，也不改变权限继承规则。
+- **依赖兼容修复**：MaxFrame extra 使用 `pyarrow<26`，匹配 MaxFrame 2.x 的 NumPy 1 约束。安装 `dbt-maxcompute[maxframe]==1.11.3` 后检查依赖一致性，不在现有环境中盲目升级 NumPy/PyArrow。
+- **旧版 UDF 升级**：全局 CP311 默认配置延续 1.11.3 beta 行为，但不同于 1.11.2。调用已有 CP27/CP37 函数时须显式配置匹配运行时，hook 和 `dbt show --select` 另有配置要求，见[配置参考](./reference.mdx#python-运行时兼容)。
 
 ## 升级检查
 

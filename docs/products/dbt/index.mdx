@@ -28,6 +28,6 @@ dbt 把 SQL 转换逻辑组织为一个工程。你写模型，使用 `ref()` �
 | Profile、权限、模型和依赖问题  | [故障排查](./troubleshooting.mdx)   |
 | 稳定版与预发布版本             | [版本说明](./release-notes.mdx)     |
 
-入门示例采用 PyPI 稳定版 **1.11.2**、Python **3.11**，SQL 模型作为主线。源码中的 MaxFrame Python 模型、UDF 等能力须按实际发布版本和能力成熟度另行核对；不要把 `master` 文档中的功能自动当成稳定版已发布。
+入门示例采用 PyPI 稳定版 **1.11.3**、Python **3.11**，SQL 模型作为主线。MaxFrame Python 的 `table` / `incremental` 模型及 Python 标量、聚合 UDF 已在限定支持范围内正式 GA；MaxFrame 仍需安装可选依赖。`truncate_insert` 是需显式启用的整表替换策略，不改变现有策略默认行为。支持范围和限制见[模型指南](./guides.mdx)，旧版 UDF 的 CP27/CP37 升级配置见[配置参考](./reference.mdx#python-运行时兼容)。
 
 事实来源：[dbt-maxcompute 仓库](https://github.com/aliyun/dbt-maxcompute)、[PyPI](https://pypi.org/project/dbt-maxcompute/)、[dbt 官方文档](https://docs.getdbt.com/docs/introduction)。

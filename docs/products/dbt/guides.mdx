@@ -25,11 +25,11 @@ where id > 0
 
 ## 选择物化方式
 
-| 方式          | 适用场景               | 注意                             |
-| ------------- | ---------------------- | -------------------------------- |
-| `table`       | 首个模型、可重建派生表 | 每次运行重建目标表               |
-| `incremental` | 只处理本批新数据或变更 | 必须定义筛选、匹配与迟到数据策略 |
-| `view`        | 轻量逻辑层             | 以目标项目和所选版本支持为准     |
+| 方式          | 适用场景               | 注意                           |
+| ------------- | ---------------------- | ------------------------------ |
+| `table`       | 首个模型、可重建派生表 | 每次运行重建目标表             |
+| `incremental` | 增量处理或显式整表替换 | 按策略定义筛选、匹配及替换范围 |
+| `view`        | 轻量逻辑层             | 以目标项目和所选版本支持为准   |
 
 ## 增量模型
 
@@ -55,9 +55,31 @@ where updated_at >= (
 
 同一批次业务键需唯一；源时间类型要与水位比较一致。仅用最大时间不能自动解决迟到数据、空水位或删除同步；生产流水线应明确回看窗口和去重规则。
 
+## 可选整表替换：truncate_insert
+
+1.11.3 新增 `truncate_insert`，适用于保留非分区目标表对象、每次替换全部数据的场景。它是可选 incremental 策略，不改变已有策略和默认值：
+
+```sql
+{{ config(
+    materialized='incremental',
+    incremental_strategy='truncate_insert',
+    full_refresh=false,
+    on_schema_change='fail'
+) }}
+
+select id, message
+from {{ ref('hello_maxcompute') }}
+```
+
+每次必须返回目标表的**完整期望数据**，不要添加 `is_incremental()` 水位筛选；结果为空会清空旧数据。`unique_key` 不负责合并或去重。首次运行创建表，后续先构建临时结果，再用一次 `INSERT OVERWRITE` 替换目标数据；临时结果构建失败时旧数据保留。不要让多个作业并发写同一目标。
+
+仅支持非分区表，不支持 `partition_by`、非空 `partitions`、已有分区目标、`predicates` 或 `incremental_predicates`，也不替换已有视图或外部关系。必须设置 `full_refresh=false`，使项目级 `--full-refresh` 不重建该目标；否则对已有目标的 full-refresh 会被拒绝。Python 模型同样必须返回完整快照，不按 `dbt.is_incremental` 过滤。
+
+保留表对象可避免因 drop/create 丢失对象绑定的 Label 授权，但不会恢复历史已丢失的授权，也不改变服务端权限继承规则。schema 变更、grants 和 hooks 仍可改变元数据或权限；固定结构时使用 `on_schema_change='fail'`，上线前核对实际授权与跨项目读取。项目覆盖策略宏时，以覆盖实现为准。详见 [1.11.3 策略指南](https://github.com/aliyun/dbt-maxcompute/blob/v1.11.3/docs/truncate-insert.md)。
+
 ## Delta Table 配置
 
-SQL 模型的基线为 dbt-maxcompute **1.11.2 / 1.11.3b3**：
+SQL 模型的基线为 dbt-maxcompute **1.11.3**：
 
 | 目标               | 配置                                          | 边界                                                               |
 | ------------------ | --------------------------------------------- | ------------------------------------------------------------------ |
@@ -65,7 +87,7 @@ SQL 模型的基线为 dbt-maxcompute **1.11.2 / 1.11.3b3**：
 | PK Delta Table     | `transactional=true, primary_keys=['id']`     | `table` 创建物理主键表                                             |
 | 增量匹配键         | `unique_key='id'`                             | 不是物理主键；SQL incremental 不会因 `primary_keys` 自动创建 PK 表 |
 
-Append Delta 是表格式名称，不代表只能用 append 策略。属性不会自动转换已有目标表；普通增量运行保留已有表定义，`--full-refresh` 会重建，当前 SQL incremental 重建路径不能保留物理主键。详见[上游 Delta Table 指南](https://github.com/aliyun/dbt-maxcompute/blob/master/docs/delta-tables.md)。
+Append Delta 是表格式名称，不代表只能用 append 策略。属性不会自动转换已有目标表；普通增量运行保留已有表定义；允许 full-refresh 的策略会在 `--full-refresh` 时重建，当前 SQL incremental 重建路径不能保留物理主键。上文 `truncate_insert` 须通过 `full_refresh=false` 禁用重建。详见[上游 Delta Table 指南](https://github.com/aliyun/dbt-maxcompute/blob/master/docs/delta-tables.md)。
 
 ## 分区与生命周期
 
@@ -73,4 +95,16 @@ Append Delta 是表格式名称，不代表只能用 append 策略。属性不�
 
 ## Python 模型与 UDF
 
-SQL 路径跑通后，再根据目标版本查[上游指南](https://github.com/aliyun/dbt-maxcompute#maxframe-python-models)。MaxFrame 是可选依赖和独立执行路径；预发布功能、Python 运行时及依赖兼容性需单独验收，不由本页 SQL 入门样例保证。
+1.11.3 中，MaxFrame Python 模型与 Python 标量、聚合 UDF 在各自文档限定范围内正式 GA，两者是独立执行路径：
+
+- **MaxFrame Python 模型**：支持 `table` / `incremental`，模型必须返回一个 MaxFrame DataFrame，不能返回 Pandas DataFrame、Series 或任意 Python 值。安装可选运行时：
+
+  ```shell
+  python -m pip install "dbt-maxcompute[maxframe]==1.11.3"
+  ```
+
+  不支持 Python `view`、`ephemeral`、snapshot、物化视图输出、`cluster_by`、强制模型 contracts 或动态安装模型级 `packages`。dbt 中断尚不能保证立即取消远端 MaxFrame DAG；中断后需核对服务端状态。自定义函数序列化推荐使用与默认远端 CP311 匹配的 Python 3.11 客户端。详见 [1.11.3 MaxFrame 指南](https://github.com/aliyun/dbt-maxcompute/blob/v1.11.3/docs/maxframe-python-models.md)。
+
+- **持久化 Python UDF**：通过 dbt `functions:` 资源部署 MaxCompute 标量 UDF 和聚合 UDF（UDAF），不在 MaxFrame 模型 DAG 中执行。不支持 SQL 函数资源、UDTF、函数重载、默认参数、函数 grants 或持久化函数描述；不自动从 PyPI 安装依赖，需预先上传兼容运行时的资源。详见 [1.11.3 UDF 指南](https://github.com/aliyun/dbt-maxcompute/blob/v1.11.3/docs/python-udfs.md)。
+
+GA 不代表覆盖上述未支持能力，也不替代目标 quota、运行时、依赖和数据规模的验证。SQL 入门成功不能证明 Python 路径已验收。
