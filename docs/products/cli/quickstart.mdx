@@ -96,6 +96,8 @@ aliyun maxc query "SELECT 1 AS id, 'hello' AS message" --json
 
 ## 读取已有表
 
+本节以阿里云 CLI 的 `aliyun maxc` 为命令前缀。若你刚完成[独立 maxc 教程](../../getting-started/first-query.mdx)，请将下面**每一条命令**的 `aliyun maxc` 前缀替换为 `maxc`，沿用同一套项目与身份配置。如果已执行 `deactivate`，先回到创建 `.venv` 的工作目录，按该教程的操作系统步骤重新激活环境，再运行命令；无需重新安装或重复登录。
+
 已获准访问业务表后，再根据实际表结构修改下列模板的项目、Schema、表名、字段和分区值，不要原样执行占位名称：
 
 ```bash
