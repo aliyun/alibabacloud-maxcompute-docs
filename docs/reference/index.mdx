@@ -1,12 +1,53 @@
 ---
-title: 公共参考
-description: 提供 MaxCompute 多产品共用的术语、文档约定和参考入口。
+title: 公共概念与官方参考
+description: 解释连接和查询所需的基本术语，并定位 SQL、权限、费用及版本的权威说明。
 product: platform
 doc_type: reference
 status: draft
 tags:
-  - reference
   - maxcompute
+  - getting-started
 ---
 
-本目录汇集多个产品共用的术语和参考信息。产品专属的命令、工具、参数、错误和兼容性信息，请在对应产品文档中查看。
+先理解下面几个词，就能填写大部分连接配置。不必在第一次查询前阅读完整 SQL 手册。
+
+## 连接信息中的基本概念
+
+| 术语                          | 对入门操作的含义                         | 常见误解                                     |
+| ----------------------------- | ---------------------------------------- | -------------------------------------------- |
+| Project（项目）               | MaxCompute 的组织和访问控制边界          | 项目名不是地域名或工具名称                   |
+| Schema                        | 使用三层命名空间时，项目内的对象命名空间 | 不要假定所有项目都采用同一种表名写法         |
+| Endpoint                      | 工具访问云服务的地址                     | 必须匹配项目地域和当前网络                   |
+| 身份与权限                    | 谁发起请求，以及能对哪些对象做什么       | 登录成功不等于获得表读权限                   |
+| Table（表）                   | 保存有结构数据的对象                     | 常量 SELECT 无需准备业务表                   |
+| Partition（分区）             | 按字段值组织表内数据                     | `LIMIT` 限制返回行数，不替代分区过滤         |
+| Job / Instance（作业 / 实例） | 服务端执行查询或计算的任务               | 客户端等待超时不等于作业未执行               |
+| Quota（配额）                 | 计算资源与调度相关的配置                 | 具体要求取决于计算模式，不要复制别人的资源名 |
+
+层级与命名以[官方核心概念](https://help.aliyun.com/zh/maxcompute/user-guide/concept-hierarchy)为准；分区设计见[官方分区说明](https://help.aliyun.com/zh/maxcompute/user-guide/partition)。
+
+## 常见产品名
+
+- **CLI**：在终端中执行查询和管理命令。
+- **桌面客户端**：使用图形界面连接项目、编辑 SQL 和查看结果。
+- **JDBC / ODBC**：让应用或支持相应接口的工具连接 MaxCompute。
+- **SDK**：在程序中使用 MaxCompute 专用 API。
+- **Spark / Flink Connector**：让已有计算作业读取或写入 MaxCompute。
+- **dbt Adapter**：把模型依赖、SQL 转换和数据测试组织为工程。
+- **MCP Server**：让支持 MCP 的 AI 工具调用 MaxCompute 能力。
+
+具体选择见[按任务选择工具](../getting-started/client-selection.mdx)。各工具并非都要安装，客户端中的本地操作也不意味着数据在本地完成计算。
+
+## 官方参考入口
+
+| 需要确认的事实                | 权威入口                                                                                                                                                                                 |
+| ----------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| SQL、函数、数据类型与开发能力 | [MaxCompute 官方文档](https://help.aliyun.com/zh/maxcompute/)                                                                                                                            |
+| 开通与项目创建                | [开通服务](https://help.aliyun.com/zh/maxcompute/user-guide/activate-maxcompute-and-dataworks)、[创建项目](https://help.aliyun.com/zh/maxcompute/user-guide/create-a-maxcompute-project) |
+| 身份接入与项目授权            | [添加用户并授权](https://help.aliyun.com/zh/maxcompute/user-guide/user-planning-and-management)                                                                                          |
+| 地域与网络地址                | [Endpoint 列表](https://help.aliyun.com/zh/maxcompute/endpoints)                                                                                                                         |
+| 费用与资源选择                | [计费项与计费方式](https://help.aliyun.com/zh/maxcompute/product-overview/overview-1)                                                                                                    |
+| SDK API 与示例                | [既有 SDK 官方文档](https://aliyun.github.io/aliyun-odps-java-sdk/)                                                                                                                      |
+| 工具升级与兼容性              | [全部产品版本说明](../updates/index.mdx)                                                                                                                                                 |
+
+本站维护工具接入与操作指南，避免复制完整主产品手册。页面标记的“文档草稿”是内容状态；GA、Beta、支持地域和运行时兼容性须在对应产品的版本说明中确认。

@@ -103,6 +103,9 @@ const entries = collectDocumentFiles(docsRoot)
       description: data.description.trim(),
       href: routeFor(file, data.slug),
       group: groupFor(data.product),
+      product: data.product,
+      status: data.status,
+      docType: data.doc_type,
       keywords,
     };
   })

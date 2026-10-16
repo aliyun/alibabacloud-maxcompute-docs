@@ -23,6 +23,7 @@ import {
 
 import styles from './index.module.css';
 import registry from '@site/config/products.json';
+import searchIndex from '@site/src/generated/search-index.json';
 
 const SHOWCASE_CYCLE = 6;
 
@@ -300,15 +301,15 @@ function Hero(): ReactNode {
         <div className={styles.heroCopy}>
           <span className={styles.badge}>MAXCOMPUTE DOCS</span>
           <Heading as="h1" className={styles.heroTitle}>
-            MaxCompute：企业级云原生数据平台，为 AI 与分析而生
+            从第一条查询开始
+            <span className={styles.heroProductLine}>连接 MaxCompute</span>
           </Heading>
           <p className={styles.heroSubtitle}>
-            统一、安全、可扩展的大数据计算与分析平台，支撑 PB
-            级数据仓库、实时分析与 AI 工作流。
+            先准备项目和身份，再运行不依赖业务表的查询。已有工程？按任务选择客户端、驱动或连接器。
           </p>
           <div className={styles.heroActions}>
-            <Link className={styles.primaryAction} to="/docs/products/">
-              浏览全部产品 <ArrowRight aria-hidden="true" size={17} />
+            <Link className={styles.primaryAction} to="/docs/getting-started/">
+              第一次使用 <ArrowRight aria-hidden="true" size={17} />
             </Link>
             <DocSearchTrigger variant="hero" />
           </div>
@@ -318,8 +319,8 @@ function Hero(): ReactNode {
               <dd>产品文档</dd>
             </div>
             <div>
-              <dt>36+</dt>
-              <dd>篇文档</dd>
+              <dt>{searchIndex.length}</dt>
+              <dd>篇文档（含草稿）</dd>
             </div>
             <div>
               <dt>3</dt>
@@ -335,28 +336,28 @@ function Hero(): ReactNode {
 
 const paths = [
   {
-    step: 'CLI',
-    title: '命令行快速开始',
-    body: '安装 maxc、完成认证、跑通第一条查询。',
-    href: '/docs/products/cli/quickstart/',
+    step: '01 · 准备',
+    title: '还没有可用项目',
+    body: '确认账号、项目、身份、地域与费用范围。',
+    href: '/docs/getting-started/prepare/',
   },
   {
-    step: 'MCP',
-    title: 'MCP Server 快速开始',
-    body: '通过标准协议把 MaxCompute 能力暴露给 Agent。',
-    href: '/docs/products/mcp-server/quickstart/',
+    step: '02 · 查询',
+    title: '执行第一条查询',
+    body: '不创建表，核对一行确定的结果，再分析内联样例。',
+    href: '/docs/getting-started/first-query/',
   },
   {
-    step: 'Desktop',
-    title: 'Desktop 快速开始',
-    body: '桌面端 SQL 工作台与可视化管理。',
-    href: '/docs/products/desktop/quickstart/',
+    step: '03 · 选择',
+    title: '连接自己的工具',
+    body: '按图形界面、程序接口或计算工程选择一条路径。',
+    href: '/docs/getting-started/client-selection/',
   },
   {
-    step: '实践',
-    title: '最佳实践',
-    body: '场景化的落地方法与经验总结。',
-    href: '/docs/best-practices/',
+    step: '04 · 恢复',
+    title: '遇到错误怎么处理',
+    body: '按安装、连接、权限、执行与结果读取定位问题。',
+    href: '/docs/faq/',
   },
 ];
 
@@ -376,11 +377,11 @@ function QuickPaths(): ReactNode {
             className={styles.pathHeadingIcon}
             size={20}
           />
-          <Heading as="h2">按产品开始</Heading>
+          <Heading as="h2">按你现在的任务开始</Heading>
         </div>
         <div className={styles.pathGrid} ref={gridRef}>
           {paths.map((path) => (
-            <Link className={styles.pathCard} href={path.href} key={path.step}>
+            <Link className={styles.pathCard} to={path.href} key={path.step}>
               <span>{path.step}</span>
               <strong>{path.title}</strong>
               <small>{path.body}</small>
@@ -400,6 +401,7 @@ export default function Home(): ReactNode {
     >
       <Hero />
       <main>
+        <QuickPaths />
         <section className={styles.productsSection} id="products">
           <div className="container">
             <div className={styles.sectionHeading}>
@@ -408,14 +410,13 @@ export default function Home(): ReactNode {
                 <Heading as="h2">选择产品</Heading>
               </div>
               <div className={styles.sectionIntro}>
-                <p>按产品进入对应的文档与参考信息。</p>
+                <p>已确定工具时，从这里进入快速开始和参考。</p>
                 <Link to="/docs/products/">查看产品总览 →</Link>
               </div>
             </div>
             <ProductGrid />
           </div>
         </section>
-        <QuickPaths />
       </main>
     </Layout>
   );

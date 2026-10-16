@@ -1,0 +1,128 @@
+---
+title: 完成第一条查询
+description: 完成第一次查询，用一种工具执行不依赖业务表的 SELECT，核对确定结果并分析内联数据。
+product: platform
+doc_type: tutorial
+status: draft
+tags:
+  - maxcompute
+  - getting-started
+sidebar_position: 3
+---
+
+**完成目标**：在你的 MaxCompute 项目执行一条只读查询，看到一行 `id=1, message=hello`。本教程不创建、覆盖或删除表。
+
+**前提**：已有可用项目、匹配的 Endpoint 和可执行 SQL 的身份；尚未准备好时，先完成[连接准备](./prepare.mdx)。查询会访问云服务，费用以目标项目的计费方式为准。
+
+## 1. 只选择一种入口
+
+| 偏好                                | 路径                                                                                               |
+| ----------------------------------- | -------------------------------------------------------------------------------------------------- |
+| 愿意使用终端，希望逐条检查          | 继续本页的独立 maxc 步骤                                                                           |
+| 希望使用图形界面（macOS / Windows） | 按[桌面客户端快速开始](../products/desktop/quickstart.mdx)安装并建立连接，在编辑器执行下方相同 SQL |
+| 已在编写 Java 程序                  | [JDBC 快速开始](../products/jdbc/quickstart.mdx)已经包含可编译项目和同类常量查询                   |
+
+不要同时安装所有入口来排查同一个问题。本页固定使用**独立 `maxc`**，不混用阿里云 CLI 的配置。若你已经使用 `aliyun maxc`，直接沿用[CLI 快速开始](../products/cli/quickstart.mdx)的整套命令与认证方式；本页的 SQL 和完成判据仍可参考。
+
+## 2. 安装并确认独立 maxc
+
+准备 Python **3.11**，尚未安装时按[Python 官方平台安装指南](https://docs.python.org/3.11/using/index.html)操作。先执行 `python3 --version`（Windows 可用 `py -3.11 --version`）确认版本；虚拟环境会使用创建它的解释器。新建工作目录并在其中建立虚拟环境：
+
+```shell
+python3 -m venv .venv
+```
+
+Windows 若没有 `python3` 命令，使用 `py -3.11 -m venv .venv`。Linux/macOS 执行 `source .venv/bin/activate`；Windows PowerShell 执行 `.venv\Scripts\Activate.ps1`。如果系统限制脚本执行，使用组织允许的终端和安装方式，不修改系统安全策略来绕过。
+
+激活后执行：
+
+```shell
+python -m pip install --upgrade maxc-cli
+maxc --version
+```
+
+应看到 MaxCompute CLI 的版本。后续命令都在此虚拟环境中执行；找不到命令时先修复[安装问题](../products/cli/troubleshooting.mdx#安装问题)，不要继续提交查询。其他安装渠道见[CLI 安装指南](../products/cli/installation.mdx)。
+
+## 3. 检查已有身份，必要时再登录
+
+已有独立 maxc 配置时先执行：
+
+```shell
+maxc auth whoami --json
+```
+
+若身份和项目正确，跳过登录。若尚未配置，在交互式环境中可以使用 OAuth：
+
+```shell
+maxc auth login --oauth --json
+```
+
+按提示完成浏览器登录并选择**已获准使用的项目**。交互式项目选择器需要 TTY，默认仅支持中国区项目；其他地域或非交互环境按[认证方式](../products/cli/installation.mdx#认证方式)配置，不依赖自动选项。已有配置但认证失败时先核对错误原因，不盲目覆盖凭据。
+
+登录后检查：
+
+```shell
+maxc auth whoami --json
+maxc agent doctor --online --json
+```
+
+第一条确认身份，第二条检查在线就绪状态。成功不代表你有所有表的权限。若失败，按[常见问题](../faq/index.mdx)先确认身份、地域、Endpoint 和项目授权。
+
+## 4. 执行确定结果的查询
+
+```shell
+maxc query "SELECT 1 AS id, 'hello' AS message" --json
+```
+
+检查返回的 `data.result.rows`，应包含**一行**，两列值分别为 `1` 和 `hello`。JSON 的完整字段、作业信息和输出模式以[CLI 输出协议](../products/cli/reference.mdx)为准；不要要求整份响应与别人的日志逐字相同。
+
+在桌面客户端或其他 SQL 编辑器中，执行：
+
+```sql
+SELECT 1 AS id, 'hello' AS message;
+```
+
+如果命令只返回作业标识或等待超时，先按返回的后续动作查询同一作业状态，不要重复提交来猜测是否成功。见[CLI 作业超时](../products/cli/troubleshooting.mdx#作业超时)。
+
+## 5. 用内联样例完成一次分析
+
+第一条查询成功后，可以在同一个 SQL 编辑器中执行以下查询。样例数据就在 SQL 内，不依赖任何业务表，也不保存表：
+
+```sql
+WITH sample_orders AS (
+  SELECT 'book' AS product, CAST(2 AS BIGINT) AS quantity
+  UNION ALL
+  SELECT 'book' AS product, CAST(1 AS BIGINT) AS quantity
+  UNION ALL
+  SELECT 'pen' AS product, CAST(3 AS BIGINT) AS quantity
+)
+SELECT product, SUM(quantity) AS total_quantity
+FROM sample_orders
+GROUP BY product
+ORDER BY product;
+```
+
+本例期望结果为两行：
+
+| product | total_quantity |
+| ------- | -------------- |
+| book    | 3              |
+| pen     | 3              |
+
+如果继续使用 CLI，可以复制下面这一条命令（与上方 SQL 等价）。不要把 SQL 逐行当成终端命令执行：
+
+```shell
+maxc query "WITH sample_orders AS (SELECT 'book' AS product, CAST(2 AS BIGINT) AS quantity UNION ALL SELECT 'book', CAST(1 AS BIGINT) UNION ALL SELECT 'pen', CAST(3 AS BIGINT)) SELECT product, SUM(quantity) AS total_quantity FROM sample_orders GROUP BY product ORDER BY product" --json
+```
+
+## 6. 核对完成情况，再选择下一步
+
+- 版本可读、身份与在线检查通过。
+- 常量查询返回一行 `1, hello`。
+- 如执行了内联样例，分组结果与上表一致。
+
+本教程未创建云端表，无需执行 DROP 或删除项目。可以关闭编辑器，或执行 `deactivate` 退出本次虚拟环境。虚拟环境不包含用户级登录配置；已有凭据仍按工具配置保留，卸载与凭据清理见所选工具的安装说明。
+
+下一步：[按任务选择工具](./client-selection.mdx)，或[读取已有表并控制范围](../products/cli/quickstart.mdx#读取已有表)。需要理解 Project、Schema、分区和作业时，阅读[公共参考](../reference/index.mdx)。
+
+内容依据：本站已有 [CLI 命令参考](../products/cli/command-reference.mdx)、[JDBC 常量查询示例](../products/jdbc/quickstart.mdx)和[官方 SQL 文档](https://help.aliyun.com/zh/maxcompute/user-guide/)。实际完成状态须以你在目标项目执行和读回的结果为准。

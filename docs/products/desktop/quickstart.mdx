@@ -1,6 +1,6 @@
 ---
 title: 快速开始
-description: 用 10 分钟完成 MaxCompute AI数据探索的安装、连接和第一条查询，并可启用 AI 助手。
+description: 完成 MaxCompute AI数据探索的安装、连接和第一条查询，并可启用 AI 助手。
 product: desktop
 doc_type: quickstart
 status: draft
@@ -9,6 +9,8 @@ tags:
   - quickstart
 sidebar_position: 2
 ---
+
+第一次接入 MaxCompute？先核对[账号、项目与权限准备](../../getting-started/prepare.mdx)；只想先看到确定结果时，走[第一条查询](../../getting-started/first-query.mdx)，再继续本页的产品步骤。
 
 通过本页完成 MaxCompute AI数据探索（MaxCompute Desktop）的安装、连接配置和第一次数据查询，确认产品端到端可用。
 
@@ -56,10 +58,12 @@ sidebar_position: 2
 2. 在编辑器中输入查询语句：
 
    ```sql
-   SELECT * FROM <your_table> LIMIT 10;
+   SELECT 1 AS id, 'hello' AS message;
    ```
 
 3. 按 **Cmd+Enter**（Windows 为 Ctrl+Enter）执行。
+
+先核对结果为一行 `id=1, message=hello`，此查询不依赖已有业务表，也不创建表。再按获准访问的表结构和分区条件读取真实数据；`LIMIT` 不替代扫描范围控制。
 
 查询结果出现在编辑器下方的结果面板，可切换表格、图表、透视等视图，也可导出为 CSV、JSON、Parquet 或 XLSX。
 

@@ -69,6 +69,8 @@
 }
 
 .dialog {
+  display: flex;
+  flex-direction: column;
   width: min(720px, 100%);
   height: fit-content;
   max-height: min(720px, 80vh);
@@ -117,6 +119,8 @@
 }
 
 .results {
+  min-height: 0;
+  flex: 1 1 auto;
   max-height: min(520px, 60vh);
   overflow-y: auto;
   padding: 0.55rem;
@@ -261,4 +265,72 @@
 
 [data-theme='light'] .footer {
   background: rgba(23, 32, 51, 0.03);
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.65rem 1rem;
+  color: var(--mc-muted);
+  font-size: 0.78rem;
+  border-bottom: 1px solid var(--mc-border);
+}
+
+.filters select {
+  max-width: 180px;
+  padding: 0.3rem;
+  color: var(--mc-ink);
+  background: var(--mc-card);
+  border: 1px solid var(--mc-border);
+  border-radius: 6px;
+}
+
+.dialog :focus-visible {
+  outline: 2px solid var(--ifm-color-primary);
+  outline-offset: 2px;
+}
+
+.results > a:focus-visible {
+  background: var(--mc-surface);
+}
+
+.resultCopy small {
+  display: -webkit-box;
+  white-space: normal;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.resultCopy mark {
+  color: var(--mc-ink);
+  background: color-mix(in srgb, var(--ifm-color-primary) 26%, transparent);
+  border-radius: 2px;
+}
+
+.resultStatus {
+  color: var(--mc-muted);
+  font-size: 0.68rem;
+}
+
+@media screen and (max-height: 700px) {
+  .overlay {
+    padding-top: 1rem;
+  }
+
+  .dialog {
+    max-height: calc(100dvh - 2rem);
+  }
+
+  .results {
+    max-height: calc(100dvh - 220px);
+  }
+}
+
+.searchBox,
+.filters,
+.footer {
+  flex-shrink: 0;
 }

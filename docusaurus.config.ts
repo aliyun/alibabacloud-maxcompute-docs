@@ -110,6 +110,7 @@ const config: Config = {
           position: 'left',
           label: '文档首页',
         },
+        {to: '/docs/getting-started/', position: 'left', label: '第一次使用'},
         {
           type: 'custom-product-menu',
           position: 'left',
@@ -152,6 +153,7 @@ const config: Config = {
         {
           title: '文档',
           items: [
+            {label: '第一次使用', to: '/docs/getting-started/'},
             {label: '产品总览', to: '/docs/products/'},
             {
               label: 'SDK 官方文档',
