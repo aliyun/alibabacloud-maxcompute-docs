@@ -9,7 +9,7 @@ const source = readFileSync(
 const compiled = ts.transpileModule(source, {
   compilerOptions: {module: ts.ModuleKind.ESNext},
 }).outputText;
-const {searchDocs} = await import(
+const {searchDocs, searchKeyAction} = await import(
   `data:text/javascript;base64,${Buffer.from(compiled).toString('base64')}`
 );
 const entries = JSON.parse(
@@ -61,4 +61,67 @@ test('body-only matches show contextual evidence in the snippet', () => {
     'Tunnel',
   )[0];
   assert.match(result.snippet, /Tunnel/);
+});
+
+test('Chinese IME candidate keys never navigate results or close search', () => {
+  for (const key of ['ArrowDown', 'ArrowUp', 'Escape', 'Tab', 'k']) {
+    assert.equal(
+      searchKeyAction({
+        key,
+        ctrlKey: true,
+        metaKey: false,
+        isComposing: true,
+        keyCode: 0,
+      }),
+      'none',
+    );
+    assert.equal(
+      searchKeyAction({
+        key,
+        ctrlKey: true,
+        metaKey: false,
+        isComposing: false,
+        keyCode: 229,
+      }),
+      'none',
+    );
+  }
+});
+test('completed input retains keyboard navigation and platform search shortcuts', () => {
+  const event = {
+    ctrlKey: false,
+    metaKey: false,
+    isComposing: false,
+    keyCode: 0,
+  };
+  for (const [key, action] of [
+    ['ArrowDown', 'next'],
+    ['ArrowUp', 'previous'],
+    ['Escape', 'close'],
+    ['Tab', 'tab'],
+    ['a', 'none'],
+  ]) {
+    assert.equal(searchKeyAction({...event, key}), action);
+  }
+  assert.equal(searchKeyAction({...event, key: 'K', metaKey: true}), 'toggle');
+  assert.equal(searchKeyAction({...event, key: 'k', ctrlKey: true}), 'toggle');
+});
+
+test('natural mixed-language queries do not require users to add spaces', () => {
+  for (const [compact, spaced] of [
+    ['dbt升级', 'dbt 升级'],
+    ['JDBC连接', 'JDBC 连接'],
+  ]) {
+    assert.deepEqual(
+      searchDocs(entries, compact).map((e) => e.href),
+      searchDocs(entries, spaced).map((e) => e.href),
+    );
+    assert.ok(searchDocs(entries, compact).length > 0);
+  }
+});
+test('project creation task surfaces preparation over search-help examples', () => {
+  assert.equal(
+    searchDocs(entries, '创建项目')[0].href,
+    '/docs/getting-started/prepare/',
+  );
 });

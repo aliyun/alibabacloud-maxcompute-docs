@@ -133,7 +133,7 @@
 .heroTitle {
   margin: 0;
   color: #fff;
-  font-size: clamp(2.4rem, 4.6vw, 4.6rem);
+  font-size: clamp(2rem, 4vw, 4rem);
   font-weight: 720;
   line-height: 1.08;
   letter-spacing: -0.045em;
@@ -748,4 +748,8 @@
 
 [data-theme='light'] .pathCard:hover {
   box-shadow: 0 12px 32px rgba(20, 32, 60, 0.1);
+}
+
+.heroProductLine {
+  display: block;
 }

@@ -17,6 +17,8 @@ export function searchTerms(query: string): string[] {
         .toLowerCase()
         .trim()
         .replace(/(?:如何|怎么|怎样)/g, '')
+        .replace(/([a-z0-9])([\p{Script=Han}])/gu, '$1 $2')
+        .replace(/([\p{Script=Han}])([a-z0-9])/gu, '$1 $2')
         .split(/[\s，,。？?！!]+/u)
         .filter(Boolean),
     ),
@@ -71,4 +73,21 @@ export function searchDocs(
     .sort(
       (a, b) => b.score - a.score || a.title.localeCompare(b.title, 'zh-CN'),
     );
+}
+
+export function searchKeyAction(
+  event: Pick<
+    KeyboardEvent,
+    'key' | 'ctrlKey' | 'metaKey' | 'isComposing' | 'keyCode'
+  >,
+): 'none' | 'toggle' | 'close' | 'tab' | 'next' | 'previous' {
+  // IME candidate selection owns these keys until composition completes.
+  if (event.isComposing || event.keyCode === 229) return 'none';
+  if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k')
+    return 'toggle';
+  if (event.key === 'Escape') return 'close';
+  if (event.key === 'Tab') return 'tab';
+  if (event.key === 'ArrowDown') return 'next';
+  if (event.key === 'ArrowUp') return 'previous';
+  return 'none';
 }

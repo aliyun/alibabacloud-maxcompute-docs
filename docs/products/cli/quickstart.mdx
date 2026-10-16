@@ -37,18 +37,19 @@ sidebar_position: 2
 aliyun maxc --version
 ```
 
-无法使用阿里云 CLI 扩展时，使用 PyPI 独立入口：
-
-```bash
-python3 -m pip install --upgrade maxc-cli
-maxc --version
-```
+无法使用阿里云 CLI 入口时，改走[独立 maxc 首次查询教程](../../getting-started/first-query.mdx)。该教程从虚拟环境安装到登录、查询均使用 `maxc`，不要只安装独立入口后继续照抄本页的 `aliyun maxc` 命令。
 
 更多安装渠道（预编译二进制等）见[安装与配置](./installation.mdx)。
 
 ### 2. 认证
 
-OAuth 是交互式登录的首选方式，不需要把长期 AK/SK 放进命令行：
+已有阿里云 CLI Profile 或 maxc 配置时，先检查当前实际身份：
+
+```shell
+aliyun maxc auth whoami --json
+```
+
+身份和项目正确时跳过登录。若尚未配置可用身份，交互式登录可使用 OAuth，不需要把长期 AK/SK 放进命令行：
 
 ```bash
 aliyun maxc auth login --oauth --json
@@ -65,11 +66,7 @@ aliyun maxc auth login \
   --no-picker --json
 ```
 
-已有阿里云 CLI OAuth profile、环境变量或 STS 凭证时，先验证现有身份，不要无故覆盖：
-
-```bash
-aliyun maxc auth whoami --json
-```
+阿里云 CLI Profile、环境变量和显式保存的 maxc 认证不是同一个配置入口；已有配置但身份不符合预期时，先按[认证说明](./installation.mdx#认证方式)核对，不无故覆盖。
 
 配置保存在 `~/.maxc/config.yaml`（文件权限 0600）。
 

@@ -4,6 +4,7 @@ description: 在不创建表的情况下，对照两个客户端的配置、常�
 product: platform
 doc_type: how-to
 status: draft
+sidebar_position: 2
 tags:
   - maxcompute
   - getting-started
@@ -20,7 +21,7 @@ tags:
 按[第一次查询](../getting-started/first-query.mdx)完成 CLI 安装、登录和在线检查，执行：
 
 ```shell
-aliyun maxc query "SELECT 1 AS id, 'hello' AS message" --json
+maxc query "SELECT 1 AS id, 'hello' AS message" --json
 ```
 
 核对一行 `id=1, message=hello`。CLI 失败时先在此入口排查，不同时修改 Java 依赖和云端配置。

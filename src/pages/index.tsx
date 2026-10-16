@@ -301,7 +301,8 @@ function Hero(): ReactNode {
         <div className={styles.heroCopy}>
           <span className={styles.badge}>MAXCOMPUTE DOCS</span>
           <Heading as="h1" className={styles.heroTitle}>
-            从第一条查询开始， 连接 MaxCompute
+            从第一条查询开始
+            <span className={styles.heroProductLine}>连接 MaxCompute</span>
           </Heading>
           <p className={styles.heroSubtitle}>
             先准备项目和身份，再运行不依赖业务表的查询。已有工程？按任务选择客户端、驱动或连接器。

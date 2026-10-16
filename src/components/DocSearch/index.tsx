@@ -8,6 +8,7 @@ import generatedSearchIndex from '@site/src/generated/search-index.json';
 import {
   searchDocs,
   searchTerms,
+  searchKeyAction,
   type SearchEntry,
 } from '@site/src/lib/doc-search';
 import {
@@ -68,7 +69,7 @@ export function DocSearchTrigger({
   useEffect(() => {
     if (variant !== 'navbar' || mobile) return undefined;
     const shortcut = (event: KeyboardEvent) => {
-      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') {
+      if (searchKeyAction(event) === 'toggle') {
         event.preventDefault();
         if (!document.querySelector('[aria-label="搜索 MaxCompute 文档"]'))
           setOpen(true);
@@ -94,14 +95,13 @@ export function DocSearchTrigger({
         inputRef.current?.focus();
     };
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (
-        event.key === 'Escape' ||
-        ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k')
-      ) {
+      const action = searchKeyAction(event);
+      if (action === 'none') return;
+      if (action === 'close' || action === 'toggle') {
         event.preventDefault();
         close();
       }
-      if (event.key === 'Tab') {
+      if (action === 'tab') {
         const elements = focusable();
         const first = elements[0];
         const last = elements.at(-1);
@@ -113,7 +113,7 @@ export function DocSearchTrigger({
           first?.focus();
         }
       }
-      if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+      if (action === 'next' || action === 'previous') {
         if (document.activeElement?.tagName === 'SELECT') return;
         const links = Array.from(
           dialogRef.current?.querySelectorAll<HTMLAnchorElement>(
@@ -127,10 +127,10 @@ export function DocSearchTrigger({
         );
         const next =
           index < 0
-            ? event.key === 'ArrowDown'
+            ? action === 'next'
               ? 0
               : links.length - 1
-            : (index + (event.key === 'ArrowDown' ? 1 : -1) + links.length) %
+            : (index + (action === 'next' ? 1 : -1) + links.length) %
               links.length;
         links[next].focus();
       }
@@ -149,7 +149,7 @@ export function DocSearchTrigger({
     if (!open || !dialog || prefersReducedMotion()) return undefined;
     const {gsap} = ensureGsap();
     const ctx = gsap.context(() => {
-      gsap.from(dialog, {y: -14, autoAlpha: 0, duration: 0.3, ease: EASE_OUT});
+      gsap.from(dialog, {y: -14, opacity: 0, duration: 0.3, ease: EASE_OUT});
     }, dialog);
     return () => ctx.revert();
   }, [open]);

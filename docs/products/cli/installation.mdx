@@ -76,7 +76,7 @@ maxc 支持多种认证方式，按优先级推荐：
 | AK/SK              | `maxc auth login --access-id <id> --access-key-secret <secret>` | 显式凭证，写入 `~/.maxc/config.yaml`（权限 0600） |
 | STS / 外部凭证进程 | `maxc auth login-external`                                      | 由可信外部进程输出临时凭证                        |
 
-使用阿里云 CLI 入口时，`aliyun maxc` 直接复用 `aliyun configure` 配置的凭证体系。
+使用阿里云 CLI 入口时，`aliyun maxc` 可复用 `aliyun configure` 配置的凭证体系。若已通过 maxc 登录显式保存认证配置，不要假定仅切换命令前缀就会切换身份；先用 `auth whoami --json` 确认当前实际身份与项目，再决定是否需要重新配置。
 
 注意事项：
 
