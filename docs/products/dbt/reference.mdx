@@ -42,6 +42,39 @@ sidebar_position: 4
 
 模型配置基于[官方 Adapter README](https://github.com/aliyun/dbt-maxcompute#configure-your-dbt-models)，新建表属性与已有表迁移分别处理。
 
+## Python 运行时兼容
+
+1.11.3 延续 beta 的全局 SQL 默认值 `odps.sql.python.version=cp311`，对 dbt `function()` 引用和直接写函数名的 SQL 调用均生效。1.11.2 未全局设置此 hint，因此从 1.11.2 升级时，调用已有 Python 2.7 / 3.7 UDF 的模型必须显式使用匹配的 `cp27` / `cp37`：
+
+```sql
+{{ config(sql_hints={'odps.sql.python.version': 'cp27'}) }}
+```
+
+Python 3.7 函数改用 `cp37`。调用旧函数的 hook 需在自己的 SQL 中加入对应的 `SET odps.sql.python.version=cp27;` 或 `cp37`。同一 SQL 语句不能混用不兼容的 Python 运行时。
+
+`dbt show --select` 的 Core 预览路径不应用模型 `sql_hints`，预览旧版函数时还需配置对应的 `sql_header`，例如 Python 3.7：
+
+```sql
+{{ config(
+    sql_hints={'odps.sql.python.version': 'cp37'},
+    sql_header='SET odps.sql.python.version=cp37;'
+) }}
+```
+
+新建 dbt Python 函数须有有效的 `runtime_version`，可在 `dbt_project.yml` 设置项目默认值：
+
+```yaml
+functions:
+  +runtime_version: '3.11'
+```
+
+`runtime_version` 用于源代码校验和兼容性报告，不替代调用端的 SQL 运行时 hint；CP27 提醒针对已有旧函数调用，不表示可用此适配器新建 CP27 函数。CP37 函数可显式声明兼容运行时，依赖资源也必须匹配 CP37，不能复用为 CP311。详见 [1.11.3 UDF 运行时说明](https://github.com/aliyun/dbt-maxcompute/blob/v1.11.3/docs/python-udfs.md)。
+
+## 可选配置
+
+- `incremental_strategy='truncate_insert'`：非分区整表替换，需同时设置 `full_refresh=false`，返回完整数据并核对限制；见[模型指南](./guides.mdx#可选整表替换truncate_insert)。
+- `catalog_strict_metadata`：严格元数据检查仍为可选项，默认 `false`；元数据不完整会产生警告。不要把 catalog 生成成功等同于元数据完整。
+
 ## 命令与产物的含义
 
 | 命令 / 产物               | 能证明什么                                           |

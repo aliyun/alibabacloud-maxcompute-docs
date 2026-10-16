@@ -23,11 +23,11 @@ python -m venv .venv
 Linux/macOS 执行 `source .venv/bin/activate`；Windows PowerShell 执行 `.venv\Scripts\Activate.ps1`。然后安装：
 
 ```shell
-python -m pip install "dbt-maxcompute==1.11.2" "dbt-core>=1.11.2,<1.12"
+python -m pip install "dbt-maxcompute==1.11.3" "dbt-core>=1.11.2,<1.12"
 dbt --version
 ```
 
-输出应显示 MaxCompute Adapter 1.11.2 和兼容的 dbt Core 1.11.x。安装本身不验证服务连接。
+输出应显示 MaxCompute Adapter 1.11.3 和兼容的 dbt Core 1.11.x。安装本身不验证服务连接。从 1.11.2 升级且调用旧版 Python UDF 时，先阅读[运行时兼容配置](./reference.mdx#python-运行时兼容)，显式选择 CP27/CP37。
 
 ## 2. 创建文件
 
