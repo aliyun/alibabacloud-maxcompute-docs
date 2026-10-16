@@ -217,3 +217,71 @@ body {
     padding-inline: 0.6rem;
   }
 }
+
+/* Product identity is shared by cards, navigation and documentation landings. */
+[data-product-accent] {
+  --product-accent: var(--mc-ink);
+  --product-accent-soft: color-mix(
+    in srgb,
+    var(--product-accent) 12%,
+    transparent
+  );
+  --card-accent: var(--product-accent);
+  --card-accent-soft: var(--product-accent-soft);
+}
+
+[data-product-accent='orange'] {
+  --product-accent: #ffad70;
+}
+
+[data-theme='light'] [data-product-accent='orange'] {
+  --product-accent: #c74d04;
+}
+
+[data-product-accent='blue'] {
+  --product-accent: #82b5ff;
+}
+
+[data-theme='light'] [data-product-accent='blue'] {
+  --product-accent: #2466bf;
+}
+
+[data-product-accent='violet'] {
+  --product-accent: #bba6ff;
+}
+
+[data-theme='light'] [data-product-accent='violet'] {
+  --product-accent: #7057d9;
+}
+
+[data-product-accent='green'] {
+  --product-accent: #61d993;
+}
+
+[data-theme='light'] [data-product-accent='green'] {
+  --product-accent: #087f43;
+}
+
+[data-product-accent='cyan'] {
+  --product-accent: #64d9ee;
+}
+
+[data-theme='light'] [data-product-accent='cyan'] {
+  --product-accent: #087e98;
+}
+
+[data-product-accent='amber'] {
+  --product-accent: #f6c45b;
+}
+
+[data-theme='light'] [data-product-accent='amber'] {
+  --product-accent: #966000;
+}
+
+[data-product-accent='emerald'] {
+  --product-accent: #62d9b4;
+}
+
+[data-theme='light'] [data-product-accent='emerald'] {
+  --product-accent: #087e66;
+}

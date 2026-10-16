@@ -5,6 +5,7 @@ export type ProductCategoryId = 'ai' | 'interface' | 'connector';
 export type CategoryItem = {
   id: string;
   label: string;
+  description?: string;
   href: string;
   icon: ProductIconName;
   accent: 'orange' | 'blue' | 'violet' | 'green' | 'cyan' | 'amber' | 'emerald';
@@ -36,7 +37,8 @@ export const productCategories: ProductCategory[] = [
     items: [
       {
         id: 'sdk',
-        label: 'SDK',
+        label: 'MaxCompute SDK',
+        description: '查阅已有 SDK 官方文档，将 MaxCompute 集成到应用中。',
         href: 'https://aliyun.github.io/aliyun-odps-java-sdk/',
         external: true,
         icon: 'code',

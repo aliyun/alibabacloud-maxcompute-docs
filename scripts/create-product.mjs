@@ -79,11 +79,33 @@ if (!/^@\S+$/.test(options.owner)) {
 
 const icon = options.icon ?? 'cube';
 const accent = options.accent ?? 'green';
-if (!new Set(['terminal', 'robot', 'desktop', 'cube']).has(icon)) {
+if (
+  !new Set([
+    'terminal',
+    'robot',
+    'desktop',
+    'cube',
+    'code',
+    'database',
+    'flow',
+    'plug',
+    'lightning',
+  ]).has(icon)
+) {
   console.error('--icon 不在允许列表中。');
   process.exit(1);
 }
-if (!new Set(['orange', 'blue', 'violet', 'green']).has(accent)) {
+if (
+  !new Set([
+    'orange',
+    'blue',
+    'violet',
+    'green',
+    'cyan',
+    'amber',
+    'emerald',
+  ]).has(accent)
+) {
   console.error('--accent 不在允许列表中。');
   process.exit(1);
 }

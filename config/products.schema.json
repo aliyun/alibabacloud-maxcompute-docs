@@ -43,7 +43,19 @@
           },
           "status": {"enum": ["draft", "published", "deprecated"]},
           "owner": {"type": "string", "pattern": "^@[^\\s]+$"},
-          "icon": {"enum": ["terminal", "robot", "desktop", "cube"]},
+          "icon": {
+            "enum": [
+              "terminal",
+              "robot",
+              "desktop",
+              "cube",
+              "code",
+              "database",
+              "flow",
+              "plug",
+              "lightning"
+            ]
+          },
           "accent": {
             "enum": [
               "orange",

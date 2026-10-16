@@ -16,7 +16,7 @@ type ProductEntry = {
   description: string;
   href: string;
   icon: ProductIconName;
-  accent: 'orange' | 'blue' | 'violet' | 'green';
+  accent: 'orange' | 'blue' | 'violet' | 'green' | 'cyan' | 'amber' | 'emerald';
   navigation: Array<{label: string; href: string}>;
 };
 
@@ -42,7 +42,7 @@ export default function ProductDocLanding({
   if (!product) return null;
 
   return (
-    <div className={`${styles.landing} ${styles[product.accent]}`}>
+    <div className={styles.landing} data-product-accent={product.accent}>
       <section className={styles.hero} ref={heroRef}>
         <div className={styles.heroIcon}>
           <ProductIcon name={product.icon} size={34} />
