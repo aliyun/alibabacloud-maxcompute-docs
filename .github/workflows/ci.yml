@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+env:
+  # Keep aligned with .github/workflows/deploy-pages.yml so the pre-merge gate and
+  # the Pages build validate the same toolchain.
+  NODE_VERSION: '24.x'
+
+jobs:
+  validate-and-build:
+    name: Validate and build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          check-latest: true
+          cache: npm
+
+      - name: Install dependencies
+        # Install from the committed lockfile against the public registry, same as the Pages build.
+        run: npm ci --registry=https://registry.npmjs.org --no-audit --no-fund
+
+      - name: Validate and build website
+        # AGENTS.md requires the full `npm run ci` for every change; this is that check.
+        run: npm run ci
